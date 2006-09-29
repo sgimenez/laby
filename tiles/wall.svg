@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   version="1.0"
+   sodipodi:docbase="/home/gimenez/fdls/tiles"
+   sodipodi:docname="wall.svg"
+   inkscape:export-filename="/home/gimenez/fdls/tiles/exit.png"
+   inkscape:export-xdpi="140.625"
+   inkscape:export-ydpi="140.625">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     gridtolerance="10000"
+     guidetolerance="10"
+     objecttolerance="10"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.2"
+     inkscape:cx="30.02551"
+     inkscape:cy="13.151815"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     width="32px"
+     height="32px"
+     inkscape:window-width="892"
+     inkscape:window-height="719"
+     inkscape:window-x="588"
+     inkscape:window-y="39" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect1903"
+       width="13.839286"
+       height="8.75"
+       x="1.4285715"
+       y="1.1964285" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2808"
+       width="13.839286"
+       height="8.75"
+       x="7.2767863"
+       y="5.0357137" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2810"
+       width="13.839286"
+       height="8.75"
+       x="16.919641"
+       y="1.1071429" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2812"
+       width="13.839286"
+       height="8.75"
+       x="1.3839279"
+       y="11.642858" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2814"
+       width="13.839286"
+       height="8.75"
+       x="7.2767854"
+       y="15.392857" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2816"
+       width="13.839286"
+       height="8.75"
+       x="16.830357"
+       y="11.732142" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2818"
+       width="13.839286"
+       height="8.75"
+       x="1.3839301"
+       y="21.910715" />
+    <rect
+       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
+       id="rect2822"
+       width="13.839286"
+       height="8.75"
+       x="16.830357"
+       y="22" />
+  </g>
+</svg>
