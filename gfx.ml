@@ -2,40 +2,49 @@ let print = F.print ~l:"gfx"
 
 exception Error
 
-let _ = GtkMain.Main.init ()
+type ressources =
+    {
+      void_p : GDraw.pixmap;
+      exit_p : GDraw.pixmap;
+      wall_p : GDraw.pixmap;
+      ant_n_p : GDraw.pixmap;
+      ant_e_p : GDraw.pixmap;
+      ant_s_p : GDraw.pixmap;
+      ant_w_p : GDraw.pixmap;
+    }
 
-let void_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/void.xpm" ()
-let exit_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/exit.xpm" ()
-let wall_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/wall.xpm" ()
-let ant_n_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/ant-n.xpm" ()
-let ant_e_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/ant-e.xpm" ()
-let ant_s_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/ant-s.xpm" ()
-let ant_w_p =
-  GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file:"tiles/ant-w.xpm" ()
+let gtk_init () =
+  let load_pixmap file =
+    GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file ()
+  in
+  let _ = GtkMain.Main.init () in
+  {
+    void_p = load_pixmap "tiles/void.xpm";
+    exit_p = load_pixmap "tiles/exit.xpm";
+    wall_p = load_pixmap "tiles/wall.xpm";
+    ant_n_p = load_pixmap "tiles/ant-n.xpm";
+    ant_e_p = load_pixmap "tiles/ant-e.xpm";
+    ant_s_p = load_pixmap "tiles/ant-s.xpm";
+    ant_w_p = load_pixmap "tiles/ant-w.xpm";
+  }
 
-let draw_state state (pixmap : GDraw.pixmap) =
+let draw_state state ressources (pixmap : GDraw.pixmap) =
   let tile i j (p : GDraw.pixmap) =
     pixmap#put_pixmap ~x:(i*50) ~y:(j*50) p#pixmap
   in
   let p i j t =
     begin match t with
-    | `Void -> tile i j void_p
-    | `Wall -> tile i j wall_p
-    | `Exit -> tile i j exit_p
+    | `Void -> tile i j ressources.void_p
+    | `Wall -> tile i j ressources.wall_p
+    | `Exit -> tile i j ressources.exit_p
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
   begin match state.State.pos with
-  | i, j, `N -> tile i j ant_n_p
-  | i, j, `E -> tile i j ant_e_p
-  | i, j, `S -> tile i j ant_s_p
-  | i, j, `W -> tile i j ant_w_p
+  | i, j, `N -> tile i j ressources.ant_n_p
+  | i, j, `E -> tile i j ressources.ant_e_p
+  | i, j, `S -> tile i j ressources.ant_s_p
+  | i, j, `W -> tile i j ressources.ant_w_p
   end
 
 let display_gtk story =
@@ -45,7 +54,7 @@ let display_gtk story =
   let pos = ref 0 in
   let bg = ref `WHITE in
   begin try
-(*       let _ = GtkMain.Main.init () in *)
+      let ressources = gtk_init () in
       let window = GWindow.window () in
       let delete ev = false in
       let destroy () = GMain.Main.quit () in
@@ -67,7 +76,7 @@ let display_gtk story =
 	pixmap#set_foreground !bg;
 	let width, height = pixmap#size in
 	pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-	draw_state (state !pos) pixmap;
+	draw_state (state !pos) ressources pixmap;
 	px#set_pixmap pixmap
       in
       let first () = if !pos > 0 then (pos := 0; update ()) in
