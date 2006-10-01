@@ -23,7 +23,7 @@ BASE_S=state.cmo gfx.cmo fdls.cmo
 FDLS_S=$(S) $(BASE_S)
 
 BASE_LIBS=unix.cma nums.cma getopt.cma
-GFX_LIBS=bigarray.cma lablgtk.cma cairo.cma cairo_lablgtk.cma
+GFX_LIBS=bigarray.cma lablgtk.cma
 FDLS_LIBS=$(BASE_LIBS) $(GFX_LIBS)
 
 fdls: $(FDLS_S)

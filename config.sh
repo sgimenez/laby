@@ -24,7 +24,6 @@ echo "let version_current = \"${VERSION_CURRENT}\"" >> config.ml.tmp
 echo "let version_status = \"${VERSION_STATUS}\"" >> config.ml.tmp
 echo "let build_ocaml = \"${BUILD_OCAML}\"" >> config.ml.tmp
 echo "let build_getopt = \"${BUILD_GETOPT}\"" >> config.ml.tmp
-echo "let build_cairo = \"${BUILD_CAIRO}\"" >> config.ml.tmp
 echo "let build_lablgtk = \"${BUILD_LABLGTK}\"" >> config.ml.tmp
 echo "let conf_path = Sys.getenv \"HOME\" ^ \"/.lin/\"" >> config.ml.tmp
 

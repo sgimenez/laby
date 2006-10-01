@@ -32,7 +32,6 @@ let build () =
     section "build"
       [[F.s "ocaml        "; F.sb Config.build_ocaml];
        [F.s "ocaml-getopt "; F.sb Config.build_getopt];
-       [F.s "ocaml-cairo  "; F.sb Config.build_cairo];
        [F.s "ocaml-lablgtk"; F.sb Config.build_lablgtk]]
   )
 
