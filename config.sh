@@ -2,9 +2,16 @@
 
 PROJECT_NAME=$(cat NAME)
 VERSION_STRING=$(cat VERSION)
+
+if which mtn > /dev/null; then
 VERSION_BASE=$(mtn automate get_base_revision_id)
 VERSION_CURRENT=$(mtn automate get_current_revision_id)
 VERSION_STATUS=$(mtn st)
+else
+VERSION_BASE="unknown"
+VERSION_CURRENT="unknown"
+VERSION_STATUS="unknown"
+fi
 
 function get_pkg_version()
 {
@@ -13,7 +20,6 @@ function get_pkg_version()
 
 BUILD_OCAML=$(ocamlc -version)
 BUILD_GETOPT=$(get_pkg_version getopt)
-BUILD_CAIRO=$(get_pkg_version cairo)
 BUILD_LABLGTK=$(get_pkg_version lablgtk2)
 
 rm -f config.ml.tmp
