@@ -40,17 +40,24 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
-  begin match state.State.pos with
-  | i, j, `N -> tile i j ressources.ant_n_p
-  | i, j, `E -> tile i j ressources.ant_e_p
-  | i, j, `S -> tile i j ressources.ant_s_p
-  | i, j, `W -> tile i j ressources.ant_w_p
+  begin match state.State.pos, state.State.dir with
+  | (i, j), `N -> tile i j ressources.ant_n_p
+  | (i, j), `E -> tile i j ressources.ant_e_p
+  | (i, j), `S -> tile i j ressources.ant_s_p
+  | (i, j), `W -> tile i j ressources.ant_w_p
   end
 
-let display_gtk story =
-  let state i = List.nth story (List.length story - 1 - i) in
-  let posm = List.length story - 1 in
-  assert (posm >= 0);
+let display_gtk next =
+  let story = ref [State.basic] in
+  let last_state () = List.length !story - 1 in
+  let add_state () =
+    assert (!story <> []);
+    begin match next (List.hd !story) with
+    | None -> false
+    | Some state -> story := state :: !story; true
+    end
+  in
+  let state i = List.nth !story (last_state () - i) in
   let pos = ref 0 in
   let bg = ref `WHITE in
   begin try
@@ -79,10 +86,19 @@ let display_gtk story =
 	draw_state (state !pos) ressources pixmap;
 	px#set_pixmap pixmap
       in
-      let first () = if !pos > 0 then (pos := 0; update ()) in
-      let prev () =  if !pos > 0 then (decr pos; update ()) in
-      let next () =  if !pos < posm then (incr pos; update ()) in
-      let last () = if !pos < posm then (pos := posm; update ()) in
+      let first () =
+	if !pos > 0 then (pos := 0; update ())
+      in
+      let prev () =
+	if !pos > 0 then (decr pos; update ())
+      in
+      let next () =
+	if !pos < last_state () || (!pos = last_state () && add_state ())
+	then (incr pos; update ())
+      in
+      let last () =
+	if !pos < last_state () then (pos := last_state (); update ())
+      in
       ignore (button_first#connect#clicked ~callback:first);
       ignore (button_prev#connect#clicked ~callback:prev);
       ignore (button_next#connect#clicked ~callback:next);

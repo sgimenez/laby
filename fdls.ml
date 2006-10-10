@@ -6,9 +6,8 @@ let texts_path = ref (Config.conf_path ^ "texts")
 let theme_path = ref (Config.conf_path ^ "theme")
 
 let proceed () =
-  let story = [State.basic] in
   begin try
-      Gfx.display_gtk story
+      Gfx.display_gtk State.next
     with
     | Gfx.Error ->
 	print ~e:0 (fun () ->

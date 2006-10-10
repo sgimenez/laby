@@ -1,12 +1,12 @@
 .PHONY: all clean opt
 
-all: fdls
+all: fdls robot.cmo
 opt: fdls.opt
 
 VERSION:=$(shell sh config.sh)
 
 OCAMLFIND=ocamlfind
-OPTIONS=-package getopt,lablgtk2,cairo
+OPTIONS=-package getopt,lablgtk2
 
 OCAML_VERSION=$(shell $(OCAML) -version)
 OCAMLC=$(OCAMLFIND) ocamlc $(OPTIONS) -custom -g
