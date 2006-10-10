@@ -1,7 +1,7 @@
 .PHONY: all clean opt
 
-all: fdls robot.cmo
-opt: fdls.opt
+all: laby robot.cmo
+opt: laby.opt
 
 VERSION:=$(shell sh config.sh)
 
@@ -18,22 +18,22 @@ MENHIR=menhir --no-stdlib
 -include .depend
 
 S=run.cmo config.cmo f.cmo opt.cmo version.cmo
-BASE_S=state.cmo gfx.cmo fdls.cmo
+BASE_S=state.cmo gfx.cmo laby.cmo
 
-FDLS_S=$(S) $(BASE_S)
+LABY_S=$(S) $(BASE_S)
 
 BASE_LIBS=unix.cma nums.cma getopt.cma
 GFX_LIBS=bigarray.cma lablgtk.cma
-FDLS_LIBS=$(BASE_LIBS) $(GFX_LIBS)
+LABY_LIBS=$(BASE_LIBS) $(GFX_LIBS)
 
-fdls: $(FDLS_S)
-	$(OCAMLC) $(FDLS_LIBS) $^ -o $@
+laby: $(LABY_S)
+	$(OCAMLC) $(LABY_LIBS) $^ -o $@
 
-fdls.opt: $(LDLS_S:.cmo=.cmx)
-	$(OCAMLOPT) $(FDLS_LIBS:.cma=.cmxa) $^ -o $@
+laby.opt: $(LDLS_S:.cmo=.cmx)
+	$(OCAMLOPT) $(LABY_LIBS:.cma=.cmxa) $^ -o $@
 
 clean:
-	rm -rf *.cm[iox] *.o fdls{,.opt}
+	rm -rf *.cm[iox] *.o laby{,.opt}
 	rm -rf config.ml
 	rm -rf .depend
 

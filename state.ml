@@ -1,7 +1,6 @@
 type terrain = [ `Void | `Wall | `Exit ]
 type dir = [ `N | `E | `S | `W ]
 
-
 type t =
     {
       map: terrain array array;
@@ -67,16 +66,16 @@ let buf = String.make 1024 ' '
 let current = ref ""
 let buffer = ref []
 
-let rec input () =
+let rec input channels =
   begin match !buffer with
   | a :: q -> buffer := q; Some a
   | [] ->
-      let l, _, _ = Unix.select [Unix.stdin] [] [] 0.2 in
+      let l, _, _ = Unix.select [fst channels] [] [] 0.2 in
       begin match l with
       | [] -> None
       | _ ->
 	  begin try
-	      let i = Unix.read Unix.stdin buf 0 1024 in
+	      let i = Unix.read (fst channels) buf 0 1024 in
 	      if i = 0 then None
 	      else begin
 		  for j = 0 to i - 1; do
@@ -85,7 +84,7 @@ let rec input () =
 		    | c -> current := !current ^ (String.make 1 c)
 		    end
 		  done;
-		  input ()
+		  input channels
 		end
             with
 	    | End_of_file -> None
@@ -134,28 +133,30 @@ let load file =
 	Printf.eprintf "no level: %s\n" file; basic;
   end
 
-let output s =
-  Printf.printf "%s\n%!" s
+let output channels s =
+  Printf.fprintf (Unix.out_channel_of_descr (snd channels)) "%s\n%!" s
 
-let rec next state =
-  begin match input () with
-  | None -> None
-  | Some "forward" -> Some (forward state)
-  | Some "left" -> Some (left state)
-  | Some "right" -> Some (right state)
-  | Some "look" ->
-      let ans =
-	begin match look state with
-	| `Wall -> "wall"
-	| `Void -> "void"
-	| `Exit -> "exit"
+let run channels =
+  let rec next state =
+    begin match input channels with
+    | None -> None
+    | Some "forward" -> Some (forward state)
+    | Some "left" -> Some (left state)
+    | Some "right" -> Some (right state)
+    | Some "look" ->
+	let ans =
+	  begin match look state with
+	  | `Wall -> "wall"
+	  | `Void -> "void"
+	  | `Exit -> "exit"
+	  end
+	in
+	output channels ans; next state
+    | Some "load" ->
+	begin match input channels with
+	| None -> Printf.eprintf "no level\n"; None
+	| Some l -> Some (load ("levels/" ^ l ^ ".map"))
 	end
-      in
-      output ans; next state
-  | Some "load" ->
-      begin match input () with
-      | None -> Printf.eprintf "no level\n"; None
-      | Some l -> Some (load ("levels/" ^ l ^ ".map"))
-      end
-  | Some a -> Printf.eprintf "unknown action: %s\n" a; None
-  end
+    | Some a -> Printf.eprintf "unknown action: %s\n" a; None
+    end
+  in next

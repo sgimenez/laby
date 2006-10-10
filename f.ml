@@ -211,7 +211,7 @@ let set_debug d =
   | Some i -> debug_level := i
   end
 
-let output = ref (print_string)
+let output = ref (Printf.eprintf "%s")
 
 let log path =
   let open_opts =

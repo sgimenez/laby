@@ -29,4 +29,6 @@ let _ =
   Robot.droite ();
   fonce ();
   Robot.droite ();
-  fonce ()
+  fonce ();
+  Robot.avance ()
+

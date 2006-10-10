@@ -1,11 +1,15 @@
 let input_ch, output_ch =
-  Unix.open_process "./fdls"
+  stdin, stdout
 
 let output s =
   Printf.fprintf output_ch "%s\n%!" s
 
 let input () =
-  input_line input_ch
+  begin try
+      input_line input_ch
+    with
+    | End_of_file -> exit 1
+  end
 
 let gauche () = output "left"
 
@@ -18,7 +22,12 @@ let regarde () = output "look";
   | "void" -> `Rien
   | "wall" -> `Mur
   | "exit" -> `Sortie
-  | _ -> assert false
+  | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
+
+let prend () = output "raise"
+let pose () = output "lower"
+
+let pousser () = output "push"
 
 let debut s = output "load"; output s
