@@ -4,47 +4,52 @@ exception Error
 
 type ressources =
     {
-      void_p : GDraw.pixmap;
-      exit_p : GDraw.pixmap;
-      wall_p : GDraw.pixmap;
-      ant_n_p : GDraw.pixmap;
-      ant_e_p : GDraw.pixmap;
-      ant_s_p : GDraw.pixmap;
-      ant_w_p : GDraw.pixmap;
+      void_p : GdkPixbuf.pixbuf;
+      exit_p : GdkPixbuf.pixbuf;
+      wall_p : GdkPixbuf.pixbuf;
+      rock_p : GdkPixbuf.pixbuf;
+      ant_n_p : GdkPixbuf.pixbuf;
+      ant_e_p : GdkPixbuf.pixbuf;
+      ant_s_p : GdkPixbuf.pixbuf;
+      ant_w_p : GdkPixbuf.pixbuf;
     }
 
 let gtk_init () =
-  let load_pixmap file =
-    GDraw.pixmap_from_xpm ~transparent:(`WHITE) ~file ()
-  in
   let _ = GtkMain.Main.init () in
   {
-    void_p = load_pixmap "tiles/void.xpm";
-    exit_p = load_pixmap "tiles/exit.xpm";
-    wall_p = load_pixmap "tiles/wall.xpm";
-    ant_n_p = load_pixmap "tiles/ant-n.xpm";
-    ant_e_p = load_pixmap "tiles/ant-e.xpm";
-    ant_s_p = load_pixmap "tiles/ant-s.xpm";
-    ant_w_p = load_pixmap "tiles/ant-w.xpm";
+    void_p = GdkPixbuf.from_file "tiles/void.png";
+    exit_p = GdkPixbuf.from_file "tiles/exit.png";
+    wall_p = GdkPixbuf.from_file "tiles/wall.png";
+    rock_p = GdkPixbuf.from_file "tiles/rock.png";
+    ant_n_p = GdkPixbuf.from_file "tiles/ant-n.png";
+    ant_e_p = GdkPixbuf.from_file "tiles/ant-e.png";
+    ant_s_p = GdkPixbuf.from_file "tiles/ant-s.png";
+    ant_w_p = GdkPixbuf.from_file "tiles/ant-w.png";
   }
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
-  let tile i j (p : GDraw.pixmap) =
-    pixmap#put_pixmap ~x:(i*50) ~y:(j*50) p#pixmap
+  let tile i j p =
+    pixmap#put_pixbuf ~x:(i*50) ~y:(j*50) p
   in
   let p i j t =
     begin match t with
     | `Void -> tile i j ressources.void_p
-    | `Wall -> tile i j ressources.wall_p
     | `Exit -> tile i j ressources.exit_p
+    | `Wall -> tile i j ressources.wall_p
+    | `Rock -> tile i j ressources.rock_p
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
-  begin match state.State.pos, state.State.dir with
-  | (i, j), `N -> tile i j ressources.ant_n_p
-  | (i, j), `E -> tile i j ressources.ant_e_p
-  | (i, j), `S -> tile i j ressources.ant_s_p
-  | (i, j), `W -> tile i j ressources.ant_w_p
+  let i, j = state.State.pos in
+  begin match state.State.dir with
+  | `N -> tile i j ressources.ant_n_p
+  | `E -> tile i j ressources.ant_e_p
+  | `S -> tile i j ressources.ant_s_p
+  | `W -> tile i j ressources.ant_w_p
+  end;
+  begin match state.State.carry with
+  | `Rock -> tile i j ressources.rock_p
+  | _ -> ()
   end
 
 let display_gtk next =

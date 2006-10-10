@@ -19,15 +19,17 @@ let avance () = output "forward"
 
 let regarde () = output "look";
   begin match input () with
-  | "void" -> `Rien
+  | "void" -> `Vide
   | "wall" -> `Mur
+  | "rock" -> `Roche
   | "exit" -> `Sortie
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
 
-let prend () = output "raise"
-let pose () = output "lower"
+let ouvre () = output "open"
 
-let pousser () = output "push"
+let prend () = output "take"
 
-let debut s = output "load"; output s
+let pose () = output "drop"
+
+let pousse () = output "push"
