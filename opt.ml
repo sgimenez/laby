@@ -11,7 +11,7 @@ type action =
 
 type handle = unit -> action
 type handle_s = string -> action
-type t = char * string * handle option * handle_s option * string
+type t = char * string * handle option * handle_s option * F.t
 
 let noshort = Getopt.noshort
 let nolong = Getopt.nolong
@@ -31,11 +31,11 @@ let help_opt opts =
   let handle () =
     let action () =
       let usage =
-	('h', "help", None, None, "displays help message") :: opts
+	('h', "help", None, None, F.s "displays help message") :: opts
       in
       let pl opt =
 	let (short, long, _, _, desc) = opt in
-	F.f [f opt; F.v [F.s desc]]
+	F.f [f opt; F.v [desc]]
       in
       let program = F.s (Sys.argv.(0)) in
       let options_f = F.v (List.map pl usage) in
@@ -45,9 +45,9 @@ let help_opt opts =
     in
     Excl action
   in
-  'h', "help", Some handle, None, ""
+  'h', "help", Some handle, None, F.s ""
 
-let cmd opts arg main =
+let cmd opts main =
   let actions = ref [] in
   let excl_command = ref None in
   let set_excl_command c =
@@ -103,15 +103,20 @@ let cmd opts arg main =
     (short, long, handle', handle_s')
   in
   let getopts = List.map opt_to_getopt ((help_opt opts) :: opts) in
+  let args =
   begin try
+      let args = ref [] in
+      let arg s = args := s :: !args in
       Getopt.parse_cmdline getopts arg;
+      !args
     with
     | Getopt.Error m ->
 	print ~e:1 (fun () -> F.s m); raise Error
-  end;
+  end
+  in
   List.iter (fun f -> f ()) !actions;
   begin match !excl_command with
-  | None -> main ()
+  | None -> main args
   | Some f -> f ()
   end
 
@@ -128,7 +133,7 @@ let debug_opt =
     end
   in
   'd', "debug", Some handle, Some handle_s,
-  "outputs debug information"
+  F.s "outputs debug information"
 
 let log_opt ~default =
   let r = ref None in
@@ -151,7 +156,7 @@ let log_opt ~default =
     end
   in
   'l', "log", Some handle, Some handle_s,
-  "logs output to a file"
+  F.s "logs output to a file"
 
 let theme_opt ~default =
   let r = ref None in
@@ -174,4 +179,4 @@ let theme_opt ~default =
     end
   in
   noshort, "theme", Some handle, Some handle_s,
-  "chooses theme file"
+  F.s "chooses theme file"

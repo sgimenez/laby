@@ -49,4 +49,4 @@ let opt =
     end
   in
   'v', "version", Some handle, Some handle_s,
-  "shows versioning information"
+  F.s "shows versioning information"

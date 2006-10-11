@@ -29,7 +29,7 @@ LABY_LIBS=$(BASE_LIBS) $(GFX_LIBS)
 laby: $(LABY_S)
 	$(OCAMLC) $(LABY_LIBS) $^ -o $@
 
-laby.opt: $(LDLS_S:.cmo=.cmx)
+laby.opt: $(LABY_S:.cmo=.cmx)
 	$(OCAMLOPT) $(LABY_LIBS:.cma=.cmxa) $^ -o $@
 
 clean:
