@@ -176,7 +176,9 @@ let run channels =
 	| `None, `Exit ->
 	    begin
 	      incr level;
-	      let file = Printf.sprintf "levels/level%d.map" !level in
+	      let file =
+		Config.conf_path ^ Printf.sprintf "levels/level%d.map" !level
+	      in
 	      if Sys.file_exists file then Some (load file)
 	      else (Printf.eprintf "no more levels\n%!"; None)
 	    end

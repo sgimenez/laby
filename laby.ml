@@ -10,14 +10,14 @@ let proceed robots =
   | [robot] ->
       let in_ch, in_ch' = Unix.pipe () in
       let out_ch', out_ch = Unix.pipe () in
-      begin match Unix.fork () with
+      begin match flush_all (); Unix.fork () with
       | 0 ->
 	  Unix.dup2 in_ch' Unix.stdout;
 	  Unix.dup2 out_ch' Unix.stdin;
 	  Unix.close in_ch;
 	  Unix.close out_ch;
 	  begin try
-	      Unix.execv Sys.argv.(1) [||]
+	      Unix.execv Sys.argv.(1) [| Sys.argv.(1) |]
 	    with
 	      exn ->
 		print ~e:0 (fun () ->

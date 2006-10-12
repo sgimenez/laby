@@ -2,7 +2,7 @@
 #load "unix.cma"
 #load "robot.cmo"
 
-let _ =
+let fourmi =
   (* Niveau 0 *)
   Robot.droite ();
   Robot.avance ();

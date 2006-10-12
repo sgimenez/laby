@@ -17,14 +17,14 @@ type ressources =
 let gtk_init () =
   let _ = GtkMain.Main.init () in
   {
-    void_p = GdkPixbuf.from_file "tiles/void.png";
-    exit_p = GdkPixbuf.from_file "tiles/exit.png";
-    wall_p = GdkPixbuf.from_file "tiles/wall.png";
-    rock_p = GdkPixbuf.from_file "tiles/rock.png";
-    ant_n_p = GdkPixbuf.from_file "tiles/ant-n.png";
-    ant_e_p = GdkPixbuf.from_file "tiles/ant-e.png";
-    ant_s_p = GdkPixbuf.from_file "tiles/ant-s.png";
-    ant_w_p = GdkPixbuf.from_file "tiles/ant-w.png";
+    void_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/void.png");
+    exit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/exit.png");
+    wall_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/wall.png");
+    rock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/rock.png");
+    ant_n_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-n.png");
+    ant_e_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-e.png");
+    ant_s_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-s.png");
+    ant_w_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-w.png");
   }
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
