@@ -1,6 +1,4 @@
-#!/usr/bin/env ocaml
-#load "unix.cma"
-#load "robot.cmo"
+#!/usr/bin/env robot
 
 let fourmi =
   (* Niveau 0 *)

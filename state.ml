@@ -136,6 +136,7 @@ let load file =
 	  begin match s.[i] with
 	  | 'w' -> `Wall;
 	  | 'e' -> `Exit;
+	  | 'r' -> `Exit;
 	  | _ -> `Void;
 	  end
       done;

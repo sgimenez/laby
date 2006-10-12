@@ -1,6 +1,6 @@
 .PHONY: all clean opt
 
-all: laby robot.cmo
+all: laby robot srobot
 opt: laby.opt
 
 VERSION:=$(shell sh config.sh)
@@ -11,20 +11,16 @@ OPTIONS=-package getopt,lablgtk2
 OCAML_VERSION=$(shell $(OCAML) -version)
 OCAMLC=$(OCAMLFIND) ocamlc $(OPTIONS) -custom -g
 OCAMLOPT=$(OCAMLFIND) ocamlopt $(OPTIONS) -unsafe
+OCAMLMKTOP=$(OCAMLFIND) ocamlmktop $(OPTIONS)
 OCAMLDEP=$(OCAMLFIND) ocamldep $(OPTIONS)
-OCAMLLEX=ocamllex
-MENHIR=menhir --no-stdlib
 
 -include .depend
 
 S=run.cmo config.cmo f.cmo opt.cmo version.cmo
-BASE_S=state.cmo gfx.cmo laby.cmo
 
-LABY_S=$(S) $(BASE_S)
+LABY_S=$(S) state.cmo gfx.cmo laby.cmo
 
-BASE_LIBS=unix.cma nums.cma getopt.cma
-GFX_LIBS=bigarray.cma lablgtk.cma
-LABY_LIBS=$(BASE_LIBS) $(GFX_LIBS)
+LABY_LIBS=unix.cma nums.cma getopt.cma bigarray.cma lablgtk.cma
 
 laby: $(LABY_S)
 	$(OCAMLC) $(LABY_LIBS) $^ -o $@
@@ -32,8 +28,20 @@ laby: $(LABY_S)
 laby.opt: $(LABY_S:.cmo=.cmx)
 	$(OCAMLOPT) $(LABY_LIBS:.cma=.cmxa) $^ -o $@
 
+robot: robot.cmo
+	$(OCAMLMKTOP) -o $@ unix.cma $^
+
+
+srobot.cmo: srobot.ml
+	$(OCAMLC) -pp camlp4rf -I +camlp4 -c $<
+srobot.cmx: srobot.ml
+	$(OCAMLOPT) -pp camlp4rf -I +camlp4 -c $<
+
+srobot: robot.cmo srobot.cmo
+	$(OCAMLMKTOP) -o $@ unix.cma $^
+
 clean:
-	rm -rf *.cm[iox] *.o laby{,.opt}
+	rm -rf *.cm[iox] *.o laby{,.opt} robot srobot
 	rm -rf config.ml
 	rm -rf .depend
 
@@ -44,5 +52,5 @@ clean:
 %.cmx: %.ml
 	$(OCAMLOPT) -c $<
 
-.depend: $(wilcard *.ml *.mli)
-	@$(OCAMLDEP) *.ml{,i} >> .depend
+.depend: config.ml f.ml gfx.ml laby.ml opt.ml robot.ml run.ml state.ml version.ml $(wildcard *.mli)
+	@$(OCAMLDEP) $^ >> .depend
