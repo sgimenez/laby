@@ -1,4 +1,4 @@
-type terrain = [ `Void | `Wall | `Exit | `Rock ]
+type terrain = [ `Void | `Wall | `Exit | `Rock | `Pit | `NRock | `NPit ]
 type dir = [ `N | `E | `S | `W ]
 
 type t =
@@ -27,6 +27,13 @@ let basic =
     dir = `N;
     carry = `None;
     say = "";
+  }
+
+let copy state =
+  { state with
+    map =
+      Array.init (Array.length state.map) (fun j -> Array.copy state.map.(j));
+    say = String.copy(state.say);
   }
 
 let get state (i, j) =
@@ -73,44 +80,15 @@ let forward state =
   let move pos =
     let pos' = front state in
     begin match get state pos' with
-    | `Void | `Exit -> pos'
-    | `Wall | `Rock -> pos
+    | `Void | `Pit | `NPit | `NRock ->
+	if get state pos <> `Pit then pos' else pos
+    | _ -> pos
     end
   in
   { state with pos = move state.pos }
 
 let look state =
   get state (front state)
-
-let buf = String.make 1024 ' '
-let current = ref ""
-let buffer = ref []
-
-let rec input channels =
-  begin match !buffer with
-  | a :: q -> buffer := q; Some a
-  | [] ->
-      let l, _, _ = Unix.select [fst channels] [] [] 0.2 in
-      begin match l with
-      | [] -> None
-      | _ ->
-	  begin try
-	      let i = Unix.read (fst channels) buf 0 1024 in
-	      if i = 0 then None
-	      else begin
-		  for j = 0 to i - 1; do
-		    begin match buf.[j] with
-		    | '\n' -> buffer := !buffer @ [!current]; current := ""
-		    | c -> current := !current ^ (String.make 1 c)
-		    end
-		  done;
-		  input channels
-		end
-            with
-	    | End_of_file -> None
-	  end
-      end
-  end
 
 let load file =
   let f = open_in file in
@@ -128,6 +106,12 @@ let load file =
     )
   in
   let map = Array.make_matrix sizey sizex `Void in
+  let rand () =
+    let b = ref (Random.bool ()) in
+    fun a1 a2 -> b := not !b; if !b then a1 else a2
+  in
+  let rock = rand () in
+  let pit = rand () in
   begin
     for j = 0 to sizey - 1 do
       let s = input_line f in
@@ -136,7 +120,10 @@ let load file =
 	  begin match s.[i] with
 	  | 'w' -> `Wall;
 	  | 'e' -> `Exit;
-	  | 'r' -> `Exit;
+	  | 'r' -> `Rock;
+	  | 'R' -> rock `Rock `NRock;
+	  | 'p' -> `Pit;
+	  | 'P' -> pit `Pit `NPit;
 	  | _ -> `Void;
 	  end
       done;
@@ -154,9 +141,9 @@ let load file =
 let output channels s =
   Printf.fprintf (Unix.out_channel_of_descr (snd channels)) "%s\n%!" s
 
-let run channels =
+let run (input, output) =
   let rec next state =
-    begin match input channels with
+    begin match input () with
     | None -> None
     | Some "forward" -> Some (forward state)
     | Some "left" -> Some (left state)
@@ -164,14 +151,14 @@ let run channels =
     | Some "look" ->
 	let ans =
 	  begin match look state with
+	  | `NRock | `NPit | `Void -> "void"
 	  | `Wall -> "wall"
-	  | `Void -> "void"
 	  | `Rock -> "rock"
+	  | `Pit -> "pit"
 	  | `Exit -> "exit"
 	  end
 	in
-	output channels ans; next state
-
+	output ans; next state
     | Some "open" ->
 	begin match state.carry, get state (front state) with
 	| `None, `Exit ->

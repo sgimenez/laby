@@ -8,6 +8,9 @@ type ressources =
       exit_p : GdkPixbuf.pixbuf;
       wall_p : GdkPixbuf.pixbuf;
       rock_p : GdkPixbuf.pixbuf;
+      pit_p : GdkPixbuf.pixbuf;
+      nrock_p : GdkPixbuf.pixbuf;
+      npit_p : GdkPixbuf.pixbuf;
       ant_n_p : GdkPixbuf.pixbuf;
       ant_e_p : GdkPixbuf.pixbuf;
       ant_s_p : GdkPixbuf.pixbuf;
@@ -21,6 +24,9 @@ let gtk_init () =
     exit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/exit.png");
     wall_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/wall.png");
     rock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/rock.png");
+    pit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/pit.png");
+    nrock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/nrock.png");
+    npit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/npit.png");
     ant_n_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-n.png");
     ant_e_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-e.png");
     ant_s_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-s.png");
@@ -37,6 +43,9 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     | `Exit -> tile i j ressources.exit_p
     | `Wall -> tile i j ressources.wall_p
     | `Rock -> tile i j ressources.rock_p
+    | `Pit -> tile i j ressources.pit_p
+    | `NRock -> tile i j ressources.nrock_p
+    | `NPit -> tile i j ressources.npit_p
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
@@ -52,25 +61,35 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
-let display_gtk next =
-  let story = ref [State.basic] in
+let display_gtk file launch =
+  let story = ref [] in
+  let pos = ref 0 in
+  let next = ref (fun s -> None) in
+    Random.self_init ();
+  let restart () =
+    Random.init (Random.int 100000);
+    story := [if file = "" then State.basic else State.load file];
+    pos := 0;
+    next := State.run (launch ());
+  in
+  restart ();
   let last_state () = List.length !story - 1 in
   let add_state () =
     assert (!story <> []);
-    begin match next (List.hd !story) with
+    begin match !next (List.hd !story) with
     | None -> false
     | Some state -> story := state :: !story; true
     end
   in
   let state i = List.nth !story (last_state () - i) in
-  let pos = ref 0 in
   let bg = ref `WHITE in
   begin try
       let ressources = gtk_init () in
       let window = GWindow.window () in
-      let delete ev = false in
-      let destroy () = GMain.Main.quit () in
-      ignore (window#event#connect#delete ~callback:delete);
+      let destroy () =
+	window#destroy ();
+	GMain.Main.quit () in
+      ignore (window#event#connect#delete ~callback:(fun _ -> exit 0));
       ignore (window#connect#destroy ~callback:destroy);
       let vbox = GPack.vbox ~packing:window#add () in
       let width, height = 800, 600 in
@@ -84,6 +103,7 @@ let display_gtk next =
       let button_prev = button "<" `GO_BACK in
       let button_next = button ">" `GO_FORWARD in
       let button_last = button ">>" `GOTO_LAST in
+      let button_refresh = button "!" `REFRESH in
       let update () =
 	pixmap#set_foreground !bg;
 	let width, height = pixmap#size in
@@ -104,10 +124,12 @@ let display_gtk next =
       let last () =
 	if !pos < last_state () then (pos := last_state (); update ())
       in
+      let refresh () = restart (); update () in
       ignore (button_first#connect#clicked ~callback:first);
       ignore (button_prev#connect#clicked ~callback:prev);
       ignore (button_next#connect#clicked ~callback:next);
       ignore (button_last#connect#clicked ~callback:last);
+      ignore (button_refresh#connect#clicked ~callback:refresh);
       window#show ();
       bg := `COLOR (px#misc#style#light `NORMAL);
       update ();

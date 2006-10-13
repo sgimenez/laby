@@ -125,8 +125,7 @@ let debug_opt =
     F.set_debug (Some i);
     Run.catch := Some (F.exn);
   in
-  let handle () = debug 1; Noop
-  in
+  let handle () = debug 1; Noop in
   let handle_s slevel =
     begin try debug (int_of_string slevel); Noop with
     | Failure _ -> raise Invalid

@@ -2,7 +2,7 @@ val avance : unit -> unit
 val gauche : unit -> unit
 val droite : unit -> unit
 
-val regarde : unit -> [ `Vide | `Mur | `Sortie | `Roche ]
+val regarde : unit -> [ `Vide | `Mur | `Sortie | `Roche | `Toile]
 
 val ouvre : unit -> unit
 
