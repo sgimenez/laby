@@ -132,7 +132,7 @@ let debug_opt =
     end
   in
   'd', "debug", Some handle, Some handle_s,
-  F.s "outputs debug information"
+  F.text "outputs debug information" []
 
 let log_opt ~default =
   let r = ref None in
@@ -155,7 +155,7 @@ let log_opt ~default =
     end
   in
   'l', "log", Some handle, Some handle_s,
-  F.s "logs output to a file"
+  F.text "logs output to a file" []
 
 let theme_opt ~default =
   let r = ref None in
@@ -178,4 +178,4 @@ let theme_opt ~default =
     end
   in
   noshort, "theme", Some handle, Some handle_s,
-  F.s "chooses theme file"
+  F.text "chooses theme file" []

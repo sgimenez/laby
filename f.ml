@@ -21,7 +21,7 @@ let escape c s = "\027[" ^ c ^ "m" ^ s ^ "\027[0m"
 
 let color, bcolor =
   begin match env_term with
-  | Some "xterm" ->
+  | Some "xterm" | Some "xterm-color" ->
       let c r g b = string_of_int (16+b+6*g+36*r) in
       (fun r g b -> "38;5;" ^ c r g b), (fun r g b -> "48;5;" ^ c r g b)
   | Some ("rxvt-unicode" | "rxvt") ->
@@ -345,19 +345,22 @@ let theme_line lnb s =
       Hashtbl.add tags !key !code
   end
 
-let set_theme path =
-  let print = print ~l:"theme" in
+let read_theme f =
   let lnb = ref 0 in
   begin try
+      while true do
+	let s = incr lnb; input_line f ^ "\n" in
+	theme_line lnb s
+      done
+    with
+    | End_of_file -> ()
+  end
+
+let set_theme path =
+  let print = print ~l:"theme" in
+  begin try
       let f = open_in_bin path in
-      begin try
-	  while true do
-	    let s = incr lnb; input_line f ^ "\n" in
-	    theme_line lnb s
-	  done
-	with
-	| End_of_file -> ()
-      end;
+      read_theme f;
       close_in f
     with
     | Sys_error m ->
@@ -369,33 +372,37 @@ let set_theme path =
 	);
   end
 
-let set_texts path =
-  let print = print ~l:"texts" in
+let read_texts f =
   let lnb = ref 0 in
   begin try
+      let txt = ref "" in
+      while true do
+	let s = incr lnb; input_line f ^ "\n" in
+	begin match texts_line txt s with
+	| `Entry (msg_lang, txt, msg) ->
+	    print ~d:5 (fun () ->
+	      F ("", [S "msg txt:"; sq txt; S "lang:"; sq msg_lang])
+	    );
+	    if lang = msg_lang then
+	      Hashtbl.add texts txt msg
+	| `Skip -> ()
+	| `Error ->
+	    print ~e:2 (fun () ->
+	      F ("", [text "line <l>" ["l", i !lnb];
+		      S ","; text "syntax error" []])
+	    )
+	end
+      done
+    with
+    | End_of_file -> ()
+  end
+
+
+let set_texts path =
+  let print = print ~l:"texts" in
+  begin try
       let f = open_in_bin path in
-      begin try
-	  let txt = ref "" in
-	  while true do
-	    let s = incr lnb; input_line f ^ "\n" in
-	    begin match texts_line txt s with
-	    | `Entry (msg_lang, txt, msg) ->
-		print ~d:5 (fun () ->
-		  F ("", [S "msg txt:"; sq txt; S "lang:"; sq msg_lang])
-		);
-		if lang = msg_lang then
-		  Hashtbl.add texts txt msg
-	    | `Skip -> ()
-	    | `Error ->
-		print ~e:2 (fun () ->
-		  F ("", [text "line <l>" ["l", i !lnb];
-			  S ","; text "syntax error" []])
-		)
-	    end
-	  done
-	with
-	| End_of_file -> ()
-      end;
+      read_texts f;
       close_in f;
     with
     | Sys_error m ->

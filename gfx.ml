@@ -8,9 +8,9 @@ type ressources =
       exit_p : GdkPixbuf.pixbuf;
       wall_p : GdkPixbuf.pixbuf;
       rock_p : GdkPixbuf.pixbuf;
-      pit_p : GdkPixbuf.pixbuf;
+      web_p : GdkPixbuf.pixbuf;
       nrock_p : GdkPixbuf.pixbuf;
-      npit_p : GdkPixbuf.pixbuf;
+      nweb_p : GdkPixbuf.pixbuf;
       ant_n_p : GdkPixbuf.pixbuf;
       ant_e_p : GdkPixbuf.pixbuf;
       ant_s_p : GdkPixbuf.pixbuf;
@@ -24,9 +24,9 @@ let gtk_init () =
     exit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/exit.png");
     wall_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/wall.png");
     rock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/rock.png");
-    pit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/pit.png");
+    web_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/web.png");
     nrock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/nrock.png");
-    npit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/npit.png");
+    nweb_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/nweb.png");
     ant_n_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-n.png");
     ant_e_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-e.png");
     ant_s_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-s.png");
@@ -43,9 +43,9 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     | `Exit -> tile i j ressources.exit_p
     | `Wall -> tile i j ressources.wall_p
     | `Rock -> tile i j ressources.rock_p
-    | `Pit -> tile i j ressources.pit_p
+    | `Web -> tile i j ressources.web_p
     | `NRock -> tile i j ressources.nrock_p
-    | `NPit -> tile i j ressources.npit_p
+    | `NWeb -> tile i j ressources.nweb_p
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;

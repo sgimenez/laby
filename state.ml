@@ -1,4 +1,4 @@
-type terrain = [ `Void | `Wall | `Exit | `Rock | `Pit | `NRock | `NPit ]
+type terrain = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
 type dir = [ `N | `E | `S | `W ]
 
 type t =
@@ -80,8 +80,18 @@ let forward state =
   let move pos =
     let pos' = front state in
     begin match get state pos' with
-    | `Void | `Pit | `NPit | `NRock ->
-	if get state pos <> `Pit then pos' else pos
+    | `Void | `Web | `NWeb | `NRock ->
+	if get state pos <> `Web then pos' else pos
+    | _ -> pos
+    end
+  in
+  { state with pos = move state.pos }
+
+let forward_exit state =
+  let move pos =
+    let pos' = front state in
+    begin match get state pos' with
+    | `Exit -> if get state pos <> `Web then pos' else pos
     | _ -> pos
     end
   in
@@ -101,7 +111,11 @@ let load file =
       | "E" -> `E
       | "S" -> `S
       | "W" -> `W
-      | _ -> Printf.eprintf "unknown direction\n"; `N
+      | _ ->
+          F.print ~e:1 (fun () ->
+	    F.text "unknown direction" [];
+	  );
+	  Run.exit ();
       end
     )
   in
@@ -111,7 +125,7 @@ let load file =
     fun a1 a2 -> b := not !b; if !b then a1 else a2
   in
   let rock = rand () in
-  let pit = rand () in
+  let web = rand () in
   begin
     for j = 0 to sizey - 1 do
       let s = input_line f in
@@ -122,8 +136,8 @@ let load file =
 	  | 'e' -> `Exit;
 	  | 'r' -> `Rock;
 	  | 'R' -> rock `Rock `NRock;
-	  | 'p' -> `Pit;
-	  | 'P' -> pit `Pit `NPit;
+	  | 'p' -> `Web;
+	  | 'P' -> web `Web `NWeb;
 	  | _ -> `Void;
 	  end
       done;
@@ -151,25 +165,17 @@ let run (input, output) =
     | Some "look" ->
 	let ans =
 	  begin match look state with
-	  | `NRock | `NPit | `Void -> "void"
+	  | `NRock | `NWeb | `Void -> "void"
 	  | `Wall -> "wall"
 	  | `Rock -> "rock"
-	  | `Pit -> "pit"
+	  | `Web -> "web"
 	  | `Exit -> "exit"
 	  end
 	in
 	output ans; next state
     | Some "open" ->
 	begin match state.carry, get state (front state) with
-	| `None, `Exit ->
-	    begin
-	      incr level;
-	      let file =
-		Config.conf_path ^ Printf.sprintf "levels/level%d.map" !level
-	      in
-	      if Sys.file_exists file then Some (load file)
-	      else (Printf.eprintf "no more levels\n%!"; None)
-	    end
+	| `None, `Exit -> Some (forward_exit state)
 	| _, `Exit -> Some (say state "!")
 	| _, _ -> Some (say state "?")
 	end
@@ -193,6 +199,13 @@ let run (input, output) =
 	      }
 	|  _, _ -> Some (say state "!")
 	end
-    | Some a -> Printf.eprintf "unknown action: %s\n%!" a; None
+    | Some a ->
+	F.print ~e:1 (fun () ->
+	  F.text "unknown action: <action>" [
+	      "action", F.sq a;
+	  ];
+	);
+	None
     end
-  in next
+  in
+  next

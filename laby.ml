@@ -39,7 +39,7 @@ let launch robot () =
 	  exn ->
 	    print ~e:0 (fun () ->
 	      F.text "execution of <program> failed" [
-		  "program", F.sq Sys.argv.(1);
+		  "program", F.sq robot;
 	      ]
 	    );
       end;

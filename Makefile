@@ -1,6 +1,6 @@
 .PHONY: all clean opt
 
-all: laby robot srobot
+all: laby robot
 opt: laby.opt
 
 VERSION:=$(shell sh config.sh)

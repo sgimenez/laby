@@ -47,15 +47,21 @@ open Syntax;
 
 EXTEND Gram
   str_item:
-  [ [ "tant"; "que"; e1 = expr; "faire"; e2 = expr; "fait" ->
+  [ [ "tant_que"; e1 = expr; "faire" ; e2 = expr; "fin" ->
         <:str_item< while $e1$ do { $e2$ } >>
-    | "si"; e1 = expr; "alors"; e2 = expr; "sinon"; e3 = expr; "fin"; "si" ->
+    | "si"; e1 = expr; "faire"; "{" ; e2 = expr; "}";
+	  "sinon"; "{"; e3 = expr; "}" ->
         <:str_item< if $e1$ then $e2$ else $e3$ >>
-    | "si"; e1 = expr; "alors"; e2 = expr; "fin"; "si" ->
+    | "si"; e1 = expr; "faire"; "{"; e2 = expr; "}" ->
         <:str_item< if $e1$ then $e2$ else () >>
     ] ];
   expr:
-  [ [ "rien"; "devant" -> <:expr< Robot.regarde () = `Vide >> ] ];
+  [ [ "rien_devant" -> <:expr< Robot.regarde () = `Vide >>
+    | "mur_devant" -> <:expr< Robot.regarde () = `Mur >>
+    | "roche_devant" -> <:expr< Robot.regarde () = `Roche >>
+    | "sortie_devant" -> <:expr< Robot.regarde () = `Sortie >>
+    ] ];
 END;
+
 
 AstFilters.register_str_item_filter filter#str_item;
