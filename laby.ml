@@ -22,7 +22,7 @@ let level_opt =
     end
   in
   'L', "level", None, Some handle_s,
-  F.s "level file"
+  F.s "chooses level file"
 
 let launch robot () =
   let in_ch, in_ch' = Unix.pipe () in
@@ -60,17 +60,19 @@ let launch robot () =
 	      | [] -> None
 	      | _ ->
 		  begin try
-		      let i = Unix.read (in_ch) buf 0 1024 in
-		      if i = 0 then None
-		      else begin
+		      begin match Unix.read (in_ch) buf 0 1024 with
+		      | 0 -> None
+		      | i ->
 			  for j = 0 to i - 1; do
 			    begin match buf.[j] with
-			    | '\n' -> buffer := !buffer @ [!current]; current := ""
+			    | '\n' ->
+				buffer := !buffer @ [!current];
+				current := ""
 			    | c -> current := !current ^ (String.make 1 c)
 			    end
 			  done;
 			  input ()
-			end
+		      end
 		    with
 		    | End_of_file -> None
 		  end

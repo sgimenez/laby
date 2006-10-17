@@ -31,7 +31,6 @@ let build () =
   F.print (fun () ->
     section "build"
       [[F.s "ocaml        "; F.sb Config.build_ocaml];
-       [F.s "ocaml-getopt "; F.sb Config.build_getopt];
        [F.s "ocaml-lablgtk"; F.sb Config.build_lablgtk]]
   )
 

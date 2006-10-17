@@ -13,18 +13,20 @@ type handle = unit -> action
 type handle_s = string -> action
 type t = char * string * handle option * handle_s option * F.t
 
-let noshort = Getopt.noshort
-let nolong = Getopt.nolong
+let noshort = '\000'
+let nolong = ""
+
+let color = F.t "getopt.option"
+
+let l_f long = color (F.s ("--" ^ long))
+let s_f short = color (F.s ("-" ^ String.make 1 short))
 
 let f (short, long, _, _, _) =
-  let color = F.t "getopt.option" in
-  let l_f = color (F.s ("--" ^ long)) in
-  let s_f = color (F.s ("-" ^ String.make 1 short)) in
   begin match short = noshort, long = nolong with
   | true, true -> assert false
-  | true, false -> l_f
-  | false, true -> s_f
-  | false, false -> F.h [l_f; F.s "("; s_f; F.s ")"]
+  | true, false -> l_f long
+  | false, true -> s_f short
+  | false, false -> F.h [l_f long; F.s "("; s_f short; F.s ")"]
   end
 
 let help_opt opts =
@@ -47,6 +49,62 @@ let help_opt opts =
   in
   'h', "help", Some handle, None, F.s ""
 
+let parse () =
+  let i = ref 0 in
+  let args = ref [] in
+  let opts = ref [] in
+  let getarg () =
+    incr i; if !i >= Array.length Sys.argv then None else Some (Sys.argv.(!i))
+  in
+  let add_arg arg = args := arg :: !args in
+  let add_opt opt = opts := opt :: !opts in
+  let rec aux state =
+    begin match state, getarg () with
+    | `None, None -> ()
+    | `None, Some arg ->
+	let l = String.length arg in
+	begin match l with
+	| 0 | 1 -> add_arg arg; aux `None
+	| _ ->
+	    begin match arg.[0], arg.[1] with
+	    | '-', '-' ->
+		if l = 2 then aux (`AllArgs)
+		else
+		  begin try
+		      let i = String.index arg '=' in
+		      let opt = String.sub arg 2 (i-2) in
+		      let value = String.sub arg (i+1) (l-i-1) in
+		      add_opt (`Long (opt, Some value))
+		    with
+		    | Not_found ->
+			let opt = String.sub arg 2 (l-2) in
+			add_opt (`Long (opt, None))
+		  end
+	    | '-', opt ->
+		if l = 2
+		then (add_opt (`Short (opt, None)); aux `None)
+		else
+		  begin match arg.[2] with
+		  | '=' ->
+		      let value = String.sub arg (3) (l-3) in
+		      add_opt (`Short (opt, Some value));
+		      aux `None
+		  | _ ->
+		      for i = 1 to l - 1 do
+			add_opt (`Short (arg.[i], None))
+		      done;
+		      aux `None
+		  end
+	    | _, _ -> add_arg arg; aux `None
+	    end
+	end
+    | `AllArgs, None -> ()
+    | `AllArgs, Some arg -> add_arg arg; aux `AllArgs
+    end
+  in
+  aux `None;
+  List.rev !args, List.rev !opts
+
 let cmd opts main =
   let actions = ref [] in
   let excl_command = ref None in
@@ -60,7 +118,7 @@ let cmd opts main =
 	raise Error
     end
   in
-  let opt_to_getopt opt =
+  let action opt value =
     let (short, long, handle, handle_s, descr) = opt in
     let add_action =
       begin function
@@ -74,7 +132,7 @@ let cmd opts main =
       | Invalid ->
 	  print ~e:1 (fun () ->
 	    F.text "invalid argument to <opt>: <arg>" [
-		"opt",  f opt;
+		"opt", f opt;
 		"arg", F.sq s;
 	    ]
 	  );
@@ -88,35 +146,71 @@ let cmd opts main =
 	  raise Error
       end
     in
-    let handle' =
-      begin match handle with
-      | None -> None
-      | Some a -> Some (fun () -> add_action (catch a () ""))
-      end
-    in
-    let handle_s' =
-      begin match handle_s with
-      | None -> None
-      | Some h -> Some (fun s -> add_action (catch h s s))
-      end
-    in
-    (short, long, handle', handle_s')
+    begin match value with
+    | None ->
+	begin match handle with
+	| None ->
+	    print ~e:1 (fun () ->
+	      F.text "option <opt> requires an argument" [
+		  "opt", f opt;
+	      ]
+	    );
+	    raise Error
+	| Some a ->
+	    fun () -> add_action (catch a () "")
+	end
+    | Some s ->
+	begin match handle_s with
+	| None ->
+	    print ~e:1 (fun () ->
+	      F.text "option <opt> do not take an argument" [
+		  "opt", f opt;
+	      ]
+	    );
+	    raise Error
+	| Some h ->
+	    fun () -> add_action (catch h s s)
+	end
+    end
   in
-  let getopts = List.map opt_to_getopt ((help_opt opts) :: opts) in
-  let args =
-  begin try
-      let args = ref [] in
-      let arg s = args := s :: !args in
-      Getopt.parse_cmdline getopts arg;
-      !args
-    with
-    | Getopt.Error m ->
-	print ~e:1 (fun () -> F.s m); raise Error
-  end
+  let opts = help_opt opts :: opts in
+  let argl, optl = parse () in
+  let find_short c =
+    begin match List.filter (fun (c0,_,_,_,_) -> c0 = c) opts with
+    | [] ->
+	print ~e:1 (fun () ->
+	  F.text "unknown option: <option>" [
+	      "option", s_f c;
+	  ]
+	);
+	raise Error
+    | [opt] -> opt
+    | _ -> assert false
+    end
   in
-  List.iter (fun f -> f ()) !actions;
+  let find_long s =
+    begin match List.filter (fun (_,s0,_,_,_) -> s0 = s) opts with
+    | [] ->
+	print ~e:1 (fun () ->
+	  F.text "unknown option: <option>" [
+	      "option", l_f s;
+	  ]
+	);
+	raise Error
+    | [opt] -> opt
+    | _ -> assert false
+    end
+  in
+  let do_opt =
+    begin function
+    | `Short (c, v) -> action (find_short c) v
+    | `Long (s, v) -> action (find_long s) v
+    end
+  in
+  let actions = List.map do_opt optl in
+  List.iter (fun f -> f ()) actions;
   begin match !excl_command with
-  | None -> main args
+  | None -> main argl
   | Some f -> f ()
   end
 

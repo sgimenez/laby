@@ -19,7 +19,6 @@ function get_pkg_version()
 }
 
 BUILD_OCAML=$(ocamlc -version)
-BUILD_GETOPT=$(get_pkg_version getopt)
 BUILD_LABLGTK=$(get_pkg_version lablgtk2)
 
 rm -f config.ml.tmp
@@ -29,7 +28,6 @@ echo "let version_base = \"${VERSION_BASE}\"" >> config.ml.tmp
 echo "let version_current = \"${VERSION_CURRENT}\"" >> config.ml.tmp
 echo "let version_status = \"${VERSION_STATUS}\"" >> config.ml.tmp
 echo "let build_ocaml = \"${BUILD_OCAML}\"" >> config.ml.tmp
-echo "let build_getopt = \"${BUILD_GETOPT}\"" >> config.ml.tmp
 echo "let build_lablgtk = \"${BUILD_LABLGTK}\"" >> config.ml.tmp
 echo "let conf_path = Sys.getenv \"HOME\" ^ \"/.${PROJECT_NAME}/\"" >> config.ml.tmp
 

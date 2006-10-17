@@ -6,7 +6,7 @@ opt: laby.opt
 VERSION:=$(shell sh config.sh)
 
 OCAMLFIND=ocamlfind
-OPTIONS=-package getopt,lablgtk2
+OPTIONS=-package lablgtk2
 
 OCAML_VERSION=$(shell $(OCAML) -version)
 OCAMLC=$(OCAMLFIND) ocamlc $(OPTIONS) -custom -g
@@ -20,7 +20,7 @@ S=run.cmo config.cmo f.cmo opt.cmo version.cmo
 
 LABY_S=$(S) state.cmo gfx.cmo laby.cmo
 
-LABY_LIBS=unix.cma nums.cma getopt.cma bigarray.cma lablgtk.cma
+LABY_LIBS=unix.cma nums.cma bigarray.cma lablgtk.cma
 
 laby: $(LABY_S)
 	$(OCAMLC) $(LABY_LIBS) $^ -o $@
