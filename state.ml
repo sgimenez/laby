@@ -200,7 +200,7 @@ let run (input, output) =
 	|  _, _ -> Some (say state "!")
 	end
     | Some a ->
-	F.print ~e:1 (fun () ->
+	F.print ~e:2 (fun () ->
 	  F.text "unknown action: <action>" [
 	      "action", F.sq a;
 	  ];

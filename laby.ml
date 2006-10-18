@@ -86,7 +86,7 @@ let launch robot () =
       input, output
   end
 
-let proceed robot =
+let display robot =
   begin try
       Gfx.display_gtk !map (launch robot)
     with
@@ -97,10 +97,10 @@ let proceed robot =
 	Run.fail ()
   end
 
-let m robots =
+let proceed robots =
   begin match robots with
   | [robot] ->
-      proceed robot
+      display robot
   | [] ->
       print ~e:0 (fun () ->
 	F.text "no robot specified" []
@@ -118,7 +118,7 @@ let main () =
   F.set_theme !theme_path;
   let log_opt = Opt.log_opt ~default:(Some (!log_path)) in
   let opts = [Version.opt; Opt.debug_opt; log_opt; level_opt] in
-  begin try Opt.cmd opts m with
+  begin try Opt.cmd opts proceed with
   | Opt.Error ->
       print ~e:0 (fun () ->
 	F.text "incorrect options" []

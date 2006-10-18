@@ -21,7 +21,7 @@ let escape c s = "\027[" ^ c ^ "m" ^ s ^ "\027[0m"
 
 let color, bcolor =
   begin match env_term with
-  | Some "xterm" | Some "xterm-color" ->
+  | Some ("xterm" | "xterm-color") ->
       let c r g b = string_of_int (16+b+6*g+36*r) in
       (fun r g b -> "38;5;" ^ c r g b), (fun r g b -> "48;5;" ^ c r g b)
   | Some ("rxvt-unicode" | "rxvt") ->
@@ -412,6 +412,5 @@ let set_texts path =
 	print ~e:2 (fun () ->
 	  text "failed to open texts file" []
 	);
-
   end
 
