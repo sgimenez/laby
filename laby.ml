@@ -83,7 +83,12 @@ let launch robot () =
       let output s =
 	Printf.fprintf (Unix.out_channel_of_descr (out_ch)) "%s\n%!" s
       in
-      input, output
+      let close () =
+	Unix.close in_ch;
+	Unix.close out_ch;
+	ignore (Unix.waitpid [] pid)
+      in
+      input, output, close
   end
 
 let display robot =

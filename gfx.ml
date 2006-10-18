@@ -65,12 +65,15 @@ let display_gtk file launch =
   let story = ref [] in
   let pos = ref 0 in
   let next = ref (fun s -> None) in
-    Random.self_init ();
+  let close = ref (fun () -> ()) in
   let restart () =
-    Random.init (Random.int 100000);
+    !close ();
+    Random.self_init ();
     story := [if file = "" then State.basic else State.load file];
     pos := 0;
-    next := State.run (launch ());
+    let i, o, c = launch () in
+    close := c;
+    next := State.run (i, o);
   in
   restart ();
   let last_state () = List.length !story - 1 in
