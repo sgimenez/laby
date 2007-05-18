@@ -1,4 +1,4 @@
-type t =
+type d =
     | N
     | S of string
     | F of string * t list
@@ -6,16 +6,19 @@ type t =
     | V of string * t list
     | P of int * (string * string) option * t
     | T of string * t
-
-type l = unit -> t
-
-let n = N
+and t = unit -> d
 
 let env_term =
   begin try Some (Sys.getenv "TERM") with Not_found -> None end
 
 let lang =
-  begin try Sys.getenv "LANG" with Not_found -> "" end
+  begin try Sys.getenv "LC_MESSAGES" with Not_found ->
+    begin try Sys.getenv "LC_ALL" with Not_found ->
+      begin try Sys.getenv "LANG" with Not_found ->
+	""
+      end
+    end
+  end
 
 let escape c s = "\027[" ^ c ^ "m" ^ s ^ "\027[0m"
 
@@ -36,25 +39,15 @@ let tags : (string, string) Hashtbl.t =
 let texts : (string, (string * t) list -> t) Hashtbl.t =
   Hashtbl.create 1024
 
-let s string = S string
-let sb ?(padding=0) string =
-  H ("", [S (Printf.sprintf "%-0*s" padding string)])
-let sq string = H ("", [S "\""; T ("format.quoted", S string); S "\""])
-
-let i ?zeros int =
-  begin match zeros with
-  | None -> S (string_of_int int)
-  | Some x -> S (Printf.sprintf "%0*i" x int)
-  end
-let l s tl = F ("", T ("format.label", S (s ^ ":")) :: tl)
-
 let punct c =
   c = ',' || c = ':' || c = '!' || c = '?' || c = ';' || c = '.'
   || c = '(' || c = ')'
 
-let rec str ?(ind="\n") ?(pri=100) tl =
+let force l = l ()
+
+let rec str ?(ind="\n") ?(pri=100) t =
   let aux ?(ind=ind) ?(pri=pri) tl = str ~ind ~pri tl in
-  begin match tl with
+  begin match t with
   | N -> ""
   | S (s) -> s
   | F (ind0, l) ->
@@ -82,9 +75,9 @@ let rec str ?(ind="\n") ?(pri=100) tl =
 	      f (r ^ s ^ sep ^ aux ~ind x) r' q
 	end
       in
-      f "" "" l
+      f "" "" (List.map force l)
   | H (sep0, l) ->
-      let sl = List.map (fun x -> aux x) l in
+      let sl = List.map (fun x -> aux x) (List.map force l) in
       String.concat sep0 sl
   | V (head0, l) ->
       let ind' = ind ^ head0 in
@@ -96,16 +89,16 @@ let rec str ?(ind="\n") ?(pri=100) tl =
 	| x :: q -> f (s ^ ind' ^ aux ~ind:ind' x) q
 	end
       in
-      f "" l
+      f "" (List.map force l)
   | P (pri0, delim, t) ->
-      let s = aux ~pri:pri0 t in
+      let s = aux ~pri:pri0 (force t) in
       begin match delim with
       | None -> s
       | Some (d_begin, d_end) ->
 	  if pri <= pri0 then d_begin ^ s ^ d_end else s
       end
   | T (tag, t) ->
-      let s = aux t in
+      let s = aux (force t) in
       begin try
 	  let tstr = Hashtbl.find tags tag in
 	  if tstr <> "" then escape tstr s else s
@@ -114,38 +107,67 @@ let rec str ?(ind="\n") ?(pri=100) tl =
       end
   end
 
-let string t = str t
+let string t = str (t ())
+
+let n =
+  fun () -> N
+let s string =
+  fun () -> S string
 
 let t tag t =
-  T (tag, t)
-let f ?(ind=(S "")) l =
-  F (string ind, l)
+  fun () -> T (tag, t)
+let f ?(ind=(s "")) l =
+  fun () -> F (string ind, l)
 let h ?(sep=n) tl =
-  H (string sep, tl)
-let v ?(head=(S "  ")) tl =
-  V (string head, tl)
-let p i ?(delim=(S "("),(S ")")) t =
+  fun () -> H (string sep, tl)
+let v ?(head=(s "  ")) tl =
+  fun () -> V (string head, tl)
+let p i ?(delim=(s "("),(s ")")) t =
   let b, e = delim in
-  P (i, Some (string b, string e), t)
+  fun () -> P (i, Some (string b, string e), t)
 let pn i t =
-  P (i, None, t)
+  fun () -> P (i, None, t)
 
-let texts_line txt s =
+let q l =
+  v [l]
+
+
+let sb ?(padding=0) string =
+  h [s (Printf.sprintf "%-0*s" padding string)]
+let sq string =
+  h [s "\""; t "format.quoted" (s string); s "\""]
+
+let i ?zeros int =
+  begin match zeros with
+  | None -> s (string_of_int int)
+  | Some x -> s (Printf.sprintf "%0*i" x int)
+  end
+
+let float ?zeros v =
+  begin match zeros with
+  | None -> s (string_of_float v)
+  | Some x -> s (Printf.sprintf "%0*f" x v)
+  end
+
+let l string b = f [t "format.label" (s (string ^ ":")); b]
+
+
+let texts_line txt str =
   let msg_lang = ref "" in
   let elem = ref "" in
   let arg = ref "" in
   let l = ref [] in
-  let push c s = s := !s ^ String.make 1 c in
+  let push c str = str := !str ^ String.make 1 c in
   let add_elem () = l := !l @ [ `Elem !elem ]; elem := "" in
   let add_arg () = l := !l @ [ `Arg !arg ]; arg := "" in
   let p = ref 0 in
-  let eos = String.length s in
+  let eos = String.length str in
   let state = ref `Init in
   while !p < eos do
     state :=
-      begin match !state, s.[!p] with
+      begin match !state, str.[!p] with
       | `Init, '\t' ->
-	  incr p;
+	  while str.[!p] = '\t' do incr p done;
 	  if !msg_lang = "text" then (txt := ""; `Text) else `Elem
       | `Init, ' ' -> `Error
       | `Init, c -> push c msg_lang; incr p; `Init
@@ -163,43 +185,43 @@ let texts_line txt s =
   let msg vars =
     let map =
       begin function
-      | `Elem e -> S e
+      | `Elem e -> s e
       | `Arg a ->
 	  begin try List.assoc a vars with
-	  | Not_found -> T ("msg.unknown", S "<?>")
+	  | Not_found -> t "msg.unknown" (s "<?>")
 	  end
       end
     in
-    if !msg_lang = lang then H ("", List.map map !l)
-    else H ("", T ("msg.lang", S ("<" ^ !msg_lang ^ ">")) :: List.map map !l)
+    if !msg_lang = lang then h (List.map map !l)
+    else h (t "msg.lang" (s ("<" ^ !msg_lang ^ ">")) :: List.map map !l)
   in
   begin match !state with
   | `Text -> `Skip
   | `Elem -> `Entry (!msg_lang, !txt, msg)
   | _ ->
-      if (s <> "\n" && s.[0] <> '#') then `Error else `Skip
+      if (str <> "\n" && str.[0] <> '#') then `Error else `Skip
   end
 
-let text m vars =
-  let bad m =
-    let arg (var, f) = F ("", [T ("msg.bad", S (var ^ ":")); f]) in
-    let f vars =
-      F ("", [T ("msg.bad", S "<!>"); S m; v (List.map arg vars)])
-    in
-    Hashtbl.add texts m f;
-    f vars
+let bad m vars =
+  let arg (var, fn) = f [t "msg.bad" (s (var ^ ":")); fn] in
+  let fn vars =
+    f [t "msg.bad" (s "<!>"); s m; v (List.map arg vars)]
   in
+  Hashtbl.add texts m fn;
+  fn vars
+
+let x m vars () : d =
   begin try
-      begin try (Hashtbl.find texts m) vars with
+      begin try (Hashtbl.find texts m) vars () with
       | Not_found ->
 	  begin match texts_line (ref m) ("\t" ^ m ^ "\n") with
 	  | `Entry (msg_lang, txt, msg) ->
-	      Hashtbl.add texts txt msg; msg vars
-	  | _ -> bad m
+	      Hashtbl.add texts txt msg; msg vars ()
+	  | _ -> bad m vars ()
 	  end
       end
     with
-    | Not_found -> bad m
+    | Not_found -> bad m vars ()
   end
 
 let debug = ref None
@@ -211,7 +233,7 @@ let set_debug d =
   | Some i -> debug_level := i
   end
 
-let output = ref (Printf.eprintf "%s")
+let output = ref (print_string)
 
 let log path =
   let open_opts =
@@ -230,21 +252,21 @@ let print ?l ?d ?e =
     let l1 =
       begin match l with
       | None -> []
-      | Some lbl -> [T ("format.label", S (lbl ^ ":"))]
+      | Some lbl -> [t "format.label" (s (lbl ^ ":"))]
       end
     in
     let l2 =
       begin match d with
       | None -> []
-      | Some lvl -> [T ("format.debug", S (string_of_int lvl ^ ":"))]
+      | Some lvl -> [t "format.debug" (s (string_of_int lvl ^ ":"))]
       end
     in
     let l3 =
       begin match e with
       | None ->  []
-      | Some 0 -> [T ("format.fatal-error", S "error:")]
-      | Some 1 -> [T ("format.error", S "error:")]
-      | Some _ -> [T ("format.warning", S "warning:")]
+      | Some 0 -> [t "format.fatal-error" (s "error:")]
+      | Some 1 -> [t "format.error" (s "error:")]
+      | Some _ -> [t "format.warning" (s "warning:")]
       end
     in
     string (f (l1 @ l2 @ l3))
@@ -252,32 +274,32 @@ let print ?l ?d ?e =
   let head = if head = "" then "" else head ^ " " in
   begin match d with
   | None ->
-      (fun tu -> !output (head ^ string (tu ()) ^ "\n"))
+      (fun tu -> !output ((head ^ string tu) ^ "\n"))
   | Some level when level <= !debug_level ->
-      (fun tu -> !output (head ^ string (tu ()) ^ "\n"))
+      (fun tu -> !output ((head ^ string tu) ^ "\n"))
   | _ -> (fun _ -> ())
   end
 
 let prompt tu =
-  print_string (string (tu ()));
+  print_string (string tu);
   let s =
-    begin try Some (read_line ()) with End_of_file -> None end
+    begin try Some (read_line ()) with
+    |  End_of_file -> None
+    end
   in
-  print_string "\r"; s
+  print_string "\r";
+  s
 
 let exn exn =
-  let head = [T ("format.internal-error", S "internal error:")] in
+  let head = [t "format.internal-error" (s "internal error:")] in
   !output ((string (f head)) ^ " " ^ Printexc.to_string exn ^ "\n")
 
-let codes lnb =
-  let print = print ~l:"theme" in
+let codes error =
   let is_digit c = '0' <= c && c <= '5' in
   let digit c = int_of_char c - int_of_char '0' in
-  let unrecognized s =
-    print ~e:2 (fun () ->
-      f [text "lign <l>" ["l", i lnb]; S ",";
-	 text "unrecognized value <var>" ["val", sq s]]
-    ); ""
+  let unrecognized str =
+    error (x "unrecognized value <val>" ["val", sq str]);
+    ""
   in
   begin function
   | "" -> ""
@@ -290,18 +312,18 @@ let codes lnb =
   | "#purple" -> "35" | "##purple" -> "45"
   | "#cyan" -> "36" | "##cyan" -> "46"
   | "#white" -> "37" | "##white" -> "47"
-  | s when s.[0] = '#' ->
-      if String.length s = 4 &&
-	is_digit s.[1] && is_digit s.[2] && is_digit s.[3]
-      then color (digit s.[1]) (digit s.[2]) (digit s.[3])
-      else if String.length s = 5 && s.[1] = '#'
-	&& is_digit s.[2] && is_digit s.[3] && is_digit s.[4]
-      then bcolor (digit s.[2]) (digit s.[3]) (digit s.[4])
-      else unrecognized s
-  | s -> unrecognized s
+  | str when str.[0] = '#' ->
+      if String.length str = 4 &&
+	is_digit str.[1] && is_digit str.[2] && is_digit str.[3]
+      then color (digit str.[1]) (digit str.[2]) (digit str.[3])
+      else if String.length str = 5 && str.[1] = '#'
+	&& is_digit str.[2] && is_digit str.[3] && is_digit str.[4]
+      then bcolor (digit str.[2]) (digit str.[3]) (digit str.[4])
+      else unrecognized str
+  | str -> unrecognized str
   end
 
-let theme_line lnb s =
+let theme_line error string =
   let key = ref "" in
   let elem = ref "" in
   let code = ref "" in
@@ -311,11 +333,11 @@ let theme_line lnb s =
   in
   let spacer c = c = ' ' || c = '\t' in
   let p = ref 0 in
-  let eos = String.length s in
+  let eos = String.length string in
   let state = ref `Init in
   while !p < eos do
     state :=
-      begin match !state, s.[!p] with
+      begin match !state, string.[!p] with
       | `Init, c when spacer c -> incr p; `Init
       | `Init, c -> `Key
       | `Key, c when spacer c -> `Post_Key
@@ -326,91 +348,87 @@ let theme_line lnb s =
       | `Post_Key, ':' -> incr p; `Elem
       | `Post_Key, _ -> `Error
       | `Elem, (':' | '\n') ->
-	  add_code (codes !lnb !elem); elem := ""; incr p; `Elem
+	  add_code (codes error !elem); elem := ""; incr p; `Elem
       | `Elem, c -> incr p; push c elem; `Elem
       | `Error, _ -> p := eos; `Error
       end
   done;
   begin match !state with
   | `Error ->
-      if (s <> "\n" && s.[0] <> '#') then
-	print ~e:2 (fun () ->
-	  F ("", [text "line <l>" ["l", i !lnb]; S ",";
-		  text "syntax error" []])
-	)
+      if (string <> "\n" && string.[0] <> '#')
+      then error (x "syntax error" [])
   | _ ->
-      print ~d:5 (fun () ->
-	F ("", [S "key:"; sq !key; S "code"; sq !code])
+      print ~d:5 (
+	f [s "key:"; sq !key; s "code"; sq !code]
       );
       Hashtbl.add tags !key !code
   end
 
-let read_theme f =
+let read_theme error f =
   let lnb = ref 0 in
   begin try
       while true do
 	let s = incr lnb; input_line f ^ "\n" in
-	theme_line lnb s
+	theme_line (error !lnb) s
       done
     with
     | End_of_file -> ()
   end
 
-let set_theme path =
-  let print = print ~l:"theme" in
-  begin try
-      let f = open_in_bin path in
-      read_theme f;
-      close_in f
-    with
-    | Sys_error m ->
-	print ~e:2 (fun () ->
-	  text "open failed: <error>" ["error", sq m]
-	);
-	print ~e:2 (fun () ->
-	  text "failed to open theme file" []
-	);
-  end
-
-let read_texts f =
+let read_texts error file =
   let lnb = ref 0 in
   begin try
       let txt = ref "" in
       while true do
-	let s = incr lnb; input_line f ^ "\n" in
-	begin match texts_line txt s with
+	let string = incr lnb; input_line file ^ "\n" in
+	begin match texts_line txt string with
 	| `Entry (msg_lang, txt, msg) ->
-	    print ~d:5 (fun () ->
-	      F ("", [S "msg txt:"; sq txt; S "lang:"; sq msg_lang])
+	    print ~d:5 (
+	      f [s "msg txt:"; sq txt; s "lang:"; sq msg_lang]
 	    );
 	    if lang = msg_lang then
 	      Hashtbl.add texts txt msg
 	| `Skip -> ()
-	| `Error ->
-	    print ~e:2 (fun () ->
-	      F ("", [text "line <l>" ["l", i !lnb];
-		      S ","; text "syntax error" []])
-	    )
+	| `Error -> error !lnb (x "syntax error" [])
 	end
       done
     with
     | End_of_file -> ()
   end
 
+let error path line f =
+  print ~e:2 (
+    x "file <f>, line <l>: <error>" [
+      "f", sq path;
+      "l", i line;
+      "error", f
+    ];
+  )
+
+let set_theme path =
+  let print = print ~l:"theme" in
+  begin try
+      let f = open_in_bin path in
+      read_theme (error path) f;
+      close_in f
+    with
+    | Sys_error m ->
+	print ~e:2 (
+	  x "open failed: <error>" ["error", sq m]
+	);
+	print ~e:2 (
+	  x "failed to open theme file" []
+	);
+  end
 
 let set_texts path =
   let print = print ~l:"texts" in
   begin try
       let f = open_in_bin path in
-      read_texts f;
+      read_texts (error path) f;
       close_in f;
     with
     | Sys_error m ->
-	print ~e:2 (fun () ->
-	  text "open failed: <error>" ["error", sq m]
-	);
-	print ~e:2 (fun () ->
-	  text "failed to open texts file" []
-	);
+	print ~e:2 (x "open failed: <error>" ["error", sq m]);
+	print ~e:2 (x "failed to open texts file" []);
   end
-

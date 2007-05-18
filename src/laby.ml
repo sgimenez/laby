@@ -13,9 +13,9 @@ let level_opt =
     begin match Sys.file_exists file with
     | true -> map := file; Opt.Noop
     | false ->
-	print ~e:0 (fun () ->
-	  F.text "level <level> does not exists" [
-	      "level", F.sq level;
+	print ~e:0 (
+	  F.x "level <level> does not exists" [
+	    "level", F.sq level;
 	  ]
 	);
 	Run.fail ()
@@ -37,9 +37,9 @@ let launch robot () =
 	  Unix.execv robot [| robot |]
 	with
 	  exn ->
-	    print ~e:0 (fun () ->
-	      F.text "execution of <program> failed" [
-		  "program", F.sq robot;
+	    print ~e:0 (
+	      F.x "execution of <program> failed" [
+		"program", F.sq robot;
 	      ]
 	    );
       end;
@@ -96,8 +96,8 @@ let display robot =
       Gfx.display_gtk !map (launch robot)
     with
     | Gfx.Error ->
-	print ~e:0 (fun () ->
-	  F.text "display failed" []
+	print ~e:0 (
+	  F.x "display failed" []
 	);
 	Run.fail ()
   end
@@ -107,13 +107,13 @@ let proceed robots =
   | [robot] ->
       display robot
   | [] ->
-      print ~e:0 (fun () ->
-	F.text "no robot specified" []
+      print ~e:0 (
+	F.x "no robot specified" []
       );
       Run.fail ()
   | _ ->
-      print ~e:0 (fun () ->
-	F.text "can't handle more than one robot for now" []
+      print ~e:0 (
+	F.x "can't handle more than one robot for now" []
       );
       Run.fail ()
   end
@@ -124,9 +124,11 @@ let main () =
   let log_opt = Opt.log_opt ~default:(Some (!log_path)) in
   let opts = [Version.opt; Opt.debug_opt; log_opt; level_opt] in
   begin try Opt.cmd opts proceed with
-  | Opt.Error ->
-      print ~e:0 (fun () ->
-	F.text "incorrect options" []
+  | Opt.Error f ->
+      print ~e:0 (
+	F.x "incorrect options, <error>" [
+	  "error", f;
+	]
       );
       Run.fail ()
   end

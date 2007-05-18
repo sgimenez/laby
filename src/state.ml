@@ -112,8 +112,8 @@ let load file =
       | "S" -> `S
       | "W" -> `W
       | _ ->
-          F.print ~e:1 (fun () ->
-	    F.text "unknown direction" [];
+          F.print ~e:1 (
+	    F.x "unknown direction" [];
 	  );
 	  Run.exit ();
       end
@@ -200,8 +200,8 @@ let run (input, output) =
 	|  _, _ -> Some (say state "!")
 	end
     | Some a ->
-	F.print ~e:2 (fun () ->
-	  F.text "unknown action: <action>" [
+	F.print ~e:2 (
+	  F.x "unknown action: <action>" [
 	      "action", F.sq a;
 	  ];
 	);

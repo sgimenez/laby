@@ -1,6 +1,6 @@
 exception Invalid
 exception Conflict
-exception Error
+exception Error of F.t
 
 type action =
     | Noop
@@ -10,6 +10,7 @@ type action =
 type handle = unit -> action
 type handle_s = string -> action
 type t = char * string * handle option * handle_s option * F.t
+
 val noshort : char
 val nolong : string
 

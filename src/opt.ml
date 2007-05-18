@@ -1,8 +1,6 @@
-let print = F.print ~l:"opt"
-
 exception Invalid
 exception Conflict
-exception Error
+exception Error of F.t
 
 type action =
     | Noop
@@ -16,7 +14,7 @@ type t = char * string * handle option * handle_s option * F.t
 let noshort = '\000'
 let nolong = ""
 
-let color = F.t "getopt.option"
+let color = F.t "opt.option"
 
 let l_f long = color (F.s ("--" ^ long))
 let s_f short = color (F.s ("-" ^ String.make 1 short))
@@ -29,32 +27,35 @@ let f (short, long, _, _, _) =
   | false, false -> F.h [l_f long; F.s "("; s_f short; F.s ")"]
   end
 
-let help_opt opts =
+let help_opt opts : t =
   let handle () =
     let action () =
-      let usage =
-	('h', "help", None, None, F.s "displays help message") :: opts
-      in
+      let msg = F.x "display help message" [] in
+      let help_opt : t = ('h', "help", None, None, msg) in
+      let usage = help_opt :: opts in
       let pl opt =
 	let (short, long, _, _, desc) = opt in
-	F.f [f opt; F.v [desc]]
+	F.f [f opt; F.q desc]
       in
       let program = F.s (Sys.argv.(0)) in
       let options_f = F.v (List.map pl usage) in
-      F.print ~l:"usage" (fun () ->
+      F.print ~l:"usage" (
 	F.h [program; F.s " "; F.s "[options]"; F.s " "; options_f]
       );
     in
     Excl action
   in
-  'h', "help", Some handle, None, F.s ""
+  'h', "help", Some handle, None, F.n
 
 let parse () =
   let i = ref 0 in
   let args = ref [] in
   let opts = ref [] in
   let getarg () =
-    incr i; if !i >= Array.length Sys.argv then None else Some (Sys.argv.(!i))
+    incr i;
+    if !i >= Array.length Sys.argv
+    then None
+    else Some (Sys.argv.(!i))
   in
   let add_arg arg = args := arg :: !args in
   let add_opt opt = opts := opt :: !opts in
@@ -79,7 +80,8 @@ let parse () =
 		    | Not_found ->
 			let opt = String.sub arg 2 (l-2) in
 			add_opt (`Long (opt, None))
-		  end
+		  end;
+		aux `None
 	    | '-', opt ->
 		if l = 2
 		then (add_opt (`Short (opt, None)); aux `None)
@@ -112,13 +114,10 @@ let cmd opts main =
     begin match !excl_command with
     | None -> excl_command := Some c
     | Some _ ->
-	print ~e:1 (fun () ->
-	  F.text "multiple exclusive actions specified" []
-	);
-	raise Error
+	raise (Error (F.x "multiple exclusive actions specified" []));
     end
   in
-  let action opt value =
+  let action (opt : t) value =
     let (short, long, handle, handle_s, descr) = opt in
     let add_action =
       begin function
@@ -130,44 +129,40 @@ let cmd opts main =
     let catch fn a s =
       begin try fn a with
       | Invalid ->
-	  print ~e:1 (fun () ->
-	    F.text "invalid argument to <opt>: <arg>" [
-		"opt", f opt;
-		"arg", F.sq s;
+	  raise (Error (
+	    F.x "invalid argument to <opt>: <arg>" [
+	      "opt", f opt;
+	      "arg", F.sq s;
 	    ]
-	  );
-	  raise Error
+	  ))
       | Conflict ->
-	  print ~e:1 (fun () ->
-	    F.text "option <opt> conflicts with a previous option" [
-		"opt", f opt;
+	  raise (Error (
+	    F.x "option <opt> conflicts with a previous option" [
+	      "opt", f opt;
 	    ]
-	  );
-	  raise Error
+	  ))
       end
     in
     begin match value with
     | None ->
 	begin match handle with
 	| None ->
-	    print ~e:1 (fun () ->
-	      F.text "option <opt> requires an argument" [
-		  "opt", f opt;
+	    raise (Error (
+	      F.x "option <opt> requires an argument" [
+		"opt", f opt;
 	      ]
-	    );
-	    raise Error
+	    ))
 	| Some a ->
 	    fun () -> add_action (catch a () "")
 	end
     | Some s ->
 	begin match handle_s with
 	| None ->
-	    print ~e:1 (fun () ->
-	      F.text "option <opt> do not take an argument" [
-		  "opt", f opt;
+	    raise (Error (
+	      F.x "option <opt> does not take an argument" [
+		"opt", f opt;
 	      ]
-	    );
-	    raise Error
+	    ))
 	| Some h ->
 	    fun () -> add_action (catch h s s)
 	end
@@ -175,28 +170,23 @@ let cmd opts main =
   in
   let opts = help_opt opts :: opts in
   let argl, optl = parse () in
+  let unk_opt f =
+    raise (Error (
+      F.x "unknown option <opt>" [
+	"opt", f;
+      ]
+    ))
+  in
   let find_short c =
     begin match List.filter (fun (c0,_,_,_,_) -> c0 = c) opts with
-    | [] ->
-	print ~e:1 (fun () ->
-	  F.text "unknown option: <option>" [
-	      "option", s_f c;
-	  ]
-	);
-	raise Error
+    | [] -> unk_opt (s_f c)
     | [opt] -> opt
     | _ -> assert false
     end
   in
   let find_long s =
     begin match List.filter (fun (_,s0,_,_,_) -> s0 = s) opts with
-    | [] ->
-	print ~e:1 (fun () ->
-	  F.text "unknown option: <option>" [
-	      "option", l_f s;
-	  ]
-	);
-	raise Error
+    | [] -> unk_opt (l_f s)
     | [opt] -> opt
     | _ -> assert false
     end
@@ -226,7 +216,7 @@ let debug_opt =
     end
   in
   'd', "debug", Some handle, Some handle_s,
-  F.text "outputs debug information" []
+  F.x "output debug information" []
 
 let log_opt ~default =
   let r = ref None in
@@ -249,7 +239,7 @@ let log_opt ~default =
     end
   in
   'l', "log", Some handle, Some handle_s,
-  F.text "logs output to a file" []
+  F.x "log output to a file" []
 
 let theme_opt ~default =
   let r = ref None in
@@ -272,4 +262,4 @@ let theme_opt ~default =
     end
   in
   noshort, "theme", Some handle, Some handle_s,
-  F.text "chooses theme file" []
+  F.x "select theme file" []

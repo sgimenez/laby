@@ -139,8 +139,8 @@ let display_gtk file launch =
       ignore (GMain.Main.main ())
     with
     | Gtk.Error m ->
-	print ~e:1 (fun () ->
-	  F.text "gtk error: <error>" ["error", F.sq m]
+	print ~e:1 (
+	  F.x "gtk error: <error>" ["error", F.sq m]
 	);
 	raise Error
   end
