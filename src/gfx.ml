@@ -19,18 +19,19 @@ type ressources =
 
 let gtk_init () =
   let _ = GtkMain.Main.init () in
+  let pix p = GdkPixbuf.from_file_at_size (Config.conf_path ^ p) 50 50 in
   {
-    void_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/void.png");
-    exit_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/exit.png");
-    wall_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/wall.png");
-    rock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/rock.png");
-    web_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/web.png");
-    nrock_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/nrock.png");
-    nweb_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/nweb.png");
-    ant_n_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-n.png");
-    ant_e_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-e.png");
-    ant_s_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-s.png");
-    ant_w_p = GdkPixbuf.from_file (Config.conf_path ^ "tiles/ant-w.png");
+    void_p = pix "tiles/void.svg";
+    exit_p = pix "tiles/exit.svg";
+    wall_p = pix "tiles/wall.svg";
+    rock_p = pix "tiles/rock.svg";
+    web_p = pix "tiles/web.svg";
+    nrock_p = pix "tiles/nrock.svg";
+    nweb_p = pix "tiles/nweb.svg";
+    ant_n_p = pix "tiles/ant-n.svg";
+    ant_e_p = pix "tiles/ant-e.svg";
+    ant_s_p = pix "tiles/ant-s.svg";
+    ant_w_p = pix "tiles/ant-w.svg";
   }
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =

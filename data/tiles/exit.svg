@@ -12,12 +12,12 @@
   <g
      id="layer1">
     <path
-       d="M 4.1964286,2.9821428 L 4.1071429,30.125 L 28.839285,30.75 L 27.857143,1.3749999 L 4.1964286,2.9821428 z "
-       style="fill:#d35f5f;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1876" />
+       d="M 4.1964286,2.9821428 L 4.1071429,30.125 L 28.839285,30.75 L 27.857143,1.3749999 L 4.1964286,2.9821428 z"
+       id="path1876"
+       style="fill:#d35f5f;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 22.589286,14.232143 C 21.255679,15.204167 22.120254,17.038105 23.303571,17.714286 C 24.553571,18.428572 25.982143,16.910715 25.803571,15.571429 C 25.626173,14.240945 23.865292,13.302103 22.589286,14.232143 z "
-       style="fill:white;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1878" />
+       d="M 22.589286,14.232143 C 21.255679,15.204167 22.120254,17.038105 23.303571,17.714286 C 24.553571,18.428572 25.982143,16.910715 25.803571,15.571429 C 25.626173,14.240945 23.865292,13.302103 22.589286,14.232143 z"
+       id="path1878"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
 </svg>

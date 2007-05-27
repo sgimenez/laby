@@ -5,21 +5,13 @@ format.warning		:#520
 format.quoted		:#333
 format.label		:#555
 format.debug		:underline:#222
+
 msg.lang		:##200
 msg.unknown		:##200
 msg.bad			:##200
 
+opt.option		:#055
+
 cmd.input		:bold:#red
 cmd.output		:bold:#red
-getopt.option		:#055
-
-term			:#purple
-type			:#cyan
-net			:#005
-net.index		:#025
-net.port		:#033
-hash			:#green
-link.id			:#222
-index.link		:#222
-index.name		:#yellow
 

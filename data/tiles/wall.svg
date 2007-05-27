@@ -16,56 +16,56 @@
        height="8.75"
        x="1.4285715"
        y="1.1964285"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect1903" />
+       id="rect1903"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="7.2767863"
        y="5.0357137"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2808" />
+       id="rect2808"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="16.919641"
        y="1.1071429"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2810" />
+       id="rect2810"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="1.3839279"
        y="11.642858"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2812" />
+       id="rect2812"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="7.2767854"
        y="15.392857"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2814" />
+       id="rect2814"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="16.830357"
        y="11.732142"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2816" />
+       id="rect2816"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="1.3839301"
        y="21.910715"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2818" />
+       id="rect2818"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
     <rect
        width="13.839286"
        height="8.75"
        x="16.830357"
        y="22"
-       style="fill:#ff6400;fill-opacity:1;stroke:black;stroke-opacity:1"
-       id="rect2822" />
+       id="rect2822"
+       style="fill:#ff6400;fill-opacity:1;stroke:#000000;stroke-opacity:1" />
   </g>
 </svg>

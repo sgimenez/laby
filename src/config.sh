@@ -14,7 +14,7 @@ BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
 
 cat <<EOF
 let project_name = "${PROJECT_NAME}"
-let version_string = "${VERSION_STRING}"
+let version_string = "${PROJECT_VERSION}"
 let version_base = "${VERSION_BASE}"
 let version_current = "${VERSION_CURRENT}"
 let version_status = "${VERSION_STATUS}"

@@ -12,32 +12,32 @@
   <g
      id="layer1">
     <path
-       d="M 18.8125,5.40625 L 9.4375,6.125 L 6.71875,18.15625 L 11.5,26.28125 L 22.9375,26.34375 L 26.34375,15.59375 L 25.28125,8.21875 L 18.8125,5.40625 z "
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path2789" />
+       d="M 18.8125,5.40625 L 9.4375,6.125 L 6.71875,18.15625 L 11.5,26.28125 L 22.9375,26.34375 L 26.34375,15.59375 L 25.28125,8.21875 L 18.8125,5.40625 z"
+       id="path2789"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 19.5625,1.03125 L 5.96875,2.09375 L 2.15625,18.875 L 9.03125,30.5625 L 26.0625,30.65625 L 30.71875,15.96875 L 29.1875,5.21875 L 19.5625,1.03125 z "
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path2787" />
+       d="M 19.5625,1.03125 L 5.96875,2.09375 L 2.15625,18.875 L 9.03125,30.5625 L 26.0625,30.65625 L 30.71875,15.96875 L 29.1875,5.21875 L 19.5625,1.03125 z"
+       id="path2787"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        d="M 5.9821429,1.8214286 L 16.517857,16.196429 L 25.982143,30.75"
-       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path4571" />
+       id="path4571"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        d="M 8.75,30.482143 L 16.339286,16.017857 L 29.285714,5.5714286"
-       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path4573" />
+       id="path4573"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        d="M 19.464286,0.92857143 L 16.25,15.660714"
-       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path4575" />
+       id="path4575"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        d="M 30.535714,16.107143 L 16.517857,16.017857"
-       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path4577" />
+       id="path4577"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        d="M 1.9642857,18.696429 L 16.428571,15.75"
-       style="fill:none;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path4579" />
+       id="path4579"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
 </svg>

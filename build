@@ -1,26 +1,27 @@
 #!/bin/sh
 
+REP=src
+
 DIR=$(dirname $0)
 cd ${DIR}
 
-source project.conf
+[ -f project.conf ] && source project.conf
 source build.conf
 
-export PROJECT_NAME
-export PROJECT_VERSION
-export OCAML_VERSION=$(ocamlc -version)
-export PKG_VERSION="${OCAMLFIND} query -format %v"
+export PROJECT_NAME=${PROJECT_NAME-unknown}
+export PROJECT_VERSION=${PROJECT_VERSION-unknown}
+export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
+export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
 
-OCB="${OCAMLBUILD} -use-menhir -no-links -no-sanitize -no-hygiene"
-OFQ="${OCAMLFIND} query -r -format -I,%d"
+OCB="${OCAMLBUILD-ocamlbuild} -use-menhir -no-links -no-sanitize -no-hygiene"
+OFQ="${OCAMLFIND-ocamlfind} query -r -format -I,%d"
 
 DIRS=$(${OFQ} ${PACKAGES})
-CFLAGS=""; for i in ${DIRS}; do CFLAGS="${CFLAGS} -cflags $i"; done;
-LFLAGS=""; for i in ${DIRS}; do LFLAGS="${LFLAGS} -lflags $i"; done;
+for i in ${DIRS}; do CFLAGS="${CFLAGS} -cflags $i"; done;
+for i in ${DIRS}; do LFLAGS="${LFLAGS} -lflags $i"; done;
+for i in ${DEPLIBS}; do LIBFLAGS="${LIBFLAGS} -lib $i"; done;
 
-LIBFLAGS=""; for i in ${DEPLIBS}; do LIBFLAGS="${LIBFLAGS} -lib $i"; done;
-
-OCBF="${OCB} ${CFLAGS} ${LFLAGS} ${LIBFLAGS} -I src"
+OCBF="${OCB} ${CFLAGS} ${LFLAGS} ${LIBFLAGS} -I ${REP}"
 
 ACT="${1---all}";
 shift;
@@ -50,7 +51,7 @@ case ${ACT} in
       exit 0;;
   --clean|-c)
       ${OCAMLBUILD} -clean
-      rm -rf src/config.ml
+      rm -rf ${REP}/config.ml
       for i in ${BINTARGETS}; do
         rm -rf $i $i.{byte,native,d.byte,p.native};
       done
@@ -71,15 +72,15 @@ esac
 
 TARGETS=""
 for i in ${BINTARGETS}; do
-  for j in ${BINEXT}; do TARGETS="${TARGETS} src/$i.$j"; done;
+  for j in ${BINEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
 done;
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do TARGETS="${TARGETS} src/$i.$j"; done;
+  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
 done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
 echo building "${PROJECT_NAME}-${PROJECT_VERSION}:" ${FILES}
-rm -f src/config.ml && sh src/config.sh > src/config.ml
+rm -f ${REP}/config.ml && sh ${REP}/config.sh > ${REP}/config.ml
 
 for i in ${TARGETS}; do rm -f $(basename "$i"); done
 

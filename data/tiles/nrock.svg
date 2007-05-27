@@ -12,28 +12,28 @@
   <g
      id="layer1">
     <path
-       d="M 6.7857138,6.4642855 L 8.5714278,13.874999 L 10.267856,8.4285705 L 14.464285,8.4285715 L 9.0178568,5.0357145 L 6.7857138,6.4642855 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1895" />
+       d="M 6.7857138,6.4642855 L 8.5714278,13.874999 L 10.267856,8.4285705 L 14.464285,8.4285715 L 9.0178568,5.0357145 L 6.7857138,6.4642855 z"
+       id="path1895"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 4.1071425,11.374999 L 11.071429,9.9464289 L 9.2857144,7.8035709 L 5.5357135,7.5357139 L 4.1071425,11.374999 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path2786" />
+       d="M 4.1071425,11.374999 L 11.071429,9.9464289 L 9.2857144,7.8035709 L 5.5357135,7.5357139 L 4.1071425,11.374999 z"
+       id="path2786"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 21.160714,22.758929 L 19.553572,26.776787 L 25,26.955357 L 27.321429,26.151786 L 28.392857,23.026785 L 26.071428,20.973214 L 21.160714,22.758929 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1900" />
+       d="M 21.160714,22.758929 L 19.553572,26.776787 L 25,26.955357 L 27.321429,26.151786 L 28.392857,23.026785 L 26.071428,20.973214 L 21.160714,22.758929 z"
+       id="path1900"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 21.071429,28.116072 L 24.196429,27.401787 L 25.178572,25.4375 L 22.5,24.276786 L 21.071429,28.116072 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1902" />
+       d="M 21.071429,28.116072 L 24.196429,27.401787 L 25.178572,25.4375 L 22.5,24.276786 L 21.071429,28.116072 z"
+       id="path1902"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 6.6071425,26.776786 L 8.9285721,26.419643 L 9.3750001,24.723214 L 5.6249992,24.455357 L 6.6071425,26.776786 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1904" />
+       d="M 6.6071425,26.776786 L 8.9285721,26.419643 L 9.3750001,24.723214 L 5.6249992,24.455357 L 6.6071425,26.776786 z"
+       id="path1904"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
-       d="M 26.964287,6.7321429 L 27.410715,5.0357139 L 23.660714,4.7678569 L 26.964287,6.7321429 z "
-       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:black;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       id="path1906" />
+       d="M 26.964287,6.7321429 L 27.410715,5.0357139 L 23.660714,4.7678569 L 26.964287,6.7321429 z"
+       id="path1906"
+       style="fill:#5c4f4b;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
   </g>
 </svg>
