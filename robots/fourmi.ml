@@ -1,7 +1,7 @@
-#!/usr/bin/env robot
+#!/usr/bin/env ocaml
+#load "robot.cmo"
 
 let fourmi =
-  (* Niveau 0 *)
   Robot.droite ();
   Robot.avance ();
   Robot.prend ();
@@ -16,24 +16,3 @@ let fourmi =
   Robot.droite ();
   Robot.ouvre ();
 
-  (* Niveau 1 *)
-  Robot.droite ();
-  while Robot.regarde () = `Vide do Robot.avance () done;
-  Robot.droite ();
-  Robot.ouvre ();
-
-  (* Niveau 2 *)
-  let fonce () =
-    while Robot.regarde () = `Vide do Robot.avance () done
-  in
-  Robot.droite ();
-  fonce ();
-  Robot.gauche ();
-  fonce ();
-  Robot.gauche ();
-  fonce ();
-  Robot.droite ();
-  fonce ();
-  Robot.droite ();
-  fonce ();
-  Robot.ouvre ()

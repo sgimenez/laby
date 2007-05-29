@@ -8,6 +8,7 @@ type t =
       dir: dir;
       carry: [`None | `Rock ];
       say: string;
+      sound: string option;
     }
 
 let level = ref 0
@@ -17,7 +18,7 @@ let basic =
     map =
       [|
 	[| `Wall; `Wall; `Wall; `Wall; `Wall |];
-	[| `Wall; `Void; `Void; `Void; `Exit |];
+	[| `Wall;  `Web; `Void; `Void; `Exit |];
 	[| `Wall; `Void; `Void; `Void; `Wall |];
 	[| `Wall; `Void; `Void; `Void; `Wall |];
 	[| `Wall; `Void; `Void; `Rock; `Wall |];
@@ -27,13 +28,20 @@ let basic =
     dir = `N;
     carry = `None;
     say = "";
+    sound = None;
   }
 
 let copy state =
   { state with
     map =
       Array.init (Array.length state.map) (fun j -> Array.copy state.map.(j));
-    say = String.copy(state.say);
+    say = String.copy state.say;
+    sound =
+      begin match state.sound with
+      | None -> None
+      | Some s -> Some (String.copy s)
+      end
+    ;
   }
 
 let get state (i, j) =
@@ -53,8 +61,11 @@ let set state (i, j) t =
     map
   else state.map
 
-let say state s =
-  { state with say = s }
+let clean state =
+  { state with say = ""; sound = None; }
+
+let chg state say sound =
+  { state with say = say; sound = Some sound; }
 
 let left state =
   let turn =
@@ -79,77 +90,90 @@ let front state =
 let forward state =
   let move pos =
     let pos' = front state in
-    begin match get state pos' with
-    | `Void | `Web | `NWeb | `NRock ->
-	if get state pos <> `Web then pos' else pos
-    | _ -> pos
+    begin match get state pos, get state pos' with
+    | `Web, _ -> pos, Some "web-out"
+    | _, `Rock -> pos, Some "rock-in"
+    | _, `Wall -> pos, Some "wall-in"
+    | _, `Exit -> pos', Some "exit"
+    | _, `Web -> pos', Some "web-in"
+    | _, _ -> pos', None
     end
   in
-  { state with pos = move state.pos }
-
-let forward_exit state =
-  let move pos =
-    let pos' = front state in
-    begin match get state pos' with
-    | `Exit -> if get state pos <> `Web then pos' else pos
-    | _ -> pos
-    end
-  in
-  { state with pos = move state.pos }
+  let pos, sound = move state.pos in
+  { state with pos = pos; sound = sound }
 
 let look state =
   get state (front state)
 
+let sep = Str.regexp " "
+
 let load file =
   let f = open_in file in
-  let l = input_line f in
-  let sizex, sizey, posx, posy, dir =
-    Scanf.sscanf l "%d %d %d %d %s" (fun i1 i2 i3 i4 s1 ->
-      i1, i2, i3, i4,
-      begin match s1 with
-      | "N" -> `N
-      | "E" -> `E
-      | "S" -> `S
-      | "W" -> `W
-      | _ ->
-          F.print ~e:1 (
-	    F.x "unknown direction" [];
-	  );
-	  Run.exit ();
-      end
-    )
+  let lines = ref [] in
+  let posx = ref (-1) in
+  let posy = ref (-1) in
+  let may_rocks = ref [] in
+  let may_webs = ref [] in
+  let dir = ref `N in
+  let antpos = ref (0, 0) in
+  let conv s =
+    incr posx;
+    begin match s with
+    | "o" -> `Wall;
+    | "x" -> `Exit;
+    | "↑" -> antpos := !posx, !posy; dir := `N; `Void;
+    | "→" -> antpos := !posx, !posy; dir := `E; `Void;
+    | "↓" -> antpos := !posx, !posy; dir := `S; `Void;
+    | "←" -> antpos := !posx, !posy; dir := `W; `Void;
+    | "r" -> `Rock;
+    | "R" -> may_rocks := (!posx, !posy) :: !may_rocks; `NRock;
+    | "w" -> `Web;
+    | "W" -> may_webs := (!posx, !posy) :: !may_webs; `Web;
+    | "." -> `Void;
+    | _ ->
+        F.print ~e:1 (
+	  F.x "level: unknown tile" [];
+	);
+	Run.exit ();
+    end
   in
-  let map = Array.make_matrix sizey sizex `Void in
-  let rand () =
-    let b = ref (Random.bool ()) in
-    fun a1 a2 -> b := not !b; if !b then a1 else a2
-  in
-  let rock = rand () in
-  let web = rand () in
-  begin
-    for j = 0 to sizey - 1 do
-      let s = input_line f in
-      for i = 0 to sizex - 1 do
-	map.(j).(i) <-
-	  begin match s.[i] with
-	  | 'w' -> `Wall;
-	  | 'e' -> `Exit;
-	  | 'r' -> `Rock;
-	  | 'R' -> rock `Rock `NRock;
-	  | 'p' -> `Web;
-	  | 'P' -> web `Web `NWeb;
-	  | _ -> `Void;
-	  end
+  begin try
+      while true do
+	posx := -1; incr posy;
+	let l = Array.of_list (Str.split sep (input_line f)) in
+	if l <> [||] then lines := (Array.map conv l) :: !lines;
       done;
-      done;
+    with
+    | End_of_file -> ()
   end;
+  let sizex = Array.length (List.hd !lines) in
+  begin match List.for_all (fun a -> Array.length a = sizex) !lines with
+  | false ->
+      F.print ~e:1 (
+	F.x "level: mismatching line length" [];
+      );
+      Run.exit ();
+  | true -> ()
+  end;
+  let array = Array.of_list (List.rev !lines) in
+  let fill may tile =
+  if !may <> [] then
+    begin
+      let i = Random.int (List.length !may) in
+      let x, y = List.nth !may i in
+      array.(y).(x) <- tile;
+    end;
+  in
+  fill may_rocks `Rock;
+  fill may_webs `NWeb;
   close_in f;
   {
-    map = map;
-    pos = posx, posy;
-    dir = dir;
+    map = array;
+    pos = !antpos;
+    dir = !dir;
     carry = `None;
     say = "";
+    sound = None;
   }
 
 let output channels s =
@@ -157,6 +181,7 @@ let output channels s =
 
 let run (input, output) =
   let rec next state =
+    let state = clean state in
     begin match input () with
     | None -> None
     | Some "forward" -> Some (forward state)
@@ -175,9 +200,9 @@ let run (input, output) =
 	output ans; next state
     | Some "open" ->
 	begin match state.carry, get state (front state) with
-	| `None, `Exit -> Some (forward_exit state)
-	| _, `Exit -> Some (say state "!")
-	| _, _ -> Some (say state "?")
+	| `None, `Exit -> Some (forward state)
+	| _, `Exit -> Some (chg state "!" "bad")
+	| _, _ -> Some (chg state "?" "bad")
 	end
     | Some "take" ->
 	begin match state.carry, get state (front state) with
@@ -186,8 +211,9 @@ let run (input, output) =
 	      { state with
 		map = set state (front state) `Void;
 		carry = `Rock;
+		sound = Some "rock-take";
 	      }
-	|  _, _ -> Some (say state "!")
+	|  _, _ -> Some (chg state "!" "bad")
 	end
     | Some "drop" ->
 	begin match state.carry, get state (front state) with
@@ -196,8 +222,9 @@ let run (input, output) =
 	      { state with
 		map = set state (front state) `Rock;
 		carry = `None;
+		sound = Some "rock-drop";
 	      }
-	|  _, _ -> Some (say state "!")
+	|  _, _ -> Some (chg state "!" "bad")
 	end
     | Some a ->
 	F.print ~e:2 (

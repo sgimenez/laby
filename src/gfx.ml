@@ -36,12 +36,13 @@ let gtk_init () =
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
   let tile i j p =
-    pixmap#put_pixbuf ~x:(i*50) ~y:(j*50) p
+    pixmap#put_pixbuf ~x:(25+i*50) ~y:(25+j*50) p
   in
+  let i0, j0 = state.State.pos in
   let p i j t =
     begin match t with
     | `Void -> tile i j ressources.void_p
-    | `Exit -> tile i j ressources.exit_p
+    | `Exit -> if i <> i0 || j <> j0 then tile i j ressources.exit_p
     | `Wall -> tile i j ressources.wall_p
     | `Rock -> tile i j ressources.rock_p
     | `Web -> tile i j ressources.web_p
@@ -50,15 +51,14 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     end
   in
   Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
-  let i, j = state.State.pos in
   begin match state.State.dir with
-  | `N -> tile i j ressources.ant_n_p
-  | `E -> tile i j ressources.ant_e_p
-  | `S -> tile i j ressources.ant_s_p
-  | `W -> tile i j ressources.ant_w_p
+  | `N -> tile i0 j0 ressources.ant_n_p
+  | `E -> tile i0 j0 ressources.ant_e_p
+  | `S -> tile i0 j0 ressources.ant_s_p
+  | `W -> tile i0 j0 ressources.ant_w_p
   end;
   begin match state.State.carry with
-  | `Rock -> tile i j ressources.rock_p
+  | `Rock -> tile i0 j0 ressources.rock_p
   | _ -> ()
   end
 
@@ -67,10 +67,13 @@ let display_gtk file launch =
   let pos = ref 0 in
   let next = ref (fun s -> None) in
   let close = ref (fun () -> ()) in
+  let init_state = if file = "" then State.basic else State.load file in
+  let sizex = Array.length init_state.State.map.(0) in
+  let sizey = Array.length init_state.State.map in
   let restart () =
     !close ();
     Random.self_init ();
-    story := [if file = "" then State.basic else State.load file];
+    story := [init_state];
     pos := 0;
     let i, o, c = launch () in
     close := c;
@@ -89,54 +92,83 @@ let display_gtk file launch =
   let bg = ref `WHITE in
   begin try
       let ressources = gtk_init () in
-      let window = GWindow.window () in
+      let window = GWindow.window ~resizable:true () in
       let destroy () =
 	window#destroy ();
 	GMain.Main.quit () in
       ignore (window#event#connect#delete ~callback:(fun _ -> exit 0));
       ignore (window#connect#destroy ~callback:destroy);
+      let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
       let vbox = GPack.vbox ~packing:window#add () in
-      let width, height = 800, 600 in
+      let sw = GBin.scrolled_window
+	~width:(width+10) ~height:(height+10) ~packing:vbox#add
+	~hpolicy:`AUTOMATIC ~vpolicy:`AUTOMATIC () in
+      let px = GMisc.image ~packing:sw#add_with_viewport () in
       let pixmap = GDraw.pixmap ~width ~height () in
-      let px = GMisc.pixmap pixmap ~packing:vbox#add () in
-      let hbox = GPack.hbox ~packing:vbox#add ~homogeneous:true () in
+      let hbox = GPack.hbox ~packing:vbox#pack ~homogeneous:true () in
       let button label stock =
 	GButton.button ~packing:hbox#add ~stock (* ~label *) ()
       in
-      let button_first = button "<<" `GOTO_FIRST in
+      let tbutton label stock =
+	GButton.toggle_button ~packing:hbox#add ~stock (* ~label *) ()
+      in
+      let button_first = button "|<" `GOTO_FIRST in
       let button_prev = button "<" `GO_BACK in
       let button_next = button ">" `GO_FORWARD in
-      let button_last = button ">>" `GOTO_LAST in
+      let button_last = button ">|" `GOTO_LAST in
+      let button_play = tbutton ">>" `MEDIA_PLAY in
       let button_refresh = button "!" `REFRESH in
-      let update () =
+      let update sound =
 	pixmap#set_foreground !bg;
 	let width, height = pixmap#size in
 	pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
 	draw_state (state !pos) ressources pixmap;
-	px#set_pixmap pixmap
+	px#set_pixmap pixmap;
+	if sound then
+	  begin match (state !pos).State.sound with
+	  | None -> ()
+	  | Some s -> Sound.play s
+	  end
       in
       let first () =
-	if !pos > 0 then (pos := 0; update ())
+	if !pos > 0 then (pos := 0; update false)
       in
       let prev () =
-	if !pos > 0 then (decr pos; update ())
+	if !pos > 0 then (decr pos; update false)
       in
       let next () =
 	if !pos < last_state () || (!pos = last_state () && add_state ())
-	then (incr pos; update ())
+	then (incr pos; update true)
+	else (button_play#set_active false)
+      in
+      let play =
+	let rid = ref None in
+	begin fun () ->
+	  begin match !rid with
+	  | None ->
+	      let callback () = next (); true in
+	      rid := Some (GMain.Timeout.add ~ms:500 ~callback);
+	  | Some id ->
+	      GMain.Timeout.remove id; rid := None
+	  end
+	end
       in
       let last () =
-	if !pos < last_state () then (pos := last_state (); update ())
+	if !pos < last_state () then (pos := last_state (); update false)
       in
-      let refresh () = restart (); update () in
+      let refresh () =
+	button_play#set_active false; restart (); update true
+      in
       ignore (button_first#connect#clicked ~callback:first);
       ignore (button_prev#connect#clicked ~callback:prev);
       ignore (button_next#connect#clicked ~callback:next);
       ignore (button_last#connect#clicked ~callback:last);
+      ignore (button_play#connect#toggled ~callback:play);
       ignore (button_refresh#connect#clicked ~callback:refresh);
+      window#set_default_size 640 480;
       window#show ();
       bg := `COLOR (px#misc#style#light `NORMAL);
-      update ();
+      update true;
       ignore (GMain.Main.main ())
     with
     | Gtk.Error m ->

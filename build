@@ -13,8 +13,11 @@ export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
 export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
 
-OCB="${OCAMLBUILD-ocamlbuild} -use-menhir -no-links -no-sanitize -no-hygiene"
-OFQ="${OCAMLFIND-ocamlfind} query -r -format -I,%d"
+OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
+OCAMLFIND=${OCAMLFIND-ocamlfind}
+
+OCB="${OCAMLBUILD} -use-menhir -no-links -no-sanitize -no-hygiene"
+OFQ="${OCAMLFIND} query -r -format -I,%d"
 
 DIRS=$(${OFQ} ${PACKAGES})
 for i in ${DIRS}; do CFLAGS="${CFLAGS} -cflags $i"; done;
@@ -52,6 +55,9 @@ case ${ACT} in
   --clean|-c)
       ${OCAMLBUILD} -clean
       rm -rf ${REP}/config.ml
+      for i in ${AUXTARGETS}; do
+        rm -rf $i
+      done
       for i in ${BINTARGETS}; do
         rm -rf $i $i.{byte,native,d.byte,p.native};
       done
@@ -71,6 +77,9 @@ case ${ACT} in
 esac
 
 TARGETS=""
+for i in ${AUXTARGETS}; do
+  TARGETS="${TARGETS} ${REP}/$i";
+done;
 for i in ${BINTARGETS}; do
   for j in ${BINEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
 done;

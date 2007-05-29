@@ -10,43 +10,35 @@
   <defs
      id="defs4" />
   <g
-     id="layer1">
+     id="g4581">
     <g
-       id="g4581">
-      <g
-         transform="translate(6.339286,5.089286)"
-         id="g4622">
-        <path
-           d="M 18.03125,9.9375 L 13.0625,10.3125 L 11.46875,17.4375 L 14.03125,21.84375 L 19.65625,21.875 L 21.78125,15.1875 L 21.21875,11.3125 L 18.03125,9.9375 z"
-           transform="matrix(0.950389,0.311063,-0.311063,0.950389,-3.155943,-11.70373)"
-           id="path2787"
-           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 17.6875,11.78125 L 14.5625,12.03125 L 13.40625,17.125 L 15.09375,20 L 18.3125,20.03125 L 19.90625,15 L 19.5625,12.59375 L 17.6875,11.78125 z"
-           transform="matrix(0.950389,0.311063,-0.311063,0.950389,-3.155943,-11.70373)"
-           id="path2789"
-           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 6.3118741,2.4244057 L 7.5043368,8.8272721 L 8.6381819,14.835166"
-           id="path4571"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 3.7442972,13.139448 L 7.390172,8.6020124 L 13.050963,5.9453644"
-           id="path4573"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 10.722859,3.5862851 L 7.4164096,8.2348141"
-           id="path4575"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 12.506243,9.6188811 L 7.5598839,8.6575592"
-           id="path4577"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-        <path
-           d="M 2.5332759,8.5154905 L 7.5583479,8.3752173"
-           id="path4579"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      </g>
+       transform="translate(6.339286,5.089286)"
+       id="g4622">
+      <path
+         d="M 18.03125,9.9375 L 13.0625,10.3125 L 11.46875,17.4375 L 14.03125,21.84375 L 19.65625,21.875 L 21.78125,15.1875 L 21.21875,11.3125 L 18.03125,9.9375 z"
+         transform="matrix(0.950389,0.311063,-0.311063,0.950389,-3.155943,-11.70373)"
+         id="path2787"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         d="M 6.3118741,2.4244057 L 7.5043368,8.8272721 L 8.6381819,14.835166"
+         id="path4571"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         d="M 3.7442972,13.139448 L 7.390172,8.6020124 L 13.050963,5.9453644"
+         id="path4573"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         d="M 10.722859,3.5862851 L 7.4164096,8.2348141"
+         id="path4575"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         d="M 12.506243,9.6188811 L 7.5598839,8.6575592"
+         id="path4577"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         d="M 2.5332759,8.5154905 L 7.5583479,8.3752173"
+         id="path4579"
+         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.9999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
   </g>
 </svg>
