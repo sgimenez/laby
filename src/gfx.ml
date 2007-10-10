@@ -105,19 +105,22 @@ let display_gtk file launch =
 	~hpolicy:`AUTOMATIC ~vpolicy:`AUTOMATIC () in
       let px = GMisc.image ~packing:sw#add_with_viewport () in
       let pixmap = GDraw.pixmap ~width ~height () in
-      let hbox = GPack.hbox ~packing:vbox#pack ~homogeneous:true () in
-      let button label stock =
-	GButton.button ~packing:hbox#add ~stock (* ~label *) ()
+      let toolbar = GButton.toolbar ~packing:(vbox#pack) ~style:`BOTH () in
+      let button (tb:GButton.toolbar) stock =
+	GButton.tool_button ~packing:tb#insert ~stock ()
       in
-      let tbutton label stock =
-	GButton.toggle_button ~packing:hbox#add ~stock (* ~label *) ()
+      let tbutton (tb:GButton.toolbar) stock =
+	GButton.toggle_tool_button ~packing:tb#insert ~stock ()
       in
-      let button_first = button "|<" `GOTO_FIRST in
-      let button_prev = button "<" `GO_BACK in
-      let button_next = button ">" `GO_FORWARD in
-      let button_last = button ">|" `GOTO_LAST in
-      let button_play = tbutton ">>" `MEDIA_PLAY in
-      let button_refresh = button "!" `REFRESH in
+      let button_first = button toolbar `GOTO_FIRST in
+      let button_prev = button toolbar `GO_BACK in
+      let button_next = button toolbar `GO_FORWARD in
+      let button_last = button toolbar `GOTO_LAST in
+      let button_play = tbutton toolbar `MEDIA_PLAY in
+      let _ =
+	GButton.separator_tool_item
+	  ~expand:true ~draw:false ~packing:toolbar#insert () in
+      let button_refresh = button toolbar `REFRESH in
       let update sound =
 	pixmap#set_foreground !bg;
 	let width, height = pixmap#size in
@@ -146,9 +149,11 @@ let display_gtk file launch =
 	begin fun () ->
 	  begin match !rid with
 	  | None ->
+	      button_play#set_stock_id `MEDIA_STOP;
 	      let callback () = next (); true in
 	      rid := Some (GMain.Timeout.add ~ms:500 ~callback);
 	  | Some id ->
+	      button_play#set_stock_id `MEDIA_PLAY;
 	      GMain.Timeout.remove id; rid := None
 	  end
 	end
