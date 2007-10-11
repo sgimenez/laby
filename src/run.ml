@@ -13,7 +13,7 @@ type 'a result =
     | Exn of exn
 
 let _ =
-  Sys.catch_break true;
+  Sys.catch_break false;
   Sys.set_signal Sys.sigpipe (Sys.Signal_handle signal);
   Sys.set_signal Sys.sigterm (Sys.Signal_handle signal);
   Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);

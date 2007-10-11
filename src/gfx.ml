@@ -73,7 +73,7 @@ let display_gtk file launch =
   let restart () =
     !close ();
     Random.self_init ();
-    story := [init_state];
+    story := [ if file = "" then State.basic else State.load file ];
     pos := 0;
     let i, o, c = launch () in
     close := c;
@@ -101,26 +101,29 @@ let display_gtk file launch =
       let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
       let vbox = GPack.vbox ~packing:window#add () in
       let sw = GBin.scrolled_window
-	~width:(width+10) ~height:(height+10) ~packing:vbox#add
+	~packing:vbox#add
 	~hpolicy:`AUTOMATIC ~vpolicy:`AUTOMATIC () in
       let px = GMisc.image ~packing:sw#add_with_viewport () in
       let pixmap = GDraw.pixmap ~width ~height () in
       let toolbar = GButton.toolbar ~packing:(vbox#pack) ~style:`BOTH () in
-      let button (tb:GButton.toolbar) stock =
-	GButton.tool_button ~packing:tb#insert ~stock ()
+      let button stock =
+	GButton.tool_button ~packing:toolbar#insert ~stock ()
       in
-      let tbutton (tb:GButton.toolbar) stock =
-	GButton.toggle_tool_button ~packing:tb#insert ~stock ()
+      let tbutton stock =
+	GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
       in
-      let button_first = button toolbar `GOTO_FIRST in
-      let button_prev = button toolbar `GO_BACK in
-      let button_next = button toolbar `GO_FORWARD in
-      let button_last = button toolbar `GOTO_LAST in
-      let button_play = tbutton toolbar `MEDIA_PLAY in
+      let button_first = button `GOTO_FIRST in
+      let button_prev = button `GO_BACK in
+      let button_next = button `GO_FORWARD in
+      let button_last = button `GOTO_LAST in
+      let _ =
+	GButton.separator_tool_item
+	  ~expand:false ~draw:true ~packing:toolbar#insert () in
+      let button_play = tbutton `MEDIA_PLAY in
       let _ =
 	GButton.separator_tool_item
 	  ~expand:true ~draw:false ~packing:toolbar#insert () in
-      let button_refresh = button toolbar `REFRESH in
+      let button_refresh = button `REFRESH in
       let update sound =
 	pixmap#set_foreground !bg;
 	let width, height = pixmap#size in
@@ -149,7 +152,7 @@ let display_gtk file launch =
 	begin fun () ->
 	  begin match !rid with
 	  | None ->
-	      button_play#set_stock_id `MEDIA_STOP;
+	      button_play#set_stock_id `MEDIA_PAUSE;
 	      let callback () = next (); true in
 	      rid := Some (GMain.Timeout.add ~ms:500 ~callback);
 	  | Some id ->
@@ -170,7 +173,7 @@ let display_gtk file launch =
       ignore (button_last#connect#clicked ~callback:last);
       ignore (button_play#connect#toggled ~callback:play);
       ignore (button_refresh#connect#clicked ~callback:refresh);
-      window#set_default_size 640 480;
+      window#set_default_size 900 600;
       window#show ();
       bg := `COLOR (px#misc#style#light `NORMAL);
       update true;
