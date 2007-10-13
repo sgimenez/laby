@@ -22,7 +22,7 @@ let regarde () = output "look";
   | "void" -> `Vide
   | "wall" -> `Mur
   | "rock" -> `Roche
-  | "pit" -> `Toile
+  | "web" -> `Toile
   | "exit" -> `Sortie
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end

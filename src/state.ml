@@ -94,9 +94,21 @@ let forward state =
     | `Web, _ -> pos, Some "web-out"
     | _, `Rock -> pos, Some "rock-in"
     | _, `Wall -> pos, Some "wall-in"
-    | _, `Exit -> pos', Some "exit"
+    | _, `Exit -> pos, Some "exit"
     | _, `Web -> pos', Some "web-in"
     | _, _ -> pos', None
+    end
+  in
+  let pos, sound = move state.pos in
+  { state with pos = pos; sound = sound }
+
+let forwardopen state =
+  let move pos =
+    let pos' = front state in
+    begin match get state pos, get state pos' with
+    | `Web, _ -> pos, Some "web-out"
+    | _, `Exit -> pos', Some "exit"
+    | _, _ -> pos, None
     end
   in
   let pos, sound = move state.pos in
@@ -200,7 +212,7 @@ let run (input, output) =
 	output ans; next state
     | Some "open" ->
 	begin match state.carry, get state (front state) with
-	| `None, `Exit -> Some (forward state)
+	| `None, `Exit -> Some (forwardopen state)
 	| _, `Exit -> Some (chg state "!" "bad")
 	| _, _ -> Some (chg state "?" "bad")
 	end
