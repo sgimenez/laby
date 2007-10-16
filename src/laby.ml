@@ -1,44 +1,52 @@
-let print = F.print ~l:"fdls"
+let log = Log.make ["laby"]
+
+let conf =
+  Conf.void
+    (F.x "laby configuration" [])
 
 let conf_path = ref (Config.conf_path ^ "fdls.conf")
 let log_path = ref (Config.conf_path ^ "fdls.log")
 let texts_path = ref (Config.conf_path ^ "texts")
 let theme_path = ref (Config.conf_path ^ "theme")
 
+let conf_map =
+  Conf.string ~p:(conf#plug "map")
+    (F.x "map file" [])
+
 let proceed _ =
   begin try
     Gfx.display_gtk Bot.caml
   with
   | Gfx.Error f ->
-      print ~e:0 (
+      log#fatal (
 	F.x "display failed: <error>" [
 	  "error", f;
 	]
       );
-      Run.fail ()
+      Init.exit 1
   end
 
-let main () =
-  F.set_texts !texts_path;
-  F.set_theme !theme_path;
-  let log_opt = Opt.log_opt ~default:(Some (!log_path)) in
-  let opts = [Version.opt; Opt.debug_opt; log_opt] in
-  begin try Opt.cmd opts proceed with
-  | Opt.Error f ->
-      print ~e:0 (
-	F.x "incorrect options, <error>" [
-	  "error", f;
+let main =
+  Fd.set_texts !texts_path;
+  conf#plug "log" Log.conf#ut;
+  let opts =
+    [
+      Version.opt;
+      Conf.opt ~short:'L' ~long:"level" conf_map#ut;
+      Conf.opt_descr ~long:"conf-descr" conf;
+    ]
+  in
+  begin match Opt.cmd opts with
+  | `Errors ml ->
+      log#fatal (
+	F.x "incorrect options: <errors>" [
+	  "errors", F.v ml;
 	]
       );
-      Run.fail ()
+      Init.exit 1;
+  | `Excl fn ->
+      Fd.stdout (fn ())
+  | `Proceed list ->
+      Init.init (fun () -> proceed list)
   end
 
-let _ =
-  Run.exec (fun () ->
-    begin match Run.run main with
-    | Run.Done () -> exit 0
-    | Run.Exited -> exit 0
-    | Run.Failed -> exit 1
-    | Run.Exn exn -> F.exn exn
-    end
-  )

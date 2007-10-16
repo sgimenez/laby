@@ -1,4 +1,4 @@
-let print = F.print ~l:"bot"
+let log = Log.make ["bot"]
 
 type query = string * (string -> unit)
 
@@ -46,7 +46,7 @@ let exec_caml h =
       Unix.execvp "ocaml" [| "ocaml"; h.filename |]
     with
       exn ->
-	print ~e:0 (
+	log#error (
 	  F.x "execution of program failed" []
 	);
   end

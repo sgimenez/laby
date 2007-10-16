@@ -1,4 +1,4 @@
-let print = F.print ~l:"gfx"
+let log = Log.make ["gfx"]
 
 exception Error of F.t
 
@@ -76,6 +76,7 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
+
 let layout () =
   let window = GWindow.window ~resizable:true () in
   let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
@@ -124,9 +125,9 @@ let layout () =
     view_mesg = view_mesg;
   }
 
-let display_gtk (bot : Bot.t) =
-  Random.self_init ();
-  let load () = State.basic in
+let display_gtk bot =
+  let level = Level.basic in
+  let load () = Level.generate level in
   let b_states = ref [] in
   let c_state = ref (load ()) in
   let n_states = ref [] in
@@ -248,8 +249,7 @@ let display_gtk (bot : Bot.t) =
   | Gtk.Error m ->
       raise (
 	Error (
-	  F.x "gtk error: <error>" ["error", F.sq m]
+	  F.x "gtk error: <error>" ["error", F.string m]
 	)
       )
   end
-
