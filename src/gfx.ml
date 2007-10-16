@@ -1,6 +1,6 @@
 let print = F.print ~l:"gfx"
 
-exception Error
+exception Error of F.t
 
 type ressources =
     {
@@ -15,6 +15,20 @@ type ressources =
       ant_e_p : GdkPixbuf.pixbuf;
       ant_s_p : GdkPixbuf.pixbuf;
       ant_w_p : GdkPixbuf.pixbuf;
+    }
+
+type controls =
+    {
+      window: GWindow.window;
+      button_first: GButton.tool_button;
+      button_prev: GButton.tool_button;
+      button_next: GButton.tool_button;
+      button_last: GButton.tool_button;
+      button_play: GButton.toggle_tool_button;
+      button_refresh: GButton.tool_button;
+      px: GMisc.image;
+      view_prog: GText.view;
+      view_mesg: GText.view;
     }
 
 let gtk_init () =
@@ -62,127 +76,180 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
-let display_gtk file launch =
-  let story = ref [] in
-  let pos = ref 0 in
-  let next = ref (fun s -> None) in
-  let close = ref (fun () -> ()) in
-  let init_state = if file = "" then State.basic else State.load file in
-  let sizex = Array.length init_state.State.map.(0) in
-  let sizey = Array.length init_state.State.map in
-  let restart () =
-    !close ();
-    Random.self_init ();
-    story := [ if file = "" then State.basic else State.load file ];
-    pos := 0;
-    let i, o, c = launch () in
-    close := c;
-    next := State.run (i, o);
+let layout () =
+  let window = GWindow.window ~resizable:true () in
+  let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
+  hpaned#set_position 500;
+  let vbox = GPack.vbox ~packing:hpaned#add1 () in
+  let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
+  vpaned#set_position 500;
+  let scrolled ?(vpolicy=`ALWAYS) packing =
+    GBin.scrolled_window ~packing ~hpolicy:`AUTOMATIC ~vpolicy ()
   in
-  restart ();
-  let last_state () = List.length !story - 1 in
-  let add_state () =
-    assert (!story <> []);
-    begin match !next (List.hd !story) with
-    | None -> false
-    | Some state -> story := state :: !story; true
-    end
+  let sw_prog = scrolled vpaned#add1 in
+  let view_prog = GText.view ~packing:sw_prog#add () in
+  let sw_mesg = scrolled vpaned#add2 in
+  let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
+  let sw_laby = scrolled ~vpolicy:`AUTOMATIC vbox#add in
+  let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
+  let toolbar = GButton.toolbar ~packing:vbox#pack ~style:`ICONS () in
+  let button stock =
+    GButton.tool_button ~packing:toolbar#insert ~stock ()
   in
-  let state i = List.nth !story (last_state () - i) in
+  let tbutton stock =
+    GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
+  in
+  let button_first = button `GOTO_FIRST in
+  let button_prev = button `GO_BACK in
+  let button_next = button `GO_FORWARD in
+  let button_last = button `GOTO_LAST in
+  let _ =
+    GButton.separator_tool_item
+      ~expand:false ~draw:true ~packing:toolbar#insert () in
+  let button_play = tbutton `MEDIA_PLAY in
+  let _ =
+    GButton.separator_tool_item
+      ~expand:true ~draw:false ~packing:toolbar#insert () in
+  let button_refresh = button `REFRESH in
+  {
+    window = window;
+    button_first = button_first;
+    button_prev = button_prev;
+    button_next = button_next;
+    button_last = button_last;
+    button_play = button_play;
+    button_refresh = button_refresh;
+    px = px;
+    view_prog = view_prog;
+    view_mesg = view_mesg;
+  }
+
+let display_gtk (bot : Bot.t) =
+  Random.self_init ();
+  let load () = State.basic in
+  let b_states = ref [] in
+  let c_state = ref (load ()) in
+  let n_states = ref [] in
+  let sizex = Array.length !c_state.State.map.(0) in
+  let sizey = Array.length !c_state.State.map in
   let bg = ref `WHITE in
   begin try
-      let ressources = gtk_init () in
-      let window = GWindow.window ~resizable:true () in
-      let destroy () =
-	window#destroy ();
-	GMain.Main.quit () in
-      ignore (window#event#connect#delete ~callback:(fun _ -> exit 0));
-      ignore (window#connect#destroy ~callback:destroy);
-      let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
-      let vbox = GPack.vbox ~packing:window#add () in
-      let sw = GBin.scrolled_window
-	~packing:vbox#add
-	~hpolicy:`AUTOMATIC ~vpolicy:`AUTOMATIC () in
-      let px = GMisc.image ~packing:sw#add_with_viewport () in
-      let pixmap = GDraw.pixmap ~width ~height () in
-      let toolbar = GButton.toolbar ~packing:(vbox#pack) ~style:`BOTH () in
-      let button stock =
-	GButton.tool_button ~packing:toolbar#insert ~stock ()
-      in
-      let tbutton stock =
-	GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
-      in
-      let button_first = button `GOTO_FIRST in
-      let button_prev = button `GO_BACK in
-      let button_next = button `GO_FORWARD in
-      let button_last = button `GOTO_LAST in
-      let _ =
-	GButton.separator_tool_item
-	  ~expand:false ~draw:true ~packing:toolbar#insert () in
-      let button_play = tbutton `MEDIA_PLAY in
-      let _ =
-	GButton.separator_tool_item
-	  ~expand:true ~draw:false ~packing:toolbar#insert () in
-      let button_refresh = button `REFRESH in
-      let update sound =
-	pixmap#set_foreground !bg;
-	let width, height = pixmap#size in
-	pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-	draw_state (state !pos) ressources pixmap;
-	px#set_pixmap pixmap;
-	if sound then
-	  begin match (state !pos).State.sound with
-	  | None -> ()
-	  | Some s -> Sound.play s
-	  end
-      in
-      let first () =
-	if !pos > 0 then (pos := 0; update false)
-      in
-      let prev () =
-	if !pos > 0 then (decr pos; update false)
-      in
-      let next () =
-	if !pos < last_state () || (!pos = last_state () && add_state ())
-	then (incr pos; update true)
-	else (button_play#set_active false)
-      in
-      let play =
-	let rid = ref None in
-	begin fun () ->
-	  begin match !rid with
-	  | None ->
-	      button_play#set_stock_id `MEDIA_PAUSE;
-	      let callback () = next (); true in
-	      rid := Some (GMain.Timeout.add ~ms:500 ~callback);
-	  | Some id ->
-	      button_play#set_stock_id `MEDIA_PLAY;
-	      GMain.Timeout.remove id; rid := None
-	  end
+    let ressources = gtk_init () in
+    let c = layout () in
+    let destroy () =
+      c.window#destroy ();
+      GMain.Main.quit ()
+    in
+    let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
+    let pixmap = GDraw.pixmap ~width ~height () in
+    let buffer = c.view_prog#buffer in
+    let print_mesg = c.view_mesg#buffer#insert in
+    bot#errto (fun s -> print_mesg s);
+    buffer#insert (bot#skel);
+    let clear_mesg () = c.view_mesg#buffer#set_text "" in
+    let step state =
+      begin match bot#probe with
+      | None -> None
+      | Some (action, reply) ->
+	  let answer, newstate = State.run action state in
+	  reply answer;
+	  Some newstate
+      end
+    in
+    let restart prog =
+      bot#close;
+      clear_mesg ();
+      b_states := []; c_state := load (); n_states := [];
+      bot#start prog
+    in
+    let update sound =
+      pixmap#set_foreground !bg;
+      let width, height = pixmap#size in
+      pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+      draw_state !c_state ressources pixmap;
+      c.px#set_pixmap pixmap;
+      if sound then
+	begin match !c_state.State.sound with
+	| None -> ()
+	| Some s -> Sound.play s
 	end
-      in
-      let last () =
-	if !pos < last_state () then (pos := last_state (); update false)
-      in
-      let refresh () =
-	button_play#set_active false; restart (); update true
-      in
-      ignore (button_first#connect#clicked ~callback:first);
-      ignore (button_prev#connect#clicked ~callback:prev);
-      ignore (button_next#connect#clicked ~callback:next);
-      ignore (button_last#connect#clicked ~callback:last);
-      ignore (button_play#connect#toggled ~callback:play);
-      ignore (button_refresh#connect#clicked ~callback:refresh);
-      window#set_default_size 900 600;
-      window#show ();
-      bg := `COLOR (px#misc#style#light `NORMAL);
-      update true;
-      ignore (GMain.Main.main ())
-    with
-    | Gtk.Error m ->
-	print ~e:1 (
+    in
+    let first () =
+      if !b_states <> [] then
+	begin match List.rev !b_states @ (!c_state :: !n_states) with
+	| x :: q ->
+	    b_states := []; c_state := x; n_states := q; update false
+	| _ -> assert false
+	end
+    in
+    let prev () =
+      begin match !b_states with
+      | [] -> ()
+      | x :: q ->
+	  b_states := q; n_states := !c_state :: !n_states; c_state := x;
+	  update false
+      end
+    in
+    let next () =
+      begin match !n_states with
+      | [] ->
+	  begin match step !c_state with
+	  | Some x ->
+	      b_states := !c_state :: !b_states; c_state := x;
+	      update true
+	  | None -> c.button_play#set_active false
+	  end
+      | x :: q ->
+	  b_states := !c_state :: !b_states; c_state := x; n_states := q;
+	  update false
+      end
+    in
+    let last () =
+      if !n_states <> [] then
+	begin match List.rev !n_states @ (!c_state :: !b_states) with
+	| x :: q ->
+	    b_states := q; c_state := x; n_states := []; update false
+	| _ -> assert false
+	end
+    in
+    let play =
+      let rid = ref None in
+      begin fun () ->
+	begin match !rid with
+	| None ->
+	    c.button_play#set_stock_id `MEDIA_PAUSE;
+	    let callback () = next (); true in
+	    rid := Some (GMain.Timeout.add ~ms:500 ~callback);
+	| Some id ->
+	    c.button_play#set_stock_id `MEDIA_PLAY;
+	    GMain.Timeout.remove id; rid := None
+	end
+      end
+    in
+    let refresh () =
+      c.button_play#set_active false;
+      restart (buffer#get_text ());
+      update true
+    in
+    ignore (c.window#event#connect#delete ~callback:(fun _ -> exit 0));
+    ignore (c.window#connect#destroy ~callback:destroy);
+    ignore (c.button_first#connect#clicked ~callback:first);
+    ignore (c.button_prev#connect#clicked ~callback:prev);
+    ignore (c.button_next#connect#clicked ~callback:next);
+    ignore (c.button_last#connect#clicked ~callback:last);
+    ignore (c.button_play#connect#toggled ~callback:play);
+    ignore (c.button_refresh#connect#clicked ~callback:refresh);
+    c.window#set_default_size 900 600;
+    c.window#show ();
+    bg := `COLOR (c.px#misc#style#light `NORMAL);
+    update true;
+    ignore (GMain.Main.main ())
+  with
+  | Gtk.Error m ->
+      raise (
+	Error (
 	  F.x "gtk error: <error>" ["error", F.sq m]
-	);
-	raise Error
+	)
+      )
   end
 

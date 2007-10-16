@@ -33,15 +33,15 @@ let basic =
 
 let copy state =
   { state with
-    map =
+      map =
       Array.init (Array.length state.map) (fun j -> Array.copy state.map.(j));
-    say = String.copy state.say;
-    sound =
+      say = String.copy state.say;
+      sound =
       begin match state.sound with
       | None -> None
       | Some s -> Some (String.copy s)
       end
-    ;
+      ;
   }
 
 let get state (i, j) =
@@ -94,7 +94,7 @@ let forward state =
     | `Web, _ -> pos, Some "web-out"
     | _, `Rock -> pos, Some "rock-in"
     | _, `Wall -> pos, Some "wall-in"
-    | _, `Exit -> pos, Some "exit"
+    | _, `Exit -> pos, Some "exit-in"
     | _, `Web -> pos', Some "web-in"
     | _, _ -> pos', None
     end
@@ -102,7 +102,7 @@ let forward state =
   let pos, sound = move state.pos in
   { state with pos = pos; sound = sound }
 
-let forwardopen state =
+let forward_open state =
   let move pos =
     let pos' = front state in
     begin match get state pos, get state pos' with
@@ -150,13 +150,13 @@ let load file =
     end
   in
   begin try
-      while true do
-	posx := -1; incr posy;
-	let l = Array.of_list (Str.split sep (input_line f)) in
-	if l <> [||] then lines := (Array.map conv l) :: !lines;
-      done;
-    with
-    | End_of_file -> ()
+    while true do
+      posx := -1; incr posy;
+      let l = Array.of_list (Str.split sep (input_line f)) in
+      if l <> [||] then lines := (Array.map conv l) :: !lines;
+    done;
+  with
+  | End_of_file -> ()
   end;
   let sizex = Array.length (List.hd !lines) in
   begin match List.for_all (fun a -> Array.length a = sizex) !lines with
@@ -169,12 +169,12 @@ let load file =
   end;
   let array = Array.of_list (List.rev !lines) in
   let fill may tile =
-  if !may <> [] then
-    begin
-      let i = Random.int (List.length !may) in
-      let x, y = List.nth !may i in
-      array.(y).(x) <- tile;
-    end;
+    if !may <> [] then
+      begin
+	let i = Random.int (List.length !may) in
+	let x, y = List.nth !may i in
+	array.(y).(x) <- tile;
+      end;
   in
   fill may_rocks `Rock;
   fill may_webs `NWeb;
@@ -191,60 +191,57 @@ let load file =
 let output channels s =
   Printf.fprintf (Unix.out_channel_of_descr (snd channels)) "%s\n%!" s
 
-let run (input, output) =
-  let rec next state =
-    let state = clean state in
-    begin match input () with
-    | None -> None
-    | Some "forward" -> Some (forward state)
-    | Some "left" -> Some (left state)
-    | Some "right" -> Some (right state)
-    | Some "look" ->
-	let ans =
-	  begin match look state with
-	  | `NRock | `NWeb | `Void -> "void"
-	  | `Wall -> "wall"
-	  | `Rock -> "rock"
-	  | `Web -> "web"
-	  | `Exit -> "exit"
-	  end
-	in
-	output ans; next state
-    | Some "open" ->
-	begin match state.carry, get state (front state) with
-	| `None, `Exit -> Some (forwardopen state)
-	| _, `Exit -> Some (chg state "!" "bad")
-	| _, _ -> Some (chg state "?" "bad")
-	end
-    | Some "take" ->
-	begin match state.carry, get state (front state) with
-	| `None, `Rock ->
-	    Some
-	      { state with
-		map = set state (front state) `Void;
-		carry = `Rock;
-		sound = Some "rock-take";
-	      }
-	|  _, _ -> Some (chg state "!" "bad")
-	end
-    | Some "drop" ->
-	begin match state.carry, get state (front state) with
-	| `Rock, `Void ->
-	    Some
-	      { state with
-		map = set state (front state) `Rock;
-		carry = `None;
-		sound = Some "rock-drop";
-	      }
-	|  _, _ -> Some (chg state "!" "bad")
-	end
-    | Some a ->
-	F.print ~e:2 (
-	  F.x "unknown action: <action>" [
-	      "action", F.sq a;
-	  ];
-	);
-	None
-    end
-  in
-  next
+let run action state =
+  let state = clean state in
+  begin match action with
+  | "forward" -> "ok", forward state
+  | "left" -> "ok", left state
+  | "right" -> "ok", right state
+  | "look" ->
+      let ans =
+        begin match look state with
+        | `NRock | `NWeb | `Void -> "void"
+        | `Wall -> "wall"
+        | `Rock -> "rock"
+        | `Web -> "web"
+        | `Exit -> "exit"
+        end
+      in
+      ans, state
+  | "open" ->
+      begin match state.carry, get state (front state) with
+      | `None, `Exit -> "ok", forward_open state
+      | _, `Exit -> "error", chg state "!" "bad"
+      | _, _ -> "", chg state "?" "bad"
+      end
+  | "take" ->
+      begin match state.carry, get state (front state) with
+      | `None, `Rock ->
+	  "ok",
+	  { state with
+              map = set state (front state) `Void;
+              carry = `Rock;
+              sound = Some "rock-take";
+	  }
+      |  _, _ -> "error", chg state "!" "bad"
+      end
+  | "drop" ->
+      begin match state.carry, get state (front state) with
+      | `Rock, `Void ->
+	  "ok",
+	  { state with
+              map = set state (front state) `Rock;
+              carry = `None;
+              sound = Some "rock-drop";
+	  }
+      |  _, _ -> "error", chg state "!" "bad"
+      end
+  | a ->
+      F.print ~e:2 (
+        F.x "unknown action: <action>" [
+          "action", F.sq a;
+        ];
+      );
+      "-", state
+  end
+

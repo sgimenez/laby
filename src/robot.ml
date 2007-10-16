@@ -11,11 +11,11 @@ let input () =
     | End_of_file -> exit 1
   end
 
-let gauche () = output "left"
+let gauche () = output "left"; ignore (input ())
 
-let droite () = output "right"
+let droite () = output "right"; ignore (input ())
 
-let avance () = output "forward"
+let avance () = output "forward"; ignore (input ())
 
 let regarde () = output "look";
   begin match input () with
@@ -27,10 +27,13 @@ let regarde () = output "look";
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
 
-let ouvre () = output "open"
+let ouvre () = output "open"; ignore (input ())
 
-let prend () = output "take"
+let prend () = output "take"; ignore (input ())
 
-let pose () = output "drop"
+let pose () = output "drop"; ignore (input ())
 
-let pousse () = output "push"
+let pousse () = output "push"; ignore (input ())
+
+let _ = output "start"; ignore (input ())
+

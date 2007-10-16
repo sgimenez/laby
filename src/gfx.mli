@@ -1,4 +1,3 @@
-exception Error
-val display_gtk : string ->
-  (unit -> (unit -> string option) * (string -> unit) * (unit -> unit))
-  -> unit
+exception Error of F.t
+
+val display_gtk : Bot.t -> unit
