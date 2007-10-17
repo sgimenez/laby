@@ -4,10 +4,9 @@ let conf =
   Conf.void
     (F.x "laby configuration" [])
 
-let conf_path = ref (Config.conf_path ^ "fdls.conf")
-let log_path = ref (Config.conf_path ^ "fdls.log")
-let texts_path = ref (Config.conf_path ^ "texts")
-let theme_path = ref (Config.conf_path ^ "theme")
+let conf_path = ref (Data.get "conf")
+let texts_path = ref (Data.get "texts")
+let theme_path = ref (Data.get "theme")
 
 let conf_level =
   Conf.string ~p:(conf#plug "level")

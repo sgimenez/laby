@@ -6,6 +6,7 @@ type t =
     <
       errto: (string -> unit) -> unit;
       skel: string;
+      lang_file: string;
       start: string -> unit;
       probe: query option;
       close: unit;
@@ -91,7 +92,7 @@ let input errto h =
   in
   read ()
 
-let go skel slave =
+let go skel lang_file slave =
   object (self)
 
     val hr = ref None
@@ -99,6 +100,8 @@ let go skel slave =
     val errto = ref (fun s -> ())
 
     method skel = skel
+
+    method lang_file = lang_file
 
     method errto f =
       errto := f
@@ -141,7 +144,8 @@ let go skel slave =
 	      output "go";
 	      !errto "Robot has started\n";
 	      hr := Some { h with pid = pid }
-	  | _ -> !errto "Robot has not started\n"
+	  | _ ->
+	      !errto "Robot has not started\n"
 	  end
       end
 
@@ -166,8 +170,7 @@ let go skel slave =
   end
 
 let load name =
-  let dir = Config.conf_path ^ "run/" ^ name ^ "/" in
-  Printf.eprintf "%s\n" dir;
+  let dir = Data.get "run/" ^ name ^ "/" in
   let exec h =
     Unix.chdir dir;
     begin try
@@ -192,5 +195,6 @@ let load name =
     close_in f;
     !s
   in
-  go skel exec
+  let lang_file = dir ^ "lang" in
+  go skel lang_file exec
 

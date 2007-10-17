@@ -1,0 +1,2 @@
+val get : string -> string
+

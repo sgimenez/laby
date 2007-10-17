@@ -33,19 +33,22 @@ type controls =
 
 let gtk_init () =
   let _ = GtkMain.Main.init () in
-  let pix p = GdkPixbuf.from_file_at_size (Config.conf_path ^ p) 50 50 in
+  let pix p =
+    let file = Data.get ("tiles/" ^ p ^ ".svg") in
+    GdkPixbuf.from_file_at_size file 50 50
+  in
   {
-    void_p = pix "tiles/void.svg";
-    exit_p = pix "tiles/exit.svg";
-    wall_p = pix "tiles/wall.svg";
-    rock_p = pix "tiles/rock.svg";
-    web_p = pix "tiles/web.svg";
-    nrock_p = pix "tiles/nrock.svg";
-    nweb_p = pix "tiles/nweb.svg";
-    ant_n_p = pix "tiles/ant-n.svg";
-    ant_e_p = pix "tiles/ant-e.svg";
-    ant_s_p = pix "tiles/ant-s.svg";
-    ant_w_p = pix "tiles/ant-w.svg";
+    void_p = pix "void";
+    exit_p = pix "exit";
+    wall_p = pix "wall";
+    rock_p = pix "rock";
+    web_p = pix "web";
+    nrock_p = pix "nrock";
+    nweb_p = pix "nweb";
+    ant_n_p = pix "ant-n";
+    ant_e_p = pix "ant-e";
+    ant_s_p = pix "ant-s";
+    ant_w_p = pix "ant-w";
   }
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
@@ -93,13 +96,6 @@ let layout () =
       ~show_line_numbers:true
       ~packing:sw_prog#add ()
   in
-  let lang_file = Config.conf_path ^ "run/ocaml/lang" in
-  begin match GSourceView.source_language_from_file lang_file with
-  | None -> log#warning (F.x "cannot load language file" []);
-  | Some l ->
-      view_prog#source_buffer#set_language l;
-      view_prog#source_buffer#set_highlight true;
-  end;
   let sw_mesg = scrolled vpaned#add2 in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC vbox#add in
@@ -159,6 +155,12 @@ let display_gtk () =
     let print_mesg = c.view_mesg#buffer#insert in
     bot#errto (fun s -> print_mesg s);
     buffer#insert (bot#skel);
+    begin match GSourceView.source_language_from_file bot#lang_file with
+    | None -> log#warning (F.x "cannot load language file" []);
+    | Some l ->
+	c.view_prog#source_buffer#set_language l;
+	c.view_prog#source_buffer#set_highlight true;
+    end;
     let clear_mesg () = c.view_mesg#buffer#set_text "" in
     let step state =
       begin match bot#probe with

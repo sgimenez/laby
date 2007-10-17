@@ -10,3 +10,4 @@ val build_lablgtk : string
 val build_lablgtksourceview : string
 
 val conf_path : string
+val sys_data_path : string
