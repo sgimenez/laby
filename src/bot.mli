@@ -2,6 +2,7 @@ type query = string * (string -> unit)
 
 type t =
     <
+      set: string -> unit;
       errto: (string -> unit) -> unit;
       skel: string;
       lang_file: string;
@@ -10,5 +11,5 @@ type t =
       close: unit;
     >
 
-val load : string -> t
+val make : unit -> t
 

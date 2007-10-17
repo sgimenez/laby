@@ -27,6 +27,7 @@ type controls =
       button_play: GButton.toggle_tool_button;
       button_refresh: GButton.tool_button;
       px: GMisc.image;
+      interprets: GEdit.combo;
       view_prog: GSourceView.source_view;
       view_mesg: GText.view;
     }
@@ -79,14 +80,15 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
+let interp_list = ["ocaml"; "java"]
 
 let layout () =
   let window = GWindow.window ~resizable:true () in
   let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
   hpaned#set_position 500;
-  let vbox = GPack.vbox ~packing:hpaned#add1 () in
+  let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
-  vpaned#set_position 500;
+  vpaned#set_position 450;
   let scrolled ?(vpolicy=`ALWAYS) packing =
     GBin.scrolled_window ~packing ~hpolicy:`AUTOMATIC ~vpolicy ()
   in
@@ -96,11 +98,17 @@ let layout () =
       ~show_line_numbers:true
       ~packing:sw_prog#add ()
   in
-  let sw_mesg = scrolled vpaned#add2 in
+  let rvbox = GPack.vbox ~packing:vpaned#add2 () in
+  let interprets =
+    GEdit.combo
+      ~popdown_strings:interp_list
+      ~packing:(rvbox#pack) ()
+  in
+  let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
-  let sw_laby = scrolled ~vpolicy:`AUTOMATIC vbox#add in
+  let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
-  let toolbar = GButton.toolbar ~packing:vbox#pack ~style:`ICONS () in
+  let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`ICONS () in
   let button stock =
     GButton.tool_button ~packing:toolbar#insert ~stock ()
   in
@@ -128,12 +136,13 @@ let layout () =
     button_play = button_play;
     button_refresh = button_refresh;
     px = px;
+    interprets = interprets;
     view_prog = view_prog;
     view_mesg = view_mesg;
   }
 
 let display_gtk () =
-  let bot = Bot.load "ocaml" in
+  let bot = Bot.make () in
   let level = Level.basic in
   let load () = Level.generate level in
   let b_states = ref [] in
@@ -153,6 +162,7 @@ let display_gtk () =
     let pixmap = GDraw.pixmap ~width ~height () in
     let buffer = c.view_prog#buffer in
     let print_mesg = c.view_mesg#buffer#insert in
+    bot#set (c.interprets#entry#text);
     bot#errto (fun s -> print_mesg s);
     buffer#insert (bot#skel);
     begin match GSourceView.source_language_from_file bot#lang_file with
@@ -175,6 +185,7 @@ let display_gtk () =
       bot#close;
       clear_mesg ();
       b_states := []; c_state := load (); n_states := [];
+      bot#set (c.interprets#entry#text);
       bot#start prog
     in
     let update sound =

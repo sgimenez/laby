@@ -14,4 +14,3 @@ let fourmi =
   Robot.avance ();
   Robot.droite ();
   Robot.ouvre ()
-

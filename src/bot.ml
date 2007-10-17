@@ -4,6 +4,7 @@ type query = string * (string -> unit)
 
 type t =
     <
+      set: string -> unit;
       errto: (string -> unit) -> unit;
       skel: string;
       lang_file: string;
@@ -92,22 +93,50 @@ let input errto h =
   in
   read ()
 
-let go skel lang_file slave =
+let make () =
   object (self)
 
     val hr = ref None
 
     val errto = ref (fun s -> ())
 
-    method skel = skel
+    val dir = ref "default/"
 
-    method lang_file = lang_file
+    method set name =
+      dir := Data.get "run/" ^ name ^ "/"
+
+    method skel =
+      let s = ref "" in
+      let f = open_in (!dir ^ "skel") in
+      begin try
+	  while true do
+	    s := !s ^ input_line f ^ "\n"
+	  done
+	with
+	| End_of_file -> ()
+      end;
+      close_in f;
+      !s
+
+    method lang_file =
+      !dir ^ "lang"
 
     method errto f =
       errto := f
 
     method start prog =
       self#close;
+      let slave h =
+	Unix.chdir !dir;
+	begin try
+	    Unix.execvp "./command" [| "./command"; h.filename |]
+	  with
+	    exn ->
+	      log#error (
+		F.x "execution of interpreter failed" []
+	      );
+	end
+      in
       let in_ch, in_ch' = Unix.pipe () in
       let out_ch', out_ch = Unix.pipe () in
       let err_ch, err_ch' = Unix.pipe () in
@@ -168,33 +197,3 @@ let go skel lang_file slave =
       end
 
   end
-
-let load name =
-  let dir = Data.get "run/" ^ name ^ "/" in
-  let exec h =
-    Unix.chdir dir;
-    begin try
-	Unix.execvp "./command" [| "./command"; h.filename |]
-      with
-	exn ->
-	  log#error (
-	    F.x "execution of interpreter failed" []
-	  );
-    end
-  in
-  let skel =
-    let s = ref "" in
-    let f = open_in (dir ^ "skel") in
-    begin try
-	while true do
-	  s := !s ^ input_line f ^ "\n"
-	done
-      with
-      | End_of_file -> ()
-    end;
-    close_in f;
-    !s
-  in
-  let lang_file = dir ^ "lang" in
-  go skel lang_file exec
-
