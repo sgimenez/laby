@@ -41,7 +41,7 @@ let dump prog =
   Unix.close fd;
   filename
 
-let exec_caml h =
+let exec_caml dir h =
   begin try
       Unix.execvp "ocaml" [| "ocaml"; h.filename |]
     with
@@ -51,8 +51,6 @@ let exec_caml h =
 	);
   end
 
-let skel_caml =
-  "#load \"robot.cmo\"\n\nlet fourmi =\n"
 
 let input errto h =
   let output s =
@@ -167,5 +165,32 @@ let go skel slave =
 
   end
 
-let caml = go skel_caml exec_caml
+let load name =
+  let dir = Config.conf_path ^ "run/" ^ name ^ "/" in
+  Printf.eprintf "%s\n" dir;
+  let exec h =
+    Unix.chdir dir;
+    begin try
+	Unix.execvp "./command" [| "./command"; h.filename |]
+      with
+	exn ->
+	  log#error (
+	    F.x "execution of interpreter failed" []
+	  );
+    end
+  in
+  let skel =
+    let s = ref "" in
+    let f = open_in (dir ^ "skel") in
+    begin try
+	while true do
+	  s := !s ^ input_line f ^ "\n"
+	done
+      with
+      | End_of_file -> ()
+    end;
+    close_in f;
+    !s
+  in
+  go skel exec
 

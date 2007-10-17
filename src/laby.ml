@@ -9,13 +9,17 @@ let log_path = ref (Config.conf_path ^ "fdls.log")
 let texts_path = ref (Config.conf_path ^ "texts")
 let theme_path = ref (Config.conf_path ^ "theme")
 
-let conf_map =
-  Conf.string ~p:(conf#plug "map")
-    (F.x "map file" [])
+let conf_level =
+  Conf.string ~p:(conf#plug "level")
+    (F.x "level file" [])
+
+let conf_prog =
+  Conf.string ~p:(conf#plug "prog")
+    (F.x "program file" [])
 
 let proceed _ =
   begin try
-    Gfx.display_gtk Bot.caml
+    Gfx.display_gtk ()
   with
   | Gfx.Error f ->
       log#fatal (
@@ -32,7 +36,8 @@ let main =
   let opts =
     [
       Version.opt;
-      Conf.opt ~short:'L' ~long:"level" conf_map#ut;
+      Conf.opt ~short:'p' ~long:"prog" conf_prog#ut;
+      Conf.opt ~short:'l' ~long:"level" conf_level#ut;
       Conf.opt_descr ~long:"conf-descr" conf;
     ]
   in

@@ -1,5 +1,4 @@
-#!/usr/bin/env ocaml
-#load "robot.cmo"
+#use "robot.ml"
 
 let fourmi =
   Robot.droite ();
@@ -14,5 +13,5 @@ let fourmi =
   Robot.avance ();
   Robot.avance ();
   Robot.droite ();
-  Robot.ouvre ();
+  Robot.ouvre ()
 

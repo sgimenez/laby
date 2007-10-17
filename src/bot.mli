@@ -9,4 +9,5 @@ type t =
       close: unit;
     >
 
-val caml : t
+val load : string -> t
+

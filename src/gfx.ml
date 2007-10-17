@@ -27,7 +27,7 @@ type controls =
       button_play: GButton.toggle_tool_button;
       button_refresh: GButton.tool_button;
       px: GMisc.image;
-      view_prog: GText.view;
+      view_prog: GSourceView.source_view;
       view_mesg: GText.view;
     }
 
@@ -88,7 +88,18 @@ let layout () =
     GBin.scrolled_window ~packing ~hpolicy:`AUTOMATIC ~vpolicy ()
   in
   let sw_prog = scrolled vpaned#add1 in
-  let view_prog = GText.view ~packing:sw_prog#add () in
+  let view_prog =
+    GSourceView.source_view
+      ~show_line_numbers:true
+      ~packing:sw_prog#add ()
+  in
+  let lang_file = Config.conf_path ^ "run/ocaml/lang" in
+  begin match GSourceView.source_language_from_file lang_file with
+  | None -> log#warning (F.x "cannot load language file" []);
+  | Some l ->
+      view_prog#source_buffer#set_language l;
+      view_prog#source_buffer#set_highlight true;
+  end;
   let sw_mesg = scrolled vpaned#add2 in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC vbox#add in
@@ -125,7 +136,8 @@ let layout () =
     view_mesg = view_mesg;
   }
 
-let display_gtk bot =
+let display_gtk () =
+  let bot = Bot.load "ocaml" in
   let level = Level.basic in
   let load () = Level.generate level in
   let b_states = ref [] in
@@ -242,6 +254,7 @@ let display_gtk bot =
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
     c.window#set_default_size 900 600;
     c.window#show ();
+    (* bg color has to be retrieved after c.window#show *)
     bg := `COLOR (c.px#misc#style#light `NORMAL);
     update true;
     ignore (GMain.Main.main ())

@@ -7,7 +7,7 @@ type t =
       mwebs: (int * int) list;
     }
 
-let log = Log.make ["map"]
+let log = Log.make ["level"]
 
 let basic =
   {
