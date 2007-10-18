@@ -1,6 +1,7 @@
 let log = Log.make ["data"]
 
-let get ressource =
+let get rpath =
+  let ressource = String.concat "/" rpath in
   let check f =
     begin try Sys.file_exists f with
     | Sys_error _ ->
@@ -36,8 +37,8 @@ let get ressource =
   | Sys_error _ -> error ()
   end
 
-let get_list dir =
-  let f = Unix.opendir (get dir) in
+let get_list rpath =
+  let f = Unix.opendir (get rpath) in
   let list = ref [] in
   begin try
     while true do
