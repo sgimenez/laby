@@ -36,7 +36,7 @@ type controls =
 let gtk_init () =
   let _ = GtkMain.Main.init () in
   let pix p =
-    let file = Data.get ("tiles/" ^ p ^ ".svg") in
+    let file = Data.get ["tiles"; p ^ ".svg"] in
     GdkPixbuf.from_file_at_size file 50 50
   in
   {
@@ -82,9 +82,9 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   end
 
 let interprets_list =
-  List.sort (compare) (Data.get_list "run")
+  List.sort (compare) (Data.get_list ["run"])
 let levels_list =
-  List.sort (compare) (Data.get_list "levels")
+  "demo" :: List.sort (compare) (Data.get_list ["levels"])
 
 let layout () =
   let window = GWindow.window ~resizable:true () in
@@ -174,11 +174,14 @@ let display_gtk () =
     in
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
     let newinterpret () =
-      begin match List.mem c.interprets#entry#text interprets_list with
+      let name = c.interprets#entry#text in
+      begin match List.mem name interprets_list with
       | true ->
-	  bot#set (c.interprets#entry#text);
-	  c.view_prog#buffer#set_text (bot#skel);
-	  begin match GSourceView.source_language_from_file bot#lang_file with
+	  bot#set_buf (c.view_prog#buffer#get_text ());
+	  bot#set_name name;
+	  c.view_prog#buffer#set_text bot#get_buf;
+	  let langf = Data.get ["run"; name; "lang"] in
+	  begin match GSourceView.source_language_from_file langf with
 	  | None -> log#warning (F.x "cannot load language file" []);
 	  | Some l ->
 	      c.view_prog#source_buffer#set_language l;
@@ -201,13 +204,10 @@ let display_gtk () =
       c.view_mesg#buffer#set_text "";
       b_states := []; c_state := load (); n_states := [];
     in
-    let bot_start prog =
-      bot#set (c.interprets#entry#text);
-      bot#start prog
-    in
-    let restart prog =
-      bot_stop ();
-      bot_start prog
+    let bot_start () =
+      bot#set_name (c.interprets#entry#text);
+      bot#set_buf (c.view_prog#buffer#get_text ());
+      bot#start
     in
     let update sound =
       !pixmap#set_foreground !bg;
@@ -223,14 +223,19 @@ let display_gtk () =
     in
     let refresh () =
       c.button_play#set_active false;
-      restart (c.view_prog#buffer#get_text ());
+      bot_stop ();
+      bot_start ();
       update true
     in
     let newlevel () =
       let name = c.levels#entry#text in
       begin match List.mem name levels_list with
        | true ->
-	   level := Level.load (Data.get ("levels/" ^ name));
+	   level :=
+	   begin match name with
+	   | "demo" -> Level.basic
+	   | n -> Level.load (Data.get ["levels"; n])
+	   end;
 	   pixmap := make_pixmap !level;
 	   c.button_play#set_active false;
 	   bot_stop ();

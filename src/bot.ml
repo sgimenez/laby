@@ -4,11 +4,12 @@ type query = string * (string -> unit)
 
 type t =
     <
-      set: string -> unit;
+      set_name: string -> unit;
+      get_name: string;
       errto: (string -> unit) -> unit;
-      skel: string;
-      lang_file: string;
-      start: string -> unit;
+      set_buf: string -> unit;
+      get_buf: string;
+      start: unit;
       probe: query option;
       close: unit;
     >
@@ -17,7 +18,6 @@ type h =
     {
       pid: int;
       tmpdir: string;
-      robot: string;
       in_ch : Unix.file_descr;
       in_ch' : Unix.file_descr;
       out_ch : Unix.file_descr;
@@ -93,36 +93,45 @@ let make () =
 
     val hr = ref None
 
+    val buffers = Hashtbl.create 64
+
     val errto = ref (fun s -> ())
 
+    val name = ref "demo"
     val dir = ref "default/"
 
-    method set name =
-      dir := Data.get "run/" ^ name ^ "/"
+    method set_name n =
+      name := n
 
-    method skel =
-      let s = ref "" in
-      let f = open_in (!dir ^ "skel") in
-      begin try
-	  while true do
-	    s := !s ^ input_line f ^ "\n"
-	  done
-	with
-	| End_of_file -> ()
-      end;
-      close_in f;
-      !s
+    method get_name =
+      !name
 
-    method lang_file =
-      !dir ^ "lang"
+    method get_buf =
+      begin try Hashtbl.find buffers !name with
+      | Not_found ->
+	  let s = ref "" in
+	  let f = open_in (Data.get ["run"; !name; "skel"]) in
+	  begin try
+	      while true do
+		s := !s ^ input_line f ^ "\n"
+	      done
+	    with
+	    | End_of_file -> ()
+	  end;
+	  close_in f;
+	  !s
+      end
+
+    method set_buf buf =
+      Hashtbl.replace buffers !name buf
 
     method errto f =
       errto := f
 
-    method start prog =
+    method start =
       self#close;
       let slave h =
-	Unix.chdir !dir;
+	Unix.chdir (Data.get ["run"; !name]);
 	begin try
 	    Unix.execvp "./command" [| "./command"; h.tmpdir |]
 	  with
@@ -138,8 +147,7 @@ let make () =
       let h =
 	{
 	  pid = 0;
-	  tmpdir = dump prog;
-	  robot = prog;
+	  tmpdir = dump self#get_buf;
 	  in_ch = in_ch; in_ch' = in_ch';
 	  out_ch = out_ch; out_ch' = out_ch';
 	  err_ch = err_ch; err_ch' = err_ch';
