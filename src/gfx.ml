@@ -28,6 +28,7 @@ type controls =
       button_refresh: GButton.tool_button;
       px: GMisc.image;
       interprets: GEdit.combo;
+      levels: GEdit.combo;
       view_prog: GSourceView.source_view;
       view_mesg: GText.view;
     }
@@ -81,7 +82,9 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   end
 
 let interprets_list =
-  Data.get_list "run"
+  List.sort (compare) (Data.get_list "run")
+let levels_list =
+  List.sort (compare) (Data.get_list "levels")
 
 let layout () =
   let window = GWindow.window ~resizable:true () in
@@ -107,6 +110,11 @@ let layout () =
   in
   let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
+  let levels =
+    GEdit.combo
+      ~popdown_strings:levels_list
+      ~packing:(lvbox#pack) ()
+  in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`ICONS () in
@@ -138,29 +146,32 @@ let layout () =
     button_refresh = button_refresh;
     px = px;
     interprets = interprets;
+    levels = levels;
     view_prog = view_prog;
     view_mesg = view_mesg;
   }
 
+let make_pixmap level =
+  let sizex, sizey = Level.size level in
+  let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
+  GDraw.pixmap ~width ~height ()
+
 let display_gtk () =
   let bot = Bot.make () in
-  let level = Level.basic in
-  let load () = Level.generate level in
+  let level = ref Level.basic in
+  let load () = Level.generate !level in
   let b_states = ref [] in
   let c_state = ref (load ()) in
   let n_states = ref [] in
-  let sizex = Array.length !c_state.State.map.(0) in
-  let sizey = Array.length !c_state.State.map in
   let bg = ref `WHITE in
   begin try
     let ressources = gtk_init () in
     let c = layout () in
+    let pixmap = ref (make_pixmap !level) in
     let destroy () =
       c.window#destroy ();
       GMain.Main.quit ()
     in
-    let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
-    let pixmap = GDraw.pixmap ~width ~height () in
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
     let newinterpret () =
       begin match List.mem c.interprets#entry#text interprets_list with
@@ -176,8 +187,6 @@ let display_gtk () =
       | false -> ()
       end
     in
-    c.interprets#entry#set_text "ocaml";
-    newinterpret ();
     let step state =
       begin match bot#probe with
       | None -> None
@@ -187,25 +196,50 @@ let display_gtk () =
 	  Some newstate
       end
     in
-    let restart prog =
+    let bot_stop () =
       bot#close;
       c.view_mesg#buffer#set_text "";
       b_states := []; c_state := load (); n_states := [];
+    in
+    let bot_start prog =
       bot#set (c.interprets#entry#text);
       bot#start prog
     in
+    let restart prog =
+      bot_stop ();
+      bot_start prog
+    in
     let update sound =
-      pixmap#set_foreground !bg;
-      let width, height = pixmap#size in
-      pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-      draw_state !c_state ressources pixmap;
-      c.px#set_pixmap pixmap;
+      !pixmap#set_foreground !bg;
+      let width, height = !pixmap#size in
+      !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+      draw_state !c_state ressources !pixmap;
+      c.px#set_pixmap !pixmap;
       if sound then
 	begin match !c_state.State.sound with
 	| None -> ()
 	| Some s -> Sound.play s
 	end
     in
+    let refresh () =
+      c.button_play#set_active false;
+      restart (c.view_prog#buffer#get_text ());
+      update true
+    in
+    let newlevel () =
+      let name = c.levels#entry#text in
+      begin match List.mem name levels_list with
+       | true ->
+	   level := Level.load (Data.get ("levels/" ^ name));
+	   pixmap := make_pixmap !level;
+	   c.button_play#set_active false;
+	   bot_stop ();
+	   update true
+       | false -> ()
+      end
+    in
+    c.interprets#entry#set_text "ocaml";
+    newinterpret ();
     let first () =
       if !b_states <> [] then
 	begin match List.rev !b_states @ (!c_state :: !n_states) with
@@ -258,11 +292,6 @@ let display_gtk () =
 	end
       end
     in
-    let refresh () =
-      c.button_play#set_active false;
-      restart (c.view_prog#buffer#get_text ());
-      update true
-    in
     ignore (c.window#event#connect#delete ~callback:(fun _ -> exit 0));
     ignore (c.window#connect#destroy ~callback:destroy);
     ignore (c.button_first#connect#clicked ~callback:first);
@@ -272,6 +301,7 @@ let display_gtk () =
     ignore (c.button_play#connect#toggled ~callback:play);
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
     ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
+    ignore (c.levels#entry#connect#changed ~callback:newlevel);
     c.window#set_default_size 900 600;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)

@@ -155,3 +155,7 @@ let run action state =
       );
      "-", state
   end
+
+let size state =
+  Array.length state.map.(0),
+  Array.length state.map

@@ -118,3 +118,7 @@ let generate level =
     State.say = "";
     State.sound = None;
   }
+
+let size state =
+  Array.length state.map.(0),
+  Array.length state.map
