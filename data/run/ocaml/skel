@@ -1,4 +1,3 @@
-#use "robot.ml"
 
 let fourmi =
   Robot.droite ();

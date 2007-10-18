@@ -80,7 +80,8 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
-let interp_list = ["ocaml"; "java"]
+let interprets_list =
+  Data.get_list "run"
 
 let layout () =
   let window = GWindow.window ~resizable:true () in
@@ -101,7 +102,7 @@ let layout () =
   let rvbox = GPack.vbox ~packing:vpaned#add2 () in
   let interprets =
     GEdit.combo
-      ~popdown_strings:interp_list
+      ~popdown_strings:interprets_list
       ~packing:(rvbox#pack) ()
   in
   let sw_mesg = scrolled rvbox#add in
@@ -160,18 +161,23 @@ let display_gtk () =
     in
     let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
     let pixmap = GDraw.pixmap ~width ~height () in
-    let buffer = c.view_prog#buffer in
-    let print_mesg = c.view_mesg#buffer#insert in
-    bot#set (c.interprets#entry#text);
-    bot#errto (fun s -> print_mesg s);
-    buffer#insert (bot#skel);
-    begin match GSourceView.source_language_from_file bot#lang_file with
-    | None -> log#warning (F.x "cannot load language file" []);
-    | Some l ->
-	c.view_prog#source_buffer#set_language l;
-	c.view_prog#source_buffer#set_highlight true;
-    end;
-    let clear_mesg () = c.view_mesg#buffer#set_text "" in
+    bot#errto (fun s -> c.view_mesg#buffer#insert s);
+    let newinterpret () =
+      begin match List.mem c.interprets#entry#text interprets_list with
+      | true ->
+	  bot#set (c.interprets#entry#text);
+	  c.view_prog#buffer#set_text (bot#skel);
+	  begin match GSourceView.source_language_from_file bot#lang_file with
+	  | None -> log#warning (F.x "cannot load language file" []);
+	  | Some l ->
+	      c.view_prog#source_buffer#set_language l;
+	      c.view_prog#source_buffer#set_highlight true;
+	  end
+      | false -> ()
+      end
+    in
+    c.interprets#entry#set_text "ocaml";
+    newinterpret ();
     let step state =
       begin match bot#probe with
       | None -> None
@@ -183,7 +189,7 @@ let display_gtk () =
     in
     let restart prog =
       bot#close;
-      clear_mesg ();
+      c.view_mesg#buffer#set_text "";
       b_states := []; c_state := load (); n_states := [];
       bot#set (c.interprets#entry#text);
       bot#start prog
@@ -254,7 +260,7 @@ let display_gtk () =
     in
     let refresh () =
       c.button_play#set_active false;
-      restart (buffer#get_text ());
+      restart (c.view_prog#buffer#get_text ());
       update true
     in
     ignore (c.window#event#connect#delete ~callback:(fun _ -> exit 0));
@@ -265,6 +271,7 @@ let display_gtk () =
     ignore (c.button_last#connect#clicked ~callback:last);
     ignore (c.button_play#connect#toggled ~callback:play);
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
+    ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
     c.window#set_default_size 900 600;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)

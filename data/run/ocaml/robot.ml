@@ -1,6 +1,3 @@
-module Robot =
-struct
-
 let input_ch, output_ch =
   stdin, stdout
 
@@ -38,6 +35,5 @@ let pose () = output "drop"; ignore (input ())
 
 let pousse () = output "push"; ignore (input ())
 
-let _ = output "start"; ignore (input ())
-
-end
+let _ =
+  output "start"; ignore (input ())

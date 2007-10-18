@@ -1,0 +1,21 @@
+public class Fourmi extends Robot {
+
+  Fourmi() {}
+
+  public void run() {
+    droite();
+    avance();
+    prend();
+    gauche();
+    avance();
+    pose();
+    droite();
+    avance();
+    gauche();
+    avance();
+    avance();
+    droite();
+    ouvre();
+  }
+
+}

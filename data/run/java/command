@@ -1,0 +1,8 @@
+#!/bin/sh
+DIR=$1
+
+cp Robot.java Main.java $DIR/ || exit 1
+cd $DIR || exit 1
+cp program Fourmi.java || exit 1
+javac Main.java || exit 1
+exec java Main

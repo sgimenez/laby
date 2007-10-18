@@ -1,0 +1,17 @@
+#include "robot.h"
+
+void fourmi() {
+  droite();
+  avance();
+  prend();
+  gauche();
+  avance();
+  pose();
+  droite();
+  avance();
+  gauche();
+  avance();
+  avance();
+  droite();
+  ouvre();
+}

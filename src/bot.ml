@@ -16,7 +16,7 @@ type t =
 type h =
     {
       pid: int;
-      filename: string;
+      tmpdir: string;
       robot: string;
       in_ch : Unix.file_descr;
       in_ch' : Unix.file_descr;
@@ -33,7 +33,10 @@ type h =
 let bufsize = 16384
 
 let dump prog =
-  let filename = Printf.sprintf "/tmp/fourmi-%d.ml" (Unix.getpid ()) in
+  let tmpdir = Printf.sprintf "/tmp/fourmi-%d/" (Unix.getpid ()) in
+  ignore (Unix.system ("rm -rf " ^ tmpdir));
+  Unix.mkdir tmpdir 0o755;
+  let filename = tmpdir ^ "program" in
   let fd =
     Unix.openfile filename
       [ Unix.O_CREAT; Unix.O_TRUNC; Unix.O_WRONLY]
@@ -41,20 +44,12 @@ let dump prog =
   in
   ignore (Unix.write fd prog 0 (String.length prog));
   Unix.close fd;
-  filename
+  tmpdir
 
-let exec_caml dir h =
-  begin try
-      Unix.execvp "ocaml" [| "ocaml"; h.filename |]
-    with
-      exn ->
-	log#error (
-	  F.x "execution of program failed" []
-	);
-  end
+let clean tmpdir =
+  ignore (Unix.system ("rm -rf " ^ tmpdir))
 
-
-let input errto h =
+let input ?(timeout=0.5) errto h =
   let output s =
     Printf.fprintf (Unix.out_channel_of_descr (h.out_ch)) "%s\n%!" s
   in
@@ -63,7 +58,7 @@ let input errto h =
     | a :: q ->
 	h.buf <- q; Some (a, output)
     | [] ->
-	let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] 0.5 in
+	let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] timeout in
 	if List.mem h.err_ch l then
 	  begin
 	    let r = ref 1 in
@@ -129,7 +124,7 @@ let make () =
       let slave h =
 	Unix.chdir !dir;
 	begin try
-	    Unix.execvp "./command" [| "./command"; h.filename |]
+	    Unix.execvp "./command" [| "./command"; h.tmpdir |]
 	  with
 	    exn ->
 	      log#error (
@@ -143,7 +138,7 @@ let make () =
       let h =
 	{
 	  pid = 0;
-	  filename = dump prog;
+	  tmpdir = dump prog;
 	  robot = prog;
 	  in_ch = in_ch; in_ch' = in_ch';
 	  out_ch = out_ch; out_ch' = out_ch';
@@ -168,7 +163,7 @@ let make () =
 	  Unix.close in_ch';
 	  Unix.close out_ch';
 	  Unix.close err_ch';
-	  begin match input !errto h with
+	  begin match input ~timeout:5. !errto h with
 	  | Some ("start", output) ->
 	      output "go";
 	      !errto "Robot has started\n";
@@ -185,7 +180,7 @@ let make () =
 	  Unix.close h.in_ch;
 	  Unix.close h.out_ch;
 	  Unix.close h.err_ch;
-	  Unix.unlink h.filename;
+	  clean h.tmpdir;
 	  ignore (Unix.waitpid [] h.pid);
 	  hr := None
       end
