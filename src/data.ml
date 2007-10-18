@@ -1,12 +1,22 @@
 let log = Log.make ["data"]
 
 let get ressource =
-  let l =
-    [
-      Config.conf_path ^ ressource;
-      Config.sys_data_path ^ ressource;
-    ]
+  let check f =
+    begin try Sys.file_exists f with
+    | Sys_error _ ->
+	log#warning (
+	  F.x "cannot access <path>" [
+	    "path", F.string f;
+	  ]
+	);
+	false
+    end
   in
+  let dir_list =
+    List.filter check
+      [ Config.conf_path; Config.sys_data_path; ]
+  in
+  let l = List.map (fun s -> s ^ ressource) dir_list in
   let error () =
     log#error (
       F.x "cannot find ressource <ressource> at: <list>" [
@@ -16,12 +26,13 @@ let get ressource =
     );
     Init.exit 1
   in
-  begin try
-    begin match List.filter Sys.file_exists l with
+  let rec may =
+    begin function
+    | x :: q -> if Sys.file_exists x then x else may q
     | [] -> error ()
-    | x :: _ -> x
     end
-  with
+  in
+  begin try may l with
   | Sys_error _ -> error ()
   end
 
