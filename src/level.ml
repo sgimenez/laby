@@ -77,16 +77,16 @@ let load file =
   | true -> ()
   end;
   let array = Array.of_list (List.rev !lines) in
-  let fill may tile =
+  (*let fill may tile =
   if !may <> [] then
     begin
       let i = Random.int (List.length !may) in
       let x, y = List.nth !may i in
       array.(y).(x) <- tile;
     end;
-  in
-  fill may_rocks `Rock;
-  fill may_webs `NWeb;
+  in *)
+  (* fill may_rocks `Rock; *)
+  (* fill may_webs `NWeb; *)
   close_in f;
   {
     map = array;
