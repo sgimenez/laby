@@ -8,13 +8,13 @@ let conf_path = ref (Data.get ["conf"])
 let texts_path = ref (Data.get ["texts"])
 let theme_path = ref (Data.get ["theme"])
 
-let conf_level =
-  Conf.string ~p:(conf#plug "level")
-    (F.x "level file" [])
+(* let conf_level = *)
+(*   Conf.string ~p:(conf#plug "level") *)
+(*     (F.x "level file" []) *)
 
-let conf_prog =
-  Conf.string ~p:(conf#plug "prog")
-    (F.x "program file" [])
+(* let conf_prog = *)
+(*   Conf.string ~p:(conf#plug "prog") *)
+(*     (F.x "program file" []) *)
 
 let proceed _ =
   begin try
@@ -35,8 +35,8 @@ let main =
   let opts =
     [
       Version.opt;
-      Conf.opt ~short:'p' ~long:"prog" conf_prog#ut;
-      Conf.opt ~short:'l' ~long:"level" conf_level#ut;
+(*       Conf.opt ~short:'p' ~long:"prog" conf_prog#ut; *)
+(*       Conf.opt ~short:'l' ~long:"level" conf_level#ut; *)
       Conf.opt_descr ~long:"conf-descr" conf;
     ]
   in

@@ -6,9 +6,9 @@ format.quoted		:#333
 format.label		:#555
 format.debug		:underline:#222
 
-msg.lang		:##200
-msg.unknown		:##200
-msg.bad			:##200
+format.msg.lang		:##200
+format.msg.unknown	:##200
+format.msg.bad		:##200
 
 opt.option		:#055
 

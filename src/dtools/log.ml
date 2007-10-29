@@ -30,7 +30,7 @@ let conf_timestamps_format =
       F.x "\"localized\" for human readable timestamps in local timezone" [];
       F.x "\"unix\" for subsecond accuracy, and is timezone independant" [];
     ]
-    (F.x "display timestamps in unix format" [])
+    (F.x "format of displayed timestamps" [])
 
 let conf_file  =
   Conf.bool ~p:(conf#plug "file") ~d:false
@@ -125,7 +125,7 @@ object (self : t)
     begin fun tag x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
-      proceed (F.h (ts @ [ tag (F.s "msg:"); F.s path_str; x]))
+      proceed (F.h (ts @ [ tag (F.s (path_str ^ ":")); x]))
     end
   val active =
     begin fun lvl ->

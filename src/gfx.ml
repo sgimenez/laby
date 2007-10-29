@@ -81,11 +81,6 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
-let interprets_list =
-  List.sort (compare) (Data.get_list ["run"])
-let levels_list =
-  "demo" :: List.sort (compare) (Data.get_list ["levels"])
-
 let layout () =
   let window = GWindow.window ~resizable:true () in
   let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
@@ -103,18 +98,10 @@ let layout () =
       ~packing:sw_prog#add ()
   in
   let rvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let interprets =
-    GEdit.combo
-      ~popdown_strings:interprets_list
-      ~packing:(rvbox#pack) ()
-  in
+  let interprets = GEdit.combo ~packing:rvbox#pack () in
   let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
-  let levels =
-    GEdit.combo
-      ~popdown_strings:levels_list
-      ~packing:(lvbox#pack) ()
-  in
+  let levels = GEdit.combo ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`ICONS () in
@@ -130,11 +117,13 @@ let layout () =
   let button_last = button `GOTO_LAST in
   let _ =
     GButton.separator_tool_item
-      ~expand:false ~draw:true ~packing:toolbar#insert () in
+      ~expand:false ~draw:true ~packing:toolbar#insert ()
+  in
   let button_play = tbutton `MEDIA_PLAY in
   let _ =
     GButton.separator_tool_item
-      ~expand:true ~draw:false ~packing:toolbar#insert () in
+      ~expand:true ~draw:false ~packing:toolbar#insert ()
+  in
   let button_refresh = button `REFRESH in
   {
     window = window;
@@ -166,7 +155,15 @@ let display_gtk () =
   let bg = ref `WHITE in
   begin try
     let ressources = gtk_init () in
+    let interprets_list =
+      List.sort (compare) (Data.get_list ["run"])
+    in
+    let levels_list =
+      "demo" :: List.sort (compare) (Data.get_list ["levels"])
+    in
     let c = layout () in
+    c.interprets#set_popdown_strings interprets_list;
+    c.levels#set_popdown_strings levels_list;
     let pixmap = ref (make_pixmap !level) in
     let destroy () =
       c.window#destroy ();
@@ -317,7 +314,7 @@ let display_gtk () =
   | Gtk.Error m ->
       raise (
 	Error (
-	  F.x "gtk error: <error>" ["error", F.string m]
+	  F.x "gtk error: <error>" ["error", F.q (F.string m)]
 	)
       )
   end
