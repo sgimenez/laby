@@ -12,13 +12,18 @@ type 'a result =
     | Failed
     | Exn of exn
 
+let may_set_signal s h =
+  begin try Sys.set_signal s h with
+  | Invalid_argument _ -> ()
+  end
+
 let _ =
   Sys.catch_break false;
-  Sys.set_signal Sys.sigpipe (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sigterm (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sighup Sys.Signal_ignore
+  may_set_signal Sys.sigpipe (Sys.Signal_handle signal);
+  may_set_signal Sys.sigterm (Sys.Signal_handle signal);
+  may_set_signal Sys.sigquit (Sys.Signal_handle signal);
+  may_set_signal Sys.sigalrm (Sys.Signal_handle signal);
+  may_set_signal Sys.sighup Sys.Signal_ignore
 
 let exec f =
   begin try f () with

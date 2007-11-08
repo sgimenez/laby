@@ -39,13 +39,16 @@ let get rpath =
   in
   let rec may =
     begin function
-    | x :: q -> if Sys.file_exists x then x else may q
+    | x :: q ->
+	begin try
+	    if Sys.file_exists x then x else may q
+	  with
+	  | Sys_error _ -> may q
+	end
     | [] -> error ()
     end
   in
-  begin try may l with
-  | Sys_error _ -> error ()
-  end
+  may l
 
 let get_list rpath =
   let f = Unix.opendir (get rpath) in

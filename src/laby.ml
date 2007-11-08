@@ -31,7 +31,7 @@ let proceed _ =
 
 let main =
   Fd.set_texts !texts_path;
-  conf#plug "log" Log.conf#ut;
+(*   conf#plug "log" Log.conf#ut; *)
   let opts =
     [
       Version.opt;
@@ -51,6 +51,6 @@ let main =
   | `Excl fn ->
       Fd.stdout (fn ())
   | `Proceed list ->
-      Init.init (fun () -> proceed list)
+      proceed list
   end
 
