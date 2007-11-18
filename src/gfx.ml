@@ -1,5 +1,7 @@
 let log = Log.make ["gfx"]
 
+let tile_size = 40
+
 exception Error of F.t
 
 type ressources =
@@ -37,7 +39,7 @@ let gtk_init () =
   let _ = GtkMain.Main.init () in
   let pix p =
     let file = Data.get ["tiles"; p ^ ".svg"] in
-    GdkPixbuf.from_file_at_size file 50 50
+    GdkPixbuf.from_file_at_size file tile_size tile_size
   in
   {
     void_p = pix "void";
@@ -55,7 +57,8 @@ let gtk_init () =
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
   let tile i j p =
-    pixmap#put_pixbuf ~x:(25+i*50) ~y:(25+j*50) p
+    pixmap#put_pixbuf
+      ~x:(tile_size/2+i*tile_size) ~y:(tile_size/2+j*tile_size) p
   in
   let i0, j0 = state.State.pos in
   let p i j t =
@@ -142,7 +145,7 @@ let layout () =
 
 let make_pixmap level =
   let sizex, sizey = Level.size level in
-  let width, height = 50 + 50 * sizex, 50 + 50 * sizey in
+  let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
 
 let display_gtk () =
