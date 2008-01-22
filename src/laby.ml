@@ -30,14 +30,15 @@ let proceed _ =
   end
 
 let main =
-  Fd.set_texts !texts_path;
+  Fd.load_texts !texts_path;
+  Fd.load_theme !theme_path;
 (*   conf#plug "log" Log.conf#ut; *)
   let opts =
     [
       Version.opt;
 (*       Conf.opt ~short:'p' ~long:"prog" conf_prog#ut; *)
 (*       Conf.opt ~short:'l' ~long:"level" conf_level#ut; *)
-      Conf.opt_descr ~long:"conf-descr" conf;
+      Opt.conf_descr ~long:"conf-descr" conf;
     ]
   in
   begin match Opt.cmd opts with

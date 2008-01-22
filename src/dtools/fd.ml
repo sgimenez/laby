@@ -2,11 +2,9 @@ let conf_tags =
   Conf.string
     (F.x "theme" [])
 
-let tag_quoted = F.t "format.quoted"
-let tag_label = F.t "format.label"
-let tag_msg_unknown = F.t "format.msg.unknown"
-let tag_msg_lang = F.t "format.msg.lang"
-let tag_msg_bad = F.t "format.msg.bad"
+let conf_format_tags =
+  Conf.list ~p:(conf_tags#plug "format")
+    (F.x "format theme" [])
 
 let env_term =
   begin try Some (Sys.getenv "TERM") with Not_found -> None end
@@ -33,6 +31,64 @@ let color, bcolor =
   | _ ->
       (fun r g b -> "0"), (fun r g b -> "0")
   end
+
+let codes =
+  let is_digit c = '0' <= c && c <= '5' in
+  let digit c = int_of_char c - int_of_char '0' in
+  let unrecognized str =
+(*     error (F.x "unrecognized value <val>" ["val", F.string str]); *)
+    ""
+  in
+  begin function
+  | "" -> ""
+  | "bold" -> "01" | "italic" -> "03" | "underline" -> "04"
+  | "#black" -> "30" | "##black" -> "40"
+  | "#red" -> "31" | "##red" -> "41"
+  | "#green" -> "32" | "##green" -> "42"
+  | "#yellow" -> "33" | "##yellow" -> "43"
+  | "#blue" -> "34" | "##blue" -> "44"
+  | "#purple" -> "35" | "##purple" -> "45"
+  | "#cyan" -> "36" | "##cyan" -> "46"
+  | "#white" -> "37" | "##white" -> "47"
+  | str when str.[0] = '#' ->
+      if String.length str = 4 &&
+	is_digit str.[1] && is_digit str.[2] && is_digit str.[3]
+      then color (digit str.[1]) (digit str.[2]) (digit str.[3])
+      else if String.length str = 5 && str.[1] = '#'
+	&& is_digit str.[2] && is_digit str.[3] && is_digit str.[4]
+      then bcolor (digit str.[2]) (digit str.[3]) (digit str.[4])
+      else unrecognized str
+  | str -> unrecognized str
+  end
+
+let tag s descr =
+  let c =
+    begin try Conf.list ~p:(conf_tags#plug s) ~d:[] descr
+    with
+    | Conf.Unbound _ ->
+	Printf.printf "name: %s%!\n" s; assert false
+    end
+  in
+  let tstr = ref None in
+  let tag m =
+    if !tstr = None then
+      tstr := Some (String.concat ";" (List.map codes c#get));
+    begin match !tstr with
+    | Some tstr when tstr <> "" -> escape tstr m
+    | _ -> m
+    end
+  in
+  F.t tag
+
+let load_theme s =
+  Conf.conf_file ~strict:false conf_tags#ut s
+
+let tag_quoted = tag "format-quoted" (F.s "quote style")
+let tag_label = tag "format-label" F.n
+
+let tag_msg_unknown = tag "format-msg-unknown" F.n
+let tag_msg_lang = tag "format-msg-lang" F.n
+let tag_msg_bad = tag "format-msg-bad" F.n
 
 let texts : (string, (string * F.t) list -> F.t) Hashtbl.t =
   Hashtbl.create 1024
@@ -77,8 +133,9 @@ let texts_line txt str =
 	  end
       end
     in
-    if !msg_lang = lang then F.h ~sep:F.n (List.map map !l)
-    else F.h (tag_msg_lang (F.s ("<" ^ !msg_lang ^ ">")) :: List.map map !l)
+    let msg = F.h ~sep:F.n (List.map map !l) in
+    if !msg_lang = lang then msg
+    else F.h [tag_msg_lang (F.s ("<" ^ !msg_lang ^ ">")); msg]
   in
   begin match !state with
   | `Text -> `Skip
@@ -95,28 +152,29 @@ let bad m vars =
   Hashtbl.add texts m fn;
   fn vars
 
-let tag s m =
-  begin try
-      let _ = Conf.as_list (conf_tags#path (Conf.path_of_string s)) in
-      m
-    with
-    | Conf.Unbound _ -> m
-  end
 
 let string t =
-  let rec str ?(ind="\n") ?(pri=100) t =
-    let aux ?(ind=ind) ?(pri=pri) t = str ~ind ~pri t in
+  let rec str ?(ind="\n") ?(pri=100) ?(cr=true) t =
+    let aux ?(ind=ind) ?(pri=pri) ?(cr=false) t = str ~ind ~pri ~cr t in
     begin match F.use t with
     | `N -> ""
-    | `T (s, m) -> aux (tag s m)
+    | `T (t, m) -> t (aux m)
     | `S (s) -> s
     | `L (s, m) -> aux (tag_label (F.s (s ^ ":"))) ^ " " ^ aux m
     | `H (sep0, l) ->
 	let sl = List.map (fun x -> aux x) l in
 	String.concat (aux sep0) sl
     | `V (head0, l) ->
-	let ind = ind ^ (aux head0) in
-	ind ^ String.concat ind (List.map (aux ~ind) l)
+	let ind0 = aux head0 in
+	let ind = ind ^ ind0 in
+	begin match l with
+	| [] -> ""
+	| x :: q ->
+	    let tab =
+	      String.concat ind (aux ~ind ~cr:true x :: List.map (aux ~ind ~cr:true) q)
+	    in
+	    if cr then ind0 ^ tab else ind ^ tab
+	end
     | `Q l ->
 	let ind = ind ^ "  " in
 	ind ^ (aux ~ind l)
@@ -141,7 +199,7 @@ let string t =
 	aux t
     | `Int i -> string_of_int i
     | `Float f -> string_of_float f
-    | `String s -> "\"" ^ s ^ "\""
+    | `String s -> "\"" ^ aux (tag_quoted (F.s s)) ^ "\""
     | `Time time ->
 	let date = Unix.localtime time in
 	Printf.sprintf "%d/%02d/%02d %02d:%02d:%02d"
@@ -159,35 +217,6 @@ let string t =
 
 let stdout x =
   Printf.printf "%s\n" (string x)
-
-let codes error =
-  let is_digit c = '0' <= c && c <= '5' in
-  let digit c = int_of_char c - int_of_char '0' in
-  let unrecognized str =
-    error (F.x "unrecognized value <val>" ["val", F.string str]);
-    ""
-  in
-  begin function
-  | "" -> ""
-  | "bold" -> "01" | "italic" -> "03" | "underline" -> "04"
-  | "#black" -> "30" | "##black" -> "40"
-  | "#red" -> "31" | "##red" -> "41"
-  | "#green" -> "32" | "##green" -> "42"
-  | "#yellow" -> "33" | "##yellow" -> "43"
-  | "#blue" -> "34" | "##blue" -> "44"
-  | "#purple" -> "35" | "##purple" -> "45"
-  | "#cyan" -> "36" | "##cyan" -> "46"
-  | "#white" -> "37" | "##white" -> "47"
-  | str when str.[0] = '#' ->
-      if String.length str = 4 &&
-	is_digit str.[1] && is_digit str.[2] && is_digit str.[3]
-      then color (digit str.[1]) (digit str.[2]) (digit str.[3])
-      else if String.length str = 5 && str.[1] = '#'
-	&& is_digit str.[2] && is_digit str.[3] && is_digit str.[4]
-      then bcolor (digit str.[2]) (digit str.[3]) (digit str.[4])
-      else unrecognized str
-  | str -> unrecognized str
-  end
 
 let log : (int -> F.t -> unit) ref =
   ref (fun _ _ -> ())
@@ -225,7 +254,7 @@ let error path line f =
     ]
   )
 
-let set_texts path =
+let load_texts path =
   begin try
       let f = open_in_bin path in
       read_texts (error path) f;
@@ -236,3 +265,20 @@ let set_texts path =
 	!log 2 (F.x "failed to open texts file" []);
   end
 
+let tag_cmd_output = tag "cmd-output" (F.s "command line output")
+let tag_cmd_input = tag "cmd-input" (F.s "command line input")
+
+let output f =
+(*   let head = tag_cmd_output (F.s "·") in *)
+  stdout (F.v ~head:(F.h ~sep:F.n [tag_cmd_output (F.s ">"); F.s " "]) [f]);
+  stdout F.n
+
+let input () =
+  let prompt = F.h [tag_cmd_input (F.s "<"); F.s ""] in
+  print_string (string prompt);
+  begin try Some (read_line ()) with
+  | End_of_file -> None
+  end
+
+let exn e =
+  stdout (F.h [F.h ~sep:F.n [F.x "exception" []; F.s ":"]; F.q (F.exn e)])

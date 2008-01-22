@@ -124,18 +124,11 @@ val conf_set : ut -> string -> unit
      correctly formated string: "type key :value"
      Raises [Wrong_Conf] in badly formated cases.
   *)
-val conf_file : ut -> string -> unit
+val conf_file : ?strict: bool -> ut -> string -> unit
   (**
      Read configuration values from the file associated with the given
      filename.
      Raises [File_Wrong_Conf] with filename line and and error message
      in case of a bad configuration file.
   *)
-
-val opt : ?short:char -> ?long:string -> ut -> Opt.t
-  (**
-     Generate an Opt.t from a configuration key.
-  *)
-
-val opt_descr : ?short:char -> ?long:string -> ut -> Opt.t
 

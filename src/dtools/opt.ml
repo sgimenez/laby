@@ -14,7 +14,7 @@ let nolong = ""
 let make ?(short=noshort) ?(long=nolong) ?noarg ?arg descr =
   short, long, noarg, arg, descr
 
-let tag_option = F.t "opt.option"
+let tag_option = Fd.tag "opt-option" (F.s "command line options style")
 
 let l_f long = tag_option (F.s ("--" ^ long))
 let s_f short = tag_option (F.s ("-" ^ String.make 1 short))
@@ -208,3 +208,82 @@ let cmd ?(argv=Sys.argv) opts =
       in
       `Errors (List.rev errors)
   end
+
+
+let opt_unit ?short ?long conf : t =
+  make ?short ?long
+    ~noarg:(fun () -> Do (fun () -> conf#set ()))
+    conf#descr
+
+let opt_int ?short ?long conf : t =
+  let set s =
+    begin try
+	let i = int_of_string s in
+	Do (fun () -> conf#set i)
+      with
+      | Invalid_argument _ ->
+	  Invalid (F.x "integer expected" [])
+    end
+  in
+  make ?short ?long ~arg:set conf#descr
+
+let opt_float ?short ?long conf : t =
+  let set s =
+    begin try
+	let f = float_of_string s in
+	Do (fun () -> conf#set f)
+      with
+      | Invalid_argument _ ->
+	  Invalid (F.x "float expected" [])
+    end
+  in
+  make ?short ?long ~arg:set conf#descr
+
+let opt_bool ?short ?long conf : t =
+  let set =
+    begin function
+    | "true" -> Do (fun () -> conf#set true)
+    | "false" -> Do (fun () -> conf#set false)
+    | _ -> Invalid (F.x "boolean expected" [])
+    end
+  in
+  make ?short ?long
+    ~noarg:(fun () -> Do (fun () -> conf#set true))
+    ~arg:set
+    conf#descr
+
+let opt_string ?short ?long conf : t =
+  make ?short ?long
+    ~arg:(fun s -> Do (fun () -> conf#set s))
+    conf#descr
+
+let opt_list ?short ?long conf : t =
+  make ?short ?long
+    ~arg:(fun s -> Do (fun () -> conf#set (conf#get @ [s])))
+    conf#descr
+
+let conf ?short ?long conf : t =
+  begin match conf#kind with
+  | Some "unit" -> opt_unit ?short ?long (Conf.as_unit conf)
+  | Some "int" -> opt_int ?short ?long (Conf.as_int conf)
+  | Some "float" -> opt_float ?short ?long (Conf.as_float conf)
+  | Some "string" -> opt_string ?short ?long (Conf.as_string conf)
+  | Some "list" -> opt_list ?short ?long (Conf.as_list conf)
+  | _ -> assert false
+  end
+
+let conf_descr ?short ?long t =
+  let noarg () =
+    Excl (fun () -> F.v ~head:F.n (Conf.descr t))
+  in
+  let arg p =
+    begin try
+	let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
+	Excl (fun () -> F.v ~head:F.n dl)
+      with
+      | Conf.Unbound _ ->
+	  Error (F.x "unknown key" [])
+    end
+  in
+  make ?short ?long ~noarg ~arg
+    (F.x "describe a configuration key" []);

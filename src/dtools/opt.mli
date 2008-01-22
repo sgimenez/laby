@@ -20,3 +20,13 @@ val cmd : ?argv:(string array) -> t list ->
   | `Excl of (unit -> F.t)
   | `Proceed of string list
   ]
+
+val conf : ?short:char -> ?long:string -> Conf.ut -> t
+  (**
+     Generate an option to configure a Conf.ut configuration key.
+  *)
+
+val conf_descr : ?short:char -> ?long:string -> Conf.ut -> t
+  (**
+     Generate an option to describe a Conf.ut configuration key.
+  *)

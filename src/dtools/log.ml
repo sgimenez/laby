@@ -110,22 +110,28 @@ let build path =
   in
   aux path [] conf_level#ut
 
-let tag_internal = F.t "log.internal"
-let tag_fatal = F.t "log.fatal"
-let tag_error = F.t "log.error"
-let tag_warning = F.t "log.warning"
-let tag_info = F.t "log.info"
-let tag_debug = F.t "log.debug"
+let tag_label = Fd.tag "log-label" F.n
+let tag_internal_error = Fd.tag "log-internal-error" F.n
+let tag_fatal_error = Fd.tag "log-fatal-error" F.n
+let tag_error = Fd.tag "log-error" F.n
+let tag_warning = Fd.tag "log-warning" F.n
+let tag_info = Fd.tag "log-info" F.n
+let tag_debug = Fd.tag "log-debug" F.n
+
+let bracketize m =
+  F.h ~sep:F.n [F.s "["; m ; F.s "]"]
+let lvl_bracketize m l =
+  F.h ~sep:F.n [F.s "["; m ; F.s ":"; l; F.s "]"]
 
 let make path : t =
   let confs = build path in
   let path_str = Conf.string_of_path path in
 object (self : t)
   val print =
-    begin fun tag x ->
+    begin fun heads x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
-      proceed (F.h (ts @ [ tag (F.s (path_str ^ ":")); x]))
+      proceed (F.h (ts @ [tag_label (F.s (path_str ^ ":"))] @ heads @ [x]))
     end
   val active =
     begin fun lvl ->
@@ -143,38 +149,38 @@ object (self : t)
   method f lvl =
     begin match active lvl with
     | true ->
-	Printf.ksprintf (fun s -> print (fun x -> x) (F.s s))
+	Printf.ksprintf (fun s -> print [] (F.s s))
     | false ->
 	Printf.ksprintf (fun _ -> ())
     end
   method internal =
     begin match active (-1) with
-    | true -> print tag_internal
+    | true -> print [tag_internal_error (bracketize (F.x "internal error" []))]
     | false -> (fun _ -> ())
     end
   method fatal =
     begin match active 0 with
-    | true -> print tag_fatal
+    | true -> print [tag_fatal_error (bracketize (F.x "fatal error" []))]
     | false -> (fun _ -> ())
     end
   method error =
     begin match active 1 with
-    | true -> print tag_error
+    | true -> print [tag_error (bracketize (F.x "error" []))]
     | false -> (fun _ -> ())
     end
   method warning =
     begin match active 2 with
-    | true -> print tag_warning
+    | true -> print [tag_warning (bracketize (F.x "warning" []))]
     | false -> (fun _ -> ())
     end
   method info =
     begin match active 3 with
-    | true -> print tag_info
+    | true -> print []
     | false -> (fun _ -> ())
     end
   method debug lvl =
     begin match active lvl with
-    | true -> print tag_debug
+    | true -> print [tag_debug (lvl_bracketize (F.x "debug" []) (F.int lvl))]
     | false -> (fun _ -> ())
     end
 end

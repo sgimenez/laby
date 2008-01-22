@@ -54,7 +54,9 @@ val time : float -> t
 
 (** Taging *)
 
-val t : string -> t -> t
+type tag = string -> string
+
+val t : tag -> t -> t
 (** taged message *)
 
 
@@ -68,7 +70,7 @@ val z : (unit -> t) -> t
 
 val use : t ->
   [ `N
-  | `T of string * t
+  | `T of tag * t
   | `S of string
   | `L of string * t
   | `H of t * t list

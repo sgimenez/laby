@@ -1,17 +1,19 @@
-format.internal-error	:bold:underline:#500
-format.fatal-error	:bold:#500
-format.error		:#500
-format.warning		:#520
-format.quoted		:#333
-format.label		:#555
-format.debug		:underline:#222
+list	log-label		:#555
+list	log-internal-error	:bold:underline:#500
+list	log-fatal-error		:bold:#500
+list	log-error		:#500
+list	log-warning		:#520
+list	log-info		:
+list	log-format-debug	:underline:#222
 
-format.msg.lang		:##200
-format.msg.unknown	:##200
-format.msg.bad		:##200
+list	format-quoted		:#333
+list	format-label		:#555
+list	format-msg-lang		:##200
+list	format-msg-unknown	:##200
+list	format-msg-bad		:##200
 
-opt.option		:#055
+list	opt-option		:#055
 
-cmd.input		:bold:#red
-cmd.output		:bold:#red
+list	cmd-input		:bold:#red
+list	cmd-output		:bold:#red
 

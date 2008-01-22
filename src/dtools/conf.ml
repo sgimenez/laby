@@ -6,14 +6,14 @@
 type link = string
 type path = link list
 
-and ut =
+type ut =
     <
       kind: string option;
       descr: F.t;
       comments: F.t list;
-      plug: string -> ut -> unit;
-      subs: string list;
-      path: string list -> ut;
+      plug: link -> ut -> unit;
+      subs: link list;
+      path: path -> ut;
       routes: ut -> path list;
       ut: ut;
     >
@@ -152,10 +152,10 @@ let string ?d = make (Some "string") ?d
 let list ?d = make (Some "list") ?d
 
 (* Harmful function, do not use *)
-let force_type c (t : ut) : 'a t =
+let force_type c t : 'a t =
   begin match t#kind with
   | Some x when x = c -> (Obj.magic t : 'a t)
-  | _ -> raise (Mismatch (t))
+  | _ -> raise (Mismatch (t#ut))
   end
 
 let as_unit t : unit t = force_type "unit" t
@@ -324,7 +324,7 @@ let conf_set (t: ut) s =
     end
   else raise (Wrong_Conf (s, "syntax error"))
 
-let conf_file t s =
+let conf_file ?(strict=true) t s =
   let nb = Pervasives.ref 0 in
   let f = open_in s in
   begin try
@@ -337,103 +337,11 @@ let conf_file t s =
 	  begin try conf_set t l with
 	  | Wrong_Conf (x,y) ->
 	      raise (File_Wrong_Conf (s,!nb,y))
+	  | Unbound (e, p) ->
+	      if strict then raise (Unbound (e, p))
 	  end
       done
     with
     | End_of_file -> ()
   end
-
-let opt_unit ?short ?long conf : Opt.t =
-  Opt.make ?short ?long
-    ~noarg:(fun () -> Opt.Do (fun () -> conf#set ()))
-    conf#descr
-
-let opt_int ?short ?long conf : Opt.t =
-  let set s =
-    begin try
-	let i = int_of_string s in
-	Opt.Do (fun () -> conf#set i)
-      with
-      | Invalid_argument _ ->
-	  Opt.Invalid (F.x "integer expected" [])
-    end
-  in
-  Opt.make ?short ?long ~arg:set conf#descr
-
-let opt_float ?short ?long conf : Opt.t =
-  let set s =
-    begin try
-	let f = float_of_string s in
-	Opt.Do (fun () -> conf#set f)
-      with
-      | Invalid_argument _ ->
-	  Opt.Invalid (F.x "float expected" [])
-    end
-  in
-  Opt.make ?short ?long ~arg:set conf#descr
-
-let opt_bool ?short ?long conf : Opt.t =
-  let set =
-    begin function
-    | "true" -> Opt.Do (fun () -> conf#set true)
-    | "false" -> Opt.Do (fun () -> conf#set false)
-    | _ -> Opt.Invalid (F.x "boolean expected" [])
-    end
-  in
-  Opt.make ?short ?long
-    ~noarg:(fun () -> Opt.Do (fun () -> conf#set true))
-    ~arg:set
-    conf#descr
-
-let opt_string ?short ?long conf : Opt.t =
-  Opt.make ?short ?long
-    ~arg:(fun s -> Opt.Do (fun () -> conf#set s))
-    conf#descr
-
-let opt_list ?short ?long conf : Opt.t =
-  Opt.make ?short ?long
-    ~arg:(fun s -> Opt.Do (fun () -> conf#set (conf#get @ [s])))
-    conf#descr
-
-let opt ?short ?long conf : Opt.t =
-  begin match conf#kind with
-  | Some "unit" -> opt_unit ?short ?long (as_unit conf)
-  | Some "int" -> opt_int ?short ?long (as_int conf)
-  | Some "float" -> opt_float ?short ?long (as_float conf)
-  | Some "string" -> opt_string ?short ?long (as_string conf)
-  | Some "list" -> opt_list ?short ?long (as_list conf)
-  | _ -> assert false
-  end
-
-let opt_descr ?short ?long t =
-  let noarg () =
-    Opt.Excl (fun () ->
-      F.v ~head:F.n (descr t)
-    )
-  in
-  let arg p =
-    begin try
-	let dl = descr ~prefix:(path_of_string p) t in
-	Opt.Excl (fun () -> F.v ~head:F.n dl)
-      with
-      | Unbound _ ->
-	  Opt.Error (F.x "unknown key" [])
-    end
-  in
-  Opt.make ?short ?long ~noarg ~arg
-    (F.x "describe a configuration key" []);
-(*
-    ["--conf-file";"-f"],
-    Arg.String (conf_file t),
-    "read the given configuration file";
-    ["--conf-set";"-s"],
-    Arg.String (conf_set t),
-    "apply the given configuration assignation";
-    ["--conf-dump"],
-    Arg.Unit (fun () ->
-      Printf.printf "%s" (dump t); exit 0),
-    "dump the configuration state";
-  ]
-
-*)
 

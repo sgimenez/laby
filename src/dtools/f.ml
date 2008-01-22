@@ -3,9 +3,11 @@
    @author Stéphane Gimenez
 *)
 
+type tag = string -> string
+
 type d =
     | N
-    | T of string * t
+    | T of tag * t
     | S of string
     | L of string * t
     | H of t * t list
@@ -24,8 +26,8 @@ and t =
 
 let z m = fun () -> m () ()
 
-let t s m =
-  fun () -> T (s, m)
+let t tag m =
+  fun () -> T (tag, m)
 
 let n =
   fun () -> N
@@ -87,3 +89,4 @@ let use x =
     | Exn e -> `Exn e
     | Time f -> `Time f
   end
+
