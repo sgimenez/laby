@@ -1,3 +1,5 @@
+let tag_option = Fd.tag "opt-option"
+
 type action =
     | Invalid of F.t
     | Error of F.t
@@ -14,21 +16,22 @@ let nolong = ""
 let make ?(short=noshort) ?(long=nolong) ?noarg ?arg descr =
   short, long, noarg, arg, descr
 
-let tag_option = Fd.tag "opt-option" (F.s "command line options style")
-
 let l_f long = tag_option (F.s ("--" ^ long))
 let s_f short = tag_option (F.s ("-" ^ String.make 1 short))
 
-let f (short, long, _, _, _) =
-  begin match short = noshort, long = nolong with
-  | true, true -> assert false
-  | true, false -> l_f long
-  | false, true -> s_f short
-  | false, false ->
-      F.x "<long-opt>(<short-opt>)" [
-	"long-opt", l_f long;
-	"short-opt", s_f short;
-      ]
+let f ?arg (short, long, _, _, _) =
+  let optf =
+    begin match short = noshort, long = nolong with
+    | true, true -> assert false
+    | true, false -> l_f long
+    | false, true -> s_f short
+    | false, false ->
+	F.h ~sep:F.n [l_f long; F.s "("; s_f short; F.s ")"]
+    end
+  in
+  begin match arg with
+  | None -> optf
+  | Some arg -> F.h ~sep:F.n [optf; F.s "="; F.string arg]
   end
 
 let help_opt opts : t =
@@ -119,19 +122,19 @@ let cmd ?(argv=Sys.argv) opts =
   let set_command c = commands := c :: !commands in
   let action (opt : t) value =
     let (short, long, handle, handle_s, descr) = opt in
-    let add_action a arg =
-      begin match a arg with
+    let add_action a argv arg =
+      begin match a argv with
       | Invalid m ->
 	  set_err (
 	    F.x "invalid argument to <opt>: <error>" [
-	      "opt", f opt;
+	      "opt", f ?arg opt;
 	      "error", F.q m;
 	    ]
 	  )
       | Error m ->
 	  set_err (
-	    F.x "error with option <opt>: <error>" [
-	      "opt", f opt;
+	    F.x "error with <opt>: <error>" [
+	      "opt", f ?arg opt;
 	      "error", F.q m;
 	    ]
 	  )
@@ -144,24 +147,26 @@ let cmd ?(argv=Sys.argv) opts =
     | None ->
 	begin match handle with
 	| None ->
-	    set_err (
+	    let f =
 	      F.x "option <opt> requires an argument" [
 		"opt", f opt;
 	      ]
-	    )
+	    in
+	    set_err f
 	| Some a ->
-	    add_action a ()
+	    add_action a () None
 	end
     | Some s ->
 	begin match handle_s with
 	| None ->
-	    set_err (
+	    let f =
 	      F.x "option <opt> does not take an argument" [
 		"opt", f opt;
 	      ]
-	    )
+	    in
+	    set_err f
 	| Some h ->
-	    add_action h s
+	    add_action h s (Some s)
 	end
     end
   in
@@ -209,6 +214,8 @@ let cmd ?(argv=Sys.argv) opts =
       `Errors (List.rev errors)
   end
 
+let wrong_value kind =
+  Invalid (F.x "<type> value expected" ["type", F.s kind])
 
 let opt_unit ?short ?long conf : t =
   make ?short ?long
@@ -221,8 +228,7 @@ let opt_int ?short ?long conf : t =
 	let i = int_of_string s in
 	Do (fun () -> conf#set i)
       with
-      | Invalid_argument _ ->
-	  Invalid (F.x "integer expected" [])
+      | Failure "int_of_string" -> wrong_value "int"
     end
   in
   make ?short ?long ~arg:set conf#descr
@@ -233,8 +239,7 @@ let opt_float ?short ?long conf : t =
 	let f = float_of_string s in
 	Do (fun () -> conf#set f)
       with
-      | Invalid_argument _ ->
-	  Invalid (F.x "float expected" [])
+      | Failure "float_of_string" -> wrong_value "float"
     end
   in
   make ?short ?long ~arg:set conf#descr
@@ -244,7 +249,7 @@ let opt_bool ?short ?long conf : t =
     begin function
     | "true" -> Do (fun () -> conf#set true)
     | "false" -> Do (fun () -> conf#set false)
-    | _ -> Invalid (F.x "boolean expected" [])
+    | _ -> wrong_value "bool"
     end
   in
   make ?short ?long
@@ -272,6 +277,26 @@ let conf ?short ?long conf : t =
   | _ -> assert false
   end
 
+let unknown_key_error s =
+  Error (F.x "unknown key <key>" ["key", F.string s])
+let mismatch_error k =
+  begin match k#kind with
+  | None ->
+      Error (F.x "this key cannot be assigned a value" []);
+  | Some s ->
+      Error (F.x "expected type for this key is <type>" ["type", F.string s])
+  end
+
+let conf_set ?short ?long conf : t =
+  let arg p =
+    begin try Do (Conf.set conf p) with
+      | Conf.Unbound (_ , s) -> unknown_key_error s
+      | Conf.Wrong_Conf (_, f) -> Error f
+    end
+  in
+  make ?short ?long ~arg
+    (F.x "set a configuration key" [])
+
 let conf_descr ?short ?long t =
   let noarg () =
     Excl (fun () -> F.v ~head:F.n (Conf.descr t))
@@ -281,9 +306,23 @@ let conf_descr ?short ?long t =
 	let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
 	Excl (fun () -> F.v ~head:F.n dl)
       with
-      | Conf.Unbound _ ->
-	  Error (F.x "unknown key" [])
+      | Conf.Unbound (_, s) -> unknown_key_error s
     end
   in
   make ?short ?long ~noarg ~arg
-    (F.x "describe a configuration key" []);
+    (F.x "describe a configuration key" [])
+
+let conf_dump ?short ?long t =
+  let noarg () =
+    Excl (fun () -> F.s (Conf.dump t))
+  in
+  let arg p =
+    begin try
+	let dl = Conf.dump ~prefix:(Conf.path_of_string p) t in
+	Excl (fun () -> F.s dl)
+      with
+      | Conf.Unbound (_, s) -> unknown_key_error s
+    end
+  in
+  make ?short ?long ~noarg ~arg
+    (F.x "dump a configuration key" [])

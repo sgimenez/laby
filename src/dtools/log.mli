@@ -23,7 +23,7 @@ type t =
        function.
     *)
 
-val make : Conf.path -> t
+val make : ?level:int -> Conf.path -> t
   (**
      Make a logger labeled according to the given path.
   *)

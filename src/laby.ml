@@ -1,16 +1,11 @@
 let log = Log.make ["laby"]
 
-let conf =
-  Conf.void
-    (F.x "laby configuration" [])
-
 let conf_path = ref (Data.get ["conf"])
-let texts_path = ref (Data.get ["texts"])
-let theme_path = ref (Data.get ["theme"])
 
-(* let conf_level = *)
-(*   Conf.string ~p:(conf#plug "level") *)
-(*     (F.x "level file" []) *)
+let conf =
+  Conf.root log !conf_path
+    ~l:["log", Log.conf#ut; "display", Fd.conf#ut]
+    (F.x "laby configuration" [])
 
 (* let conf_prog = *)
 (*   Conf.string ~p:(conf#plug "prog") *)
@@ -30,15 +25,15 @@ let proceed _ =
   end
 
 let main =
-  Fd.load_texts !texts_path;
-  Fd.load_theme !theme_path;
-(*   conf#plug "log" Log.conf#ut; *)
+  Fd.init log (Data.get []);
   let opts =
     [
       Version.opt;
-(*       Conf.opt ~short:'p' ~long:"prog" conf_prog#ut; *)
-(*       Conf.opt ~short:'l' ~long:"level" conf_level#ut; *)
+      Opt.conf ~short:'d' ~long:"debug" Log.conf_level#ut;
+      Opt.conf_set ~short:'c' ~long:"conf" conf;
       Opt.conf_descr ~long:"conf-descr" conf;
+      Opt.conf_dump ~long:"conf-dump" conf;
+(*       Opt.conf ~short:'p' ~long:"prog" conf_prog#ut; *)
     ]
   in
   begin match Opt.cmd opts with

@@ -1,10 +1,21 @@
-let conf_tags =
-  Conf.string
-    (F.x "theme" [])
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
 
-let conf_format_tags =
-  Conf.list ~p:(conf_tags#plug "format")
-    (F.x "format theme" [])
+let conf_tags =
+  Conf.void (F.x "theme" [])
+
+let conf =
+  Conf.void (F.x "display configuration" [])
+
+let conf_texts =
+  Conf.string ~p:(conf#plug "texts") ~d:"texts"
+    (F.x "path for texts" [])
+
+let conf_theme =
+  Conf.string ~p:(conf#plug "theme") ~d:"theme.conf"
+    (F.x "path for theme" [])
 
 let env_term =
   begin try Some (Sys.getenv "TERM") with Not_found -> None end
@@ -61,9 +72,9 @@ let codes =
   | str -> unrecognized str
   end
 
-let tag s descr =
+let tag s =
   let c =
-    begin try Conf.list ~p:(conf_tags#plug s) ~d:[] descr
+    begin try Conf.list ~p:(conf_tags#plug s) ~d:[] F.n
     with
     | Conf.Unbound _ ->
 	Printf.printf "name: %s%!\n" s; assert false
@@ -80,15 +91,15 @@ let tag s descr =
   in
   F.t tag
 
-let load_theme s =
-  Conf.conf_file ~strict:false conf_tags#ut s
+let load_theme log path =
+  Conf.load log ~strict:false conf_tags#ut (path ^ conf_theme#get)
 
-let tag_quoted = tag "format-quoted" (F.s "quote style")
-let tag_label = tag "format-label" F.n
+let tag_quoted = tag "format-quoted"
+let tag_label = tag "format-label"
 
-let tag_msg_unknown = tag "format-msg-unknown" F.n
-let tag_msg_lang = tag "format-msg-lang" F.n
-let tag_msg_bad = tag "format-msg-bad" F.n
+let tag_msg_unknown = tag "format-msg-unknown"
+let tag_msg_lang = tag "format-msg-lang"
+let tag_msg_bad = tag "format-msg-bad"
 
 let texts : (string, (string * F.t) list -> F.t) Hashtbl.t =
   Hashtbl.create 1024
@@ -169,10 +180,8 @@ let string t =
 	let ind = ind ^ ind0 in
 	begin match l with
 	| [] -> ""
-	| x :: q ->
-	    let tab =
-	      String.concat ind (aux ~ind ~cr:true x :: List.map (aux ~ind ~cr:true) q)
-	    in
+	| _ ->
+	    let tab = String.concat ind (List.map (aux ~ind ~cr:true) l) in
 	    if cr then ind0 ^ tab else ind ^ tab
 	end
     | `Q l ->
@@ -221,7 +230,16 @@ let stdout x =
 let log : (int -> F.t -> unit) ref =
   ref (fun _ _ -> ())
 
-let read_texts error file =
+let read_texts log path file =
+  let error line f =
+    log#error (
+      F.x "file <f>, line <l>: <error>" [
+	"f", F.string path;
+	"l", F.int line;
+	"error", f
+      ]
+    )
+  in
   let lnb = ref 0 in
   begin try
       let txt = ref "" in
@@ -229,10 +247,10 @@ let read_texts error file =
 	let str = incr lnb; input_line file ^ "\n" in
 	begin match texts_line txt str with
 	| `Entry (msg_lang, txt, msg) ->
-	    !log 5 (
-	      F.x "msg txt: <txt> lang: <lang>" [
-		"text", F.string txt;
-		"lang:", F.string msg_lang;
+	    log#debug 5 (
+	      F.x "message lang=<lang>: <text>" [
+		"lang", F.string msg_lang;
+		"text", F.q (F.s txt);
 	      ]
 	    );
 	    if lang = msg_lang then
@@ -245,28 +263,22 @@ let read_texts error file =
     | End_of_file -> ()
   end
 
-let error path line f =
-  !log 2 (
-    F.x "file <f>, line <l>: <error>" [
-      "f", F.string path;
-      "l", F.int line;
-      "error", f
-    ]
-  )
-
-let load_texts path =
+let load_texts log path =
+  let path = path ^ conf_texts#get in
   begin try
-      let f = open_in_bin path in
-      read_texts (error path) f;
-      close_in f;
+      let file = open_in_bin path in
+      read_texts log path file;
+      close_in file;
     with
     | Sys_error m ->
-	!log 2 (F.x "open failed: <error>" ["error", F.string m]);
-	!log 2 (F.x "failed to open texts file" []);
+	log#warning (
+	  F.x "failed to open theme file: <error>"
+	    ["error", F.string m]
+	);
   end
 
-let tag_cmd_output = tag "cmd-output" (F.s "command line output")
-let tag_cmd_input = tag "cmd-input" (F.s "command line input")
+let tag_cmd_output = tag "cmd-output"
+let tag_cmd_input = tag "cmd-input"
 
 let output f =
 (*   let head = tag_cmd_output (F.s "·") in *)
@@ -277,8 +289,12 @@ let input () =
   let prompt = F.h [tag_cmd_input (F.s "<"); F.s ""] in
   print_string (string prompt);
   begin try Some (read_line ()) with
-  | End_of_file -> None
+  | End_of_file -> print_newline (); None
   end
 
 let exn e =
   stdout (F.h [F.h ~sep:F.n [F.x "exception" []; F.s ":"]; F.q (F.exn e)])
+
+let init log path =
+  load_theme log path;
+  load_texts log path

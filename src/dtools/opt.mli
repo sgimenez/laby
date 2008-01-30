@@ -23,10 +23,16 @@ val cmd : ?argv:(string array) -> t list ->
 
 val conf : ?short:char -> ?long:string -> Conf.ut -> t
   (**
-     Generate an option to configure a Conf.ut configuration key.
+     Generate an option to configure a given configuration key.
+  *)
+
+val conf_set : ?short:char -> ?long:string -> Conf.ut -> t
+  (**
+     Generate an general option to configure sub configuration keys.
   *)
 
 val conf_descr : ?short:char -> ?long:string -> Conf.ut -> t
+val conf_dump : ?short:char -> ?long:string -> Conf.ut -> t
   (**
-     Generate an option to describe a Conf.ut configuration key.
+     Generate an option to describe/dump a Conf.ut configuration key.
   *)

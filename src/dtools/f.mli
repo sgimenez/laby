@@ -86,3 +86,13 @@ val use : t ->
   | `Time of float
   ]
 
+type 'a logger =
+    <
+      internal: t -> unit;
+      fatal: t -> unit;
+      error: t -> unit;
+      warning: t -> unit;
+      info: t -> unit;
+      debug: int -> t -> unit;
+      ..
+    > as 'a

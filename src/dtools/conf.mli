@@ -75,9 +75,9 @@ exception Mismatch of ut
 exception Cyclic of ut * ut
   (** Raised on cyclic plug *)
 
-exception Wrong_Conf of string * string
+exception Wrong_Conf of string * F.t
   (** Raised when bad configuration assignations are encountered  *)
-exception File_Wrong_Conf of string * int * string
+exception File_Wrong_Conf of string * int * F.t
   (** Raised when bad configuration assignations are encountered
       inside configuration files  *)
 
@@ -118,13 +118,14 @@ val descr : ?prefix:path -> ut -> F.t list
 val dump :  ?prefix:path -> ut -> string
   (** Dump the confuguration table for a (sub)key *)
 
-val conf_set : ut -> string -> unit
+val set : ut -> string -> unit -> unit
   (**
-     Add a value to the configuration keys, according to the given
+     Assign values to configuration keys, according to the given
      correctly formated string: "type key :value"
      Raises [Wrong_Conf] in badly formated cases.
   *)
-val conf_file : ?strict: bool -> ut -> string -> unit
+
+val load : 'a F.logger -> ?strict: bool -> ut -> string -> unit
   (**
      Read configuration values from the file associated with the given
      filename.
@@ -132,3 +133,4 @@ val conf_file : ?strict: bool -> ut -> string -> unit
      in case of a bad configuration file.
   *)
 
+val root : 'a F.logger -> string -> ?l:links -> F.t -> ut

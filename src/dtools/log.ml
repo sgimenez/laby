@@ -18,8 +18,17 @@ let conf =
   Conf.void
     (F.x "log configuration" [])
 
+let default_level =
+  begin try
+    int_of_string (Sys.getenv "DEBUG")
+  with
+  | Not_found -> 0
+  | Failure "int_of_float" -> 0
+  end
+
+
 let conf_level =
-  Conf.int ~p:(conf#plug "level") ~d:3
+  Conf.int ~p:(conf#plug "level") ~d:default_level
     (F.x "general log level" [])
 let conf_timestamps =
   Conf.bool ~p:(conf#plug "timestamps") ~d:false
@@ -84,13 +93,7 @@ let print_file x =
     | `Chan ch -> to_ch ch x
     end
 
-let proceed x =
-  mutexify (fun () ->
-    print_stdout x;
-    print_file x;
-  ) ()
-
-let build path =
+let build ?level path =
   let rec aux p l (t : Conf.ut) =
     begin match p with
     | [] -> t :: l
@@ -99,7 +102,7 @@ let build path =
 	  begin try t#path [s] with
 	  | Conf.Unbound _ ->
 	      let c =
-		Conf.int ~p:(t#plug s)
+		Conf.int ~p:(t#plug s) ?d:level
 		  (F.x "subordinate log level" [])
 	      in
 	      c#ut
@@ -110,22 +113,26 @@ let build path =
   in
   aux path [] conf_level#ut
 
-let tag_label = Fd.tag "log-label" F.n
-let tag_internal_error = Fd.tag "log-internal-error" F.n
-let tag_fatal_error = Fd.tag "log-fatal-error" F.n
-let tag_error = Fd.tag "log-error" F.n
-let tag_warning = Fd.tag "log-warning" F.n
-let tag_info = Fd.tag "log-info" F.n
-let tag_debug = Fd.tag "log-debug" F.n
+let tag_label = Fd.tag "log-label"
+let tag_internal_error = Fd.tag "log-internal-error"
+let tag_fatal_error = Fd.tag "log-fatal-error"
+let tag_error = Fd.tag "log-error"
+let tag_warning = Fd.tag "log-warning"
+let tag_info = Fd.tag "log-info"
+let tag_debug = Fd.tag "log-debug"
 
-let bracketize m =
-  F.h ~sep:F.n [F.s "["; m ; F.s "]"]
-let lvl_bracketize m l =
-  F.h ~sep:F.n [F.s "["; m ; F.s ":"; l; F.s "]"]
-
-let make path : t =
-  let confs = build path in
+let make ?level path : t =
+  let confs = build ?level path in
   let path_str = Conf.string_of_path path in
+  let bracketize m =
+    F.h ~sep:F.n [F.s "["; m ; F.s "]"]
+  in
+  let dbracketize m l =
+    F.h ~sep:F.n [F.s "["; m ; F.s ":"; l; F.s "]"]
+  in
+  let proceed x =
+    mutexify (fun () -> print_stdout x; print_file x;) ()
+  in
 object (self : t)
   val print =
     begin fun heads x ->
@@ -154,33 +161,33 @@ object (self : t)
 	Printf.ksprintf (fun _ -> ())
     end
   method internal =
-    begin match active (-1) with
+    begin match active (-4) with
     | true -> print [tag_internal_error (bracketize (F.x "internal error" []))]
     | false -> (fun _ -> ())
     end
   method fatal =
-    begin match active 0 with
+    begin match active (-3) with
     | true -> print [tag_fatal_error (bracketize (F.x "fatal error" []))]
     | false -> (fun _ -> ())
     end
   method error =
-    begin match active 1 with
+    begin match active (-2) with
     | true -> print [tag_error (bracketize (F.x "error" []))]
     | false -> (fun _ -> ())
     end
   method warning =
-    begin match active 2 with
+    begin match active (-1) with
     | true -> print [tag_warning (bracketize (F.x "warning" []))]
     | false -> (fun _ -> ())
     end
   method info =
-    begin match active 3 with
+    begin match active 0 with
     | true -> print []
     | false -> (fun _ -> ())
     end
   method debug lvl =
     begin match active lvl with
-    | true -> print [tag_debug (lvl_bracketize (F.x "debug" []) (F.int lvl))]
+    | true -> print [tag_debug (dbracketize (F.x "debug" []) (F.int lvl))]
     | false -> (fun _ -> ())
     end
 end

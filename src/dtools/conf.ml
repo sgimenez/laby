@@ -44,8 +44,8 @@ exception Invalid of string
 exception Unbound of ut * string
 exception Bound of ut * string
 exception Mismatch of ut
-exception Wrong_Conf of string * string
-exception File_Wrong_Conf of string * int * string
+exception Wrong_Conf of string * F.t
+exception File_Wrong_Conf of string * int * F.t
 exception Cyclic of ut * ut
 
 let path_sep_regexp =
@@ -249,7 +249,7 @@ let descr ?(prefix=[]) (t : ut) =
 	  ]
       end
     in
-    F.v ~head:F.n (title @ default @ line @ comments) :: subs
+    F.v ~head:F.n (title @ default @ line @ comments @ [F.n]) :: subs
   in
   aux (string_of_path prefix) (t#path prefix)
 
@@ -277,71 +277,117 @@ let dump ?(prefix=[]) (t : ut) =
   in
   aux (string_of_path prefix) (t#path prefix)
 
-let conf_set (t: ut) s =
+let set (t: ut) s =
   if Str.string_match line_regexp s 0
   then
     let val0 = Str.matched_group 1 s in
     let val1 = Str.matched_group 2 s in
     let val2 = Str.matched_group 3 s in
     let st = t#path (path_of_string val1) in
+    let value_error kind =
+      let f = F.x "<type> value expected" ["type", F.s kind] in
+      raise (Wrong_Conf (s, f))
+    in
+    let type_error kind =
+      begin match kind with
+      | Some t ->
+	  let f =
+	    F.x "the given configuration key has type <type>" ["type", F.s t]
+	  in
+	  raise (Wrong_Conf (s, f))
+      | None ->
+	  let f =
+	    F.x "the given configuration key cannot be assigned a value" []
+	  in
+	  raise (Wrong_Conf (s, f))
+      end
+    in
     begin match val0 with
     | "unit" ->
-	begin match val2 = "" with
-	| false -> raise (Wrong_Conf (s, "unit expected"))
-	| true -> (as_unit st)#set ()
+	begin try
+	  begin match val2 = "" with
+	  | false -> value_error val0
+	  | true -> let k = as_unit st in fun () -> k#set ()
+	  end
+	with
+	| Mismatch _ -> type_error st#kind
 	end
     | "int" ->
-	let i =
-	  begin try int_of_string val2  with
-	  | Invalid_argument _ ->
-	      raise (Wrong_Conf (s, "integer expected"))
-	  end
-	in
-	(as_int st)#set i
+	begin try
+	  let i = int_of_string val2 in
+	  let k = as_int st in fun () -> k#set i
+	with
+	| Failure "int_of_string" -> value_error val0
+	| Mismatch _ -> type_error st#kind
+	end
     | "float" ->
-	let f =
-	  begin try float_of_string val2 with
-	  | Invalid_argument _ ->
-	      raise (Wrong_Conf (s, "float expected"))
-	  end
-	in
-	(as_float st)#set f
+	begin try
+	  let f = float_of_string val2 in
+	  let k = as_float st in fun () -> k#set f
+	with
+	| Failure "float_of_string" -> value_error val0
+	| Mismatch _ -> type_error st#kind
+	end
     | "bool" ->
-	let b =
-	  begin try bool_of_string val2 with
-	  | Invalid_argument _ ->
-	      raise (Wrong_Conf (s, "boolean expected"))
-	  end
-	in
-	(as_bool st)#set b
+	begin try
+	  let b = bool_of_string val2 in
+	  let k = as_bool st in fun () -> k#set b
+	with
+	| Invalid_argument "bool_of_string" -> value_error val0
+	| Mismatch _ -> type_error st#kind
+	end
     | "string" ->
-	let s = val2 in
-	(as_string st)#set s
+	begin try
+	  let s = val2 in
+	  let k = as_string st in fun () -> k#set s
+	with
+	| Mismatch _ -> type_error st#kind
+	end
     | "list" ->
-	let l = Str.split list_sep_regexp val2 in
-	(as_list st)#set l
-    | _ -> raise (Wrong_Conf (s, "unknown type"))
+	begin try
+	  let l = Str.split list_sep_regexp val2 in
+	  let k = as_list st in fun () -> k#set l
+	with
+	| Mismatch _ -> type_error st#kind
+	end
+    | _ ->
+	let f =  F.x "unknown type <type>" ["type", F.string val0] in
+	raise (Wrong_Conf (s, f))
     end
-  else raise (Wrong_Conf (s, "syntax error"))
+  else
+    let f =
+      F.x "assignation syntax is <syntax>" [
+	"syntax", F.string "type key :value";
+      ]
+    in
+    raise (Wrong_Conf (s, f))
 
-let conf_file ?(strict=true) t s =
+let load log ?(strict=true) t s =
   let nb = Pervasives.ref 0 in
-  let f = open_in s in
   begin try
-      while true do
-	nb := !nb + 1;
-	let l = input_line f in
-	if Str.string_match comment_regexp l 0
-	then ()
-	else
-	  begin try conf_set t l with
-	  | Wrong_Conf (x,y) ->
-	      raise (File_Wrong_Conf (s,!nb,y))
-	  | Unbound (e, p) ->
-	      if strict then raise (Unbound (e, p))
-	  end
-      done
-    with
-    | End_of_file -> ()
+    let f = open_in s in
+    while true do
+      nb := !nb + 1;
+      let l = input_line f in
+      if Str.string_match comment_regexp l 0
+      then ()
+      else
+	begin try set t l () with
+	| Wrong_Conf (x, y) ->
+	    raise (File_Wrong_Conf (s, !nb, y))
+	| Unbound (e, p) ->
+	    if strict then raise (Unbound (e, p))
+	end
+    done
+  with
+  | End_of_file -> ()
+  | Sys_error m ->
+      (if strict then log#error else log#warning) (
+	F.x "failed to load file: <error>"
+	  ["error", F.q (F.s m)]
+      )
   end
 
+let root log path ?l descr =
+  let c = void ?l descr in
+  load log c path; c

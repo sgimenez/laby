@@ -90,3 +90,13 @@ let use x =
     | Time f -> `Time f
   end
 
+type 'a logger =
+    <
+      internal: t -> unit;
+      fatal: t -> unit;
+      error: t -> unit;
+      warning: t -> unit;
+      info: t -> unit;
+      debug: int -> t -> unit;
+      ..
+    > as 'a
