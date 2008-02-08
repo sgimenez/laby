@@ -9,7 +9,6 @@
 
 type t =
     <
-      f: 'a. int -> ('a, unit, string, unit) format4 -> 'a;
       internal: F.t -> unit;
       fatal: F.t -> unit;
       error: F.t -> unit;
@@ -48,7 +47,3 @@ val conf_file_path : string Conf.t
 val conf_file_append : bool Conf.t
 val conf_file_perms : int Conf.t
 
-val args : (string list * Arg.spec * string) list
-  (**
-     A set of command line options to be used with the Arg module.
-  *)

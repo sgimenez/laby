@@ -16,11 +16,18 @@ type t
 val n : t
 (** null box *)
 
+val b : t list -> t
+(** block box *)
+
 val h : ?sep:t -> t list -> t
 (** horizontal box *)
 
 val v : ?head:t -> t list -> t
 (** vertical box *)
+
+val i : t list -> t
+(** itemize box *)
+
 
 val l : string -> t -> t
 (** label box *)
@@ -54,7 +61,7 @@ val time : float -> t
 
 (** Taging *)
 
-type tag = string -> string
+type tag = t -> t
 
 val t : tag -> t -> t
 (** taged message *)
@@ -84,6 +91,7 @@ val use : t ->
   | `Bool of bool
   | `Exn of exn
   | `Time of float
+  | `Lazy of (unit -> t)
   ]
 
 type 'a logger =

@@ -24,7 +24,7 @@ let proceed _ =
       Init.exit 1
   end
 
-let main =
+let main () =
   Fd.init log (Data.get []);
   let opts =
     [
@@ -50,3 +50,4 @@ let main =
       proceed list
   end
 
+let _ = Run.exec main

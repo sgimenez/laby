@@ -5,7 +5,6 @@
 
 type t =
     <
-      f: 'a. int -> ('a, unit, string, unit) format4 -> 'a;
       internal: F.t -> unit;
       fatal: F.t -> unit;
       error: F.t -> unit;
@@ -67,31 +66,40 @@ let timestamp time =
   end
 
 (* Avoiding interlacing logs *)
-let mutexify =
+let mutexify : ('a -> 'b) -> 'a -> 'b =
   let log_mutex = Mutex.create () in
   begin fun f x ->
     Mutex.lock log_mutex;
-    begin try f x; Mutex.unlock log_mutex with
+    begin try
+      let r = f x in Mutex.unlock log_mutex; r
+    with
     | e -> Mutex.unlock log_mutex; raise e
     end
   end
 
-let to_ch ch x =
-  Printf.fprintf ch "%s\n%!" (Fd.string x)
+let to_ch ch s1 s2 =
+  Printf.fprintf ch "%s %s\n%!" s1 s2
 
-let to_stdout x =
-  Printf.printf "%s\n%!" (Fd.string x)
-
-let print_stdout x =
+let to_stdout s1 s2 =
   if conf_stdout#get then
-    to_stdout x
+    Printf.printf "%s %s\n%!" s1 s2
 
-let print_file x =
+let print h x =
   if conf_file#get then
     begin match !state with
-    | `Buffer l -> state := `Buffer (x :: l)
-    | `Chan ch -> to_ch ch x
+    | `Buffer l ->
+	state := `Buffer (x :: l);
+	if conf_stdout#get then
+	  to_stdout (Fd.string h) (Fd.string x)
+    | `Chan ch ->
+	let s1 = Fd.string h in
+	let s2 = Fd.string x in
+	to_stdout s1 s2;
+	to_ch ch s1 s2
     end
+  else
+    if conf_stdout#get then
+      to_stdout (Fd.string h) (Fd.string x)
 
 let build ?level path =
   let rec aux p l (t : Conf.ut) =
@@ -125,20 +133,20 @@ let make ?level path : t =
   let confs = build ?level path in
   let path_str = Conf.string_of_path path in
   let bracketize m =
-    F.h ~sep:F.n [F.s "["; m ; F.s "]"]
+    F.b [F.s "["; m ; F.s "]"]
   in
   let dbracketize m l =
-    F.h ~sep:F.n [F.s "["; m ; F.s ":"; l; F.s "]"]
+    F.b [F.s "["; m ; F.s ":"; l; F.s "]"]
   in
-  let proceed x =
-    mutexify (fun () -> print_stdout x; print_file x;) ()
+  let proceed h x =
+    mutexify (fun () -> print h x) ()
   in
 object (self : t)
   val print =
     begin fun heads x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
-      proceed (F.h (ts @ [tag_label (F.s (path_str ^ ":"))] @ heads @ [x]))
+      proceed (F.h (ts @ [tag_label (F.s (path_str ^ ":"))] @ heads)) x
     end
   val active =
     begin fun lvl ->
@@ -152,13 +160,6 @@ object (self : t)
 	end
       in
       aux confs
-    end
-  method f lvl =
-    begin match active lvl with
-    | true ->
-	Printf.ksprintf (fun s -> print [] (F.s s))
-    | false ->
-	Printf.ksprintf (fun _ -> ())
     end
   method internal =
     begin match active (-4) with
@@ -206,31 +207,32 @@ let init () =
 	state := `Chan (open_out_gen opts log_file_perms log_file_path)
       end
   in
-  (* Re-open log file on SIGUSR1 -- for logrotate *)
-  Sys.set_signal Sys.sigusr1
-    (Sys.Signal_handle (fun _ ->
-      mutexify begin fun () ->
-	begin match !state with
-	| `Chan ch -> close_out ch; open_log ()
-	| _ -> ()
-	end
-      end ();
-    ));
-  mutexify begin fun () ->
+  let proceed () =
     begin match !state with
     | `Buffer l ->
 	open_log ();
 	begin match !state with
 	| `Buffer l -> ()
 	| `Chan ch ->
-	    to_ch ch (
+	    let send x = to_ch ch (Fd.string x) "" in
+	    send (
 	      F.x ">>> LOG START <time>" ["time", F.time time]
 	    );
-	    List.iter (to_ch ch) (List.rev l)
+	    List.iter send (List.rev l)
 	end
     | _ -> ()
-    end;
-  end ()
+    end
+  in
+  let reopen () =
+    begin match !state with
+    | `Chan ch -> close_out ch; open_log ()
+    | _ -> ()
+    end
+  in
+  (* Re-open log file on SIGUSR1 -- for logrotate *)
+  Sys.set_signal Sys.sigusr1
+    (Sys.Signal_handle (fun _ -> mutexify reopen ()));
+  mutexify proceed ()
 
 let start = Init.make ~name:"init-log-start" ~before:[Init.start] init
 
@@ -238,24 +240,17 @@ let close () =
   let time = Unix.gettimeofday () in
   begin match !state with
   | `Chan ch ->
-      mutexify begin fun () ->
-	to_ch ch (
+      let send x = to_ch ch (Fd.string x) "" in
+      let proceed () =
+	send (
 	  F.x ">>> LOG END <time>" ["time", F.time time]
 	);
 	close_out ch;
 	state := `Buffer []
-      end ();
+      in
+      mutexify proceed ()
   | _ -> ()
   end
 
 let stop = Init.make ~name:"init-log-stop" ~after:[Init.stop] close
 
-let args =
-  [
-    ["--log-stdout"],
-    Arg.Unit (fun () -> conf_stdout#set true),
-    "log also to stdout";
-    ["--log-file";"-l"],
-    Arg.String (fun s -> conf_file#set true; conf_file_path#set s),
-    "log file";
-  ]

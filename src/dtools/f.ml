@@ -3,9 +3,9 @@
    @author Stéphane Gimenez
 *)
 
-type tag = string -> string
 
-type d =
+
+type t =
     | N
     | T of tag * t
     | S of string
@@ -21,58 +21,65 @@ type d =
     | Bool of bool
     | Exn of exn
     | Time of float
-and t =
-    unit -> d
+    | Lazy of (unit -> t)
+and tag = t -> t
 
-let z m = fun () -> m () ()
+let z fn =
+  Lazy fn
 
 let t tag m =
-  fun () -> T (tag, m)
+  T (tag, m)
 
 let n =
-  fun () -> N
+  N
 
 let s string =
-  fun () -> S string
+  S string
+
+let b tl =
+  H (N, tl)
 
 let h ?(sep=(s " ")) tl =
-  fun () -> H (sep, tl)
+  H (sep, tl)
 
-let v ?(head=(s "  ")) tl =
-  fun () -> V (head, tl)
+let v ?(head=n) tl =
+  V (head, tl)
 
-let p i ?(wrap=(fun x -> h [s "("; x ; s ")"])) t =
-  fun () -> P (i, wrap, t)
+let i tl =
+  V (s "  ", tl)
+
+let p i ?(wrap=(fun x -> H (N, [s "("; x ; s ")"]))) t =
+  P (i, wrap, t)
 
 let q m =
-  fun () -> Q m
+  Q m
 
 let l s t =
-  fun () -> L (s, t)
+  L (s, t)
 
 let x s stl =
-  fun () -> X (s, stl)
+  X (s, stl)
 
 let int i =
-  fun () -> Int i
+  Int i
 
 let float f =
-  fun () -> Float f
+  Float f
 
 let string s =
-  fun () -> String s
+  String s
 
 let bool b =
-  fun () -> Bool b
+  Bool b
 
 let exn e =
-  fun () -> Exn e
+  Exn e
 
 let time f =
-  fun () -> Time f
+  Time f
 
 let use x =
-  begin match x () with
+  begin match x with
     | N -> `N
     | T (s, t) -> `T (s, t)
     | S s -> `S s
@@ -88,6 +95,7 @@ let use x =
     | Bool b -> `Bool b
     | Exn e -> `Exn e
     | Time f -> `Time f
+    | Lazy fn -> `Lazy fn
   end
 
 type 'a logger =

@@ -29,7 +29,7 @@ let lang =
     end
   end
 
-let escape c s = "\027[" ^ c ^ "m" ^ s ^ "\027[0m"
+let escape c = "\027[" ^ c ^ "m", "\027[0m"
 
 let color, bcolor =
   begin match env_term with
@@ -85,7 +85,9 @@ let tag s =
     if !tstr = None then
       tstr := Some (String.concat ";" (List.map codes c#get));
     begin match !tstr with
-    | Some tstr when tstr <> "" -> escape tstr m
+    | Some tstr when tstr <> "" ->
+	let esc1, esc2 = escape tstr in
+	F.h ~sep:F.n [F.s esc1; m ; F.s esc2]
     | _ -> m
     end
   in
@@ -110,7 +112,9 @@ let texts_line txt str =
   let arg = ref "" in
   let l = ref [] in
   let push c str = str := !str ^ String.make 1 c in
-  let add_elem () = l := !l @ [ `Elem !elem ]; elem := "" in
+  let add_elem () =
+    if !elem <> "" then  l := !l @ [ `Elem !elem ]; elem := ""
+  in
   let add_arg () = l := !l @ [ `Arg !arg ]; arg := "" in
   let p = ref 0 in
   let eos = String.length str in
@@ -144,7 +148,7 @@ let texts_line txt str =
 	  end
       end
     in
-    let msg = F.h ~sep:F.n (List.map map !l) in
+    let msg = F.b (List.map map !l) in
     if !msg_lang = lang then msg
     else F.h [tag_msg_lang (F.s ("<" ^ !msg_lang ^ ">")); msg]
   in
@@ -165,70 +169,99 @@ let bad m vars =
 
 
 let string t =
-  let rec str ?(ind="\n") ?(pri=100) ?(cr=true) t =
-    let aux ?(ind=ind) ?(pri=pri) ?(cr=false) t = str ~ind ~pri ~cr t in
+  let add state string =
+    let ind, sep, pri, s = state in
+    (ind, "", pri, s ^ sep ^ string)
+  in
+  let withind ind (_, sep, pri, s) = (ind, sep, pri, s) in
+  let withindsep ind sep (_, _, pri, s) = (ind, sep, pri, s) in
+  let withfbsep ind0 sep' (ind, sep, pri, s) =
+    ind, (if sep = "" then sep' else ind0), pri, s
+  in
+  let withpri pri (ind, sep, _, s) = (ind, sep, pri, s) in
+  let rec str t state =
+    let box m =
+      let _, _, _, b = str m ("\n", "", 10000, "") in
+      b
+    in
     begin match F.use t with
-    | `N -> ""
-    | `T (t, m) -> t (aux m)
-    | `S (s) -> s
-    | `L (s, m) -> aux (tag_label (F.s (s ^ ":"))) ^ " " ^ aux m
+    | `N -> state
+    | `T (t, m) -> str (t m) state
+    | `S (s') -> add state s'
+    | `L (slabel, m) ->
+	let ind, sep, pri, s = state in
+	let b = box (tag_label (F.s (slabel ^ ":"))) in
+	str m (ind, " ", pri, s ^ sep ^ b)
+    | `H (sep0, []) -> state
     | `H (sep0, l) ->
-	let sl = List.map (fun x -> aux x) l in
-	String.concat (aux sep0) sl
+	let ind, _, _, _ = state in
+	let sep0 = box sep0 in
+	let cat state m =
+	  withfbsep ind sep0 (str m state)
+	in
+	let state0 = withind (ind ^ "  ") state in
+	let state' = List.fold_left cat state0 l in
+	withindsep ind "" state'
+    | `V (head0, []) -> state
     | `V (head0, l) ->
-	let ind0 = aux head0 in
-	let ind = ind ^ ind0 in
-	begin match l with
-	| [] -> ""
-	| _ ->
-	    let tab = String.concat ind (List.map (aux ~ind ~cr:true) l) in
-	    if cr then ind0 ^ tab else ind ^ tab
-	end
+	let ind, _, _, _ = state in
+	let head0 = box head0 in
+	let ind' = ind ^ head0 in
+	let cat state m = str m (withindsep ind' ind' state) in
+	let state0 = withindsep ind ind state in
+	let state' = List.fold_left cat state0 l in
+	withindsep ind ind state'
     | `Q l ->
-	let ind = ind ^ "  " in
-	ind ^ (aux ~ind l)
+	str (F.v [l]) state
     | `P (pri0, wrap, m) ->
+	let _, _, pri, s = state in
 	let m' = if pri <= pri0 then wrap m else m in
-	aux ~pri:pri0 m'
+	withpri pri (str m' (withpri pri0 state))
     | `X (mstr, vars) ->
 	let t =
 	  begin try
-	      begin try (Hashtbl.find texts mstr) vars with
-	      | Not_found ->
-		  begin match texts_line (ref mstr) ("\t" ^ mstr ^ "\n") with
-		  | `Entry (msg_lang, txt, msg) ->
-	              Hashtbl.add texts txt msg; msg vars
-		  | _ -> bad mstr vars
-		  end
-	      end
-	    with
-	    | Not_found -> bad mstr vars
+	    begin try (Hashtbl.find texts mstr) vars with
+	    | Not_found ->
+		begin match texts_line (ref mstr) ("\t" ^ mstr ^ "\n") with
+		| `Entry (msg_lang, txt, msg) ->
+	            Hashtbl.add texts txt msg; msg vars
+		| _ -> bad mstr vars
+		end
+	    end
+	  with
+	  | Not_found -> bad mstr vars
 	  end
 	in
-	aux t
-    | `Int i -> string_of_int i
-    | `Float f -> string_of_float f
-    | `String s -> "\"" ^ aux (tag_quoted (F.s s)) ^ "\""
+	str t state
+    | `Int i -> add state (string_of_int i)
+    | `Float f -> add state (string_of_float f)
+    | `String s ->
+	let sstring = box (tag_quoted (F.s s)) in
+	add state ("\"" ^ sstring ^ "\"")
     | `Time time ->
 	let date = Unix.localtime time in
-	Printf.sprintf "%d/%02d/%02d %02d:%02d:%02d"
-	  (date.Unix.tm_year+1900)
-	  (date.Unix.tm_mon+1)
-	  date.Unix.tm_mday
-	  date.Unix.tm_hour
-	  date.Unix.tm_min
-	  date.Unix.tm_sec
-    | `Exn e -> Printexc.to_string e
-    | _ -> "<unknown>"
+	let stime =
+	  Printf.sprintf "%d/%02d/%02d %02d:%02d:%02d"
+	    (date.Unix.tm_year+1900)
+	    (date.Unix.tm_mon+1)
+	    date.Unix.tm_mday
+	    date.Unix.tm_hour
+	    date.Unix.tm_min
+	    date.Unix.tm_sec
+	in
+	add state stime
+    | `Exn e ->
+	add state (Printexc.to_string e)
+    | `Lazy fn ->
+	str (fn ()) state
+    | _ -> add state "<unknown>"
     end
   in
-  str t
+  let _, _, _, s = str t ("\n", "", 10000, "") in
+  s
 
 let stdout x =
   Printf.printf "%s\n" (string x)
-
-let log : (int -> F.t -> unit) ref =
-  ref (fun _ _ -> ())
 
 let read_texts log path file =
   let error line f =
@@ -242,47 +275,47 @@ let read_texts log path file =
   in
   let lnb = ref 0 in
   begin try
-      let txt = ref "" in
-      while true do
-	let str = incr lnb; input_line file ^ "\n" in
-	begin match texts_line txt str with
-	| `Entry (msg_lang, txt, msg) ->
-	    log#debug 5 (
-	      F.x "message lang=<lang>: <text>" [
-		"lang", F.string msg_lang;
-		"text", F.q (F.s txt);
-	      ]
-	    );
-	    if lang = msg_lang then
-	      Hashtbl.add texts txt msg
-	| `Skip -> ()
-	| `Error -> error !lnb (F.x "syntax error" [])
-	end
-      done
-    with
-    | End_of_file -> ()
+    let txt = ref "" in
+    while true do
+      let str = incr lnb; input_line file ^ "\n" in
+      begin match texts_line txt str with
+      | `Entry (msg_lang, txt, msg) ->
+	  log#debug 5 (
+	    F.x "message lang=<lang>: <text>" [
+	      "lang", F.string msg_lang;
+	      "text", F.q (F.s txt);
+	    ]
+	  );
+	  if lang = msg_lang then
+	    Hashtbl.add texts txt msg
+      | `Skip -> ()
+      | `Error -> error !lnb (F.x "syntax error" [])
+      end
+    done
+  with
+  | End_of_file -> ()
   end
 
 let load_texts log path =
   let path = path ^ conf_texts#get in
   begin try
-      let file = open_in_bin path in
-      read_texts log path file;
-      close_in file;
-    with
-    | Sys_error m ->
-	log#warning (
-	  F.x "failed to open theme file: <error>"
-	    ["error", F.string m]
-	);
+    let file = open_in_bin path in
+    read_texts log path file;
+    close_in file;
+  with
+  | Sys_error m ->
+      log#warning (
+	F.x "failed to open theme file: <error>"
+	  ["error", F.string m]
+      );
   end
 
 let tag_cmd_output = tag "cmd-output"
 let tag_cmd_input = tag "cmd-input"
 
 let output f =
-(*   let head = tag_cmd_output (F.s "·") in *)
-  stdout (F.v ~head:(F.h ~sep:F.n [tag_cmd_output (F.s ">"); F.s " "]) [f]);
+  let head = F.b [tag_cmd_output (F.s ">"); F.s " "] in
+  stdout (F.v ~head [f]);
   stdout F.n
 
 let input () =

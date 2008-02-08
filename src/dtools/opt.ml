@@ -31,7 +31,7 @@ let f ?arg (short, long, _, _, _) =
   in
   begin match arg with
   | None -> optf
-  | Some arg -> F.h ~sep:F.n [optf; F.s "="; F.string arg]
+  | Some arg -> F.b [optf; F.s "="; F.string arg]
   end
 
 let help_opt opts : t =
@@ -45,9 +45,9 @@ let help_opt opts : t =
 	F.h [f opt; F.q desc]
       in
       let program = F.s (Sys.argv.(0)) in
-      let options_f = F.v (List.map pl usage) in
+      let options_f = List.map pl usage in
       F.l "usage" (
-	F.h [program; F.s "[options]"; options_f]
+	F.h [program; F.s "[options]"; F.v options_f]
       )
     in
     Excl action

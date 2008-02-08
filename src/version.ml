@@ -1,17 +1,17 @@
-let print name entries =
-  F.l name (F.v (List.map F.h entries))
+let section name entries =
+  F.l name (F.i (List.map F.h entries))
 
-let version =
-  F.s Config.version_string
+let version () =
+  print_string (Config.version_string ^ "\n");
+  exit 0
 
-let id =
-  print "version" [
-    [F.s "string       "; F.s Config.version_string];
-    [F.s "base         "; F.s Config.version_base];
-    [F.s "current      "; F.s Config.version_current];
-  ]
+let id () =
+  section "id"
+    [[F.s "string       "; F.s Config.version_string];
+     [F.s "base         "; F.s Config.version_base];
+     [F.s "current      "; F.s Config.version_current]]
 
-let status =
+let status () =
   F.s Config.version_status
 
 let protocols = ref []
@@ -20,36 +20,36 @@ let register_protocol protocol version =
   protocols := [F.string protocol; F.s version] :: !protocols
 
 let protocols () =
-  print "protocols" !protocols
+  section "protocols" !protocols
 
-let build =
-  print "build" [
+let build () =
+  section "build" [
     [F.s "ocaml                  "; F.s Config.build_ocaml];
     [F.s "ocaml-lablgtk          "; F.s Config.build_lablgtk];
     [F.s "ocaml-lablgtksourceview"; F.s Config.build_lablgtksourceview];
   ]
 
+let disp l () =
+  F.l "versions" (F.i (List.map (fun f -> f ()) l))
+
 let opt =
-  let noarg () = Opt.Excl (fun () -> version) in
-  let arg =
+  Opt.make ~short:'v' ~long:"version"
+    ~noarg:(fun () -> Opt.Excl (fun () -> version ()))
+    ~arg:
     begin function
-    | "f" | "full" ->
-	Opt.Excl (
-	  fun () -> F.v ~head:F.n [id ; protocols (); build]
-	)
-    | "i" | "id" -> Opt.Excl (fun () -> id)
-    | "p" | "protocols" -> Opt.Excl (fun () -> protocols ())
-    | "b" | "build" -> Opt.Excl (fun () -> build)
-    | "s" | "status" -> Opt.Excl (fun () -> status)
+    | "f" | "full" -> Opt.Excl (disp [id; protocols; build])
+    | "i" | "id" -> Opt.Excl id
+    | "p" | "protocols" -> Opt.Excl protocols
+    | "b" | "build" -> Opt.Excl build
+    | "s" | "status" -> Opt.Excl status
     | _ ->
-	Opt.Invalid (
-	  F.x "should be one of: <values>" [
-	    "values", F.h ~sep:(F.s ", ") [
-	      F.s "full"; F.s "id"; F.s "protocols"; F.s "build"; F.s "status";
-	    ];
+	let argl =
+	  [ "full"; "id"; "protocols"; "build"; "status" ]
+	in
+ 	Opt.Invalid (
+	  F.x "version allows arguments: <arguments>" [
+	    "arguments", F.h ~sep:(F.s ", ") (List.map F.s argl)
 	  ]
 	)
     end
-  in
-  Opt.make ~short:'v' ~long:"version" ~noarg ~arg
-    (F.x "shows versioning information" [])
+    (F.x "show versioning information" [])
