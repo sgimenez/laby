@@ -220,12 +220,12 @@ let descr ?(prefix=[]) (t : ut) =
       List.concat (List.map (function s -> aux (p s) (t#path [s])) t#subs)
     in
     let title =
-      [F.h [F.s "## "; t#descr]]
+      [F.b [F.s "## "; t#descr]]
     in
     let default =
       begin match get_d_string t with
       | None -> []
-      | Some d -> [F.h [F.s "# default :"; F.s d]]
+      | Some d -> [F.h [F.s "# default:"; F.s d]]
       end
     in
     let line =
@@ -241,15 +241,10 @@ let descr ?(prefix=[]) (t : ut) =
       begin match t#comments with
       | [] -> []
       | l ->
-	  [
-	    F.v ~head:(F.s "# ") [
-	      F.s "comments:";
-	      F.v l
-	    ]
-	  ]
+	  [F.v ~head:(F.s "# ") [F.s "comments:"; F.v l]]
       end
     in
-    F.v ~head:F.n (title @ default @ line @ comments @ [F.n]) :: subs
+    F.v (title @ default @ line @ comments @ [F.s ""]) :: subs
   in
   aux (string_of_path prefix) (t#path prefix)
 

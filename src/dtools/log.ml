@@ -197,15 +197,13 @@ let init () =
   let time = Unix.gettimeofday () in
   let open_log () =
     if conf_file#get then
-      begin
-	let opts =
-	  [Open_wronly; Open_creat; Open_nonblock]
-	  @ (if conf_file_append#get then [Open_append] else [Open_trunc])
-	in
-	let log_file_path = conf_file_path#get in
-	let log_file_perms = conf_file_perms#get in
-	state := `Chan (open_out_gen opts log_file_perms log_file_path)
-      end
+      let opts =
+	[Open_wronly; Open_creat; Open_nonblock]
+	@ (if conf_file_append#get then [Open_append] else [Open_trunc])
+      in
+      let log_file_path = conf_file_path#get in
+      let log_file_perms = conf_file_perms#get in
+      state := `Chan (open_out_gen opts log_file_perms log_file_path)
   in
   let proceed () =
     begin match !state with

@@ -299,12 +299,12 @@ let conf_set ?short ?long conf : t =
 
 let conf_descr ?short ?long t =
   let noarg () =
-    Excl (fun () -> F.v ~head:F.n (Conf.descr t))
+    Excl (fun () -> F.v (Conf.descr t))
   in
   let arg p =
     begin try
 	let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
-	Excl (fun () -> F.v ~head:F.n dl)
+	Excl (fun () -> F.v dl)
       with
       | Conf.Unbound (_, s) -> unknown_key_error s
     end

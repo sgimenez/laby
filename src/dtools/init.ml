@@ -163,12 +163,20 @@ let catch f clean =
 	exit (-1)
   end
 
+let reopen fd filename =
+  let opts = [Unix.O_WRONLY; Unix.O_CREAT; Unix.O_TRUNC] in
+  let fd2 = Unix.openfile filename opts 0o666 in
+  Unix.dup2 fd2 fd;
+  Unix.close fd2
+
 let daemonize fn =
-  close_in stdin;
   flush_all ();
+  reopen Unix.stdin "/dev/null";
+  reopen Unix.stdout "/dev/null";
+  reopen Unix.stderr "/dev/null";
   begin match Unix.fork () with
   | 0 ->
-      let _ = Unix.setsid () in
+      if (Unix.setsid () < 0) then exit 1;
       begin match conf_daemon_pidfile#get with
       | false ->
 	  catch fn (fun () -> ())
