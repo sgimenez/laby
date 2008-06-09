@@ -98,7 +98,7 @@ let use x =
     | Lazy fn -> `Lazy fn
   end
 
-type 'a logger =
+type logger =
     <
       internal: t -> unit;
       fatal: t -> unit;
@@ -106,5 +106,4 @@ type 'a logger =
       warning: t -> unit;
       info: t -> unit;
       debug: int -> t -> unit;
-      ..
-    > as 'a
+    >

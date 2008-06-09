@@ -8,7 +8,7 @@
 *)
 
 val conf : Conf.ut
-val init : 'a F.logger -> string -> unit
+val init : F.logger -> string -> unit
 
 val tag : string -> F.t -> F.t
 

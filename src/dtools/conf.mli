@@ -125,7 +125,7 @@ val set : ut -> string -> unit -> unit
      Raises [Wrong_Conf] in badly formated cases.
   *)
 
-val load : 'a F.logger -> ?strict: bool -> ut -> string -> unit
+val load : F.logger -> ?strict: bool -> ut -> string -> unit
   (**
      Read configuration values from the file associated with the given
      filename.
@@ -133,4 +133,4 @@ val load : 'a F.logger -> ?strict: bool -> ut -> string -> unit
      in case of a bad configuration file.
   *)
 
-val root : 'a F.logger -> string -> ?l:links -> F.t -> ut
+val root : F.logger -> string -> ?l:links -> F.t -> ut
