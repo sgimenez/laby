@@ -24,6 +24,6 @@ let version_status = "${VERSION_STATUS}"
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
 let build_lablgtksourceview = "${BUILD_LABLGTKSOURCEVIEW}"
-let conf_path = Sys.getenv "HOME" ^ "/.${PROJECT_NAME}/"
+let conf_path = Sys.getenv "HOME" ^ "/.config/${PROJECT_NAME}/"
 let sys_data_path = "/usr/share/${PROJECT_NAME}/"
 EOF
