@@ -3,8 +3,6 @@
    @author Stéphane Gimenez
 *)
 
-
-
 type t =
     | N
     | T of tag * t

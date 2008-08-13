@@ -1,0 +1,19 @@
+o o o o o o o o o o o o o o o o
+o . . . . . . . . . . . . . . x
+o . o o o o o o o o o o o o o o
+o . o . . . . . . . . . . . . .
+o . o . . . . . . . . . . . . .
+o . o . . . . . . . . . . . . .
+o . o . . . . . . . . . . . . .
+o . o o o o o o o o o o o o o o
+o . . . . . . . . . . . . . . o
+o o o o o o o o o o o o o o . o
+. . . . . . . . . . . . . o . o
+. . . . . . . . . . . . . o . o
+. . . . . . . . . . . . . o . o
+. . . . . . . . . . . . . o . o
+o o o o o o o o o o o o o o . o
+o → . . . . . . . . . . . . . o
+o o o o o o o o o o o o o o o o
+
+#fr Pour éviter de recopier cinq fois la même boucle, on va définir une fois pour toutes une fontion qui avance le plus loin possible en ligne droite. Ensuite il suffira de l'appeller plusieur fois.

@@ -5,6 +5,7 @@ type t =
       dir: State.dir;
       mrocks: (int * int) list;
       mwebs: (int * int) list;
+      comment: string;
     }
 
 let log = Log.make ["level"]
@@ -24,6 +25,7 @@ let basic =
     dir = `N;
     mrocks = [];
     mwebs = [];
+    comment = ""
   }
 
 let sep = Str.regexp " "
@@ -37,6 +39,7 @@ let load file =
   let may_webs = ref [] in
   let dir = ref `N in
   let antpos = ref (0, 0) in
+  let comment = ref "" in
   let conv s =
     incr posx;
     begin match s with
@@ -58,14 +61,29 @@ let load file =
 	Run.exit ();
     end
   in
+  let rec get_lines () =
+    posx := -1; incr posy;
+    let l = Array.of_list (Str.split sep (input_line f)) in
+    if l <> [||]
+    then (lines := (Array.map conv l) :: !lines; get_lines ())
+  in
+  let rec get_comment () =
+    posx := -1; incr posy;
+    let l = input_line f in
+    let re = Str.regexp (Printf.sprintf "\\([^ ]*\\) \\(.*\\)") in
+    if Str.string_match re l 0
+    then (
+      if !comment = "" || Str.matched_group 1 l = Fd.lang
+      then comment := Str.matched_group 2 l
+      else get_comment ()
+    )
+    else get_comment ()
+  in
   begin try
-      while true do
-	posx := -1; incr posy;
-	let l = Array.of_list (Str.split sep (input_line f)) in
-	if l <> [||] then lines := (Array.map conv l) :: !lines;
-      done;
-    with
-    | End_of_file -> ()
+    get_lines ();
+    get_comment ();
+  with
+  | End_of_file -> ()
   end;
   let sizex = Array.length (List.hd !lines) in
   begin match List.for_all (fun a -> Array.length a = sizex) !lines with
@@ -84,7 +102,11 @@ let load file =
     dir = !dir;
     mrocks = !may_rocks;
     mwebs = !may_webs;
+    comment = !comment;
   }
+
+let comment level =
+  level.comment
 
 let generate level =
   let map =

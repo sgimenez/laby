@@ -10,6 +10,8 @@
 val conf : Conf.ut
 val init : F.logger -> string -> unit
 
+val lang : string
+
 val tag : string -> F.t -> F.t
 
 val string : F.t -> string
