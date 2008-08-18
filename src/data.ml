@@ -50,14 +50,24 @@ let get rpath =
   in
   may l
 
-let get_list rpath =
+let get_list ?ext rpath =
   let f = Unix.opendir (get rpath) in
   let list = ref [] in
+  let add e =
+    begin match ext with
+    | None -> list := e :: !list
+    | Some ext ->
+	let l = String.length ext + 1 in
+	if String.length e >= l then
+	  if String.sub e (String.length e - l) l = "." ^ ext then
+	    list := e :: !list
+    end
+  in
   begin try
     while true do
       begin match Unix.readdir f with
       | "." | ".." -> ()
-      | e -> list := e :: !list
+      | e -> add e
       end
     done;
   with

@@ -85,10 +85,16 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | _ -> ()
   end
 
+let labeled_combo text packing =
+  let box = GPack.hbox ~packing () in
+  let _ = GMisc.label ~text ~xpad:5 ~packing:box#pack () in
+  GEdit.combo ~packing:box#add ()
+
 let layout () =
+  let monofont = Pango.Font.from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
   let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
-  hpaned#set_position 500;
+  hpaned#set_position 650;
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
   vpaned#set_position 450;
@@ -97,13 +103,17 @@ let layout () =
   in
   let sw_prog = scrolled vpaned#add1 in
   let view_prog =
-    GSourceView.source_view ~show_line_numbers:true ~packing:sw_prog#add ()
+    GSourceView.source_view ~show_line_numbers:true ~packing:sw_prog#add
+      ()
   in
+  view_prog#set_indent 1;
+  view_prog#misc#modify_font monofont;
   let rvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let interprets = GEdit.combo ~packing:rvbox#pack () in
+  let interprets = labeled_combo "Language:" rvbox#pack in
   let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
-  let levels = GEdit.combo ~packing:lvbox#pack () in
+  view_mesg#misc#modify_font monofont;
+  let levels = labeled_combo "Level:" lvbox#pack in
   let view_comment = GMisc.label ~line_wrap:true ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
@@ -125,6 +135,7 @@ let layout () =
     GButton.separator_tool_item
       ~expand:true ~draw:false ~packing:toolbar#insert ()
   in
+  view_prog#misc#grab_focus ();
   let button_refresh = button `REFRESH in
   {
     window = window;
@@ -147,9 +158,18 @@ let make_pixmap level =
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
 
-let display_gtk () =
+let display_gtk ?language_list () =
+  let language_list =
+    begin match language_list with
+    | None | Some [] -> List.sort (compare) (Data.get_list ["run"])
+    | Some l -> l
+    end
+  in
+  let levels_list =
+    List.sort (compare) (Data.get_list ~ext:"laby" ["levels"])
+  in
   let bot = Bot.make () in
-  let level = ref (Level.load (Data.get ["levels"; "00.demo.laby"])) in
+  let level = ref (Level.load (Data.get ["levels"; List.hd levels_list])) in
   let load () = Level.generate !level in
   let b_states = ref [] in
   let c_state = ref (load ()) in
@@ -157,10 +177,8 @@ let display_gtk () =
   let bg = ref `WHITE in
   begin try
     let ressources = gtk_init () in
-    let interprets_list = List.sort (compare) (Data.get_list ["run"]) in
-    let levels_list = List.sort (compare) (Data.get_list ["levels"]) in
     let c = layout () in
-    c.interprets#set_popdown_strings interprets_list;
+    c.interprets#set_popdown_strings language_list;
     c.levels#set_popdown_strings levels_list;
     let pixmap = ref (make_pixmap !level) in
     c.view_comment#set_text (Level.comment !level);
@@ -171,7 +189,7 @@ let display_gtk () =
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
     let newinterpret () =
       let name = c.interprets#entry#text in
-      begin match List.mem name interprets_list with
+      begin match List.mem name language_list with
       | true ->
 	  bot#set_buf (c.view_prog#buffer#get_text ());
 	  bot#set_name name;
@@ -203,19 +221,35 @@ let display_gtk () =
     let bot_start () =
       bot#set_name (c.interprets#entry#text);
       bot#set_buf (c.view_prog#buffer#get_text ());
-      bot#start
+      if bot#start
+      then c_state := { !c_state with State.action = `Start }
     in
-    let update sound =
+    let update ?(first=false) () =
       !pixmap#set_foreground !bg;
       let width, height = !pixmap#size in
       !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
       draw_state !c_state ressources !pixmap;
       c.px#set_pixmap !pixmap;
-      if sound then
-	begin match !c_state.State.sound with
-	| None -> ()
-	| Some s -> Sound.play s
+      let say msg = c.view_mesg#buffer#insert (msg ^ "\n") in
+      let repport () =
+	begin match !c_state.State.action with
+	| `None -> ()
+	| `Start -> say "Je suis prêt."
+	| `Wall_In -> say "Je ne peux pas avancer dans le mur."
+	| `Rock_In -> say "Je ne peux pas passer sur ce caillou."
+	| `Exit_In -> say "Je ne peux pas passer à travers la porte."
+	| `Web_In -> say "Oups, une toile d'araignée."
+	| `Web_Out -> say "Je ne peux plus bouger."
+	| `Exit -> say "Ourah la sortie !"
+	| `No_Exit -> say "Je ne trouve pas de porte à ouvrir"
+	| `Carry_Exit -> say "Je ne peux pas sortir en portant une pierre."
+	| `Rock_Take -> ()
+	| `Rock_Drop -> ()
+	| `Rock_No_Take -> say "Il n'y a pas de caillou à prendre ici."
+	| `Rock_No_Drop -> say "Je ne peux pas poser le caillou ici."
 	end
+      in
+      if first then (repport (); Sound.action !c_state.State.action)
     in
     let inactive () =
       c.button_forward#set_active false;
@@ -226,37 +260,29 @@ let display_gtk () =
       inactive ();
       bot_stop ();
       bot_start ();
-      update true
+      update ~first:true ();
     in
     let newlevel () =
       let name = c.levels#entry#text in
       begin match List.mem name levels_list with
-       | true ->
-	   level := Level.load (Data.get ["levels"; name]);
-	   pixmap := make_pixmap !level;
-	   c.view_comment#set_text (Level.comment !level);
-	   inactive ();
-	   bot_stop ();
-	   update true
-       | false -> ()
+      | true ->
+	  level := Level.load (Data.get ["levels"; name]);
+	  pixmap := make_pixmap !level;
+	  c.view_comment#set_text (Level.comment !level);
+	  inactive ();
+	  bot_stop ();
+	  update ();
+      | false -> ()
       end
     in
     c.interprets#entry#set_text "ocaml";
     newinterpret ();
-(*     let first () = *)
-(*       if !b_states <> [] then *)
-(* 	begin match List.rev !b_states @ (!c_state :: !n_states) with *)
-(* 	| x :: q -> *)
-(* 	    b_states := []; c_state := x; n_states := q; update false *)
-(* 	| _ -> assert false *)
-(* 	end *)
-(*     in *)
     let prev () =
       begin match !b_states with
       | [] -> inactive ()
       | x :: q ->
 	  b_states := q; n_states := !c_state :: !n_states; c_state := x;
-	  update false
+	  update ()
       end
     in
     let next () =
@@ -265,28 +291,19 @@ let display_gtk () =
 	  begin match step !c_state with
 	  | Some x ->
 	      b_states := !c_state :: !b_states; c_state := x;
-	      update true
+	      update ~first:true ()
 	  | None -> inactive ()
 	  end
       | x :: q ->
 	  b_states := !c_state :: !b_states; c_state := x; n_states := q;
-	  update false
+	  update ()
       end
     in
-(*     let last () = *)
-(*       if !n_states <> [] then *)
-(* 	begin match List.rev !n_states @ (!c_state :: !b_states) with *)
-(* 	| x :: q -> *)
-(* 	    b_states := q; c_state := x; n_states := []; update false *)
-(* 	| _ -> assert false *)
-(* 	end *)
-(*     in *)
     let play =
       let rid = ref None in
       begin fun direction speed () ->
 	begin match !rid with
 	| None ->
-(* 	    c.button_play#set_stock_id `MEDIA_PAUSE; *)
 	    let callback () =
 	      begin match direction with
 	      |	`Forward -> next (); true
@@ -296,7 +313,6 @@ let display_gtk () =
 	    rid := Some (GMain.Timeout.add ~ms:speed ~callback);
 	| Some id ->
 	    inactive ();
-(* 	    c.button_play#set_stock_id `MEDIA_PLAY; *)
 	    GMain.Timeout.remove id; rid := None
 	end
       end
@@ -306,16 +322,16 @@ let display_gtk () =
     ignore (c.button_prev#connect#clicked ~callback:prev);
     ignore (c.button_next#connect#clicked ~callback:next);
     ignore (c.button_play#connect#toggled ~callback:(play `Forward 500));
-    ignore (c.button_backward#connect#toggled ~callback:(play `Backward 50));
-    ignore (c.button_forward#connect#toggled ~callback:(play `Forward 50));
+    ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
+    ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
     ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
-    c.window#set_default_size 900 600;
+    c.window#set_default_size 1000 725;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)
     bg := `COLOR (c.px#misc#style#light `NORMAL);
-    update true;
+    update ();
     ignore (GMain.Main.main ())
   with
   | Gtk.Error m ->

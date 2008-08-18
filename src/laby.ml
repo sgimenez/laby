@@ -7,13 +7,12 @@ let conf =
     ~l:["log", Log.conf#ut; "display", Fd.conf#ut]
     (F.x "laby configuration" [])
 
-(* let conf_prog = *)
-(*   Conf.string ~p:(conf#plug "prog") *)
-(*     (F.x "program file" []) *)
+let conf_lang =
+  Conf.list ~p:(conf#plug "lang") ~d:[] (F.x "language" [])
 
 let proceed _ =
   begin try
-    Gfx.display_gtk ()
+    Gfx.display_gtk ~language_list:conf_lang#get ()
   with
   | Gfx.Error f ->
       log#fatal (
@@ -29,11 +28,11 @@ let main () =
   let opts =
     [
       Version.opt;
-      Opt.conf ~short:'d' ~long:"debug" Log.conf_level#ut;
+      Opt.conf ~short:'l' ~long:"lang" conf_lang#ut;
       Opt.conf_set ~short:'c' ~long:"conf" conf;
       Opt.conf_descr ~long:"conf-descr" conf;
       Opt.conf_dump ~long:"conf-dump" conf;
-(*       Opt.conf ~short:'p' ~long:"prog" conf_prog#ut; *)
+      Opt.conf ~short:'d' ~long:"debug" Log.conf_level#ut;
     ]
   in
   begin match Opt.cmd opts with

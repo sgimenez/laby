@@ -9,3 +9,22 @@ let play name =
       dev_null dev_null dev_null
   in
   ()
+
+let action =
+  begin function
+  | `None -> ()
+  | `Start -> play "start"
+  | `Wall_In -> play "wall-in"
+  | `Rock_In -> play "rock-in"
+  | `Exit_In -> play "exit-in"
+  | `Web_In -> play "web-in"
+  | `Web_Out -> play "web-out"
+  | `Exit -> play "exit"
+  | `No_Exit -> play "no-exit"
+  | `Carry_Exit -> play "carry-exit"
+  | `Rock_Take -> play "rock-take"
+  | `Rock_Drop -> play "rock-drop"
+  | `Rock_No_Take -> play "rock-no-take"
+  | `Rock_No_Drop -> play "rock-no-drop"
+  end
+

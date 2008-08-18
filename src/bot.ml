@@ -9,7 +9,7 @@ type t =
       errto: (string -> unit) -> unit;
       set_buf: string -> unit;
       get_buf: string;
-      start: unit;
+      start: bool;
       probe: query option;
       close: unit;
     >
@@ -174,10 +174,10 @@ let make () =
 	  begin match input ~timeout:5. !errto h with
 	  | Some ("start", output) ->
 	      output "go";
-	      !errto "Robot has started\n";
-	      hr := Some { h with pid = pid }
+	      hr := Some { h with pid = pid };
+	      true
 	  | _ ->
-	      !errto "Robot has not started\n"
+	      false
 	  end
       end
 

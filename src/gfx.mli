@@ -1,3 +1,3 @@
 exception Error of F.t
 
-val display_gtk : unit -> unit
+val display_gtk : ?language_list:string list -> unit -> unit

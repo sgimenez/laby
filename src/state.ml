@@ -1,28 +1,37 @@
 type terrain = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
 type dir = [ `N | `E | `S | `W ]
 
+type action =
+ [ `None
+ | `Start
+ | `Wall_In
+ | `Rock_In
+ | `Exit_In
+ | `Web_In
+ | `Web_Out
+ | `Exit
+ | `No_Exit
+ | `Carry_Exit
+ | `Rock_Take
+ | `Rock_Drop
+ | `Rock_No_Take
+ | `Rock_No_Drop
+ ]
+
 type t =
     {
       map: terrain array array;
       pos: int * int;
       dir: dir;
       carry: [`None | `Rock ];
-      say: string;
-      sound: string option;
+      action: action;
     }
 
 let copy state =
-  { state with
-    map =
-      Array.init (Array.length state.map) (fun j -> Array.copy state.map.(j));
-    say = String.copy state.say;
-    sound =
-      begin match state.sound with
-      | None -> None
-      | Some s -> Some (String.copy s)
-      end
-    ;
-  }
+  let map =
+    Array.init (Array.length state.map) (fun j -> Array.copy state.map.(j))
+  in
+  { state with map = map }
 
 let get state (i, j) =
   if i >= 0 && j >= 0
@@ -42,10 +51,10 @@ let set state (i, j) t =
   else state.map
 
 let clean state =
-  { state with say = ""; sound = None; }
+  { state with action = `None; }
 
-let chg state say sound =
-  { state with say = say; sound = Some sound; }
+let chg state action =
+  { state with action = action }
 
 let left state =
   let turn =
@@ -67,32 +76,20 @@ let front state =
   | `W -> fst state.pos - 1, snd state.pos
   end
 
-let forward state =
+let forward ?(toexit=false) state =
   let move pos =
     let pos' = front state in
     begin match get state pos, get state pos' with
-    | `Web, _ -> pos, Some "web-out"
-    | _, `Rock -> pos, Some "rock-in"
-    | _, `Wall -> pos, Some "wall-in"
-    | _, `Exit -> pos, Some "exit-in"
-    | _, `Web -> pos', Some "web-in"
-    | _, _ -> pos', None
+    | `Web, _ -> pos, `Web_Out
+    | _, `Rock -> pos, `Rock_In
+    | _, `Wall -> pos, `Wall_In
+    | _, `Exit -> if toexit then (pos', `Exit) else (pos, `Exit_In)
+    | _, `Web -> pos', `Web_In
+    | _, _ -> pos', `None
     end
   in
-  let pos, sound = move state.pos in
-  { state with pos = pos; sound = sound }
-
-let forward_open state =
-  let move pos =
-    let pos' = front state in
-    begin match get state pos, get state pos' with
-    | `Web, _ -> pos, Some "web-out"
-    | _, `Exit -> pos', Some "exit"
-    | _, _ -> pos, None
-    end
-  in
-  let pos, sound = move state.pos in
-  { state with pos = pos; sound = sound }
+  let pos, action = move state.pos in
+  { state with pos = pos; action = action }
 
 let look state =
   get state (front state)
@@ -121,9 +118,9 @@ let run action state =
       ans, state
   | "open" ->
       begin match state.carry, get state (front state) with
-      | `None, `Exit -> "ok", forward_open state
-      | _, `Exit -> "error", chg state "!" "bad"
-      | _, _ -> "error", chg state "?" "bad"
+      | `None, `Exit -> "ok", forward ~toexit:true state
+      | _, `Exit -> "error", chg state `Carry_Exit
+      | _, _ -> "error", chg state `No_Exit
       end
   | "take" ->
       begin match state.carry, get state (front state) with
@@ -132,9 +129,9 @@ let run action state =
 	  { state with
             map = set state (front state) `Void;
             carry = `Rock;
-            sound = Some "rock-take";
+	    action = `Rock_Take;
 	  }
-      |  _, _ -> "error", chg state "!" "bad"
+      |  _, _ -> "error", chg state `Rock_No_Take
       end
   | "drop" ->
       begin match state.carry, get state (front state) with
@@ -143,9 +140,9 @@ let run action state =
 	  { state with
             map = set state (front state) `Rock;
             carry = `None;
-            sound = Some "rock-drop";
+	    action = `Rock_Drop;
 	  }
-      |  _, _ -> "error", chg state "!" "bad"
+      |  _, _ -> "error", chg state `Rock_No_Drop
       end
   | a ->
       log_protocol#error (

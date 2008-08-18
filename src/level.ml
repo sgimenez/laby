@@ -127,8 +127,7 @@ let generate level =
     State.pos = level.pos;
     State.dir = level.dir;
     State.carry = `None;
-    State.say = "";
-    State.sound = None;
+    State.action = `None;
   }
 
 let size state =

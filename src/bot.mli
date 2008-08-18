@@ -7,7 +7,7 @@ type t =
       errto: (string -> unit) -> unit;
       set_buf: string -> unit;
       get_buf: string;
-      start: unit;
+      start: bool;
       probe: query option;
       close: unit;
     >

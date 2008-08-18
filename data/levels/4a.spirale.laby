@@ -1,13 +1,17 @@
-o o o o o o o o o o o o o o o o
-o . . . . . . . . . . . . . . o
-o . o o o o o o o o o o o o . o
-o . o . . . . . . . . . . o . o
-o . o . o o o o o o o o . o . o
-o . o . . . . . . . x o . o . o
-o . o o o o o o o o o o . o . o
-o . . . . . . . . . . . . o . o
-o o o o o o o o o o o o o o . o
-o → . . . . . . . . . . . . . o
-o o o o o o o o o o o o o o o o
+o o o o o o o o o o o o o o
+o . . . . . . . . . . . . o
+o . o o o o o o o o o o . o
+o . o . . . . . . . . o . o
+o . o . o o o o o o . o . o
+o . o . o . . . . o . o . o
+o . o . o . o o . o . o . o
+o . o . o . x o . o . o . o
+o . o . o o o o . o . o . o
+o . o . . . . . . o . o . o
+o . o o o o o o o o . o . o
+o . . . . . . . . . . o . o
+o o o o o o o o o o o o . o
+o → . . . . . . . . . . . o
+o o o o o o o o o o o o o o
 
 fr_FR.UTF-8 La spirale infernale !
