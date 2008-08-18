@@ -21,7 +21,7 @@ let regarde () = output "look";
   begin match input () with
   | "void" -> `Vide
   | "wall" -> `Mur
-  | "rock" -> `Roche
+  | "rock" -> `Caillou
   | "web" -> `Toile
   | "exit" -> `Sortie
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
