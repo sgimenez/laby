@@ -31,7 +31,7 @@ type t =
       mutable launched: bool;
       mutable depends: t list;
       mutable triggers: t list;
-      mutable mutex: Mutex.t;
+      mutable mutex: T.mutex;
       f: unit -> unit;
     }
 
@@ -42,7 +42,7 @@ let make ?(name="") ?(depends=[]) ?(triggers=[]) ?(after=[]) ?(before=[]) f =
       launched = false;
       depends = depends;
       triggers = triggers;
-      mutex = Mutex.create ();
+      mutex = T.mutex ();
       f = f;
     }
   in
@@ -68,7 +68,7 @@ let rec exec a =
   let log =
     if conf_trace#get then
       begin fun s ->
-	let id = Thread.id (Thread.self ()) in
+	let id = (*Thread.id (Thread.self ()) *) 0 in
 	Printf.printf "init(%i):%-35s@%s\n%!" id a.name s
       end
     else
@@ -76,7 +76,7 @@ let rec exec a =
   in
   let rec exec a =
     log "called";
-    Mutex.lock a.mutex;
+    a.mutex#lock;
     begin try
 	if not a.launched
 	then begin
@@ -93,34 +93,24 @@ let rec exec a =
 	  log "stop-triggers";
 	  log "stop";
 	end;
-      Mutex.unlock a.mutex;
+      a.mutex#unlock;
       log "return"
       with
-      | e -> Mutex.unlock a.mutex; raise e
+      | e -> a.mutex#unlock; raise e
     end
   and mult_exec l =
     begin match conf_concurrent#get with
     | true ->
 	let ask x =
 	  log (Printf.sprintf "exec %s" x.name);
-	  Thread.create exec x
+	  fun () -> exec x
 	in
-	let threads = List.map ask l in
-	List.iter Thread.join threads
+	T.exec (List.map ask l)
     | false ->
 	List.iter exec l
     end
   in
   exec a
-
-let rec wait_signal () =
-  begin try
-      ignore (Thread.wait_signal [Sys.sigterm; Sys.sigint]);
-    with
-    | Unix.Unix_error (Unix.EINTR,_,_) -> ()
-    | Sys_error("Thread.wait_signal: Interrupted system call") ->
-        wait_signal ()
-  end
 
 exception StartError of exn
 exception StopError of exn
@@ -130,19 +120,14 @@ let exit i =
 
 let main f () =
   begin try exec start with e -> raise (StartError e) end;
-  let quit pid = Unix.kill pid Sys.sigterm in
-  let thread pid =
-    begin try f (); quit pid with
+  begin try f () with
     | e ->
 	let se = Printexc.to_string e in
 	Printf.eprintf
 	  "init: exception encountered during main phase:\n  %s\n%!" se;
 	Printf.eprintf "exception: %s\n%!" se;
-	if conf_catch_exn#get then quit pid else raise e
-    end
-  in
-  ignore (Thread.create thread (Unix.getpid ()));
-  wait_signal ();
+	if conf_catch_exn#get then raise e
+  end;
   begin try exec stop with e -> raise (StopError e) end
 
 let catch f clean =

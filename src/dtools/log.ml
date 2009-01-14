@@ -67,13 +67,13 @@ let timestamp time =
 
 (* Avoiding interlacing logs *)
 let mutexify : ('a -> 'b) -> 'a -> 'b =
-  let log_mutex = Mutex.create () in
+  let m = T.mutex () in
   begin fun f x ->
-    Mutex.lock log_mutex;
+    m#lock;
     begin try
-      let r = f x in Mutex.unlock log_mutex; r
+      let r = f x in m#unlock; r
     with
-    | e -> Mutex.unlock log_mutex; raise e
+    | e -> m#unlock; raise e
     end
   end
 

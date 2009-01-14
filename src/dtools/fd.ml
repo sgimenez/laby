@@ -33,7 +33,7 @@ let escape c = "\027[" ^ c ^ "m", "\027[0m"
 
 let color, bcolor =
   begin match env_term with
-  | Some ("xterm" | "xterm-color") ->
+  | Some ("xterm" | "xterm-color" | "rxvt-256color") ->
       let c r g b = string_of_int (16+b+6*g+36*r) in
       (fun r g b -> "38;5;" ^ c r g b), (fun r g b -> "48;5;" ^ c r g b)
   | Some ("rxvt-unicode" | "rxvt") ->

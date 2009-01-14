@@ -14,6 +14,8 @@ fi
 BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
 BUILD_LABLGTKSOURCEVIEW=$(${PKG_VERSION} lablgtksourceview)
 
+[ "${THREADS}" = "yes" ] && echo "let threads = T_thread.main"
+
 cat <<EOF
 let project_name = "${PROJECT_NAME}"
 let version_string = "${PROJECT_VERSION}"

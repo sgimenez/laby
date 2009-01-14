@@ -19,10 +19,15 @@ OCAMLFIND=${OCAMLFIND-ocamlfind}
 OCB="${OCAMLBUILD} -use-menhir -no-links -no-sanitize -no-hygiene"
 OFQ="${OCAMLFIND} query -r -format -I,%d"
 
+[ "${THREADS}" = "yes" ] \
+    && LFLAGS="${LFLAGS} -lflags -thread" \
+    && CFLAGS="${CFLAGS} -cflags -thread"
+
 DIRS=$(${OFQ} ${PACKAGES})
 for i in ${DIRS}; do CFLAGS="${CFLAGS} -cflags $i"; done;
 for i in ${DIRS}; do LFLAGS="${LFLAGS} -lflags $i"; done;
 for i in ${DEPLIBS}; do LIBFLAGS="${LIBFLAGS} -lib $i"; done;
+
 
 OCBF="${OCB} ${CFLAGS} ${LFLAGS} ${LIBFLAGS} -I ${REP}"
 
@@ -89,6 +94,7 @@ done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
 echo building "${PROJECT_NAME}-${PROJECT_VERSION}:" ${FILES}
+export THREADS
 rm -f ${REP}/config.ml && sh ${REP}/config.sh > ${REP}/config.ml
 
 for i in ${TARGETS}; do rm -f $(basename "$i"); done
