@@ -32,7 +32,7 @@ int regarde() {
   char *s = input();
   if (strcmp(s, "void\n") == 0) { free(s); return VIDE; }
   if (strcmp(s, "wall\n") == 0) { free(s); return MUR; }
-  if (strcmp(s, "rock\n") == 0) { free(s); return ROCHE; }
+  if (strcmp(s, "rock\n") == 0) { free(s); return CAILLOU; }
   if (strcmp(s, "web\n") == 0) { free(s); return TOILE; }
   if (strcmp(s, "exit\n") == 0) { free(s); return SORTIE; }
   fprintf(stderr,"robot: unknown tile : %s\n", s);
