@@ -1,6 +1,6 @@
 extern const int VIDE;
 extern const int MUR;
-extern const int ROCHE;
+extern const int CAILLOU;
 extern const int TOILE;
 extern const int SORTIE;
 

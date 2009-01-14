@@ -5,7 +5,7 @@
 
 const int VIDE = 0;
 const int MUR = 1;
-const int ROCHE = 2;
+const int CAILLOU = 2;
 const int TOILE = 3;
 const int SORTIE = 4;
 
@@ -30,11 +30,11 @@ void avance() { output("forward"); free(input()); }
 int regarde() {
   output("look");
   char *s = input();
-  if (strcmp(s, "void") == 0) { free(s); return VIDE; }
-  if (strcmp(s, "wall") == 0) { free(s); return MUR; }
-  if (strcmp(s, "rock") == 0) { free(s); return ROCHE; }
-  if (strcmp(s, "web") == 0) { free(s); return TOILE; }
-  if (strcmp(s, "exit") == 0) { free(s); return SORTIE; }
+  if (strcmp(s, "void\n") == 0) { free(s); return VIDE; }
+  if (strcmp(s, "wall\n") == 0) { free(s); return MUR; }
+  if (strcmp(s, "rock\n") == 0) { free(s); return ROCHE; }
+  if (strcmp(s, "web\n") == 0) { free(s); return TOILE; }
+  if (strcmp(s, "exit\n") == 0) { free(s); return SORTIE; }
   fprintf(stderr,"robot: unknown tile : %s\n", s);
   exit(1);
 }
