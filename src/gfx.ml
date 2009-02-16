@@ -90,6 +90,9 @@ let labeled_combo text packing =
   let _ = GMisc.label ~text ~xpad:5 ~packing:box#pack () in
   GEdit.combo ~packing:box#add ()
 
+let label_language = F.x "Language:" []
+let label_level = F.x "Level:" []
+
 let layout () =
   let monofont = Pango.Font.from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
@@ -109,11 +112,11 @@ let layout () =
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
   let rvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let interprets = labeled_combo "Language:" rvbox#pack in
+  let interprets = labeled_combo (Fd.string label_language) rvbox#pack in
   let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
-  let levels = labeled_combo "Level:" lvbox#pack in
+  let levels = labeled_combo (Fd.string label_level) lvbox#pack in
   let view_comment = GMisc.label ~line_wrap:true ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
@@ -230,23 +233,23 @@ let display_gtk ?language_list () =
       !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
       draw_state !c_state ressources !pixmap;
       c.px#set_pixmap !pixmap;
-      let say msg = c.view_mesg#buffer#insert (msg ^ "\n") in
+      let say msg = c.view_mesg#buffer#insert (Fd.string msg ^ "\n") in
       let repport () =
 	begin match !c_state.State.action with
-	| `None -> ()
-	| `Start -> say "Je suis prêt."
-	| `Wall_In -> say "Je ne peux pas avancer dans le mur."
-	| `Rock_In -> say "Je ne peux pas passer sur ce caillou."
-	| `Exit_In -> say "Je ne peux pas passer à travers la porte."
-	| `Web_In -> say "Oups, une toile d'araignée."
-	| `Web_Out -> say "Je ne peux plus bouger."
-	| `Exit -> say "Ourah la sortie !"
-	| `No_Exit -> say "Je ne trouve pas de porte à ouvrir"
-	| `Carry_Exit -> say "Je ne peux pas sortir en portant une pierre."
-	| `Rock_Take -> ()
-	| `Rock_Drop -> ()
-	| `Rock_No_Take -> say "Il n'y a pas de caillou à prendre ici."
-	| `Rock_No_Drop -> say "Je ne peux pas poser le caillou ici."
+	| `None -> say F.n
+	| `Start -> say Say.start
+	| `Wall_In -> say Say.wall_in
+	| `Rock_In -> say Say.rock_in
+	| `Exit_In -> say Say.exit_in
+	| `Web_In -> say Say.web_in
+	| `Web_Out -> say Say.web_out
+	| `Exit -> say Say.exit
+	| `No_Exit -> say Say.no_exit
+	| `Carry_Exit -> say Say.carry_exit
+	| `Rock_Take -> say Say.rock_take
+	| `Rock_Drop -> say Say.rock_drop
+	| `Rock_No_Take -> say Say.rock_no_take
+	| `Rock_No_Drop -> say Say.rock_no_drop
 	end
       in
       if first then (repport (); Sound.action !c_state.State.action)
