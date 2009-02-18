@@ -3,11 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-const int VIDE = 0;
-const int MUR = 1;
-const int CAILLOU = 2;
-const int TOILE = 3;
-const int SORTIE = 4;
+enum Case {
+  laby_name_Void,
+  laby_name_Wall,
+  laby_name_Rock,
+  laby_name_Web,
+  laby_name_Exit
+};
 
 void output(char *s) {
   printf("%s\n", s);
@@ -21,35 +23,36 @@ char *input() {
   return line;
 }
 
-void gauche() { output("left"); free(input()); }
+void laby_name_left() { output("left"); free(input()); }
 
-void droite() { output("right"); free(input()); }
+void laby_name_right() { output("right"); free(input()); }
 
-void avance() { output("forward"); free(input()); }
+void laby_name_forward() { output("forward"); free(input()); }
 
-int regarde() {
+enum Case laby_name_look() {
   output("look");
   char *s = input();
-  if (strcmp(s, "void\n") == 0) { free(s); return VIDE; }
-  if (strcmp(s, "wall\n") == 0) { free(s); return MUR; }
-  if (strcmp(s, "rock\n") == 0) { free(s); return CAILLOU; }
-  if (strcmp(s, "web\n") == 0) { free(s); return TOILE; }
-  if (strcmp(s, "exit\n") == 0) { free(s); return SORTIE; }
+  if (strcmp(s, "void\n") == 0) { free(s); return laby_name_Void; }
+  if (strcmp(s, "wall\n") == 0) { free(s); return laby_name_Wall; }
+  if (strcmp(s, "rock\n") == 0) { free(s); return laby_name_Rock; }
+  if (strcmp(s, "web\n") == 0) { free(s); return laby_name_Web; }
+  if (strcmp(s, "exit\n") == 0) { free(s); return laby_name_Exit; }
   fprintf(stderr,"robot: unknown tile : %s\n", s);
   exit(1);
+  return 0;
 }
 
-void ouvre() { output("open"); free(input()); }
+void laby_name_door_open() { output("open"); free(input()); }
 
-void prend() { output("take"); free(input()); }
+void laby_name_take() { output("take"); free(input()); }
 
-void pose() { output("drop"); free(input()); }
+void laby_name_drop() { output("drop"); free(input()); }
 
-void fourmi();
+void laby_name_ant();
 
 int main() {
   output("start"); free(input());
-  fourmi();
+  laby_name_ant();
   return 0;
 }
 

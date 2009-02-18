@@ -1,7 +1,7 @@
 #!/bin/sh
 DIR=$1
 
-cp robot.ml $DIR/ || exit 1
+sed -f $DIR/subst robot.ml > $DIR/robot.ml || exit 1
 cd $DIR || exit 1
 cp program fourmi.ml || exit 1
 ocamlc robot.ml fourmi.ml -o fourmi || exit 1

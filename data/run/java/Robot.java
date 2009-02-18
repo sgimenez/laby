@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 public class Robot {
 
   BufferedReader r;
-
-  public enum Case { VIDE, MUR, ROCHE, TOILE, SORTIE }
+  public enum Case {
+      laby_name_Void, laby_name_Wall, laby_name_Rock,
+      laby_name_Web, laby_name_Exit
+  }
 
   Robot() {
       r = new BufferedReader(new InputStreamReader(System.in));
@@ -25,26 +27,26 @@ public class Robot {
       }
   }
 
-  public void gauche() {
+  public void laby_name_left() {
       output("left"); input();
   }
-  public void droite() {
+  public void laby_name_right() {
       output("right"); input();
   }
-  public void avance() {
+  public void laby_name_forward() {
       output("forward"); input();
   }
 
-  public Case regarde() {
+  public Case laby_name_look() {
     output("look");
     String ans = input ();
-    if (ans.equals("void")) return Case.VIDE;
-    if (ans.equals("wall")) return Case.MUR;
-    if (ans.equals("rock")) return Case.ROCHE;
-    if (ans.equals("web")) return Case.TOILE;
-    if (ans.equals("exit")) return Case.SORTIE;
+    if (ans.equals("void")) return Case.laby_name_Void;
+    if (ans.equals("wall")) return Case.laby_name_Wall;
+    if (ans.equals("rock")) return Case.laby_name_Rock;
+    if (ans.equals("web")) return Case.laby_name_Web;
+    if (ans.equals("exit")) return Case.laby_name_Exit;
     assert false;
-    return Case.VIDE;
+    return Case.laby_name_Void;
   }
 
   public void ouvre() {

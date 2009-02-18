@@ -1,17 +1,17 @@
 #include "robot.h"
 
-void fourmi() {
-  droite();
-  avance();
-  prend();
-  gauche();
-  avance();
-  pose();
-  droite();
-  avance();
-  gauche();
-  avance();
-  avance();
-  droite();
-  ouvre();
+void laby_name_ant() {
+  laby_name_right();
+  laby_name_forward();
+  laby_name_take();
+  laby_name_left();
+  laby_name_forward();
+  laby_name_drop();
+  laby_name_right();
+  laby_name_forward();
+  laby_name_left();
+  laby_name_forward();
+  laby_name_forward();
+  laby_name_right();
+  laby_name_door_open();
 }

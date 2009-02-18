@@ -120,7 +120,7 @@ let layout () =
   let view_comment = GMisc.label ~line_wrap:true ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
-  let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`ICONS () in
+  let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`BOTH () in
   let button stock = GButton.tool_button ~packing:toolbar#insert ~stock () in
   let tbutton stock =
     GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
@@ -236,7 +236,7 @@ let display_gtk ?language_list () =
       let say msg = c.view_mesg#buffer#insert (Fd.string msg ^ "\n") in
       let repport () =
 	begin match !c_state.State.action with
-	| `None -> say F.n
+	| `None -> ()
 	| `Start -> say Say.start
 	| `Wall_In -> say Say.wall_in
 	| `Rock_In -> say Say.rock_in

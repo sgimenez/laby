@@ -32,18 +32,43 @@ type h =
 
 let bufsize = 16384
 
+let substs =
+  [
+    "laby_name_ant", F.x "laby_name_ant" [];
+    "laby_name_Ant", F.x "laby_name_Ant" [];
+    "laby_name_left", F.x "laby_name_left" [];
+    "laby_name_right", F.x "laby_name_right" [];
+    "laby_name_forward",  F.x "laby_name_forward" [];
+    "laby_name_look", F.x "laby_name_look" [];
+    "laby_name_door_open", F.x "laby_name_door_open" [];
+    "laby_name_take", F.x "laby_name_take" [];
+    "laby_name_drop", F.x "laby_name_drop" [];
+    "laby_name_Void", F.x "laby_name_Void" [];
+    "laby_name_Wall", F.x "laby_name_Wall" [];
+    "laby_name_Rock", F.x "laby_name_Rock" [];
+    "laby_name_Web", F.x "laby_name_Web" [];
+    "laby_name_Exit", F.x "laby_name_Exit" [];
+  ]
+
 let dump prog =
   let tmpdir = Printf.sprintf "/tmp/fourmi-%d/" (Unix.getpid ()) in
   ignore (Unix.system ("rm -rf " ^ tmpdir));
   Unix.mkdir tmpdir 0o755;
-  let filename = tmpdir ^ "program" in
+  let write filename s =
   let fd =
-    Unix.openfile filename
+    Unix.openfile (tmpdir ^ filename)
       [ Unix.O_CREAT; Unix.O_TRUNC; Unix.O_WRONLY]
       0o644
   in
-  ignore (Unix.write fd prog 0 (String.length prog));
+  ignore (Unix.write fd s 0 (String.length s));
   Unix.close fd;
+  in
+  write "program" prog;
+  let subst =
+    String.concat "\n"
+      (List.map (fun (x, y) -> "s/" ^ x ^ "/" ^ Fd.string y ^ "/g") substs);
+  in
+  write "subst" subst;
   tmpdir
 
 let clean tmpdir =
@@ -107,6 +132,13 @@ let make () =
       !name
 
     method get_buf =
+      let subst s =
+	List.fold_left
+	  (fun s (x, y) ->
+	     Str.global_replace (Str.regexp_string x) (Fd.string y) s
+	  )
+	  s substs
+      in
       begin try Hashtbl.find buffers !name with
       | Not_found ->
 	  let s = ref "" in
@@ -119,7 +151,7 @@ let make () =
 	    | End_of_file -> ()
 	  end;
 	  close_in f;
-	  !s
+	  subst !s
       end
 
     method set_buf buf =

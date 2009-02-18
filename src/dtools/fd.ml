@@ -103,6 +103,9 @@ let tag_msg_unknown = tag "format-msg-unknown"
 let tag_msg_lang = tag "format-msg-lang"
 let tag_msg_bad = tag "format-msg-bad"
 
+let tag_msg_lang lang =
+  F.t (fun x -> F.h [tag_msg_lang (F.s ("<" ^ lang ^ ">")); x])
+
 let texts : (string, (string * F.t) list -> F.t) Hashtbl.t =
   Hashtbl.create 1024
 
@@ -150,7 +153,7 @@ let texts_line txt str =
     in
     let msg = F.b (List.map map !l) in
     if !msg_lang = lang then msg
-    else F.h [tag_msg_lang (F.s ("<" ^ !msg_lang ^ ">")); msg]
+    else tag_msg_lang !msg_lang  msg
   in
   begin match !state with
   | `Text -> `Skip
@@ -168,7 +171,7 @@ let bad m vars =
   fn vars
 
 
-let string t =
+let string ?(color=false) t =
   let add state string =
     let ind, sep, pri, s = state in
     (ind, "", pri, s ^ sep ^ string)
@@ -186,7 +189,7 @@ let string t =
     in
     begin match F.use t with
     | `N -> state
-    | `T (t, m) -> str (t m) state
+    | `T (t, m) -> if color then str (t m) state else str m state
     | `S (s') -> add state s'
     | `L (slabel, m) ->
 	let ind, sep, pri, s = state in
@@ -261,7 +264,7 @@ let string t =
   s
 
 let stdout x =
-  Printf.printf "%s\n" (string x)
+  Printf.printf "%s\n" (string ~color:true x)
 
 let read_texts log path file =
   let error line f =
