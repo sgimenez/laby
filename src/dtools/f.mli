@@ -44,6 +44,9 @@ val s : string -> t
 val x : string -> (string * t) list -> t
 (** localized text box *)
 
+val xs : string -> string -> (string * t) list -> t
+(** special localized text box *)
+
 
 (** Atomic type boxes *)
 
@@ -84,7 +87,7 @@ val use : t ->
   | `V of t * t list
   | `Q of t
   | `P of int * (t -> t) * t
-  | `X of string * (string * t) list
+  | `X of string * string * (string * t) list
   | `Int of int
   | `Float of float
   | `String of string

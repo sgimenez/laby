@@ -236,7 +236,6 @@ let display_gtk ?language_list () =
       let say msg = c.view_mesg#buffer#insert (Fd.string msg ^ "\n") in
       let repport () =
 	begin match !c_state.State.action with
-	| `None -> ()
 	| `Start -> say Say.start
 	| `Wall_In -> say Say.wall_in
 	| `Rock_In -> say Say.rock_in
@@ -246,10 +245,9 @@ let display_gtk ?language_list () =
 	| `Exit -> say Say.exit
 	| `No_Exit -> say Say.no_exit
 	| `Carry_Exit -> say Say.carry_exit
-	| `Rock_Take -> say Say.rock_take
-	| `Rock_Drop -> say Say.rock_drop
 	| `Rock_No_Take -> say Say.rock_no_take
 	| `Rock_No_Drop -> say Say.rock_no_drop
+	| _ -> ()
 	end
       in
       if first then (repport (); Sound.action !c_state.State.action)

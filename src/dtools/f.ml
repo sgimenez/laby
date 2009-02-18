@@ -12,7 +12,7 @@ type t =
     | V of t * t list
     | Q of t
     | P of int * (t -> t) * t
-    | X of string * (string * t) list
+    | X of string * string * (string * t) list
     | Int of int
     | Float of float
     | String of string
@@ -56,7 +56,10 @@ let l s t =
   L (s, t)
 
 let x s stl =
-  X (s, stl)
+  X ("", s, stl)
+
+let xs special s stl =
+  X (special, s, stl)
 
 let int i =
   Int i
@@ -86,7 +89,7 @@ let use x =
     | V (s, l) -> `V (s, l)
     | Q t -> `Q t
     | P (i, f, t) -> `P (i, f, t)
-    | X (s, stl) -> `X (s, stl)
+    | X (special, s, stl) -> `X (special, s, stl)
     | Int i -> `Int i
     | Float f -> `Float f
     | String s -> `String s

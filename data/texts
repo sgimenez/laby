@@ -1,3 +1,123 @@
+# misc
+
+text		file <f>, line <l>: <error>
+en_US.UTF-8	file <f>, line <l>: <error>
+fr_FR.UTF-8	fichier <f>, ligne <l>: <error>
+
+text		line <l>, characters <begin-char>-<end-char>
+en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
+fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
+
+text		line <l>, character <char>
+en_US.UTF-8	line <l>, character <char>
+fr_FR.UTF-8	ligne <l>, caractère <char>
+
+text		lexical error
+en_US.UTF-8	lexical error
+fr_FR.UTF-8	erreur lexicale
+
+text		syntax error
+en_US.UTF-8	syntax error
+fr_FR.UTF-8	erreur de syntaxe
+
+text		<status>: <message>
+en_US.UTF-8	<status>: <message>
+fr_FR.UTF-8	<status> : <message>
+
+text		exception
+en_US.UTF-8	exception
+fr_FR.UTF-8	exception
+
+text		internal error
+en_US.UTF-8	internal error
+fr_FR.UTF-8	erreur interne
+
+text		fatal error
+en_US.UTF-8	fatal error
+fr_FR.UTF-8	erreur fatale
+
+text		error
+en_US.UTF-8	error
+fr_FR.UTF-8	erreur
+
+text		warning
+en_US.UTF-8	warning
+fr_FR.UTF-8	avertissement
+
+text		debug
+en_US.UTF-8	debug
+fr_FR.UTF-8	debug
+
+text		failure
+en_US.UTF-8	failure
+fr_FR.UTF-8	échec
+
+text		done
+en_US.UTF-8	done
+fr_FR.UTF-8	fait
+
+text		line <l>
+en_US.UTF-8	line <l>
+fr_FR.UTF-8	ligne <l>
+
+text		unknown token
+en_US.UTF-8	unknown token
+fr_FR.UTF-8	lexème inconnu
+
+# opt.ml
+
+text		invalid options: <error>
+en_US.UTF-8	invalid options: <error>
+fr_FR.UTF-8	options incorrectes : <error>
+
+text		unknown option <opt>
+en_US.UTF-8	unknown option <opt>
+fr_FR.UTF-8	option <opt> inconnue
+
+text		option <opt> does not take an argument
+en_US.UTF-8	option <opt> does not take an argument
+fr_FR.UTF-8	l'option <opt> ne prend pas d'argument
+
+text		option <opt> requires an argument
+en_US.UTF-8	option <opt> requires an argument
+fr_FR.UTF-8	l'option <opt> nécessite un argument
+
+text		multiple exclusive actions specified
+en_US.UTF-8	multiple exclusive actions specified
+fr_FR.UTF-8	plusieurs actions exclusives ont été spécifiées
+
+text		invalid argument to <opt>: <arg>
+en_US.UTF-8	invalid argument to <opt>: <arg>
+fr_FR.UTF-8	argument invalide pour <opt> : <arg>
+
+text		option <opt> conflicts with a previous option
+en_US.UTF-8	option <opt> conflicts with a previous option
+fr_FR.UTF-8	l'option <opt> est en conflit avec une option précédente
+
+text		display help message
+en_US.UTF-8	display help message
+fr_FR.UTF-8	affiche un message d'aide
+
+text		output debug information
+en_US.UTF-8	output debug information
+fr_FR.UTF-8	émet des messages de debug
+
+text		log output to a file
+en_US.UTF-8	log output to a file
+fr_FR.UTF-8	enregistre la sortie vers un fichier
+
+text		select theme file
+en_US.UTF-8	select theme file
+fr_FR.UTF-8	choix du fichier de thème
+
+# version.ml
+
+text		show versioning information
+en_US.UTF-8	show versioning information
+fr_FR.UTF-8	affiche les indications de version
+
+### begin
+
 text		Language:
 en_US.UTF-8	Language:
 fr_FR.UTF-8	Langage :
@@ -52,59 +172,59 @@ fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 
 # ascii api names
 
-text		laby_name_Ant
+text:ascii	Ant
 en_US.UTF-8	Ant
 fr_FR.UTF-8	Fourmi
 
-text		laby_name_ant
+text:ascii	ant
 en_US.UTF-8	ant
 fr_FR.UTF-8	fourmi
 
-text		laby_name_left
+text:ascii	left
 en_US.UTF-8	left
 fr_FR.UTF-8	gauche
 
-text		laby_name_right
+text:ascii	right
 en_US.UTF-8	right
 fr_FR.UTF-8	droite
 
-text		laby_name_forward
+text:ascii	forward
 en_US.UTF-8	forward
 fr_FR.UTF-8	avance
 
-text		laby_name_look
+text:ascii	look
 en_US.UTF-8	look
 fr_FR.UTF-8	regarde
 
-text		laby_name_door_open
+text:ascii	door_open
 en_US.UTF-8	door_open
 fr_FR.UTF-8	ouvre
 
-text		laby_name_take
+text:ascii	take
 en_US.UTF-8	take
 fr_FR.UTF-8	prend
 
-text		laby_name_drop
+text:ascii	drop
 en_US.UTF-8	drop
 fr_FR.UTF-8	pose
 
-text		laby_name_Void
+text:ascii	Void
 en_US.UTF-8	Void
 fr_FR.UTF-8	Vide
 
-text		laby_name_Wall
+text:ascii	Wall
 en_US.UTF-8	Wall
 fr_FR.UTF-8	Mur
 
-text		laby_name_Rock
+text:ascii	Rock
 en_US.UTF-8	Rock
 fr_FR.UTF-8	Caillou
 
-text		laby_name_Web
+text:ascii	Web
 en_US.UTF-8	Web
 fr_FR.UTF-8	Toile
 
-text		laby_name_Exit
+text:ascii	Exit
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 

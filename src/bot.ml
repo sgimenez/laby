@@ -34,20 +34,20 @@ let bufsize = 16384
 
 let substs =
   [
-    "laby_name_ant", F.x "laby_name_ant" [];
-    "laby_name_Ant", F.x "laby_name_Ant" [];
-    "laby_name_left", F.x "laby_name_left" [];
-    "laby_name_right", F.x "laby_name_right" [];
-    "laby_name_forward",  F.x "laby_name_forward" [];
-    "laby_name_look", F.x "laby_name_look" [];
-    "laby_name_door_open", F.x "laby_name_door_open" [];
-    "laby_name_take", F.x "laby_name_take" [];
-    "laby_name_drop", F.x "laby_name_drop" [];
-    "laby_name_Void", F.x "laby_name_Void" [];
-    "laby_name_Wall", F.x "laby_name_Wall" [];
-    "laby_name_Rock", F.x "laby_name_Rock" [];
-    "laby_name_Web", F.x "laby_name_Web" [];
-    "laby_name_Exit", F.x "laby_name_Exit" [];
+    "laby_name_ant", F.xs "ascii" "ant" [];
+    "laby_name_Ant", F.xs "ascii" "Ant" [];
+    "laby_name_left", F.xs "ascii" "left" [];
+    "laby_name_right", F.xs "ascii" "right" [];
+    "laby_name_forward", F.xs "ascii" "forward" [];
+    "laby_name_look", F.xs "ascii" "look" [];
+    "laby_name_door_open", F.xs "ascii" "door_open" [];
+    "laby_name_take", F.xs "ascii" "take" [];
+    "laby_name_drop", F.xs "ascii" "drop" [];
+    "laby_name_Void", F.xs "ascii" "Void" [];
+    "laby_name_Wall", F.xs "ascii" "Wall" [];
+    "laby_name_Rock", F.xs "ascii" "Rock" [];
+    "laby_name_Web", F.xs "ascii" "Web" [];
+    "laby_name_Exit", F.xs "ascii" "Exit" [];
   ]
 
 let dump prog =

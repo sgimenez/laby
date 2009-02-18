@@ -47,7 +47,7 @@ let codes =
   let is_digit c = '0' <= c && c <= '5' in
   let digit c = int_of_char c - int_of_char '0' in
   let unrecognized str =
-(*     error (F.x "unrecognized value <val>" ["val", F.string str]); *)
+    (* error (F.x "unrecognized value <val>" ["val", F.string str]); *)
     ""
   in
   begin function
@@ -106,11 +106,13 @@ let tag_msg_bad = tag "format-msg-bad"
 let tag_msg_lang lang =
   F.t (fun x -> F.h [tag_msg_lang (F.s ("<" ^ lang ^ ">")); x])
 
-let texts : (string, (string * F.t) list -> F.t) Hashtbl.t =
+let texts : (string * string, (string * F.t) list -> F.t) Hashtbl.t =
   Hashtbl.create 1024
 
-let texts_line txt str =
+let texts_line key str =
   let msg_lang = ref "" in
+  let special = ref "" in
+  let txt = ref "" in
   let elem = ref "" in
   let arg = ref "" in
   let l = ref [] in
@@ -127,7 +129,20 @@ let texts_line txt str =
       begin match !state, str.[!p] with
       | `Init, '\t' ->
 	  while str.[!p] = '\t' do incr p done;
-	  if !msg_lang = "text" then (txt := ""; `Text) else `Elem
+	  if !msg_lang = "text"
+	  then `Text
+	  else `Elem
+      | `Init, ':' ->
+	  if !msg_lang <> "text"
+	  then `Error
+	  else (
+	    incr p;
+	    let i = !p in
+	    while str.[!p] <> '\t' do incr p done;
+	    special := String.sub str i (!p - i);
+	    while str.[!p] = '\t' do incr p done;
+	    `Text
+	  )
       | `Init, ' ' -> `Error
       | `Init, c -> push c msg_lang; incr p; `Init
       | `Text, '\n' -> incr p; `Text
@@ -156,18 +171,18 @@ let texts_line txt str =
     else tag_msg_lang !msg_lang  msg
   in
   begin match !state with
-  | `Text -> `Skip
-  | `Elem -> `Entry (!msg_lang, !txt, msg)
+  | `Text -> key := (!special, !txt); `Skip
+  | `Elem -> `Entry (!msg_lang, !key, msg)
   | _ ->
       if (str <> "\n" && str.[0] <> '#') then `Error else `Skip
   end
 
-let bad m vars =
+let bad special m vars =
   let arg (var, fn) = F.h [tag_msg_bad (F.s (var ^ ":")); fn] in
   let fn vars =
     F.h [tag_msg_bad (F.s "<!>"); F.s m; F.v (List.map arg vars)]
   in
-  Hashtbl.add texts m fn;
+  Hashtbl.add texts (special, m) fn;
   fn vars
 
 
@@ -220,19 +235,22 @@ let string ?(color=false) t =
 	let _, _, pri, s = state in
 	let m' = if pri <= pri0 then wrap m else m in
 	withpri pri (str m' (withpri pri0 state))
-    | `X (mstr, vars) ->
+    | `X (special, mstr, vars) ->
+	let key = (special, mstr) in
 	let t =
 	  begin try
-	    begin try (Hashtbl.find texts mstr) vars with
+	    begin try (Hashtbl.find texts key) vars with
 	    | Not_found ->
-		begin match texts_line (ref mstr) ("\t" ^ mstr ^ "\n") with
-		| `Entry (msg_lang, txt, msg) ->
-	            Hashtbl.add texts txt msg; msg vars
-		| _ -> bad mstr vars
+		begin match
+		  texts_line (ref key) ("\t" ^ mstr ^ "\n")
+		with
+		| `Entry (_, _, msg) ->
+	            Hashtbl.add texts key msg; msg vars
+		| _ -> bad special mstr vars
 		end
 	    end
 	  with
-	  | Not_found -> bad mstr vars
+	  | Not_found -> bad special mstr vars
 	  end
 	in
 	str t state
@@ -278,19 +296,20 @@ let read_texts log path file =
   in
   let lnb = ref 0 in
   begin try
-    let txt = ref "" in
+    let key = ref ("", "") in
     while true do
       let str = incr lnb; input_line file ^ "\n" in
-      begin match texts_line txt str with
-      | `Entry (msg_lang, txt, msg) ->
+      begin match texts_line key str with
+      | `Entry (msg_lang, key, msg) ->
 	  log#debug 5 (
-	    F.x "message lang=<lang>: <text>" [
+	    F.x "message special=<id> lang=<lang>: <text>" [
+	      "id", F.string (fst key);
 	      "lang", F.string msg_lang;
-	      "text", F.q (F.s txt);
+	      "text", F.q (F.s (snd key));
 	    ]
 	  );
 	  if lang = msg_lang then
-	    Hashtbl.add texts txt msg
+	    Hashtbl.add texts key msg
       | `Skip -> ()
       | `Error -> error !lnb (F.x "syntax error" [])
       end
