@@ -278,7 +278,8 @@ let display_gtk ?language_list () =
       | false -> ()
       end
     in
-    c.interprets#entry#set_text "ocaml";
+    if List.mem "ocaml" language_list
+    then c.interprets#entry#set_text "ocaml";
     newinterpret ();
     let prev () =
       begin match !b_states with
