@@ -5,4 +5,5 @@ o . . . . o
 o . ↑ . r o
 o o o o o o
 
-fr_FR.UTF-8 Ce labyrinthe sert de démonstration. Le programme initial permet au robot fourmi de sortir de ce labyrinthe. Il va s'amuser un peu avec le caillou et éviter la toile d'araignée. Appuie sur le bouton qui permet de charger le programme dans le robot, et fait défiler le temps avec les flèches.
+en_US.UTF-8	This labyrinth is a demo. The initial program allows the ant robot to get out this labyrinth. It will tease up a bit with the rock and avoid to be caught into the web spider. Click the button to load the program into the robot, and use the arrows to perform time ticks.
+fr_FR.UTF-8	Ce labyrinthe sert de démonstration. Le programme initial permet au robot fourmi de sortir de ce labyrinthe. Il va s'amuser un peu avec le caillou et éviter la toile d'araignée. Appuie sur le bouton qui permet de charger le programme dans le robot, et fait défiler le temps avec les flèches.

@@ -70,14 +70,16 @@ let load file =
   let rec get_comment () =
     posx := -1; incr posy;
     let l = input_line f in
-    let re = Str.regexp (Printf.sprintf "\\([^ ]*\\) \\(.*\\)") in
-    if Str.string_match re l 0
-    then (
-      if !comment = "" || Str.matched_group 1 l = Fd.lang
-      then comment := Str.matched_group 2 l
+    begin try
+      let lang_str = String.sub l 0 (String.index l '\t') in
+      let last = String.rindex l '\t' in
+      let comment_str = String.sub l (last + 1) (String.length l - last - 1) in
+      if !comment = "" || lang_str = Fd.lang
+      then (comment := comment_str; get_comment ())
       else get_comment ()
-    )
-    else get_comment ()
+    with
+    | Not_found -> get_comment ()
+    end
   in
   begin try
     get_lines ();
