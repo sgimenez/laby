@@ -177,12 +177,12 @@ let texts_line key str =
       if (str <> "\n" && str.[0] <> '#') then `Error else `Skip
   end
 
-let bad special m vars =
+let bad key vars =
   let arg (var, fn) = F.h [tag_msg_bad (F.s (var ^ ":")); fn] in
   let fn vars =
-    F.h [tag_msg_bad (F.s "<!>"); F.s m; F.v (List.map arg vars)]
+    F.h [tag_msg_bad (F.s "<!>"); F.s (snd key); F.v (List.map arg vars)]
   in
-  Hashtbl.add texts (special, m) fn;
+  Hashtbl.add texts key fn;
   fn vars
 
 
@@ -246,11 +246,11 @@ let string ?(color=false) t =
 		with
 		| `Entry (_, _, msg) ->
 	            Hashtbl.add texts key msg; msg vars
-		| _ -> bad special mstr vars
+		| _ -> bad key vars
 		end
 	    end
 	  with
-	  | Not_found -> bad special mstr vars
+	  | Not_found -> bad key vars
 	  end
 	in
 	str t state
