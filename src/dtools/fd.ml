@@ -186,7 +186,7 @@ let bad key vars =
   fn vars
 
 
-let string ?(color=false) t =
+let string format t =
   let add state string =
     let ind, sep, pri, s = state in
     (ind, "", pri, s ^ sep ^ string)
@@ -204,7 +204,7 @@ let string ?(color=false) t =
     in
     begin match F.use t with
     | `N -> state
-    | `T (t, m) -> if color then str (t m) state else str m state
+    | `T (t, m) -> if format = `Color then str (t m) state else str m state
     | `S (s') -> add state s'
     | `L (slabel, m) ->
 	let ind, sep, pri, s = state in
@@ -281,8 +281,11 @@ let string ?(color=false) t =
   let _, _, _, s = str t ("\n", "", 10000, "") in
   s
 
+let render_raw x = string `Raw x
+let render_color x = string `Color x
+
 let stdout x =
-  Printf.printf "%s\n" (string ~color:true x)
+  Printf.printf "%s\n" (render_color x)
 
 let read_texts log path file =
   let error line f =
@@ -342,7 +345,7 @@ let output f =
 
 let input () =
   let prompt = F.h [tag_cmd_input (F.s "<"); F.s ""] in
-  print_string (string prompt);
+  print_string (render_color prompt);
   begin try Some (read_line ()) with
   | End_of_file -> print_newline (); None
   end

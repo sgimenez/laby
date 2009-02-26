@@ -90,16 +90,16 @@ let print h x =
     | `Buffer l ->
 	state := `Buffer (x :: l);
 	if conf_stdout#get then
-	  to_stdout (Fd.string ~color:true h) (Fd.string ~color:true x)
+	  to_stdout (Fd.render_color h) (Fd.render_color x)
     | `Chan ch ->
-	let s1 = Fd.string ~color:true h in
-	let s2 = Fd.string ~color:true x in
+	let s1 = Fd.render_color h in
+	let s2 = Fd.render_color x in
 	to_stdout s1 s2;
 	to_ch ch s1 s2
     end
   else
     if conf_stdout#get then
-      to_stdout (Fd.string ~color:true h) (Fd.string ~color:true x)
+      to_stdout (Fd.render_color h) (Fd.render_color x)
 
 let build ?level path =
   let rec aux p l (t : Conf.ut) =
@@ -212,7 +212,7 @@ let init () =
 	begin match !state with
 	| `Buffer l -> ()
 	| `Chan ch ->
-	    let send x = to_ch ch (Fd.string ~color:true x) "" in
+	    let send x = to_ch ch (Fd.render_color x) "" in
 	    send (
 	      F.x ">>> LOG START <time>" ["time", F.time time]
 	    );
@@ -238,7 +238,7 @@ let close () =
   let time = Unix.gettimeofday () in
   begin match !state with
   | `Chan ch ->
-      let send x = to_ch ch (Fd.string ~color:true x) "" in
+      let send x = to_ch ch (Fd.render_color x) "" in
       let proceed () =
 	send (
 	  F.x ">>> LOG END <time>" ["time", F.time time]

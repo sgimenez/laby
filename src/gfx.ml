@@ -112,11 +112,11 @@ let layout () =
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
   let rvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let interprets = labeled_combo (Fd.string label_language) rvbox#pack in
+  let interprets = labeled_combo (Fd.render_raw label_language) rvbox#pack in
   let sw_mesg = scrolled rvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
-  let levels = labeled_combo (Fd.string label_level) lvbox#pack in
+  let levels = labeled_combo (Fd.render_raw label_level) lvbox#pack in
   let view_comment = GMisc.label ~line_wrap:true ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
@@ -233,7 +233,7 @@ let display_gtk ?language_list () =
       !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
       draw_state !c_state ressources !pixmap;
       c.px#set_pixmap !pixmap;
-      let say msg = c.view_mesg#buffer#insert (Fd.string msg ^ "\n") in
+      let say msg = c.view_mesg#buffer#insert (Fd.render_raw msg ^ "\n") in
       let repport () =
 	begin match !c_state.State.action with
 	| `Start -> say Say.start

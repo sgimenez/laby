@@ -65,8 +65,8 @@ let dump prog =
   in
   write "program" prog;
   let subst =
-    String.concat "\n"
-      (List.map (fun (x, y) -> "s/" ^ x ^ "/" ^ Fd.string y ^ "/g") substs);
+    let f (x, y) = "s/" ^ x ^ "/" ^ Fd.render_raw y ^ "/g" in
+    String.concat "\n" (List.map f substs);
   in
   write "subst" subst;
   tmpdir
@@ -133,11 +133,10 @@ let make () =
 
     method get_buf =
       let subst s =
-	List.fold_left
-	  (fun s (x, y) ->
-	     Str.global_replace (Str.regexp_string x) (Fd.string y) s
-	  )
-	  s substs
+	let f s (x, y) =
+	  Str.global_replace (Str.regexp_string x) (Fd.render_raw y) s
+	in
+	List.fold_left f s substs
       in
       begin try Hashtbl.find buffers !name with
       | Not_found ->
