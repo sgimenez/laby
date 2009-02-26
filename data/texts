@@ -66,9 +66,9 @@ fr_FR.UTF-8	lexème inconnu
 
 # opt.ml
 
-text		invalid options: <error>
-en_US.UTF-8	invalid options: <error>
-fr_FR.UTF-8	options incorrectes : <error>
+text		invalid options: <errors>
+en_US.UTF-8	invalid options: <errors>
+fr_FR.UTF-8	options incorrectes : <errors>
 
 text		unknown option <opt>
 en_US.UTF-8	unknown option <opt>

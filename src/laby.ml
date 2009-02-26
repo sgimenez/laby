@@ -38,7 +38,7 @@ let main () =
   begin match Opt.cmd opts with
   | `Errors ml ->
       log#fatal (
-	F.x "incorrect options: <errors>" [
+	F.x "invalid options: <errors>" [
 	  "errors", F.v ml;
 	]
       );
