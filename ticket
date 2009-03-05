@@ -48,7 +48,7 @@ d|display)
       OLD="$R"; \
       echo "$T"; \
       done) \
-  | $PAGER
+  | ${PAGER-less}
   ;;
 c|comment)
   F="${DIR}/$2.ticket"
