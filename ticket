@@ -1,0 +1,89 @@
+#!/bin/sh
+
+err()
+{
+    echo error: $1
+    exit 1
+}
+
+DIR="$(mtn automate get_workspace_root 2> /dev/null)/dev/tickets" \
+    || err "out of workspace"
+
+get_cert()
+{
+    echo $(mtn automate certs "$1" | \
+	sed -n '/name "'"$2"'"/{n;s/.*value "\(.*\)".*/\1/;p}' \
+	)
+}
+
+format_msg()
+{
+    (echo ""; cat "$1"; echo "") | cat -s
+}
+
+case $1 in
+l|list)
+  [ -d "${DIR}/$2" ] || err "unknown category: $2"
+  cd "${DIR}"; find "${2-.}" -name '*.ticket' | \
+  while read i; do echo "${i%.ticket}"; done | \
+  sed 's/^.\///'
+  ;;
+s|search)
+  [ -d "${DIR}/$3" ] || err "unknown category: $3"
+  cd "${DIR}"; find "${3-.}" -name '*.ticket' | \
+  while read i; do grep -q "$2" "$i" && echo "${i%.ticket}"; done | \
+  sed 's/^.\///'
+  ;;
+d|display)
+  F="${DIR}/$2.ticket"
+  [ -f "$F" ] || err "unknown ticket"
+  cd "$DIR"
+  mtn annotate --revs-only "$2.ticket" | (
+      OLD=""; while IFS='\n:' read R T; do \
+	  [ "$OLD" != "$R" ] &&
+	  (   A=$(get_cert "$R" "author");
+	      D=$(get_cert "$R" "date" | cut -dT -f1);
+	      printf "Comment from %s (on %s):\n" "$A" "$D"; \
+	  );  \
+      OLD="$R"; \
+      echo "$T"; \
+      done) \
+  | $PAGER
+  ;;
+c|comment)
+  F="${DIR}/$2.ticket"
+  [ -f "$F" ] || err "unknown ticket"
+  TMP="${DIR}/$2.tmp"
+  $EDITOR "$TMP"
+  [ -f "$TMP" ] && \
+      (cat "$TMP" >> "$F"; rm "$TMP")
+  ;;
+o|old)
+  F="${DIR}/$2.ticket"
+  [ -f "$F" ] || err "unknown ticket"
+  cd "$DIR"; mtn rm "$2.ticket"
+  ;;
+n|new)
+  F="${DIR}/$2.ticket"
+  C="$(dirname "$F")"
+  [ -d "$C" ] || err "unknown category: $(dirname $2)"
+  TMP="${DIR}/$2.tmp"
+  $EDITOR "$TMP"
+  [ -f "$TMP" ] && \
+      (format_msg "$TMP" >> "$F"; rm "$TMP"; cd "$DIR"; mtn add "$2.ticket")
+  ;;
+''|h|help)
+  FMT="  %-20s%s\n"
+  printf "usage:\n  %s command [parameters]\n\ncommands:\n" $0
+  printf "$FMT" "search <pattern>" "search pattern in tickets"
+  printf "$FMT" "display <id>" "display a ticket"
+  printf "$FMT" "comment <id>" "add a comment to a ticket"
+  printf "$FMT" "new <id>" "create a new ticket"
+  printf "$FMT" "old <id>" "obsolete a ticket"
+  printf "$FMT" "list <category>" "list tickets"
+  printf "$FMT" "help" "command list"
+  ;;
+*)
+  err "unknown command: $1"
+  ;;
+esac
