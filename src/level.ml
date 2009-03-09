@@ -91,7 +91,7 @@ let load file =
   begin match List.for_all (fun a -> Array.length a = sizex) !lines with
   | false ->
       log#fatal (
-	F.x "level: mismatching line length" [];
+	F.x "mismatching line length" [];
       );
       Run.exit ();
   | true -> ()

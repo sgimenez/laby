@@ -30,8 +30,8 @@ let get rpath =
   let l = List.map (fun s -> s ^ ressource) dir_list in
   let error () =
     log#error (
-      F.x "cannot find ressource <ressource> at: <list>" [
-	"ressource", F.string ressource;
+      F.x "cannot find resource <resource> at: <list>" [
+	"resource", F.string ressource;
 	"list", F.v (List.map F.string raw_dir_dist);
       ]
     );

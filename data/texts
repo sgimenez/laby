@@ -1,4 +1,4 @@
-# misc
+# dtools
 
 text		file <f>, line <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
@@ -64,6 +64,66 @@ text		unknown token
 en_US.UTF-8	unknown token
 fr_FR.UTF-8	lexème inconnu
 
+text		unknown type
+en_US.UTF-8	unknown type
+fr_FR.UTF-8	type inconnu
+
+text		failed to load file: <error>
+en_US.UTF-8	failed to load file: <error>
+fr_FR.UTF-8	échec pendant le chargement du fichier: <error>
+
+text		<type> value expected
+en_US.UTF-8	<type> value expected
+fr_FR.UTF-8	valeur de type <type> attendue
+
+text		the given configuration key has type <type>
+en_US.UTF-8	the given configuration key has type <type>
+fr_FR.UTF-8	la clé de configuration donnée à le type <type>
+
+text		the given configuration key cannot be assigned a value
+en_US.UTF-8	the given configuration key cannot be assigned a value
+fr_FR.UTF-8	la clé de configuration donnée ne peut être modifiée
+
+text		assignation syntax is <syntax>
+en_US.UTF-8	assignation syntax is <syntax>
+fr_FR.UTF-8	la syntaxe pour une assignation est <syntax>
+
+text		set a configuration key
+en_US.UTF-8	set a configuration key
+fr_FR.UTF-8	spécifie une clé de configuration
+
+text		describe a configuration key
+en_US.UTF-8	describe a configuration key
+fr_FR.UTF-8	décrit une clé de configuration
+
+text		dump a configuration key
+en_US.UTF-8	dump a configuration key
+fr_FR.UTF-8	extrait une clé de configuration
+
+text		log configuration
+en_US.UTF-8	log configuration
+fr_FR.UTF-8	configuration des ‘log’s
+
+text		general log level
+en_US.UTF-8	general log level
+fr_FR.UTF-8	niveau de ‘log’ général
+
+text		subordinate log level
+en_US.UTF-8	subordinate log level
+fr_FR.UTF-8	niveau de ‘log’ subordonné
+
+
+# misc
+
+text		display failed
+en_US.UTF-8	display failed
+fr_FR.UTF-8	impossible d'ouvrir une fenêtre
+
+text		gtk error: <error>
+en_US.UTF-8	gtk error: <error>
+fr_FR.UTF-8	erreur gtk: <error>
+
+
 # opt.ml
 
 text		invalid options: <errors>
@@ -116,7 +176,41 @@ text		show versioning information
 en_US.UTF-8	show versioning information
 fr_FR.UTF-8	affiche les indications de version
 
-### begin
+
+# data.ml
+
+text		unknown os type
+en_US.UTF-8	unknown os type
+fr_FR.UTF-8	système d'exploitation inconnu
+
+text		cannot access <path>
+en_US.UTF-8	cannot access <path>
+fr_FR.UTF-8	ne peux pas accéder à <path>
+
+text		cannot find resource <resource> at: <list>
+en_US.UTF-8	cannot find resource <resource> at: <list>
+fr_FR.UTF-8	ressource <ressource> introuvable dans: <list>
+
+
+# level.ml
+
+text		unknown tile
+en_US.UTF-8	unknown tile
+fr_FR.UTF-8	case inconnue
+
+text		mismatching line length
+en_US.UTF-8	mismatching line length
+fr_FR.UTF-8	longueur de ligne non concordante
+
+
+# bot.ml
+
+text		execution of interpreter failed
+en_US.UTF-8	execution of interpreter failed
+fr_FR.UTF-8	échec lors de l'exécution de l'interprète
+
+
+# gfx.ml
 
 text		Language:
 en_US.UTF-8	Language:
@@ -125,6 +219,19 @@ fr_FR.UTF-8	Langage :
 text		Level:
 en_US.UTF-8	Level:
 fr_FR.UTF-8	Niveau :
+
+text		cannot load language file
+en_US.UTF-8	cannot load language file
+fr_FR.UTF-8	impossible de charger le fichier langage
+
+# laby.ml
+
+text		language
+en_US.UTF-8	language
+fr_FR.UTF-8	langage
+
+
+# say.ml
 
 text		I'm ready.
 en_US.UTF-8	I'm ready.
@@ -169,6 +276,7 @@ fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
 text		I can't drop the rock here.
 en_US.UTF-8	I can't drop the rock here.
 fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
+
 
 # ascii api names
 
