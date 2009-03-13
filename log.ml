@@ -35,12 +35,8 @@ let conf_timestamps =
 let conf_timestamps_format =
   Conf.string ~p:(conf_timestamps#plug "format") ~d:"localized"
     ~comments:[
-      F.x "<item> for human readable timestamps in local timezone"
-	["item", F.string "localized" ]
-      ;
-      F.x "<item> for subsecond accuracy, and is timezone independant"
-	["item", F.string "unix" ]
-      ;
+      F.x "\"localized\" for human readable timestamps in local timezone" [];
+      F.x "\"unix\" for subsecond accuracy, and is timezone independant" [];
     ]
     (F.x "format of displayed timestamps" [])
 
@@ -150,7 +146,10 @@ object (self : t)
     begin fun heads x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
-      proceed (F.h (ts @ [tag_label (F.s (path_str ^ ":"))] @ heads)) x
+      let lb =
+	if path_str <> "" then [tag_label (F.s (path_str ^ ":"))] else []
+      in
+      proceed (F.h (ts @ lb @ heads)) x
     end
   val active =
     begin fun lvl ->
@@ -196,6 +195,8 @@ object (self : t)
     | false -> (fun _ -> ())
     end
 end
+
+let master = make []
 
 let init () =
   let time = Unix.gettimeofday () in

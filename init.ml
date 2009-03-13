@@ -6,15 +6,6 @@
 let conf =
   Conf.void
     (F.x "initialization configuration" [])
-let conf_daemon =
-  Conf.bool ~p:(conf#plug "daemon") ~d:false
-    (F.x "run in daemon mode" [])
-let conf_daemon_pidfile =
-  Conf.bool ~p:(conf_daemon#plug "pidfile") ~d:false
-    (F.x "support for pidfile generation" [])
-let conf_daemon_pidfile_path =
-  Conf.string ~p:(conf_daemon_pidfile#plug "path")
-    (F.x "path to pidfile" [])
 let conf_trace =
   Conf.bool ~p:(conf#plug "trace") ~d:false
     (F.x "dump an initialization trace" [])
@@ -115,87 +106,12 @@ let rec exec a =
 exception StartError of exn
 exception StopError of exn
 
-let exit i =
-  exit i
-
 let main f () =
   begin try exec start with e -> raise (StartError e) end;
-  begin try f () with
-    | e ->
-	let se = Printexc.to_string e in
-	Printf.eprintf
-	  "init: exception encountered during main phase:\n  %s\n%!" se;
-	Printf.eprintf "exception: %s\n%!" se;
-	if conf_catch_exn#get then raise e
-  end;
+  f ();
   begin try exec stop with e -> raise (StopError e) end
 
-let catch f clean =
-  begin try
-      f (); clean ()
-    with
-    | StartError (e) ->
-	Printf.eprintf
-	  "init: exception encountered during start phase:\n  %s\n%!"
-	  (Printexc.to_string e);
-	clean ();
-	exit (-1)
-    | StopError (e) ->
-	Printf.eprintf
-	  "init: exception encountered during stop phase:\n  %s\n%!"
-	  (Printexc.to_string e);
-	clean ();
-	exit (-1)
-  end
-
-let reopen fd filename =
-  let opts = [Unix.O_WRONLY; Unix.O_CREAT; Unix.O_TRUNC] in
-  let fd2 = Unix.openfile filename opts 0o666 in
-  Unix.dup2 fd2 fd;
-  Unix.close fd2
-
-let daemonize fn =
-  flush_all ();
-  reopen Unix.stdin "/dev/null";
-  reopen Unix.stdout "/dev/null";
-  reopen Unix.stderr "/dev/null";
-  begin match Unix.fork () with
-  | 0 ->
-      if (Unix.setsid () < 0) then exit 1;
-      begin match conf_daemon_pidfile#get with
-      | false ->
-	  catch fn (fun () -> ())
-      | true ->
-	  let filename = conf_daemon_pidfile_path#get in
-	  let f = open_out filename in
-	  let pid = Unix.getpid () in
-	  output_string f (string_of_int pid);
-	  output_char f '\n';
-	  close_out f;
-	  catch fn (fun () -> Unix.unlink filename)
-      end;
-      exit 0
-  | _ -> exit 0
-  end
-
-let exit_when_root () =
-  let security s = Printf.eprintf "init: security exit, %s\n%!" s in
-  if Unix.geteuid () = 0 then
-    begin security "root euid."; exit (-1) end;
-  if Unix.getegid () = 0 then
-    begin security "root egid."; exit (-1) end
-
-let init ?(prohibit_root=false) f =
-  if prohibit_root then exit_when_root ();
-  let signal_h i = () in
-  Sys.set_signal Sys.sigterm (Sys.Signal_handle signal_h);
-  Sys.set_signal Sys.sigint (Sys.Signal_handle signal_h);
-  if conf_daemon#get
-  then daemonize (main f)
-  else catch (main f) (fun () -> ())
-
-let opt_daemon =
-  Opt.make ~short:'d' ~long:"daemon"
-    ~noarg:(fun () -> Opt.Do (fun () -> conf_daemon#set true))
-    (F.x "run in daemon mode" [])
+let init ?(services=[]) f =
+  start.triggers <- start.triggers @ services;
+  main f ()
 
