@@ -35,8 +35,12 @@ let conf_timestamps =
 let conf_timestamps_format =
   Conf.string ~p:(conf_timestamps#plug "format") ~d:"localized"
     ~comments:[
-      F.x "\"localized\" for human readable timestamps in local timezone" [];
-      F.x "\"unix\" for subsecond accuracy, and is timezone independant" [];
+      F.x "<item> for human readable timestamps in local timezone"
+	["item", F.string "localized" ]
+      ;
+      F.x "<item> for subsecond accuracy, and is timezone independant"
+	["item", F.string "unix" ]
+      ;
     ]
     (F.x "format of displayed timestamps" [])
 
