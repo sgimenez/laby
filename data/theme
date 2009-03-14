@@ -1,0 +1,18 @@
+list	log-label		:#555
+list	log-internal-error	:bold:underline:#500
+list	log-fatal-error		:bold:#500
+list	log-error		:#500
+list	log-warning		:#520
+list	log-info		:
+list	log-debug		:underline:#222
+
+list	format-quoted		:#333
+list	format-label		:#555
+list	format-msg-unknown	:##200
+list	format-msg-bad		:##200
+
+list	opt-option		:#055
+
+list	cmd-input		:bold:#red
+list	cmd-output		:bold:#red
+
