@@ -1,3 +1,8 @@
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
+
 let log = Log.make ["res"]
 
 type t = string list

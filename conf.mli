@@ -81,9 +81,6 @@ exception Cyclic of ut * ut
 
 exception Wrong_Conf of string * F.t
   (** Raised when bad configuration assignations are encountered  *)
-exception File_Wrong_Conf of string * int * F.t
-  (** Raised when bad configuration assignations are encountered
-      inside configuration files  *)
 
 type 'a builder =
     ?d:'a -> ?p:(ut -> unit) -> ?l:links -> ?comments:F.t list -> F.t -> 'a t
@@ -135,7 +132,7 @@ val load : ?log:(F.t -> unit) -> ut -> string -> unit
   (**
      Read configuration values from the file associated with the given
      filename.
-     Raises [File_Wrong_Conf] with filename line and and error message
+     Uses [log] to report filename line and and error message
      in case of a bad configuration file.
   *)
 

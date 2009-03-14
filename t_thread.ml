@@ -1,3 +1,11 @@
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
+
+(**
+   Native thread management module.
+*)
 
 let mutex () =
   let m = Mutex.create () in

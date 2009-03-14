@@ -45,7 +45,6 @@ exception Unbound of ut * string
 exception Bound of ut * string
 exception Mismatch of ut
 exception Wrong_Conf of string * F.t
-exception File_Wrong_Conf of string * int * F.t
 exception Cyclic of ut * ut
 
 let path_sep_regexp =

@@ -1,3 +1,12 @@
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
+
+(**
+   Thread management module.
+*)
+
 type mutex = < lock: unit; unlock: unit; >
 
 val mutex : unit -> mutex

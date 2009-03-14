@@ -4,7 +4,7 @@
 *)
 
 (**
-  Log management module.
+   Log management module.
 *)
 
 type t =
@@ -18,8 +18,6 @@ type t =
     >
     (**
        Type for loggers.
-       - [f lvl] prints a level [lvl] debug message using a printf like
-       function.
     *)
 
 val make : ?level:int -> Conf.path -> t
@@ -28,6 +26,9 @@ val make : ?level:int -> Conf.path -> t
   *)
 
 val master : t
+  (**
+     Root logger.
+  *)
 
 val start : Init.t
   (**

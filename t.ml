@@ -1,3 +1,8 @@
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
+
 type mutex = < lock: unit; unlock: unit; >
 
 let dummy_mutex () =
