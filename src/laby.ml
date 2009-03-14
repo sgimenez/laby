@@ -8,7 +8,8 @@ let conf =
     (F.x "laby configuration" [])
 
 let conf_lang =
-  Conf.list ~p:(conf#plug "lang") ~d:[] (F.x "language" [])
+  Conf.list ~p:(conf#plug "lang") ~d:[]
+    (F.x "language" [])
 
 let proceed _ =
   begin try
