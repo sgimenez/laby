@@ -53,7 +53,9 @@ val exec : t -> unit
      Launch the execution of a given init atom.
   *)
 
-val init : ?prohibit_root:bool -> (unit -> unit) -> unit
+val init :
+  ?services:t list ->
+  (unit -> unit) -> unit
   (**
      This fuction must be used to launch the main procedure of the
      program. It first execute the registered start atoms, then call
@@ -65,19 +67,12 @@ val init : ?prohibit_root:bool -> (unit -> unit) -> unit
      rights (euid, egid) and exit in this case.
   *)
 
-val exit : int -> 'a
-
 exception StartError of exn
 exception StopError of exn
 
 val conf : Conf.ut
-val conf_daemon : bool Conf.t
-val conf_daemon_pidfile : bool Conf.t
-val conf_daemon_pidfile_path : string Conf.t
 val conf_concurrent : bool Conf.t
 val conf_trace : bool Conf.t
 val conf_catch_exn : bool Conf.t
 
-val opt_daemon : Opt.t
-  (** A option for daemon mode *)
 

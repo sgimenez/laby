@@ -20,6 +20,7 @@ type t =
     | Exn of exn
     | Time of float
     | Lazy of (unit -> t)
+
 and tag = t -> t
 
 let z fn =
@@ -99,12 +100,3 @@ let use x =
     | Lazy fn -> `Lazy fn
   end
 
-type logger =
-    <
-      internal: t -> unit;
-      fatal: t -> unit;
-      error: t -> unit;
-      warning: t -> unit;
-      info: t -> unit;
-      debug: int -> t -> unit;
-    >

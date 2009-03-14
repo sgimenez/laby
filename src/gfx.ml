@@ -39,7 +39,7 @@ type controls =
 let gtk_init () =
   let _ = GtkMain.Main.init () in
   let pix p =
-    let file = Data.get ["tiles"; p ^ ".svg"] in
+    let file = Res.get ["tiles"; p ^ ".svg"] in
     GdkPixbuf.from_file_at_size file tile_size tile_size
   in
   {
@@ -164,15 +164,15 @@ let make_pixmap level =
 let display_gtk ?language_list () =
   let language_list =
     begin match language_list with
-    | None | Some [] -> List.sort (compare) (Data.get_list ["run"])
+    | None | Some [] -> List.sort (compare) (Res.get_list ["run"])
     | Some l -> l
     end
   in
   let levels_list =
-    List.sort (compare) (Data.get_list ~ext:"laby" ["levels"])
+    List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
   let bot = Bot.make () in
-  let level = ref (Level.load (Data.get ["levels"; List.hd levels_list])) in
+  let level = ref (Level.load (Res.get ["levels"; List.hd levels_list])) in
   let load () = Level.generate !level in
   let b_states = ref [] in
   let c_state = ref (load ()) in
@@ -197,7 +197,7 @@ let display_gtk ?language_list () =
 	  bot#set_buf (c.view_prog#buffer#get_text ());
 	  bot#set_name name;
 	  c.view_prog#buffer#set_text bot#get_buf;
-	  let langf = Data.get ["run"; name; "lang"] in
+	  let langf = Res.get ["run"; name; "lang"] in
 	  begin match GSourceView.source_language_from_file langf with
 	  | None -> log#warning (F.x "cannot load language file" []);
 	  | Some l ->
@@ -267,7 +267,7 @@ let display_gtk ?language_list () =
       let name = c.levels#entry#text in
       begin match List.mem name levels_list with
       | true ->
-	  level := Level.load (Data.get ["levels"; name]);
+	  level := Level.load (Res.get ["levels"; name]);
 	  pixmap := make_pixmap !level;
 	  c.view_comment#set_text (Level.comment !level);
 	  inactive ();

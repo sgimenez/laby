@@ -14,6 +14,7 @@ type path = link list
     (** Type for paths between keys *)
 
 type ut =
+    private
     <
       kind: string option;
       descr: F.t;
@@ -23,6 +24,7 @@ type ut =
       path: path -> ut;
       routes: ut -> path list;
       ut: ut;
+      ..
     >
 
 (** Type for untyped keys (or keys with unknown type)
@@ -36,6 +38,7 @@ type ut =
 *)
 
 type 'a t =
+    private
     <
       kind: string option;
       descr: F.t;
@@ -49,6 +52,7 @@ type 'a t =
       get_d: 'a option;
       set: 'a -> unit;
       get: 'a;
+      ..
     >
 
 (** Type for 'a keys
@@ -125,7 +129,9 @@ val set : ut -> string -> unit -> unit
      Raises [Wrong_Conf] in badly formated cases.
   *)
 
-val load : F.logger -> ?strict: bool -> ut -> string -> unit
+exception File_Error of F.t
+
+val load : ?log:(F.t -> unit) -> ut -> string -> unit
   (**
      Read configuration values from the file associated with the given
      filename.
@@ -133,4 +139,3 @@ val load : F.logger -> ?strict: bool -> ut -> string -> unit
      in case of a bad configuration file.
   *)
 
-val root : F.logger -> string -> ?l:links -> F.t -> ut

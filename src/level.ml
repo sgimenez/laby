@@ -55,10 +55,9 @@ let load file =
     | "W" -> may_webs := (!posx, !posy) :: !may_webs; `Web;
     | "." -> `Void;
     | _ ->
-        log#fatal (
+	Run.fatal (
 	  F.x "unknown tile" [];
 	);
-	Run.exit ();
     end
   in
   let rec get_lines () =
@@ -74,7 +73,7 @@ let load file =
       let lang_str = String.sub l 0 (String.index l '\t') in
       let last = String.rindex l '\t' in
       let comment_str = String.sub l (last + 1) (String.length l - last - 1) in
-      if !comment = "" || lang_str = Fd.lang
+      if !comment = "" || lang_str = Ui.lang
       then (comment := comment_str; get_comment ())
       else get_comment ()
     with
@@ -90,10 +89,9 @@ let load file =
   let sizex = Array.length (List.hd !lines) in
   begin match List.for_all (fun a -> Array.length a = sizex) !lines with
   | false ->
-      log#fatal (
+      Run.fatal (
 	F.x "mismatching line length" [];
-      );
-      Run.exit ();
+      )
   | true -> ()
   end;
   let array = Array.of_list (List.rev !lines) in

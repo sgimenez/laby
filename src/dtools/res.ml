@@ -1,4 +1,17 @@
-let log = Log.make ["data"]
+let log = Log.make ["res"]
+
+type t = string list
+
+let conf =
+  Conf.void
+    (F.x "resources configuration" [])
+
+let conf_paths =
+  Conf.list
+    ~p:(conf#plug "paths")
+    (F.x "resource directories" [])
+
+exception Error of F.t
 
 let rpath_to_string =
   let sep =
@@ -6,8 +19,7 @@ let rpath_to_string =
     | "Unix" -> "/"
     | "Cygwin" -> "/"
     | "Win32" -> "\\"
-    | _ -> log#error (F.x "unknown os type" []);
-	Init.exit 1
+    | _ -> assert false
     end
   in
   fun rpath -> String.concat sep rpath
@@ -24,26 +36,36 @@ let check_file f =
   end
 
 let get rpath =
-  let ressource = rpath_to_string rpath in
-  let raw_dir_dist = [ Config.conf_path; Config.sys_data_path; ] in
+  let resource = rpath_to_string rpath in
+  let raw_dir_dist = conf_paths#get in
   let dir_list = List.filter check_file raw_dir_dist in
-  let l = List.map (fun s -> s ^ ressource) dir_list in
+  let l = List.map (fun s -> s ^ resource) dir_list in
   let error () =
-    log#error (
-      F.x "cannot find resource <resource> at: <list>" [
-	"resource", F.string ressource;
+    raise (Error (
+      F.x "cannot find resource <resource> in: <list>" [
+	"resource", F.string resource;
 	"list", F.v (List.map F.string raw_dir_dist);
       ]
+    ));
+  in
+  let found x =
+    log#debug 2 (
+      F.x "found resource <resource> at <location>" [
+	"resource", F.string resource;
+	"location", F.string x;
+      ]
     );
-    Init.exit 1
   in
   let rec may =
     begin function
     | x :: q ->
 	begin try
-	    if Sys.file_exists x then x else may q
-	  with
-	  | Sys_error _ -> may q
+	  begin match Sys.file_exists x with
+	  | true -> found x; x
+	  | false -> may q
+	  end
+	with
+	| Sys_error _ -> may q
 	end
     | [] -> error ()
     end
@@ -75,3 +97,17 @@ let get_list ?ext rpath =
   end;
   Unix.closedir f;
   !list
+
+let use path f =
+  let filename = get path in
+  begin try
+    let file = open_in_bin filename in
+    f filename file;
+    close_in file;
+  with
+  | Sys_error m ->
+      log#warning (
+	F.x "failed to open resource: <resource>"
+	  ["resource", F.string (rpath_to_string path)]
+      );
+  end

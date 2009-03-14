@@ -21,7 +21,7 @@ val cmd : ?argv:(string array) -> t list ->
   | `Proceed of string list
   ]
 
-val conf : ?short:char -> ?long:string -> Conf.ut -> t
+val conf : ?short:char -> ?long:string -> 'a Conf.t -> t
   (**
      Generate an option to configure a given configuration key.
   *)

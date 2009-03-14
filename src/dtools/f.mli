@@ -97,12 +97,3 @@ val use : t ->
   | `Lazy of (unit -> t)
   ]
 
-type logger =
-    <
-      internal: t -> unit;
-      fatal: t -> unit;
-      error: t -> unit;
-      warning: t -> unit;
-      info: t -> unit;
-      debug: int -> t -> unit;
-    >

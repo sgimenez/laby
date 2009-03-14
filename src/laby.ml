@@ -1,10 +1,10 @@
-let log = Log.make ["laby"]
-
-let conf_path = ref (Data.get ["conf"])
-
 let conf =
-  Conf.root log !conf_path
-    ~l:["log", Log.conf#ut; "display", Fd.conf#ut]
+  Conf.void
+    ~l:[
+      "log", Log.conf#ut;
+      "ui", Ui.conf#ut;
+      "res", Res.conf#ut;
+    ]
     (F.x "laby configuration" [])
 
 let conf_lang =
@@ -15,38 +15,26 @@ let proceed _ =
     Gfx.display_gtk ~language_list:conf_lang#get ()
   with
   | Gfx.Error f ->
-      log#fatal (
+      Run.fatal (
 	F.x "display failed: <error>" [
 	  "error", f;
 	]
-      );
-      Init.exit 1
+      )
   end
 
-let main () =
-  Fd.init log (Data.get []);
-  let opts =
-    [
-      Version.opt;
-      Opt.conf ~short:'l' ~long:"lang" conf_lang#ut;
-      Opt.conf_set ~short:'c' ~long:"conf" conf;
-      Opt.conf_descr ~long:"conf-descr" conf;
-      Opt.conf_dump ~long:"conf-dump" conf;
-      Opt.conf ~short:'d' ~long:"debug" Log.conf_level#ut;
-    ]
-  in
-  begin match Opt.cmd opts with
-  | `Errors ml ->
-      log#fatal (
-	F.x "invalid options: <errors>" [
-	  "errors", F.v ml;
-	]
-      );
-      Init.exit 1;
-  | `Excl fn ->
-      Fd.stdout (fn ())
-  | `Proceed list ->
-      proceed list
-  end
+let opts =
+  [
+    Version.opt;
+    Opt.conf ~short:'l' ~long:"lang" conf_lang;
+    Opt.conf_set ~short:'c' ~long:"conf" conf;
+    Opt.conf_descr ~long:"conf-descr" conf;
+    Opt.conf_dump ~long:"conf-dump" conf;
+    Opt.conf ~short:'d' ~long:"debug" Log.conf_level;
+  ]
 
-let _ = Run.exec main
+let _ =
+  Run.init
+    ~path:[Config.conf_path; Config.sys_data_path;]
+    ~conf:(conf, ["conf"])
+    ~services:[Ui.theme; Ui.texts]
+    (`Opts (opts, proceed))

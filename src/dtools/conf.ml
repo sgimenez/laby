@@ -357,7 +357,9 @@ let set (t: ut) s =
     in
     raise (Wrong_Conf (s, f))
 
-let load log ?(strict=true) t s =
+exception File_Error of F.t
+
+let load ?(log=fun _ -> ()) t s =
   let nb = Pervasives.ref 0 in
   begin try
     let f = open_in s in
@@ -368,21 +370,37 @@ let load log ?(strict=true) t s =
       then ()
       else
 	begin try set t l () with
-	| Wrong_Conf (x, y) ->
-	    raise (File_Wrong_Conf (s, !nb, y))
+	| Wrong_Conf (x, msg) ->
+	    log (
+	      F.x "file <f>, line <l>: <error>" [
+		"f", F.string s;
+		"l", F.int (!nb);
+		"error", msg;
+	      ]
+	    )
 	| Unbound (e, p) ->
-	    if strict then raise (Unbound (e, p))
+	    let err =
+	      F.x "unbound configuration key <k>" [
+		"k", F.string p;
+	      ]
+	    in
+	    log (
+	      F.x "file <f>, line <l>: <error>" [
+		"f", F.string s;
+		"l", F.int (!nb);
+		"error", F.v [err];
+	      ]
+	    )
 	end
     done
   with
   | End_of_file -> ()
   | Sys_error m ->
-      (if strict then log#error else log#warning) (
-	F.x "failed to load file: <error>"
-	  ["error", F.q (F.s m)]
+      raise (
+	File_Error (
+	  F.x "failed to load file: <error>"
+	    ["error", F.q (F.s m)]
+	)
       )
   end
 
-let root log path ?l descr =
-  let c = void ?l descr in
-  load log c path; c

@@ -146,7 +146,10 @@ object (self : t)
     begin fun heads x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
-      proceed (F.h (ts @ [tag_label (F.s (path_str ^ ":"))] @ heads)) x
+      let lb =
+	if path_str <> "" then [tag_label (F.s (path_str ^ ":"))] else []
+      in
+      proceed (F.h (ts @ lb @ heads)) x
     end
   val active =
     begin fun lvl ->
@@ -192,6 +195,8 @@ object (self : t)
     | false -> (fun _ -> ())
     end
 end
+
+let master = make []
 
 let init () =
   let time = Unix.gettimeofday () in
