@@ -1,3 +1,8 @@
+(**
+   ocaml-dtools
+   @author Stéphane Gimenez
+*)
+
 let log = Log.make ["ui"]
 
 let conf =
@@ -20,47 +25,28 @@ let lang =
     end
   end
 
-let texts_line key str =
-  let msg_lang = ref "" in
-  let special = ref "" in
-  let txt = ref "" in
-  let msg = ref "" in
-  let push c str = str := !str ^ String.make 1 c in
-  let p = ref 0 in
-  let eos = String.length str in
-  let state = ref `Init in
-  while !p < eos do
-    state :=
-      begin match !state, str.[!p] with
-      | `Init, '\t' ->
-	  while str.[!p] = '\t' do incr p done;
-	  if !msg_lang = "text"
-	  then `Text
-	  else `Msg
-      | `Init, ':' ->
-	  if !msg_lang <> "text"
-	  then `Error
-	  else begin
-	    incr p;
-	    let i = !p in
-	    while str.[!p] <> '\t' do incr p done;
-	    special := String.sub str i (!p - i);
-	    while str.[!p] = '\t' do incr p done;
-	    `Text
+let line_regexp =
+  Str.regexp
+    "^[ \t]*\\([-0-9a-zA-Z:_.]+\\)[ \t]+\\(.*\\)$"
+
+let texts_line key s =
+  begin match Str.string_match line_regexp s 0 with
+  | true ->
+      let val0 = Str.matched_group 1 s in
+      let val1 = Str.matched_group 2 s in
+      begin match String.sub val0 0 4 with
+      | "text" ->
+	  begin match String.length val0 with
+	  | 4 -> key := ("", val1); `Skip
+	  | l when val0.[4] == ':' ->
+	      let special = String.sub val0 5 (l - 5) in
+	      key := (special, val1); `Skip
+	  | _ -> `Error
 	  end
-      | `Init, ' ' -> `Error
-      | `Init, c -> push c msg_lang; incr p; `Init
-      | `Text, '\n' -> incr p; `Text
-      | `Text, c -> incr p; push c txt; `Text
-      | `Msg, c -> push c msg; incr p; `Msg
-      | `Error, _ -> p := eos; `Error
+      | _ -> `Entry (val0, !key, val1)
       end
-  done;
-  begin match !state with
-  | `Text -> key := (!special, !txt); `Skip
-  | `Msg -> `Entry (!msg_lang, !key, !msg)
-  | _ ->
-      if (str <> "\n" && str.[0] <> '#') then `Error else `Skip
+  | false ->
+      if (s <> "\n" && s.[0] <> '#') then `Error else `Skip
   end
 
 let read_texts path file =
