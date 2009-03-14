@@ -49,7 +49,7 @@ let get rpath =
     ));
   in
   let found x =
-    log#debug 5 (
+    log#debug 2 (
       F.x "found resource <resource> at <location>" [
 	"resource", F.string resource;
 	"location", F.string x;

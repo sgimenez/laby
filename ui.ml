@@ -111,7 +111,7 @@ let load_texts () =
 let load_theme () =
   begin try
     let filename = Res.get [conf_theme#get] in
-    Conf.load ~log:log#warning Fd.conf_tags#ut filename
+    Conf.load ~log:(log#debug 2) Fd.conf_tags#ut filename
   with
   | Res.Error msg ->
       log#warning msg
