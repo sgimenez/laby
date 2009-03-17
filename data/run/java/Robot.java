@@ -49,13 +49,13 @@ public class Robot {
     return Case.laby_name_Void;
   }
 
-  public void ouvre() {
+  public void laby_name_door_open() {
       output("open"); input();
   }
-  public void prend() {
+  public void laby_name_take() {
       output("take"); input();
   }
-  public void pose() {
+  public void laby_name_drop() {
       output("drop"); input();
   }
 
