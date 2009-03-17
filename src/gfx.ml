@@ -38,6 +38,12 @@ type controls =
 
 let gtk_init () =
   let _ = GtkMain.Main.init () in
+  GtkSignal.user_handler := Pervasives.raise;
+  (* work around messed up lablgtk *)
+  Sys.catch_break false;
+  Sys.set_signal Sys.sigpipe (Sys.Signal_default);
+  Sys.set_signal Sys.sigterm (Sys.Signal_default);
+  Sys.set_signal Sys.sigquit (Sys.Signal_default);
   let pix p =
     let file = Res.get ["tiles"; p ^ ".svg"] in
     GdkPixbuf.from_file_at_size file tile_size tile_size
