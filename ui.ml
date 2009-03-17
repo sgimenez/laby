@@ -27,7 +27,7 @@ let lang =
 
 let line_regexp =
   Str.regexp
-    "^[ \t]*\\([-0-9a-zA-Z:_.]+\\)[ \t]+\\(.*\\)$"
+    "^\\([-0-9a-zA-Z:_.]+\\)[ \t]+\\(.*\\)$"
 
 let texts_line key s =
   begin match Str.string_match line_regexp s 0 with
