@@ -84,6 +84,7 @@ let read_texts path file =
 
 
 let load_texts () =
+  if lang <> "" then
   begin try
     Res.use [conf_texts#get] (
       fun filename file ->
