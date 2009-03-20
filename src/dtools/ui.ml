@@ -1,3 +1,9 @@
+(*
+   Copyright (C) 2007-2009 Stéphane Gimenez
+   You have permission to copy, modify, and redistribute under the
+   terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
+*)
+
 (**
    ocaml-dtools
    @author Stéphane Gimenez
@@ -27,7 +33,7 @@ let lang =
 
 let line_regexp =
   Str.regexp
-    "^[ \t]*\\([-0-9a-zA-Z:_.]+\\)[ \t]+\\(.*\\)$"
+    "^\\([-0-9a-zA-Z:_.]+\\)[ \t]+\\(.*\\)$"
 
 let texts_line key s =
   begin match Str.string_match line_regexp s 0 with
@@ -84,6 +90,7 @@ let read_texts path file =
 
 
 let load_texts () =
+  if lang <> "" then
   begin try
     Res.use [conf_texts#get] (
       fun filename file ->
