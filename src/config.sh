@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if which mtn > /dev/null; then
+if [ -d "_MTN" ] && mtn automate get_workspace_root > /dev/null; then
 VERSION_BASE=$(mtn automate get_base_revision_id)
 VERSION_CURRENT=$(mtn automate get_current_revision_id)
 VERSION_STATUS=$(mtn st)
