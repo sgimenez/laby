@@ -21,6 +21,5 @@ dist:
 	  [ -f "$$i" ] && \
 	    cp -f --parents "$$i" "_dist/$(PROJECT_ARCHIVE)/"; \
 	done
-	@cp build.status "_dist/$(PROJECT_ARCHIVE)/"
 	@cd _dist; tar czf $(PROJECT_ARCHIVE).tar.gz $(PROJECT_ARCHIVE)
 	@echo archive stored in "_dist/$(PROJECT_ARCHIVE).tar.gz"
