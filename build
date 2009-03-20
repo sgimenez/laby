@@ -50,7 +50,13 @@ case ${ACT} in
       echo "  --native (-n)"
       echo "  --byte-debug (-bd)"
       echo "  --native-profile (-np)"
+      echo "  --dist (-d)"
       echo "  --clean (-c)"
+      exit 0;;
+  --dist|-d)
+      $0 --clean
+      tar czf ../${PROJECT_NAME}_${PROJECT_VERSION}.tar.gz --exclude=_MTN -C ../ laby
+      echo " Tarball: ../${PROJECT_NAME}_${PROJECT_VERSION}.tar.gz"
       exit 0;;
   --clean|-c)
       ${OCAMLBUILD} -clean
