@@ -187,9 +187,9 @@ text		cannot access <path>
 en_US.UTF-8	cannot access <path>
 fr_FR.UTF-8	ne peux pas accéder à <path>
 
-text		cannot find resource <resource> at: <list>
-en_US.UTF-8	cannot find resource <resource> at: <list>
-fr_FR.UTF-8	ressource <ressource> introuvable dans: <list>
+text		cannot find resource <resource> in: <list>
+en_US.UTF-8	cannot find resource <resource> in: <list>
+fr_FR.UTF-8	ressource <resource> introuvable dans: <list>
 
 
 # level.ml
