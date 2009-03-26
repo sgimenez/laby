@@ -185,7 +185,7 @@ fr_FR.UTF-8	système d'exploitation inconnu
 
 text		cannot access <path>
 en_US.UTF-8	cannot access <path>
-fr_FR.UTF-8	ne peux pas accéder à <path>
+fr_FR.UTF-8	impossible d'accéder à <path>
 
 text		cannot find resource <resource> in: <list>
 en_US.UTF-8	cannot find resource <resource> in: <list>
