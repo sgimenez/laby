@@ -1,7 +1,7 @@
 .PHONY: default all clean
 
-PROJECT_ARCHIVE=\
-$(shell source project.conf; echo $${PROJECT_NAME}-$${PROJECT_VERSION})
+include project.conf
+PROJECT_ARCHIVE=$(PROJECT_NAME)-$(PROJECT_VERSION)
 
 default: all
 
@@ -21,5 +21,5 @@ dist:
 	  [ -f "$$i" ] && \
 	    cp -f --parents "$$i" "_dist/$(PROJECT_ARCHIVE)/"; \
 	done
-	@cd _dist; tar czf $(PROJECT_ARCHIVE).tar.gz $(PROJECT_ARCHIVE)
+	@cd _dist; tar czf "$(PROJECT_ARCHIVE).tar.gz" "$(PROJECT_ARCHIVE)"
 	@echo archive stored in "_dist/$(PROJECT_ARCHIVE).tar.gz"
