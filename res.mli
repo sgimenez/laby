@@ -14,9 +14,7 @@
 *)
 
 val conf : Conf.ut
-  (**
-     Resource configuration key.
-  *)
+  (** Resource configuration key. *)
 
 val conf_paths : string list Conf.t
   (**

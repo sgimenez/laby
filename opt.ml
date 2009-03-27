@@ -7,11 +7,11 @@
 let tag_option = Fd.tag "opt-option"
 
 type action =
-    | Invalid of F.t
-    | Error of F.t
-    | Noop
-    | Excl of (unit -> F.t)
-    | Do of (unit -> unit)
+  | Invalid of F.t
+  | Error of F.t
+  | Noop
+  | Excl of (unit -> F.t)
+  | Do of (unit -> unit)
 
 type t =
     char * string * (unit -> action) option * (string -> action) option * F.t
@@ -32,7 +32,7 @@ let f ?arg (short, long, _, _, _) =
     | true, false -> l_f long
     | false, true -> s_f short
     | false, false ->
-	F.h ~sep:F.n [l_f long; F.s "("; s_f short; F.s ")"]
+	F.b [l_f long; F.s "("; s_f short; F.s ")"]
     end
   in
   begin match arg with
@@ -85,14 +85,14 @@ let parse argv =
 		if l = 2 then aux (`AllArgs)
 		else
 		  begin try
-		      let i = String.index arg '=' in
-		      let opt = String.sub arg 2 (i-2) in
-		      let value = String.sub arg (i+1) (l-i-1) in
-		      add_opt (`Long (opt, Some value))
-		    with
-		    | Not_found ->
-			let opt = String.sub arg 2 (l-2) in
-			add_opt (`Long (opt, None))
+		    let i = String.index arg '=' in
+		    let opt = String.sub arg 2 (i-2) in
+		    let value = String.sub arg (i+1) (l-i-1) in
+		    add_opt (`Long (opt, Some value))
+		  with
+		  | Not_found ->
+		      let opt = String.sub arg 2 (l-2) in
+		      add_opt (`Long (opt, None))
 		  end;
 		aux `None
 	    | '-', opt ->
@@ -231,10 +231,10 @@ let opt_unit ?short ?long conf : t =
 let opt_int ?short ?long conf : t =
   let set s =
     begin try
-	let i = int_of_string s in
-	Do (fun () -> conf#set i)
-      with
-      | Failure "int_of_string" -> wrong_value "int"
+      let i = int_of_string s in
+      Do (fun () -> conf#set i)
+    with
+    | Failure "int_of_string" -> wrong_value "int"
     end
   in
   make ?short ?long ~arg:set conf#descr
@@ -310,10 +310,10 @@ let conf_descr ?short ?long t =
   in
   let arg p =
     begin try
-	let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
-	Excl (fun () -> F.v dl)
-      with
-      | Conf.Unbound (_, s) -> unknown_key_error s
+      let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
+      Excl (fun () -> F.v dl)
+    with
+    | Conf.Unbound (_, s) -> unknown_key_error s
     end
   in
   make ?short ?long ~noarg ~arg
@@ -325,10 +325,10 @@ let conf_dump ?short ?long t =
   in
   let arg p =
     begin try
-	let dl = Conf.dump ~prefix:(Conf.path_of_string p) t in
-	Excl (fun () -> F.s dl)
-      with
-      | Conf.Unbound (_, s) -> unknown_key_error s
+      let dl = Conf.dump ~prefix:(Conf.path_of_string p) t in
+      Excl (fun () -> F.s dl)
+    with
+    | Conf.Unbound (_, s) -> unknown_key_error s
     end
   in
   make ?short ?long ~noarg ~arg

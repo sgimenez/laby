@@ -106,16 +106,17 @@ let def_text key str =
   in
   let add_arg () = l := !l @ [ `Arg !arg ]; arg := "" in
   let eos = String.length str in
-  while !p < eos do state :=
-    begin match !state, str.[!p] with
-    | `Elem, '<' -> incr p; add_elem (); `Arg
-    | `Elem, '\n' -> incr p; add_elem (); `Elem
-    | `Elem, c -> push c elem; incr p; `Elem
-    | `Arg, '>' -> incr p; add_arg (); `Elem
-    | `Arg, '\n' -> `Error
-    | `Arg, c -> push c arg; incr p; `Arg
-    | `Error, _ -> p := eos; `Error
-    end
+  while !p < eos do
+    state :=
+      begin match !state, str.[!p] with
+      | `Elem, '<' -> incr p; add_elem (); `Arg
+      | `Elem, '\n' -> incr p; add_elem (); `Elem
+      | `Elem, c -> push c elem; incr p; `Elem
+      | `Arg, '>' -> incr p; add_arg (); `Elem
+      | `Arg, '\n' -> `Error
+      | `Arg, c -> push c arg; incr p; `Arg
+      | `Error, _ -> p := eos; `Error
+      end
   done;
   let list = !l in
   begin match !state with
