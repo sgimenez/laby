@@ -150,11 +150,11 @@ let make () =
 	  let s = ref "" in
 	  let f = open_in (Res.get ["run"; !name; "skel"]) in
 	  begin try
-	      while true do
-		s := !s ^ input_line f ^ "\n"
-	      done
-	    with
-	    | End_of_file -> ()
+	    while true do
+	      s := !s ^ input_line f ^ "\n"
+	    done
+	  with
+	  | End_of_file -> ()
 	  end;
 	  close_in f;
 	  subst !s
@@ -171,12 +171,12 @@ let make () =
       let slave h =
 	Unix.chdir (Res.get ["run"; !name]);
 	begin try
-	    Unix.execvp "./command" [| "./command"; h.tmpdir |]
-	  with
-	    exn ->
-	      log#error (
-		F.x "execution of interpreter failed" []
-	      );
+	  Unix.execvp "./command" [| "./command"; h.tmpdir |]
+	with
+	| exn ->
+	    log#error (
+	      F.x "execution of interpreter failed" []
+	    );
 	end
       in
       let in_ch, in_ch' = Unix.pipe () in

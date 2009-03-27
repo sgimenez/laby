@@ -120,12 +120,13 @@ let generate level =
     Array.init (Array.length level.map) (fun j -> Array.copy level.map.(j))
   in
   let fill m tile =
-  if m <> [] then
-    begin
-      let i = Random.int (List.length m) in
-      let x, y = List.nth m i in
-      map.(y).(x) <- tile;
-    end;
+    begin match m with
+    | [] ->
+	let i = Random.int (List.length m) in
+	let x, y = List.nth m i in
+	map.(y).(x) <- tile
+    | _ -> ()
+    end
   in
   fill level.mrocks `Rock;
   fill level.mwebs `NWeb;
