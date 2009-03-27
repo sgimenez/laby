@@ -14,17 +14,17 @@
 *)
 
 type t =
-    <
-      internal: F.t -> unit;
-      fatal: F.t -> unit;
-      error: F.t -> unit;
-      warning: F.t -> unit;
-      info: F.t -> unit;
-      debug: int -> F.t -> unit;
-    >
-    (**
-       Type for loggers.
-    *)
+  <
+    internal: F.t -> unit;
+    fatal: F.t -> unit;
+    error: F.t -> unit;
+    warning: F.t -> unit;
+    info: F.t -> unit;
+    debug: int -> F.t -> unit;
+  >
+  (**
+     Type for loggers.
+  *)
 
 val make : ?level:int -> Conf.path -> t
   (**

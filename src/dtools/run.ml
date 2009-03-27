@@ -51,7 +51,7 @@ let daemonize () =
       if (Unix.setsid () < 0) then exit 1;
       begin match conf_daemon_pidfile#get with
       | false ->
-	  fun () -> ()
+	  (fun () -> ())
       | true ->
 	  let filename = conf_daemon_pidfile_path#get in
 	  let f = open_out filename in
@@ -176,7 +176,8 @@ let timeout ?(seconds=2) f a h =
   ignore (Unix.alarm seconds);
   Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
   let start () = (try f a with Signal i when i = Sys.sigalrm -> h ()) in
-  hook start () (fun () ->
-    Sys.set_signal Sys.sigalrm Sys.Signal_ignore
-  )
+  hook start ()
+    begin fun () ->
+      Sys.set_signal Sys.sigalrm Sys.Signal_ignore
+    end
 
