@@ -11,6 +11,7 @@ let conf =
       "log", Log.conf#ut;
       "ui", Ui.conf#ut;
       "res", Res.conf#ut;
+      "sound", Sound.conf#ut;
     ]
     (F.x "laby configuration" [])
 
@@ -34,6 +35,7 @@ let opts =
   [
     Version.opt;
     Opt.conf ~short:'l' ~long:"lang" conf_lang;
+    Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
     Opt.conf_set ~short:'c' ~long:"conf" conf;
     Opt.conf_descr ~long:"conf-descr" conf;
     Opt.conf_dump ~long:"conf-dump" conf;

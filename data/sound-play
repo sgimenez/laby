@@ -1,3 +1,2 @@
 #!/bin/sh
-[ -f "$1" ] && exec aplay "$1"
-
+[ -f "$1" ] && aplay "$1" &

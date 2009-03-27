@@ -5,17 +5,27 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
+let conf =
+  Conf.void
+    (F.x "sound configuration" [])
+
+let conf_enabled =
+  Conf.bool ~p:(conf#plug "enabled") ~d:true
+    (F.x "enable or disable sounds" [])
+
 let dev_null =
   Unix.openfile "/dev/null" [Unix.O_RDWR] 0
 
 let play name =
-  let sound_play = Res.get ["sound-play"] in
-  let sound_file = Res.get ["sound"; name ^ ".wav"] in
-  let _ =
-    Unix.create_process sound_play [| sound_play; sound_file |]
-      dev_null dev_null dev_null
-  in
-  ()
+  if conf_enabled#get then
+    let sound_play = Res.get ["sound-play"] in
+    let sound_file = Res.get ["sound"; name ^ ".wav"] in
+    let wait pid = ignore (Unix.waitpid [] pid) in
+    let pid =
+      Unix.create_process sound_play [| sound_play; sound_file |]
+	dev_null dev_null dev_null
+    in
+    wait pid
 
 let action =
   begin function
