@@ -227,6 +227,7 @@ let make () =
 	  Unix.close h.out_ch;
 	  Unix.close h.err_ch;
 	  clean h.tmpdir;
+	  Unix.kill h.pid Sys.sigterm;
 	  ignore (Unix.waitpid [] h.pid);
 	  hr := None
       end
