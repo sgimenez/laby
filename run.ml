@@ -78,11 +78,6 @@ let exit_when_root () =
 
 let init ?(prohibit_root=false) ?path ?conf ?services action =
   if prohibit_root then exit_when_root ();
-  Res.conf_paths#set_d path;
-  begin match conf with
-  | None -> ()
-  | Some (conf, res) -> Conf.load ~log:Log.master#warning conf (Res.get res)
-  end;
   let f () =
     begin match action with
     | `Main f -> f ()
@@ -109,21 +104,25 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
   Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);
   Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
   Sys.set_signal Sys.sighup Sys.Signal_ignore;
-  let clean =
-    begin match conf_daemon#get with
-    | false -> fun () -> ()
-    | true -> daemonize ()
-    end
-  in
+  let clean = ref (fun () -> ()) in
   begin try
+    Res.conf_paths#set_d path;
+    begin match conf with
+    | None -> ()
+    | Some (conf, res) -> Conf.load ~log:Log.master#warning conf (Res.get res)
+    end;
+    begin match conf_daemon#get with
+    | false -> ()
+    | true -> clean := daemonize ()
+    end;
     Init.init ?services f
   with
   | Fail msg ->
-      clean ();
+      !clean ();
       exit 2
   | Res.Error msg ->
       Log.master#fatal msg;
-      clean ();
+      !clean ();
       exit 3
   | Signal i when i = Sys.sigterm || i = Sys.sigquit -> ()
   | Sys.Break -> ()
@@ -132,24 +131,24 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
 	F.x "exception encountered during start phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      clean ();
+      !clean ();
       raise e
   | Init.StopError (e) ->
       Log.master#internal (
 	F.x "exception encountered during stop phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      clean ();
+      !clean ();
       raise e
   | e ->
       Log.master#internal (
 	F.x "exception: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      clean ();
+      !clean ();
       raise e
   end;
-  clean ()
+  !clean ()
 
 let fatal msg =
   Log.master#fatal msg;
