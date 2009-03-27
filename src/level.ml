@@ -121,11 +121,11 @@ let generate level =
   in
   let fill m tile =
     begin match m with
-    | [] ->
+    | [] -> ()
+    | _ ->
 	let i = Random.int (List.length m) in
 	let x, y = List.nth m i in
 	map.(y).(x) <- tile
-    | _ -> ()
     end
   in
   fill level.mrocks `Rock;
