@@ -270,6 +270,7 @@ let opt_list ?short ?long conf : t =
 let conf ?short ?long conf : t =
   begin match conf#kind with
   | Some "unit" -> opt_unit ?short ?long (Conf.as_unit conf#ut)
+  | Some "bool" -> opt_bool ?short ?long (Conf.as_bool conf#ut)
   | Some "int" -> opt_int ?short ?long (Conf.as_int conf#ut)
   | Some "float" -> opt_float ?short ?long (Conf.as_float conf#ut)
   | Some "string" -> opt_string ?short ?long (Conf.as_string conf#ut)
