@@ -199,6 +199,7 @@ let display_gtk ?language_list () =
     let pixmap = ref (make_pixmap !level) in
     c.view_comment#set_text (Level.comment !level);
     let destroy () =
+      bot#close;
       c.window#destroy ();
       GMain.Main.quit ()
     in
@@ -332,7 +333,7 @@ let display_gtk ?language_list () =
 	end
       end
     in
-    ignore (c.window#event#connect#delete ~callback:(fun _ -> exit 0));
+    ignore (c.window#event#connect#delete ~callback:(fun _ -> destroy(); true));
     ignore (c.window#connect#destroy ~callback:destroy);
     ignore (c.button_prev#connect#clicked ~callback:prev);
     ignore (c.button_next#connect#clicked ~callback:next);
