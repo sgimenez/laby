@@ -17,7 +17,7 @@ let conf =
 
 let conf_lang =
   Conf.list ~p:(conf#plug "lang") ~d:[]
-    (F.x "language" [])
+    (F.x "programming languages" [])
 
 let proceed _ =
   begin try
