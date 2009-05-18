@@ -3,7 +3,7 @@
 if [ -d "_MTN" ] && mtn automate get_workspace_root > /dev/null; then
 VERSION_BASE=$(mtn automate get_base_revision_id)
 VERSION_CURRENT=$(mtn automate get_current_revision_id)
-VERSION_STATUS=$(mtn st)
+VERSION_STATUS=$(mtn status)
 else
 VERSION_BASE="unknown"
 VERSION_CURRENT="unknown"
@@ -27,5 +27,5 @@ let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
 let build_lablgtksourceview = "${BUILD_LABLGTKSOURCEVIEW}"
 let conf_path = Sys.getenv "HOME" ^ "/.config/${PROJECT_NAME}/"
-let sys_data_path = "/usr/share/${PROJECT_NAME}/"
+let sys_data_path = "${SYSDATADIR}/${PROJECT_NAME}/"
 EOF

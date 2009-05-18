@@ -6,6 +6,9 @@ cd ${DIR}
 [ -f project.conf ] && source project.conf
 source build.conf
 
+export PREFIX=${PREFIX-/usr}
+export SYSDATADIR=${SYSDATADIR-${PREFIX}/share}
+
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
