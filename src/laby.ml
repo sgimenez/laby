@@ -39,7 +39,7 @@ let opts =
     Opt.conf_set ~short:'c' ~long:"conf" conf;
     Opt.conf_descr ~long:"conf-descr" conf;
     Opt.conf_dump ~long:"conf-dump" conf;
-    Opt.conf ~short:'d' ~long:"debug" Log.conf_level;
+    Run.opt_debug;
   ]
 
 let _ =

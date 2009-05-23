@@ -40,23 +40,27 @@ let disp l () =
   F.l "versions" (F.i (List.map (fun f -> f ()) l))
 
 let opt =
-  Opt.make ~short:'v' ~long:"version"
-    ~noarg:(fun () -> Opt.Excl (fun () -> version ()))
-    ~arg:
+  let action =
     begin function
-    | "f" | "full" -> Opt.Excl (disp [id; protocols; build])
-    | "i" | "id" -> Opt.Excl id
-    | "p" | "protocols" -> Opt.Excl protocols
-    | "b" | "build" -> Opt.Excl build
-    | "s" | "status" -> Opt.Excl status
-    | _ ->
-	let argl =
-	  [ "full"; "id"; "protocols"; "build"; "status" ]
-	in
- 	Opt.Invalid (
-	  F.x "version allows arguments: <arguments>" [
-	    "arguments", F.h ~sep:(F.s ", ") (List.map F.s argl)
-	  ]
-	)
+    | None -> Opt.Excl (fun () -> version ())
+    | Some s ->
+	begin match s with
+	| "f" | "full" -> Opt.Excl (disp [id; protocols; build])
+	| "i" | "id" -> Opt.Excl id
+	| "p" | "protocols" -> Opt.Excl protocols
+	| "b" | "build" -> Opt.Excl build
+	| "s" | "status" -> Opt.Excl status
+	| _ ->
+	    let argl =
+	      [ "full"; "id"; "protocols"; "build"; "status" ]
+	    in
+ 	    Opt.Invalid (
+	      F.x "version allows arguments: <arguments>" [
+		"arguments", F.h ~sep:(F.s ", ") (List.map F.s argl)
+	      ]
+	    )
+	end
     end
+  in
+  Opt.make ~short:'v' ~long:"version" (`Any action)
     (F.x "show versioning information" [])
