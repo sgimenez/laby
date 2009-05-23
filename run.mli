@@ -10,6 +10,9 @@ val conf_daemon : bool Conf.t
 val conf_daemon_pidfile : bool Conf.t
 val conf_daemon_pidfile_path : string Conf.t
 
+val opt_debug : Opt.t
+  (** A option for debug mode *)
+
 val opt_daemon : Opt.t
   (** A option for daemon mode *)
 

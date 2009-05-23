@@ -7,32 +7,45 @@
 let tag_option = Fd.tag "opt-option"
 
 type action =
+  | Undefined
   | Invalid of F.t
   | Error of F.t
-  | Noop
   | Excl of (unit -> F.t)
   | Do of (unit -> unit)
 
-type t =
-    char * string * (unit -> action) option * (string -> action) option * F.t
+type spec =
+  [
+  | `None
+  | `Any of string option -> action
+  | `Arg of string -> action
+  | `Do_unit of unit -> unit
+  | `Excl_unit of unit -> F.t
+  | `Do_string of string -> unit
+  | `Excl_string of string -> F.t
+  | `Do_int of int -> unit
+  | `Excl_int of int -> F.t
+  | `Do_optint of int option -> unit
+  | `Excl_optint of int option -> F.t
+  ]
 
-let noshort = '\000'
-let nolong = ""
+type t = char option * string option * spec * F.t
 
-let make ?(short=noshort) ?(long=nolong) ?noarg ?arg descr =
-  short, long, noarg, arg, descr
+let make ?short ?long spec descr =
+  assert (short <> Some '-');
+  assert (long <> Some "");
+  short, long, spec, descr
 
 let l_f long = tag_option (F.s ("--" ^ long))
 let s_f short = tag_option (F.s ("-" ^ String.make 1 short))
 
-let f ?arg (short, long, _, _, _) =
+let f ?arg (short, long, _, _) =
   let optf =
-    begin match short = noshort, long = nolong with
-    | true, true -> assert false
-    | true, false -> l_f long
-    | false, true -> s_f short
-    | false, false ->
-	F.b [l_f long; F.s "("; s_f short; F.s ")"]
+    begin match short, long with
+    | None, None -> assert false
+    | None, Some l -> l_f l
+    | Some s, None -> s_f s
+    | Some s, Some l ->
+	F.h ~sep:F.n [l_f l; F.s "("; s_f s; F.s ")"]
     end
   in
   begin match arg with
@@ -41,24 +54,21 @@ let f ?arg (short, long, _, _, _) =
   end
 
 let help_opt opts : t =
-  let handle () =
-    let action () =
-      let msg = F.x "display help message" [] in
-      let help_opt : t = ('h', "help", None, None, msg) in
-      let usage = help_opt :: opts in
-      let pl opt =
-	let (short, long, _, _, desc) = opt in
-	F.h [f opt; F.q desc]
-      in
-      let program = F.s (Sys.argv.(0)) in
-      let options_f = List.map pl usage in
-      F.l "usage" (
-	F.h [program; F.s "[options]"; F.v options_f]
-      )
+  let action () =
+    let msg = F.x "display help message" [] in
+    let help_opt : t = (Some 'h', Some "help", `None, msg) in
+    let usage = help_opt :: opts in
+    let pl opt =
+      let (short, long, _, desc) = opt in
+      F.h [f opt; F.q desc]
     in
-    Excl action
+    let program = F.s (Sys.argv.(0)) in
+    let options_f = List.map pl usage in
+    F.l "usage" (
+      F.h [program; F.s "[options]"; F.v options_f]
+    )
   in
-  'h', "help", Some handle, None, F.n
+  Some 'h', Some "help", `Excl_unit action, F.n
 
 let parse argv =
   let i = ref 0 in
@@ -85,14 +95,14 @@ let parse argv =
 		if l = 2 then aux (`AllArgs)
 		else
 		  begin try
-		    let i = String.index arg '=' in
-		    let opt = String.sub arg 2 (i-2) in
-		    let value = String.sub arg (i+1) (l-i-1) in
-		    add_opt (`Long (opt, Some value))
-		  with
-		  | Not_found ->
-		      let opt = String.sub arg 2 (l-2) in
-		      add_opt (`Long (opt, None))
+		      let i = String.index arg '=' in
+		      let opt = String.sub arg 2 (i-2) in
+		      let value = String.sub arg (i+1) (l-i-1) in
+		      add_opt (`Long (opt, Some value))
+		    with
+		    | Not_found ->
+			let opt = String.sub arg 2 (l-2) in
+			add_opt (`Long (opt, None))
 		  end;
 		aux `None
 	    | '-', opt ->
@@ -120,6 +130,84 @@ let parse argv =
   aux `None;
   List.rev !args, List.rev !opts
 
+let wrong_value kind =
+  Invalid (F.x "<type> value expected" ["type", F.s kind])
+
+let wrap_spec sp =
+  begin match sp with
+  | `None -> assert false
+  | `Any a -> a
+  | `Arg f ->
+      begin function
+      | None -> Undefined
+      | Some s -> f s
+      end
+  | `Do_unit f ->
+      begin function
+      | None -> Do f
+      | Some _ -> Undefined
+      end
+  | `Excl_unit f ->
+      begin function
+      | None -> Excl f
+      | Some _ -> Undefined
+      end
+  | `Do_string f ->
+      begin function
+      | None -> Undefined
+      | Some s -> Do (fun () -> f s)
+      end
+  | `Excl_string f ->
+      begin function
+      | None -> Undefined
+      | Some s -> Excl (fun () -> f s)
+      end
+  | `Do_int f ->
+      begin function
+      | None -> Undefined
+      | Some s ->
+	  begin try
+	    let i = int_of_string s in
+	    Do (fun () -> f i)
+	  with
+	  | Failure "int_of_string" -> wrong_value "int"
+	  end
+      end
+  | `Excl_int f ->
+      begin function
+      | None -> Undefined
+      | Some s ->
+	  begin try
+	    let i = int_of_string s in
+	    Excl (fun () -> f i)
+	  with
+	  | Failure "int_of_string" -> wrong_value "int"
+	  end
+      end
+  | `Do_optint f ->
+      begin function
+      | None -> Do (fun () -> f None)
+      | Some s ->
+	  begin try
+	    let i = int_of_string s in
+	    Do (fun () -> f (Some i))
+	  with
+	  | Failure "int_of_string" -> wrong_value "int"
+	  end
+      end
+  | `Excl_optint f ->
+      begin function
+      | None -> Excl (fun () -> f None)
+      | Some s ->
+	  begin try
+	    let i = int_of_string s in
+	    Excl (fun () -> f (Some i))
+	  with
+	  | Failure "int_of_string" -> wrong_value "int"
+	  end
+      end
+  end
+
 let cmd ?(argv=Sys.argv) opts =
   let actions = ref [] in
   let errors = ref [] in
@@ -127,53 +215,36 @@ let cmd ?(argv=Sys.argv) opts =
   let set_err m = errors := m :: !errors in
   let set_command c = commands := c :: !commands in
   let action (opt : t) value =
-    let (short, long, handle, handle_s, descr) = opt in
-    let add_action a argv arg =
-      begin match a argv with
+    let (short, long, spec, descr) = opt in
+    begin match wrap_spec spec value with
+      | Undefined when value = None ->
+	  set_err (
+	    F.x "option <opt> requires an argument" [
+	      "opt", f opt;
+	    ]
+	  )
+      | Undefined ->
+	  set_err (
+	    F.x "option <opt> does not take an argument" [
+	      "opt", f opt;
+	    ]
+	  )
       | Invalid m ->
 	  set_err (
 	    F.x "invalid argument to <opt>: <error>" [
-	      "opt", f ?arg opt;
+	      "opt", f ?arg:value opt;
 	      "error", F.q m;
 	    ]
 	  )
       | Error m ->
 	  set_err (
 	    F.x "error with <opt>: <error>" [
-	      "opt", f ?arg opt;
+	      "opt", f ?arg:value opt;
 	      "error", F.q m;
 	    ]
 	  )
-      | Noop -> ()
       | Excl fn -> set_command fn
       | Do fn -> actions := !actions @ [fn]
-      end
-    in
-    begin match value with
-    | None ->
-	begin match handle with
-	| None ->
-	    let f =
-	      F.x "option <opt> requires an argument" [
-		"opt", f opt;
-	      ]
-	    in
-	    set_err f
-	| Some a ->
-	    add_action a () None
-	end
-    | Some s ->
-	begin match handle_s with
-	| None ->
-	    let f =
-	      F.x "option <opt> does not take an argument" [
-		"opt", f opt;
-	      ]
-	    in
-	    set_err f
-	| Some h ->
-	    add_action h s (Some s)
-	end
     end
   in
   let opts = help_opt opts :: opts in
@@ -186,14 +257,14 @@ let cmd ?(argv=Sys.argv) opts =
     )
   in
   let find_short c action v =
-    begin match List.filter (fun (c0,_,_,_,_) -> c0 = c) opts with
+    begin match List.filter (fun (c0, _, _, _) -> c0 = Some c) opts with
     | [] -> unk_opt (s_f c)
     | [opt] -> action opt v
     | _ -> assert false
     end
   in
   let find_long s action v =
-    begin match List.filter (fun (_,s0,_,_,_) -> s0 = s) opts with
+    begin match List.filter (fun (_, s0, _, _) -> s0 = Some s) opts with
     | [] -> unk_opt (l_f s)
     | [opt] -> action opt v
     | _ -> assert false
@@ -220,16 +291,11 @@ let cmd ?(argv=Sys.argv) opts =
       `Errors (List.rev errors)
   end
 
-let wrong_value kind =
-  Invalid (F.x "<type> value expected" ["type", F.s kind])
-
 let opt_unit ?short ?long conf : t =
-  make ?short ?long
-    ~noarg:(fun () -> Do (fun () -> conf#set ()))
-    conf#descr
+  make ?short ?long (`Do_unit conf#set) conf#descr
 
 let opt_int ?short ?long conf : t =
-  let set s =
+  let action s =
     begin try
       let i = int_of_string s in
       Do (fun () -> conf#set i)
@@ -237,47 +303,41 @@ let opt_int ?short ?long conf : t =
     | Failure "int_of_string" -> wrong_value "int"
     end
   in
-  make ?short ?long ~arg:set conf#descr
+  make ?short ?long (`Arg action) conf#descr
 
 let opt_float ?short ?long conf : t =
-  let set s =
+  let action s =
     begin try
-	let f = float_of_string s in
-	Do (fun () -> conf#set f)
-      with
-      | Failure "float_of_string" -> wrong_value "float"
+      let f = float_of_string s in
+      Do (fun () -> conf#set f)
+    with
+    | Failure "float_of_string" -> wrong_value "float"
     end
   in
-  make ?short ?long ~arg:set conf#descr
+  make ?short ?long (`Arg action) conf#descr
 
 let opt_bool ?short ?long conf : t =
   let set =
     begin function
-    | "true" -> Do (fun () -> conf#set true)
-    | "false" -> Do (fun () -> conf#set false)
-    | _ -> wrong_value "bool"
+    | None | Some "true" -> Do (fun () -> conf#set true)
+    | Some "false" -> Do (fun () -> conf#set false)
+    | Some _ -> wrong_value "bool"
     end
   in
-  make ?short ?long
-    ~noarg:(fun () -> Do (fun () -> conf#set true))
-    ~arg:set
-    conf#descr
+  make ?short ?long (`Any set) conf#descr
 
 let opt_string ?short ?long conf : t =
-  make ?short ?long
-    ~arg:(fun s -> Do (fun () -> conf#set s))
-    conf#descr
+  make ?short ?long (`Do_string conf#set) conf#descr
 
 let opt_list ?short ?long conf : t =
-  make ?short ?long
-    ~arg:(fun s -> Do (fun () -> conf#set (conf#get @ [s])))
-    conf#descr
+  let action s = conf#set (conf#get @ [s]) in
+  make ?short ?long (`Do_string action) conf#descr
 
 let conf ?short ?long conf : t =
   begin match conf#kind with
   | Some "unit" -> opt_unit ?short ?long (Conf.as_unit conf#ut)
-  | Some "bool" -> opt_bool ?short ?long (Conf.as_bool conf#ut)
   | Some "int" -> opt_int ?short ?long (Conf.as_int conf#ut)
+  | Some "bool" -> opt_bool ?short ?long (Conf.as_bool conf#ut)
   | Some "float" -> opt_float ?short ?long (Conf.as_float conf#ut)
   | Some "string" -> opt_string ?short ?long (Conf.as_string conf#ut)
   | Some "list" -> opt_list ?short ?long (Conf.as_list conf#ut)
@@ -301,35 +361,38 @@ let conf_set ?short ?long conf : t =
       | Conf.Wrong_Conf (_, f) -> Error f
     end
   in
-  make ?short ?long ~arg
+  make ?short ?long (`Arg arg)
     (F.x "set a configuration key" [])
 
 let conf_descr ?short ?long t =
-  let noarg () =
-    Excl (fun () -> F.v (Conf.descr t))
-  in
-  let arg p =
-    begin try
-      let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
-      Excl (fun () -> F.v dl)
-    with
-    | Conf.Unbound (_, s) -> unknown_key_error s
+  let set =
+    begin function
+    | None ->
+	Excl (fun () -> F.v (Conf.descr t))
+    | Some p ->
+	begin try
+	  let dl = Conf.descr ~prefix:(Conf.path_of_string p) t in
+	  Excl (fun () -> F.v dl)
+	with
+	| Conf.Unbound (_, s) -> unknown_key_error s
+	end
     end
   in
-  make ?short ?long ~noarg ~arg
+  make ?short ?long (`Any set)
     (F.x "describe a configuration key" [])
 
 let conf_dump ?short ?long t =
-  let noarg () =
-    Excl (fun () -> F.s (Conf.dump t))
-  in
-  let arg p =
-    begin try
-      let dl = Conf.dump ~prefix:(Conf.path_of_string p) t in
-      Excl (fun () -> F.s dl)
-    with
-    | Conf.Unbound (_, s) -> unknown_key_error s
+  let set =
+    begin function
+    | None -> Excl (fun () -> F.s (Conf.dump t))
+    | Some p ->
+	begin try
+	  let dl = Conf.dump ~prefix:(Conf.path_of_string p) t in
+	  Excl (fun () -> F.s dl)
+	with
+	| Conf.Unbound (_, s) -> unknown_key_error s
+	end
     end
   in
-  make ?short ?long ~noarg ~arg
+  make ?short ?long (`Any set)
     (F.x "dump a configuration key" [])

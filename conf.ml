@@ -205,18 +205,18 @@ let get_string (t : ut) =
 let get_d_string (t : ut) =
   let mapopt f = (function None -> None | Some x -> Some (f x)) in
   begin try
-    begin match t#kind with
-    | None -> None
-    | Some "unit" -> mapopt (fun () -> "") (as_unit t)#get_d
-    | Some "int" -> mapopt string_of_int (as_int t)#get_d
-    | Some "float" -> mapopt string_of_float (as_float t)#get_d
-    | Some "bool" -> mapopt string_of_bool (as_bool t)#get_d
-    | Some "string" -> (as_string t)#get_d
-    | Some "list" -> mapopt (String.concat ":") (as_list t)#get_d
-    | _ -> assert false
-    end
-  with
-  | Undefined _ -> None
+      begin match t#kind with
+      | None -> None
+      | Some "unit" -> mapopt (fun () -> "") (as_unit t)#get_d
+      | Some "int" -> mapopt string_of_int (as_int t)#get_d
+      | Some "float" -> mapopt string_of_float (as_float t)#get_d
+      | Some "bool" -> mapopt string_of_bool (as_bool t)#get_d
+      | Some "string" -> (as_string t)#get_d
+      | Some "list" -> mapopt (String.concat ":") (as_list t)#get_d
+      | _ -> assert false
+      end
+    with
+    | Undefined _ -> None
   end
 
 let descr ?(prefix=[]) (t : ut) =

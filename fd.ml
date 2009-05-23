@@ -106,17 +106,16 @@ let def_text key str =
   in
   let add_arg () = l := !l @ [ `Arg !arg ]; arg := "" in
   let eos = String.length str in
-  while !p < eos do
-    state :=
-      begin match !state, str.[!p] with
-      | `Elem, '<' -> incr p; add_elem (); `Arg
-      | `Elem, '\n' -> incr p; add_elem (); `Elem
-      | `Elem, c -> push c elem; incr p; `Elem
-      | `Arg, '>' -> incr p; add_arg (); `Elem
-      | `Arg, '\n' -> `Error
-      | `Arg, c -> push c arg; incr p; `Arg
-      | `Error, _ -> p := eos; `Error
-      end
+  while !p < eos do state :=
+    begin match !state, str.[!p] with
+    | `Elem, '<' -> incr p; add_elem (); `Arg
+    | `Elem, '\n' -> incr p; add_elem (); `Elem
+    | `Elem, c -> push c elem; incr p; `Elem
+    | `Arg, '>' -> incr p; add_arg (); `Elem
+    | `Arg, '\n' -> `Error
+    | `Arg, c -> push c arg; incr p; `Arg
+    | `Error, _ -> p := eos; `Error
+    end
   done;
   let list = !l in
   begin match !state with
@@ -211,12 +210,9 @@ let string format t =
 	let date = Unix.localtime time in
 	let stime =
 	  Printf.sprintf "%d/%02d/%02d %02d:%02d:%02d"
-	    (date.Unix.tm_year+1900)
-	    (date.Unix.tm_mon+1)
-	    date.Unix.tm_mday
-	    date.Unix.tm_hour
-	    date.Unix.tm_min
-	    date.Unix.tm_sec
+	    (date.Unix.tm_year + 1900)
+	    (date.Unix.tm_mon + 1) date.Unix.tm_mday
+	    date.Unix.tm_hour date.Unix.tm_min date.Unix.tm_sec
 	in
 	add state stime
     | `Exn e ->

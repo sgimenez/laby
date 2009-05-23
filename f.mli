@@ -14,58 +14,58 @@
 *)
 
 type t
-  (** Type of formated messages *)
+(** Type of formated messages *)
 
 
 (** Boxes *)
 
 val n : t
-  (** null box *)
+(** null box *)
 
 val b : t list -> t
-  (** block box *)
+(** block box *)
 
 val h : ?sep:t -> t list -> t
-  (** horizontal box *)
+(** horizontal box *)
 
 val v : ?head:t -> t list -> t
-  (** vertical box *)
+(** vertical box *)
 
 val i : t list -> t
-  (** itemize box *)
+(** itemize box *)
 
 
 val l : string -> t -> t
-  (** label box *)
+(** label box *)
 
 val p : int -> ?wrap:(t -> t) -> t -> t
-  (** precedence box *)
+(** precedence box *)
 
 val q : t -> t
-  (** quote box *)
+(** quote box *)
 
 val s : string -> t
-  (** string box *)
+(** string box *)
 
 val x : string -> (string * t) list -> t
-  (** localized text box *)
+(** localized text box *)
 
 val xs : string -> string -> (string * t) list -> t
-  (** special localized text box *)
+(** special localized text box *)
 
 
 (** Atomic type boxes *)
 
 val string : string -> t
-  (** string atom *)
+(** string atom *)
 val int : int -> t
-  (** integer atom, with specified zero padding *)
+(** integer atom, with specified zero padding *)
 val float : float -> t
-  (** float atom, with specified zero padding *)
+(** float atom, with specified zero padding *)
 val exn : exn -> t
-  (** exn atom *)
+(** exn atom *)
 val time : float -> t
-  (** timestamp atom *)
+(** timestamp atom *)
 
 
 (** Taging *)
@@ -73,13 +73,13 @@ val time : float -> t
 type tag = t -> t
 
 val t : tag -> t -> t
-  (** taged message *)
+(** taged message *)
 
 
 (** Lazyness *)
 
 val z : (unit -> t) -> t
-  (** lazy generation *)
+(** lazy generation *)
 
 
 (**/**)

@@ -52,14 +52,12 @@ let get rpath =
   let dir_list = List.filter check_file raw_dir_dist in
   let l = List.map (fun s -> s ^ resource) dir_list in
   let error () =
-    raise (
-      Error (
-	F.x "cannot find resource <resource> in: <list>" [
-	  "resource", F.string resource;
-	  "list", F.v (List.map F.string raw_dir_dist);
-	]
-      )
-    );
+    raise (Error (
+      F.x "cannot find resource <resource> in: <list>" [
+	"resource", F.string resource;
+	"list", F.v (List.map F.string raw_dir_dist);
+      ]
+    ));
   in
   let found x =
     log#debug 2 (

@@ -5,20 +5,30 @@
 *)
 
 type action =
-    | Invalid of F.t
-    | Error of F.t
-    | Noop
-    | Excl of (unit -> F.t)
-    | Do of (unit -> unit)
+  | Undefined
+  | Invalid of F.t
+  | Error of F.t
+  | Excl of (unit -> F.t)
+  | Do of (unit -> unit)
+
+type spec =
+  [
+  | `None
+  | `Any of string option -> action
+  | `Arg of string -> action
+  | `Do_unit of unit -> unit
+  | `Excl_unit of unit -> F.t
+  | `Do_string of string -> unit
+  | `Excl_string of string -> F.t
+  | `Do_int of int -> unit
+  | `Excl_int of int -> F.t
+  | `Do_optint of int option -> unit
+  | `Excl_optint of int option -> F.t
+  ]
 
 type t
 
-val make :
-  ?short:char -> ?long:string ->
-  ?noarg:(unit -> action) ->
-  ?arg:(string -> action) ->
-  F.t ->
-  t
+val make : ?short:char -> ?long:string -> spec -> F.t -> t
 
 val cmd : ?argv:(string array) -> t list ->
   [

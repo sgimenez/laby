@@ -17,9 +17,16 @@ let conf_daemon_pidfile_path =
   Conf.string ~p:(conf_daemon_pidfile#plug "path")
     (F.x "path to pidfile" [])
 
+let opt_debug =
+  let action i =
+    Log.conf_level#set (match i with None -> 5 | Some x -> x)
+  in
+  Opt.make ~long:"debug" (`Do_optint action)
+    (F.x "activate debug mode" [])
+
 let opt_daemon =
-  Opt.make ~short:'d' ~long:"daemon"
-    ~noarg:(fun () -> Opt.Do (fun () -> conf_daemon#set true))
+  let action () = conf_daemon#set true in
+  Opt.make ~short:'d' ~long:"daemon" (`Do_unit action)
     (F.x "run in daemon mode" [])
 
 
@@ -51,7 +58,7 @@ let daemonize () =
       if (Unix.setsid () < 0) then exit 1;
       begin match conf_daemon_pidfile#get with
       | false ->
-	  (fun () -> ())
+	  fun () -> ()
       | true ->
 	  let filename = conf_daemon_pidfile_path#get in
 	  let f = open_out filename in
@@ -78,6 +85,11 @@ let exit_when_root () =
 
 let init ?(prohibit_root=false) ?path ?conf ?services action =
   if prohibit_root then exit_when_root ();
+  Res.conf_paths#set_d path;
+  begin match conf with
+  | None -> ()
+  | Some (conf, res) -> Conf.load ~log:Log.master#warning conf (Res.get res)
+  end;
   let f () =
     begin match action with
     | `Main f -> f ()
@@ -104,25 +116,21 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
   Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);
   Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
   Sys.set_signal Sys.sighup Sys.Signal_ignore;
-  let clean = ref (fun () -> ()) in
-  begin try
-    Res.conf_paths#set_d path;
-    begin match conf with
-    | None -> ()
-    | Some (conf, res) -> Conf.load ~log:Log.master#warning conf (Res.get res)
-    end;
+  let clean =
     begin match conf_daemon#get with
-    | false -> ()
-    | true -> clean := daemonize ()
-    end;
+    | false -> fun () -> ()
+    | true -> daemonize ()
+    end
+  in
+  begin try
     Init.init ?services f
   with
   | Fail msg ->
-      !clean ();
+      clean ();
       exit 2
   | Res.Error msg ->
       Log.master#fatal msg;
-      !clean ();
+      clean ();
       exit 3
   | Signal i when i = Sys.sigterm || i = Sys.sigquit -> ()
   | Sys.Break -> ()
@@ -131,24 +139,24 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
 	F.x "exception encountered during start phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      !clean ();
+      clean ();
       raise e
   | Init.StopError (e) ->
       Log.master#internal (
 	F.x "exception encountered during stop phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      !clean ();
+      clean ();
       raise e
   | e ->
       Log.master#internal (
 	F.x "exception: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
-      !clean ();
+      clean ();
       raise e
   end;
-  !clean ()
+  clean ()
 
 let fatal msg =
   Log.master#fatal msg;
@@ -175,8 +183,7 @@ let timeout ?(seconds=2) f a h =
   ignore (Unix.alarm seconds);
   Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
   let start () = (try f a with Signal i when i = Sys.sigalrm -> h ()) in
-  hook start ()
-    begin fun () ->
-      Sys.set_signal Sys.sigalrm Sys.Signal_ignore
-    end
+  hook start () (fun () ->
+    Sys.set_signal Sys.sigalrm Sys.Signal_ignore
+  )
 

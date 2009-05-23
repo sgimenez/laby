@@ -75,25 +75,25 @@ let rec exec a =
     log "called";
     a.mutex#lock;
     begin try
-      if not a.launched
-      then begin
-        a.launched <- true;
-	log "start";
-	log "start-depends";
-	mult_exec a.depends;
-	log "stop-depends";
-	log "start-atom";
-	a.f ();
-	log "stop-atom";
-	log "start-triggers";
-	mult_exec a.triggers;
-	log "stop-triggers";
-	log "stop";
-      end;
+	if not a.launched
+	then begin
+          a.launched <- true;
+	  log "start";
+	  log "start-depends";
+	  mult_exec a.depends;
+	  log "stop-depends";
+	  log "start-atom";
+	  a.f ();
+	  log "stop-atom";
+	  log "start-triggers";
+	  mult_exec a.triggers;
+	  log "stop-triggers";
+	  log "stop";
+	end;
       a.mutex#unlock;
       log "return"
-    with
-    | e -> a.mutex#unlock; raise e
+      with
+      | e -> a.mutex#unlock; raise e
     end
   and mult_exec l =
     begin match conf_concurrent#get with
