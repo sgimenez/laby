@@ -23,12 +23,12 @@ val lang : string
      Locale string.
   *)
 
-val theme: Init.t
+val theme: Srv.t
   (**
      Atom to load theme.
   *)
 
-val texts: Init.t
+val texts: Srv.t
   (**
      Atom to load texts.
   *)

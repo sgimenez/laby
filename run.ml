@@ -123,7 +123,7 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
     end
   in
   begin try
-    Init.init ?services f
+    Srv.launch ?services f
   with
   | Fail msg ->
       clean ();
@@ -134,14 +134,14 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
       exit 3
   | Signal i when i = Sys.sigterm || i = Sys.sigquit -> ()
   | Sys.Break -> ()
-  | Init.StartError (e) ->
+  | Srv.StartError (e) ->
       Log.master#internal (
 	F.x "exception encountered during start phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
       clean ();
       raise e
-  | Init.StopError (e) ->
+  | Srv.StopError (e) ->
       Log.master#internal (
 	F.x "exception encountered during stop phase: <exn>"
 	  ["exn", F.v [F.exn e]]

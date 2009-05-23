@@ -20,12 +20,18 @@ val init :
   ?prohibit_root:bool ->
   ?path:string list ->
   ?conf:(Conf.ut * Res.t) ->
-  ?services:Init.t list ->
+  ?services:Srv.t list ->
   [
   | `Main of unit -> unit
   | `Opts of Opt.t list * (string list -> unit)
   ]
   -> unit
+  (**
+     This fuction must be used to launch the main procedure of the
+     program.
+     When invoqued with [~prohibit_root:true], it checks for root access
+     rights (euid, egid) and exit in this case.
+  *)
 
 exception Signal of int
 
