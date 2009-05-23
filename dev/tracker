@@ -6,7 +6,7 @@ err()
     exit 1
 }
 
-DIR="$(mtn automate get_workspace_root 2> /dev/null)/dev/tickets" \
+DIR="$(mtn automate get_workspace_root 2> /dev/null)/dev/ticket" \
     || err "out of workspace"
 
 get_cert()
