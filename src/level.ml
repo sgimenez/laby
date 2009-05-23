@@ -1,0 +1,143 @@
+
+(*
+ * Copyright (C) 2007-2009 The laby team
+ * You have permission to copy, modify, and redistribute under the
+ * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
+ *)
+
+type t =
+    {
+      map: State.terrain array array;
+      pos: int * int;
+      dir: State.dir;
+      mrocks: (int * int) list;
+      mwebs: (int * int) list;
+      comment: string;
+    }
+
+let log = Log.make ["level"]
+
+let basic =
+  {
+    map =
+      [|
+	[| `Wall; `Wall; `Wall; `Wall; `Wall |];
+	[| `Wall;  `Web; `Void; `Void; `Exit |];
+	[| `Wall; `Void; `Void; `Void; `Wall |];
+	[| `Wall; `Void; `Void; `Void; `Wall |];
+	[| `Wall; `Void; `Void; `Rock; `Wall |];
+	[| `Wall; `Wall; `Wall; `Wall; `Wall |];
+      |];
+    pos = 1, 4;
+    dir = `N;
+    mrocks = [];
+    mwebs = [];
+    comment = ""
+  }
+
+let sep = Str.regexp " "
+
+let load file =
+  let f = open_in file in
+  let lines = ref [] in
+  let posx = ref (-1) in
+  let posy = ref (-1) in
+  let may_rocks = ref [] in
+  let may_webs = ref [] in
+  let dir = ref `N in
+  let antpos = ref (0, 0) in
+  let comment = ref "" in
+  let conv s =
+    incr posx;
+    begin match s with
+    | "o" -> `Wall;
+    | "x" -> `Exit;
+    | "↑" -> antpos := !posx, !posy; dir := `N; `Void;
+    | "→" -> antpos := !posx, !posy; dir := `E; `Void;
+    | "↓" -> antpos := !posx, !posy; dir := `S; `Void;
+    | "←" -> antpos := !posx, !posy; dir := `W; `Void;
+    | "r" -> `Rock;
+    | "R" -> may_rocks := (!posx, !posy) :: !may_rocks; `NRock;
+    | "w" -> `Web;
+    | "W" -> may_webs := (!posx, !posy) :: !may_webs; `Web;
+    | "." -> `Void;
+    | _ ->
+	Run.fatal (
+	  F.x "unknown tile" [];
+	);
+    end
+  in
+  let rec get_lines () =
+    posx := -1; incr posy;
+    let l = Array.of_list (Str.split sep (input_line f)) in
+    if l <> [||]
+    then (lines := (Array.map conv l) :: !lines; get_lines ())
+  in
+  let rec get_comment () =
+    posx := -1; incr posy;
+    let l = input_line f in
+    begin try
+      let lang_str = String.sub l 0 (String.index l '\t') in
+      let last = String.rindex l '\t' in
+      let comment_str = String.sub l (last + 1) (String.length l - last - 1) in
+      if !comment = "" || lang_str = Ui.lang
+      then (comment := comment_str; get_comment ())
+      else get_comment ()
+    with
+    | Not_found -> get_comment ()
+    end
+  in
+  begin try
+    get_lines ();
+    get_comment ();
+  with
+  | End_of_file -> ()
+  end;
+  let sizex = Array.length (List.hd !lines) in
+  begin match List.for_all (fun a -> Array.length a = sizex) !lines with
+  | false ->
+      Run.fatal (
+	F.x "mismatching line length" [];
+      )
+  | true -> ()
+  end;
+  let array = Array.of_list (List.rev !lines) in
+  close_in f;
+  {
+    map = array;
+    pos = !antpos;
+    dir = !dir;
+    mrocks = !may_rocks;
+    mwebs = !may_webs;
+    comment = !comment;
+  }
+
+let comment level =
+  level.comment
+
+let generate level =
+  let map =
+    Array.init (Array.length level.map) (fun j -> Array.copy level.map.(j))
+  in
+  let fill m tile =
+    begin match m with
+    | [] -> ()
+    | _ ->
+	let i = Random.int (List.length m) in
+	let x, y = List.nth m i in
+	map.(y).(x) <- tile
+    end
+  in
+  fill level.mrocks `Rock;
+  fill level.mwebs `NWeb;
+  {
+    State.map = map;
+    State.pos = level.pos;
+    State.dir = level.dir;
+    State.carry = `None;
+    State.action = `None;
+  }
+
+let size state =
+  Array.length state.map.(0),
+  Array.length state.map

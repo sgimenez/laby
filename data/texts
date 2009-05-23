@@ -1,0 +1,338 @@
+# dtools
+
+text		file <f>, line <l>: <error>
+en_US.UTF-8	file <f>, line <l>: <error>
+fr_FR.UTF-8	fichier <f>, ligne <l>: <error>
+
+text		line <l>, characters <begin-char>-<end-char>
+en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
+fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
+
+text		line <l>, character <char>
+en_US.UTF-8	line <l>, character <char>
+fr_FR.UTF-8	ligne <l>, caractère <char>
+
+text		lexical error
+en_US.UTF-8	lexical error
+fr_FR.UTF-8	erreur lexicale
+
+text		syntax error
+en_US.UTF-8	syntax error
+fr_FR.UTF-8	erreur de syntaxe
+
+text		<status>: <message>
+en_US.UTF-8	<status>: <message>
+fr_FR.UTF-8	<status> : <message>
+
+text		exception
+en_US.UTF-8	exception
+fr_FR.UTF-8	exception
+
+text		internal error
+en_US.UTF-8	internal error
+fr_FR.UTF-8	erreur interne
+
+text		fatal error
+en_US.UTF-8	fatal error
+fr_FR.UTF-8	erreur fatale
+
+text		error
+en_US.UTF-8	error
+fr_FR.UTF-8	erreur
+
+text		warning
+en_US.UTF-8	warning
+fr_FR.UTF-8	avertissement
+
+text		debug
+en_US.UTF-8	debug
+fr_FR.UTF-8	debug
+
+text		failure
+en_US.UTF-8	failure
+fr_FR.UTF-8	échec
+
+text		done
+en_US.UTF-8	done
+fr_FR.UTF-8	fait
+
+text		line <l>
+en_US.UTF-8	line <l>
+fr_FR.UTF-8	ligne <l>
+
+text		unknown token
+en_US.UTF-8	unknown token
+fr_FR.UTF-8	lexème inconnu
+
+text		unknown type
+en_US.UTF-8	unknown type
+fr_FR.UTF-8	type inconnu
+
+text		failed to load file: <error>
+en_US.UTF-8	failed to load file: <error>
+fr_FR.UTF-8	échec pendant le chargement du fichier: <error>
+
+text		<type> value expected
+en_US.UTF-8	<type> value expected
+fr_FR.UTF-8	valeur de type <type> attendue
+
+text		the given configuration key has type <type>
+en_US.UTF-8	the given configuration key has type <type>
+fr_FR.UTF-8	la clé de configuration donnée à le type <type>
+
+text		the given configuration key cannot be assigned a value
+en_US.UTF-8	the given configuration key cannot be assigned a value
+fr_FR.UTF-8	la clé de configuration donnée ne peut être modifiée
+
+text		assignation syntax is <syntax>
+en_US.UTF-8	assignation syntax is <syntax>
+fr_FR.UTF-8	la syntaxe pour une assignation est <syntax>
+
+text		set a configuration key
+en_US.UTF-8	set a configuration key
+fr_FR.UTF-8	spécifie une clé de configuration
+
+text		describe a configuration key
+en_US.UTF-8	describe a configuration key
+fr_FR.UTF-8	décrit une clé de configuration
+
+text		dump a configuration key
+en_US.UTF-8	dump a configuration key
+fr_FR.UTF-8	extrait une clé de configuration
+
+text		log configuration
+en_US.UTF-8	log configuration
+fr_FR.UTF-8	configuration des ‘log’s
+
+text		general log level
+en_US.UTF-8	general log level
+fr_FR.UTF-8	niveau de ‘log’ général
+
+text		subordinate log level
+en_US.UTF-8	subordinate log level
+fr_FR.UTF-8	niveau de ‘log’ subordonné
+
+
+# misc
+
+text		display failed
+en_US.UTF-8	display failed
+fr_FR.UTF-8	impossible d'ouvrir une fenêtre
+
+text		gtk error: <error>
+en_US.UTF-8	gtk error: <error>
+fr_FR.UTF-8	erreur gtk: <error>
+
+
+# opt.ml
+
+text		invalid options: <errors>
+en_US.UTF-8	invalid options: <errors>
+fr_FR.UTF-8	options incorrectes : <errors>
+
+text		unknown option <opt>
+en_US.UTF-8	unknown option <opt>
+fr_FR.UTF-8	option <opt> inconnue
+
+text		option <opt> does not take an argument
+en_US.UTF-8	option <opt> does not take an argument
+fr_FR.UTF-8	l'option <opt> ne prend pas d'argument
+
+text		option <opt> requires an argument
+en_US.UTF-8	option <opt> requires an argument
+fr_FR.UTF-8	l'option <opt> nécessite un argument
+
+text		multiple exclusive actions specified
+en_US.UTF-8	multiple exclusive actions specified
+fr_FR.UTF-8	plusieurs actions exclusives ont été spécifiées
+
+text		invalid argument to <opt>: <arg>
+en_US.UTF-8	invalid argument to <opt>: <arg>
+fr_FR.UTF-8	argument invalide pour <opt> : <arg>
+
+text		option <opt> conflicts with a previous option
+en_US.UTF-8	option <opt> conflicts with a previous option
+fr_FR.UTF-8	l'option <opt> est en conflit avec une option précédente
+
+text		display help message
+en_US.UTF-8	display help message
+fr_FR.UTF-8	affiche un message d'aide
+
+text		output debug information
+en_US.UTF-8	output debug information
+fr_FR.UTF-8	émet des messages de debug
+
+text		log output to a file
+en_US.UTF-8	log output to a file
+fr_FR.UTF-8	enregistre la sortie vers un fichier
+
+text		select theme file
+en_US.UTF-8	select theme file
+fr_FR.UTF-8	choix du fichier de thème
+
+# version.ml
+
+text		show versioning information
+en_US.UTF-8	show versioning information
+fr_FR.UTF-8	affiche les indications de version
+
+
+# data.ml
+
+text		unknown os type
+en_US.UTF-8	unknown os type
+fr_FR.UTF-8	système d'exploitation inconnu
+
+text		cannot access <path>
+en_US.UTF-8	cannot access <path>
+fr_FR.UTF-8	impossible d'accéder à <path>
+
+text		cannot find resource <resource> in: <list>
+en_US.UTF-8	cannot find resource <resource> in: <list>
+fr_FR.UTF-8	ressource <resource> introuvable dans: <list>
+
+
+# level.ml
+
+text		unknown tile
+en_US.UTF-8	unknown tile
+fr_FR.UTF-8	case inconnue
+
+text		mismatching line length
+en_US.UTF-8	mismatching line length
+fr_FR.UTF-8	longueur de ligne non concordante
+
+
+# bot.ml
+
+text		execution of interpreter failed
+en_US.UTF-8	execution of interpreter failed
+fr_FR.UTF-8	échec lors de l'exécution de l'interprète
+
+
+# gfx.ml
+
+text		Language:
+en_US.UTF-8	Language:
+fr_FR.UTF-8	Langage :
+
+text		Level:
+en_US.UTF-8	Level:
+fr_FR.UTF-8	Niveau :
+
+text		cannot load language file
+en_US.UTF-8	cannot load language file
+fr_FR.UTF-8	impossible de charger le fichier langage
+
+# laby.ml
+
+text		language
+en_US.UTF-8	language
+fr_FR.UTF-8	langage
+
+
+# say.ml
+
+text		I'm ready.
+en_US.UTF-8	I'm ready.
+fr_FR.UTF-8	Je suis prêt.
+
+text		I can run into the wall.
+en_US.UTF-8	I can run into the wall.
+fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
+
+text		I can't go through this rock.
+en_US.UTF-8	I can't go through this rock.
+fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
+
+text		I can't go through the door.
+en_US.UTF-8	I can't go through the door.
+fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
+
+text		Oops, a spider web.
+en_US.UTF-8	Oops, a spider web.
+fr_FR.UTF-8	Oups, une toile d'araignée.
+
+text		I can't move anymore.
+en_US.UTF-8	I can't move anymore.
+fr_FR.UTF-8	Je ne peux plus bouger.
+
+text		Wohoo, the exit!
+en_US.UTF-8	Wohoo, the exit!
+fr_FR.UTF-8	Ourah la sortie !
+
+text		I can't find a door to open.
+en_US.UTF-8	I can't find a door to open.
+fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
+
+text		I can't go out carrying a rock.
+en_US.UTF-8	I can't go out carrying a rock.
+fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
+
+text		There's no rock to take here.
+en_US.UTF-8	There's no rock to take here.
+fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
+
+text		I can't drop the rock here.
+en_US.UTF-8	I can't drop the rock here.
+fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
+
+
+# ascii api names
+
+text:ascii	Ant
+en_US.UTF-8	Ant
+fr_FR.UTF-8	Fourmi
+
+text:ascii	ant
+en_US.UTF-8	ant
+fr_FR.UTF-8	fourmi
+
+text:ascii	left
+en_US.UTF-8	left
+fr_FR.UTF-8	gauche
+
+text:ascii	right
+en_US.UTF-8	right
+fr_FR.UTF-8	droite
+
+text:ascii	forward
+en_US.UTF-8	forward
+fr_FR.UTF-8	avance
+
+text:ascii	look
+en_US.UTF-8	look
+fr_FR.UTF-8	regarde
+
+text:ascii	door_open
+en_US.UTF-8	door_open
+fr_FR.UTF-8	ouvre
+
+text:ascii	take
+en_US.UTF-8	take
+fr_FR.UTF-8	prend
+
+text:ascii	drop
+en_US.UTF-8	drop
+fr_FR.UTF-8	pose
+
+text:ascii	Void
+en_US.UTF-8	Void
+fr_FR.UTF-8	Vide
+
+text:ascii	Wall
+en_US.UTF-8	Wall
+fr_FR.UTF-8	Mur
+
+text:ascii	Rock
+en_US.UTF-8	Rock
+fr_FR.UTF-8	Caillou
+
+text:ascii	Web
+en_US.UTF-8	Web
+fr_FR.UTF-8	Toile
+
+text:ascii	Exit
+en_US.UTF-8	Exit
+fr_FR.UTF-8	Sortie
+

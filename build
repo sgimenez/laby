@@ -1,0 +1,108 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+cd ${DIR}
+
+[ -f project.conf ] && source project.conf
+source build.conf
+
+export PREFIX=${PREFIX-/usr}
+export SYSDATADIR=${SYSDATADIR-${PREFIX}/share}
+
+export PROJECT_NAME=${PROJECT_NAME-unknown}
+export PROJECT_VERSION=${PROJECT_VERSION-unknown}
+export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
+export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
+
+OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
+OCAMLFIND=${OCAMLFIND-ocamlfind}
+
+OCB="${OCAMLBUILD} -use-menhir -no-links -no-sanitize -no-hygiene"
+OFQ="${OCAMLFIND} query -r -format -I,%d"
+
+[ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
+
+DIRS=$(${OFQ} ${PACKAGES})
+for i in ${DIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done;
+for i in ${DEPLIBS}; do OCBF="${OCBF} -lib $i"; done;
+for i in ${SRCDIRS}; do OCBF="${OCBF} -I $i"; done;
+
+OCBI="${OCB} ${OCBF}"
+
+ACT="${1---all}";
+shift;
+[ $# == 0 ] && set ${BINS} ${LIBS}
+
+BINTARGETS=""
+LIBTARGETS=""
+for i in $*; do
+  for k in ${BINS}; do
+    [ "$k" == "$i" ] && BINTARGETS="${BINTARGETS} $i"
+  done;
+  for k in ${LIBS}; do
+    [ "$k" == "$i" ] && LIBTARGETS="${LIBTARGETS} $i"
+  done;
+done
+
+case ${ACT} in
+  --help|-h)
+      echo "usage: $0 action [targets]"
+      echo "options:"
+      echo "  --all (-a)"
+      echo "  --byte (-b)"
+      echo "  --native (-n)"
+      echo "  --byte-debug (-bd)"
+      echo "  --native-profile (-np)"
+      echo "  --clean (-c)"
+      exit 0;;
+  --clean|-c)
+      ${OCAMLBUILD} -clean
+      [ -f "${CONF}.sh" ] && rm -rf "${CONF}.ml"
+      for i in ${AUXTARGETS}; do
+        rm -rf $i
+      done
+      for i in ${BINTARGETS}; do
+        rm -rf $i $i.{byte,native,d.byte,p.native};
+      done
+      for i in ${LIBTARGETS}; do
+	rm -rf $i.{cma,cmxa,.d.cma,p.cmxa};
+      done
+      exit 0;;
+  --target|-t)
+      ${OCBI} $*
+      exit 0;;
+  --all|-a) LNK="native"; BINEXT="native byte"; LIBEXT="cmxa cma";;
+  --byte|-b) LNK="byte"; BINEXT="byte"; LIBEXT="cma";;
+  --byte-debug|-bd) LNK="d.byte"; BINEXT="d.byte"; LIBEXT="d.cma";;
+  --native|-n) LNK="native"; BINEXT="native"; LIBEXT="cmxa";;
+  --native-profile|-np) LNK="p.native"; BINEXT="p.native"; LIBEXT="p.cmxa";;
+  *) echo "unknown action"; exit 1;;
+esac
+
+TARGETS=""
+for i in ${AUXTARGETS}; do
+  TARGETS="${TARGETS} ${REP}/$i";
+done;
+for i in ${BINTARGETS}; do
+  for j in ${BINEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
+done;
+for i in ${LIBTARGETS}; do
+  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
+done;
+
+FILES="${BINTARGETS} ${LIBTARGETS}"
+echo building "${PROJECT_NAME}-${PROJECT_VERSION}:" ${FILES}
+export THREADS
+[ -f "${CONF}.sh" ] && sh "${CONF}.sh" > "${CONF}.ml"
+
+for i in ${TARGETS}; do rm -f $(basename "$i"); done
+
+${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
+
+for i in ${TARGETS}; do cp "_build/$i" $(basename "$i"); done
+
+[ -n ${LNK} ] &&
+for i in ${BINTARGETS}; do ln -sf $i.${LNK} $i; done
+
+exit 0
+

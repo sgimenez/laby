@@ -1,0 +1,16 @@
+o o o o o o o o o o o o o o
+o . . . . . . . . . . . . x
+o . o o o o o o o o o o o o
+o . o . . . . . . . . . . .
+o . o . . . . . . . . . . .
+o . o o o o o o o o o o o o
+o . . . . . . . . . . . . o
+o o o o o o o o o o o o . o
+. . . . . . . . . . . o . o
+. . . . . . . . . . . o . o
+o o o o o o o o o o o o . o
+o → . . . . . . . . . . . o
+o o o o o o o o o o o o o o
+
+en_US.UTF-8	Five long runs! To avoid writing five times the same loop, we shall use a shortcut! Let's write a function which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.
+fr_FR.UTF-8	Cinq longues distances à parcourir ! Pour éviter de recopier cinq fois la même boucle, on peut utiliser un raccourci ! On va écrire une fonction qui fait avancer le robot le plus loin possible en ligne droite. Ensuite on pourra facilement l'appeler plusieurs fois.
