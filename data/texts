@@ -237,8 +237,8 @@ text		I'm ready.
 en_US.UTF-8	I'm ready.
 fr_FR.UTF-8	Je suis prêt.
 
-text		I can run into the wall.
-en_US.UTF-8	I can run into the wall.
+text		I can't go through the wall.
+en_US.UTF-8	I can't go through the wall.
 fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
 
 text		I can't go through this rock.
