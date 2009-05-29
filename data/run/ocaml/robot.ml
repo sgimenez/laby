@@ -17,7 +17,7 @@ let laby_name_right () = output "right"; ignore (input ())
 
 let laby_name_forward () = output "forward"; ignore (input ())
 
-let regarde () = output "look";
+let laby_name_look () = output "look";
   begin match input () with
   | "void" -> `laby_name_Void
   | "wall" -> `laby_name_Wall
