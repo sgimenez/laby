@@ -130,7 +130,6 @@ let make () =
     val errto = ref (fun s -> ())
 
     val name = ref "demo"
-    val dir = ref "default/"
 
     method set_name n =
       name := n
