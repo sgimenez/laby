@@ -9,7 +9,7 @@ let start =
   F.x "I'm ready." []
 
 let wall_in =
-  F.x "I can run into the wall." []
+  F.x "I can't go through the wall." []
 
 let rock_in =
   F.x "I can't go through this rock." []
