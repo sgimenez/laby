@@ -220,6 +220,14 @@ text		Level:
 en_US.UTF-8	Level:
 fr_FR.UTF-8	Niveau :
 
+text		Program:
+en_US.UTF-8	Program:
+fr_FR.UTF-8	Programme :
+
+text		Messages:
+en_US.UTF-8	Messages:
+fr_FR.UTF-8	Messages :
+
 text		cannot load language file
 en_US.UTF-8	cannot load language file
 fr_FR.UTF-8	impossible de charger le fichier langage

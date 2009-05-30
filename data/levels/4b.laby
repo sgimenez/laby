@@ -1,0 +1,18 @@
+map:
+. o o o o o o o o o o o o
+. o . . . . . . . . . . x
+. o . o . o . o . o . o o
+. o . o . o . o . o . o .
+. o W o W o W o W o W o .
+. o . o . o . o . o . o .
+o o . o . o . o . o . o .
+o → . . . . . . . . . o .
+o o o o o o o o o o o o .
+
+title:
+en_US.UTF-8	Where to
+fr_FR.UTF-8	Par ou passer
+
+comment:
+en_US.UTF-8	The last challenge !
+fr_FR.UTF-8	Le dernier défi !

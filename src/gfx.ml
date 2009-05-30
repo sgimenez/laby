@@ -40,6 +40,7 @@ type controls =
       levels: GEdit.combo;
       view_prog: GSourceView.source_view;
       view_mesg: GText.view;
+      view_title: GMisc.label;
       view_comment: GMisc.label;
     }
 
@@ -100,37 +101,48 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
 
 let labeled_combo text packing =
   let box = GPack.hbox ~packing () in
-  let _ = GMisc.label ~text ~xpad:5 ~packing:box#pack () in
+  let _ = GMisc.label ~text ~xpad:5 ~ypad:8 ~packing:box#pack () in
   GEdit.combo ~packing:box#add ()
+
+let label packing =
+  GMisc.label ~ypad:5 ~line_wrap:true ~packing ()
+
+let label_txt text packing =
+  let _ = GMisc.label ~text ~ypad:5 ~line_wrap:true ~packing () in ()
 
 let label_language = F.x "Language:" []
 let label_level = F.x "Level:" []
+let label_prog = F.x "Program:" []
+let label_mesg = F.x "Messages:" []
 
 let layout () =
-  let monofont = Pango.Font.from_string "monospace" in
-  let window = GWindow.window ~resizable:true () in
-  let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
-  hpaned#set_position 650;
-  let lvbox = GPack.vbox ~packing:hpaned#add1 () in
-  let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
-  vpaned#set_position 450;
   let scrolled ?(vpolicy=`ALWAYS) packing =
     GBin.scrolled_window ~packing ~hpolicy:`AUTOMATIC ~vpolicy ()
   in
-  let sw_prog = scrolled vpaned#add1 in
+  let monofont = Pango.Font.from_string "monospace" in
+  let window = GWindow.window ~resizable:true () in
+  let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
+  hpaned#set_position 640;
+  let lvbox = GPack.vbox ~packing:hpaned#add1 () in
+  let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
+  vpaned#set_position 450;
+  let view_title = label lvbox#pack in
+  let view_comment = label lvbox#pack in
+  let rtvbox = GPack.vbox ~packing:vpaned#add1 () in
+  let interprets = labeled_combo (Fd.render_raw label_language) rtvbox#pack in
+  let levels = labeled_combo (Fd.render_raw label_level) rtvbox#pack in
+  label_txt (Fd.render_raw label_prog) rtvbox#pack;
+  let sw_prog = scrolled rtvbox#add in
   let view_prog =
-    GSourceView.source_view ~show_line_numbers:true ~packing:sw_prog#add
-      ()
+    GSourceView.source_view ~show_line_numbers:true ~packing:sw_prog#add ()
   in
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
-  let rvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let interprets = labeled_combo (Fd.render_raw label_language) rvbox#pack in
-  let sw_mesg = scrolled rvbox#add in
+  let rbvbox = GPack.vbox ~packing:vpaned#add2 () in
+  label_txt (Fd.render_raw label_mesg) rbvbox#pack;
+  let sw_mesg = scrolled rbvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
-  let levels = labeled_combo (Fd.render_raw label_level) lvbox#pack in
-  let view_comment = GMisc.label ~line_wrap:true ~packing:lvbox#pack () in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`BOTH () in
@@ -138,19 +150,14 @@ let layout () =
   let tbutton stock =
     GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
   in
+  let sti = GButton.separator_tool_item in
   let button_prev = button `GO_BACK in
   let button_next = button `GO_FORWARD in
-  let _ =
-    GButton.separator_tool_item
-      ~expand:false ~draw:true ~packing:toolbar#insert ()
-  in
+  ignore (sti ~expand:false ~draw:true ~packing:toolbar#insert ());
   let button_backward = tbutton `MEDIA_REWIND in
   let button_play = tbutton `MEDIA_PLAY in
   let button_forward = tbutton `MEDIA_FORWARD in
-  let _ =
-    GButton.separator_tool_item
-      ~expand:true ~draw:false ~packing:toolbar#insert ()
-  in
+  ignore (sti ~expand:true ~draw:false ~packing:toolbar#insert ());
   view_prog#misc#grab_focus ();
   let button_refresh = button `REFRESH in
   {
@@ -166,6 +173,7 @@ let layout () =
     levels = levels;
     view_prog = view_prog;
     view_mesg = view_mesg;
+    view_title = view_title;
     view_comment = view_comment;
   }
 
@@ -197,6 +205,7 @@ let display_gtk ?language_list () =
     c.interprets#set_popdown_strings language_list;
     c.levels#set_popdown_strings levels_list;
     let pixmap = ref (make_pixmap !level) in
+    c.view_title#set_text (Level.title !level);
     c.view_comment#set_text (Level.comment !level);
     let destroy () =
       bot#close;
@@ -283,6 +292,7 @@ let display_gtk ?language_list () =
       | true ->
 	  level := Level.load (Res.get ["levels"; name]);
 	  pixmap := make_pixmap !level;
+	  c.view_title#set_text (Level.title !level);
 	  c.view_comment#set_text (Level.comment !level);
 	  inactive ();
 	  bot_stop ();
@@ -343,7 +353,7 @@ let display_gtk ?language_list () =
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
     ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
-    c.window#set_default_size 1000 725;
+    c.window#set_default_size 980 745;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)
     bg := `COLOR (c.px#misc#style#light `NORMAL);

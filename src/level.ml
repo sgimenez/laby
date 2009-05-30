@@ -12,6 +12,7 @@ type t =
       dir: State.dir;
       mrocks: (int * int) list;
       mwebs: (int * int) list;
+      title: string;
       comment: string;
     }
 
@@ -32,21 +33,19 @@ let basic =
     dir = `N;
     mrocks = [];
     mwebs = [];
+    title = "";
     comment = ""
   }
 
 let sep = Str.regexp " "
 
-let load file =
-  let f = open_in file in
-  let lines = ref [] in
+let get_map lines =
   let posx = ref (-1) in
   let posy = ref (-1) in
   let may_rocks = ref [] in
   let may_webs = ref [] in
   let dir = ref `N in
   let antpos = ref (0, 0) in
-  let comment = ref "" in
   let conv s =
     incr posx;
     begin match s with
@@ -67,53 +66,71 @@ let load file =
 	);
     end
   in
-  let rec get_lines () =
+  let tr line =
     posx := -1; incr posy;
-    let l = Array.of_list (Str.split sep (input_line f)) in
-    if l <> [||]
-    then (lines := (Array.map conv l) :: !lines; get_lines ())
+    Array.of_list (List.map conv (Str.split sep line))
   in
-  let rec get_comment () =
-    posx := -1; incr posy;
-    let l = input_line f in
+  let map = Array.of_list (List.map tr lines) in
+  map, !antpos, !dir, !may_rocks, !may_webs
+
+let rec get_sentence default lines =
+  begin match lines with
+  | [] -> default
+  | l :: q ->
+      begin try
+	let lang_str = String.sub l 0 (String.index l '\t') in
+	let last = String.rindex l '\t' in
+	let comment_str =
+	  String.sub l (last + 1) (String.length l - last - 1)
+	in
+	if default = "" || lang_str = Ui.lang
+	then  get_sentence comment_str q
+	else get_sentence default q
+      with
+      | Not_found -> get_sentence default q
+      end
+  end
+
+let load file =
+  let f = open_in file in
+  let rec input blocks lines =
     begin try
-      let lang_str = String.sub l 0 (String.index l '\t') in
-      let last = String.rindex l '\t' in
-      let comment_str = String.sub l (last + 1) (String.length l - last - 1) in
-      if !comment = "" || lang_str = Ui.lang
-      then (comment := comment_str; get_comment ())
-      else get_comment ()
+      begin match input_line f with
+      | "" -> input (List.rev lines :: blocks) []
+      | l -> input blocks (l :: lines)
+      end
     with
-    | Not_found -> get_comment ()
+    | End_of_file -> List.rev (List.rev lines :: blocks)
     end
   in
-  begin try
-    get_lines ();
-    get_comment ();
-  with
-  | End_of_file -> ()
-  end;
-  let sizex = Array.length (List.hd !lines) in
-  begin match List.for_all (fun a -> Array.length a = sizex) !lines with
-  | false ->
-      Run.fatal (
-	F.x "mismatching line length" [];
-      )
-  | true -> ()
-  end;
-  let array = Array.of_list (List.rev !lines) in
+  let rec app s f blocks =
+    begin match blocks with
+    | (h :: lines) :: q ->
+	if h = s then f lines else app s f q
+    | _ ->
+	Run.fatal (
+	  F.x "bad level format: <file>" [
+	    "file", F.string file;
+	  ];
+	);
+    end
+  in
+  let blocks = input [] [] in
   close_in f;
+  let map, antpos, dir, mrocks, mwebs = app "map:" get_map blocks in
+  let title = app "title:" (get_sentence "") blocks in
+  let comment = app "comment:" (get_sentence "") blocks in
   {
-    map = array;
-    pos = !antpos;
-    dir = !dir;
-    mrocks = !may_rocks;
-    mwebs = !may_webs;
-    comment = !comment;
+    map = map; pos = antpos; dir = dir;
+    mrocks = mrocks; mwebs = mwebs;
+    title = title; comment = comment;
   }
 
 let comment level =
   level.comment
+
+let title level =
+  level.title
 
 let generate level =
   let map =
