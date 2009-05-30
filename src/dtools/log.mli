@@ -36,12 +36,12 @@ val master : t
      Root logger.
   *)
 
-val start : Init.t
+val start : Srv.t
   (**
      An atom that starts the logging.
   *)
 
-val stop : Init.t
+val stop : Srv.t
   (**
      An atom that stops the logging.
   *)

@@ -18,9 +18,6 @@ let conf_trace =
 let conf_concurrent =
   Conf.bool ~p:(conf#plug "concurrent") ~d:false
     (F.x "run initialization using concurrent threads" [])
-let conf_catch_exn =
-  Conf.bool ~p:(conf#plug "catch_exn") ~d:false
-    (F.x "catch exceptions, use false to backtrace exceptions" [])
 
 type t =
     {
@@ -117,7 +114,7 @@ let main f () =
   f ();
   begin try exec stop with e -> raise (StopError e) end
 
-let init ?(services=[]) f =
+let launch ?(services=[]) f =
   start.triggers <- start.triggers @ services;
   main f ()
 

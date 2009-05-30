@@ -112,9 +112,9 @@ let load_theme () =
 
 
 let theme =
-  Init.make ~name:"load-theme" load_theme
+  Srv.make ~name:"load-theme" load_theme
 
 let texts =
-  Init.make ~name:"load-texts" load_texts
+  Srv.make ~name:"load-texts" load_texts
 
 

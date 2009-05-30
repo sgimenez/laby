@@ -247,7 +247,7 @@ let init () =
     (Sys.Signal_handle (fun _ -> mutexify reopen ()));
   mutexify proceed ()
 
-let start = Init.make ~name:"init-log-start" ~before:[Init.start] init
+let start = Srv.make ~name:"srv-log-start" ~before:[Srv.start] init
 
 let close () =
   let time = Unix.gettimeofday () in
@@ -265,5 +265,5 @@ let close () =
   | _ -> ()
   end
 
-let stop = Init.make ~name:"init-log-stop" ~after:[Init.stop] close
+let stop = Srv.make ~name:"srv-log-stop" ~after:[Srv.stop] close
 
