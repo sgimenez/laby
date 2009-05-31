@@ -9,7 +9,7 @@ let log = Log.make ["gfx"]
 
 let conf =
   Conf.void
-    (F.x "sound configuration" [])
+    (F.x "graphic interface configuration" [])
 
 let conf_tilesize =
   Conf.int ~p:(conf#plug "tile-size") ~d:40
