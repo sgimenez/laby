@@ -5,34 +5,43 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
-type terrain = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
+type tile = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
 type dir = [ `N | `E | `S | `W ]
 
 type action =
- [ `None
- | `Start
- | `Wall_In
- | `Rock_In
- | `Exit_In
- | `Web_In
+ [ `None | `Start
+ | `Wall_In | `Rock_In | `Exit_In | `Web_In
  | `Web_Out
- | `Exit
- | `No_Exit
- | `Carry_Exit
- | `Rock_Take
- | `Rock_Drop
- | `Rock_No_Take
- | `Rock_No_Drop
+ | `Exit | `No_Exit | `Carry_Exit
+ | `Rock_Take | `Rock_Drop
+ | `Rock_No_Take | `Rock_No_Drop
  ]
 
 type t =
     {
-      map: terrain array array;
+      map: tile array array;
       pos: int * int;
       dir: dir;
       carry: [`None | `Rock ];
       action: action;
     }
+
+let make map pos dir =
+  {
+    map = map; pos = pos; dir = dir;
+    carry = `None; action = `None;
+  }
+
+let init s =
+   { s with action = `Start }
+
+let iter_map s p =
+    Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) s.map
+
+let pos s = s.pos
+let dir s = s.dir
+let carry s = s.carry
+let action s = s.action
 
 let copy state =
   let map =
@@ -102,9 +111,6 @@ let look state =
   get state (front state)
 
 let log_protocol = Log.make ["protocol"]
-
-let output channels s =
-  Printf.fprintf (Unix.out_channel_of_descr (snd channels)) "%s\n%!" s
 
 let run action state =
   let state = clean state in

@@ -75,8 +75,8 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     pixmap#put_pixbuf
       ~x:(tile_size/2+i*tile_size) ~y:(tile_size/2+j*tile_size) p
   in
-  let i0, j0 = state.State.pos in
-  let p i j t =
+  let i0, j0 = State.pos state in
+  let disp_tile i j t =
     begin match t with
     | `Void -> tile i j ressources.void_p
     | `Exit -> if i <> i0 || j <> j0 then tile i j ressources.exit_p
@@ -87,16 +87,16 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
     | `NWeb -> tile i j ressources.nweb_p
     end
   in
-  Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) state.State.map;
-  begin match state.State.dir with
+  State.iter_map state disp_tile;
+  begin match State.dir state with
   | `N -> tile i0 j0 ressources.ant_n_p
   | `E -> tile i0 j0 ressources.ant_e_p
   | `S -> tile i0 j0 ressources.ant_s_p
   | `W -> tile i0 j0 ressources.ant_w_p
   end;
-  begin match state.State.carry with
+  begin match State.carry state with
   | `Rock -> tile i0 j0 ressources.rock_p
-  | _ -> ()
+  | `None -> ()
   end
 
 let labeled_combo text packing =
@@ -162,19 +162,15 @@ let layout () =
   let button_refresh = button `REFRESH in
   {
     window = window;
-    button_prev = button_prev;
-    button_next = button_next;
+    button_prev = button_prev; button_next = button_next;
     button_play = button_play;
     button_backward = button_backward;
     button_forward = button_forward;
     button_refresh = button_refresh;
     px = px;
-    interprets = interprets;
-    levels = levels;
-    view_prog = view_prog;
-    view_mesg = view_mesg;
-    view_title = view_title;
-    view_comment = view_comment;
+    interprets = interprets; levels = levels;
+    view_prog = view_prog; view_mesg = view_mesg;
+    view_title = view_title;view_comment = view_comment;
   }
 
 let make_pixmap level =
@@ -202,11 +198,7 @@ let display_gtk ?language_list () =
   begin try
     let ressources = gtk_init () in
     let c = layout () in
-    c.interprets#set_popdown_strings language_list;
-    c.levels#set_popdown_strings levels_list;
-    let pixmap = ref (make_pixmap !level) in
-    c.view_title#set_text (Level.title !level);
-    c.view_comment#set_text (Level.comment !level);
+    let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
     let destroy () =
       bot#close;
       c.window#destroy ();
@@ -247,8 +239,7 @@ let display_gtk ?language_list () =
     let bot_start () =
       bot#set_name (c.interprets#entry#text);
       bot#set_buf (c.view_prog#buffer#get_text ());
-      if bot#start
-      then c_state := { !c_state with State.action = `Start }
+      if bot#start then c_state := State.init !c_state
     in
     let update ?(first=false) () =
       !pixmap#set_foreground !bg;
@@ -257,8 +248,12 @@ let display_gtk ?language_list () =
       draw_state !c_state ressources !pixmap;
       c.px#set_pixmap !pixmap;
       let say msg = c.view_mesg#buffer#insert (Fd.render_raw msg ^ "\n") in
+      let action = State.action !c_state in
       let repport () =
-	begin match !c_state.State.action with
+	begin match action with
+	| `None -> ()
+	| `Rock_Take -> ()
+	| `Rock_Drop -> ()
 	| `Start -> say Say.start
 	| `Wall_In -> say Say.wall_in
 	| `Rock_In -> say Say.rock_in
@@ -270,10 +265,9 @@ let display_gtk ?language_list () =
 	| `Carry_Exit -> say Say.carry_exit
 	| `Rock_No_Take -> say Say.rock_no_take
 	| `Rock_No_Drop -> say Say.rock_no_drop
-	| _ -> ()
 	end
       in
-      if first then (repport (); Sound.action !c_state.State.action)
+      if first then (repport (); Sound.action action)
     in
     let inactive () =
       c.button_forward#set_active false;
@@ -300,9 +294,12 @@ let display_gtk ?language_list () =
       | false -> ()
       end
     in
+    c.interprets#set_popdown_strings language_list;
     if List.mem "ocaml" language_list
     then c.interprets#entry#set_text "ocaml";
+    c.levels#set_popdown_strings levels_list;
     newinterpret ();
+    newlevel ();
     let prev () =
       begin match !b_states with
       | [] -> inactive ()

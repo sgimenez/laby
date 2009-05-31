@@ -7,7 +7,7 @@
 
 type t =
     {
-      map: State.terrain array array;
+      map: State.tile array array;
       pos: int * int;
       dir: State.dir;
       mrocks: (int * int) list;
@@ -147,14 +147,8 @@ let generate level =
   in
   fill level.mrocks `Rock;
   fill level.mwebs `NWeb;
-  {
-    State.map = map;
-    State.pos = level.pos;
-    State.dir = level.dir;
-    State.carry = `None;
-    State.action = `None;
-  }
+  State.make map level.pos level.dir
 
-let size state =
-  Array.length state.map.(0),
-  Array.length state.map
+let size level =
+  Array.fold_left (fun m e -> max m (Array.length e)) 0 level.map,
+  Array.length level.map
