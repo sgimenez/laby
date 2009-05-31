@@ -18,18 +18,17 @@ type t =
 
 let log = Log.make ["level"]
 
-let basic =
+let dummy =
   {
     map =
       [|
-	[| `Wall; `Wall; `Wall; `Wall; `Wall |];
-	[| `Wall;  `Web; `Void; `Void; `Exit |];
-	[| `Wall; `Void; `Void; `Void; `Wall |];
-	[| `Wall; `Void; `Void; `Void; `Wall |];
-	[| `Wall; `Void; `Void; `Rock; `Wall |];
-	[| `Wall; `Wall; `Wall; `Wall; `Wall |];
+	[| `Wall; `Wall; `Wall; `Wall |];
+	[| `Wall; `Void; `Void; `Exit |];
+	[| `Wall; `Void; `Void; `Wall |];
+	[| `Wall; `Void; `Void; `Wall |];
+	[| `Wall; `Wall; `Wall; `Wall |];
       |];
-    pos = 1, 4;
+    pos = 1, 3;
     dir = `N;
     mrocks = [];
     mwebs = [];

@@ -108,7 +108,7 @@ let label packing =
   GMisc.label ~ypad:5 ~line_wrap:true ~packing ()
 
 let label_txt text packing =
-  let _ = GMisc.label ~text ~ypad:5 ~line_wrap:true ~packing () in ()
+  ignore (GMisc.label ~text ~ypad:5 ~line_wrap:true ~packing ())
 
 let label_language = F.x "Language:" []
 let label_level = F.x "Level:" []
@@ -189,10 +189,10 @@ let display_gtk ?language_list () =
     List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
   let bot = Bot.make () in
-  let level = ref (Level.load (Res.get ["levels"; List.hd levels_list])) in
-  let load () = Level.generate !level in
+  let level = ref Level.dummy in
+  let generate () = Level.generate !level in
   let b_states = ref [] in
-  let c_state = ref (load ()) in
+  let c_state = ref (generate ()) in
   let n_states = ref [] in
   let bg = ref `WHITE in
   begin try
@@ -234,7 +234,7 @@ let display_gtk ?language_list () =
     let bot_stop () =
       bot#close;
       c.view_mesg#buffer#set_text "";
-      b_states := []; c_state := load (); n_states := [];
+      b_states := []; c_state := generate (); n_states := [];
     in
     let bot_start () =
       bot#set_name (c.interprets#entry#text);
@@ -249,25 +249,7 @@ let display_gtk ?language_list () =
       c.px#set_pixmap !pixmap;
       let say msg = c.view_mesg#buffer#insert (Fd.render_raw msg ^ "\n") in
       let action = State.action !c_state in
-      let repport () =
-	begin match action with
-	| `None -> ()
-	| `Rock_Take -> ()
-	| `Rock_Drop -> ()
-	| `Start -> say Say.start
-	| `Wall_In -> say Say.wall_in
-	| `Rock_In -> say Say.rock_in
-	| `Exit_In -> say Say.exit_in
-	| `Web_In -> say Say.web_in
-	| `Web_Out -> say Say.web_out
-	| `Exit -> say Say.exit
-	| `No_Exit -> say Say.no_exit
-	| `Carry_Exit -> say Say.carry_exit
-	| `Rock_No_Take -> say Say.rock_no_take
-	| `Rock_No_Drop -> say Say.rock_no_drop
-	end
-      in
-      if first then (repport (); Sound.action action)
+      if first then (Say.action say action; Sound.action action)
     in
     let inactive () =
       c.button_forward#set_active false;
@@ -294,12 +276,6 @@ let display_gtk ?language_list () =
       | false -> ()
       end
     in
-    c.interprets#set_popdown_strings language_list;
-    if List.mem "ocaml" language_list
-    then c.interprets#entry#set_text "ocaml";
-    c.levels#set_popdown_strings levels_list;
-    newinterpret ();
-    newlevel ();
     let prev () =
       begin match !b_states with
       | [] -> inactive ()
@@ -350,6 +326,15 @@ let display_gtk ?language_list () =
     ignore (c.button_refresh#connect#clicked ~callback:refresh);
     ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
+    (* now we must have everything up *)
+    c.interprets#set_popdown_strings language_list;
+    if List.mem "ocaml" language_list
+    then c.interprets#entry#set_text "ocaml";
+    c.levels#set_popdown_strings levels_list;
+    if List.mem "0.laby" levels_list
+    then c.levels#entry#set_text "0.laby";
+    newinterpret ();
+    newlevel ();
     c.window#set_default_size 980 745;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)
