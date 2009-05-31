@@ -228,6 +228,10 @@ text		Messages:
 en_US.UTF-8	Messages:
 fr_FR.UTF-8	Messages :
 
+text		Help:
+en_US.UTF-8	Help:
+fr_FR.UTF-8	Aide :
+
 text		cannot load language file
 en_US.UTF-8	cannot load language file
 fr_FR.UTF-8	impossible de charger le fichier langage

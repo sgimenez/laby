@@ -5,6 +5,9 @@ o . . r . . o
 o ↑ . o . . o
 o o o o o o o
 
+help:
+rocks
+
 title:
 en_US.UTF-8	Oh a rock
 fr_FR.UTF-8	Oh le caillou

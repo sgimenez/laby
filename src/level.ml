@@ -14,6 +14,7 @@ type t =
       mwebs: (int * int) list;
       title: string;
       comment: string;
+      help: string;
     }
 
 let log = Log.make ["level"]
@@ -28,12 +29,9 @@ let dummy =
 	[| `Wall; `Void; `Void; `Wall |];
 	[| `Wall; `Wall; `Wall; `Wall |];
       |];
-    pos = 1, 3;
-    dir = `N;
-    mrocks = [];
-    mwebs = [];
-    title = "";
-    comment = ""
+    pos = 1, 3; dir = `N;
+    mrocks = []; mwebs = [];
+    title = ""; comment = ""; help = ""
   }
 
 let sep = Str.regexp " "
@@ -83,7 +81,7 @@ let rec get_sentence default lines =
 	  String.sub l (last + 1) (String.length l - last - 1)
 	in
 	if default = "" || lang_str = Ui.lang
-	then  get_sentence comment_str q
+	then get_sentence comment_str q
 	else get_sentence default q
       with
       | Not_found -> get_sentence default q
@@ -102,11 +100,22 @@ let load file =
     | End_of_file -> List.rev (List.rev lines :: blocks)
     end
   in
-  let rec app s f blocks =
+  let rec app ?default s f blocks =
     begin match blocks with
+    | [] ->
+	begin match default with
+	| Some x -> x
+	| None ->
+	    Run.fatal (
+	      F.x "missing level section <name> in: <file>" [
+		"name", F.string s;
+		"file", F.string file;
+	      ];
+	    );
+	end
     | (h :: lines) :: q ->
-	if h = s then f lines else app s f q
-    | _ ->
+	if h = s then f lines else app ?default s f q
+    | [] :: q ->
 	Run.fatal (
 	  F.x "bad level format: <file>" [
 	    "file", F.string file;
@@ -119,10 +128,11 @@ let load file =
   let map, antpos, dir, mrocks, mwebs = app "map:" get_map blocks in
   let title = app "title:" (get_sentence "") blocks in
   let comment = app "comment:" (get_sentence "") blocks in
+  let help = app ~default:"" "help:" (String.concat " ") blocks in
   {
     map = map; pos = antpos; dir = dir;
     mrocks = mrocks; mwebs = mwebs;
-    title = title; comment = comment;
+    title = title; comment = comment; help = help;
   }
 
 let comment level =
@@ -130,6 +140,9 @@ let comment level =
 
 let title level =
   level.title
+
+let help level =
+  level.help
 
 let generate level =
   let map =

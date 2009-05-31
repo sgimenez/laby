@@ -46,6 +46,8 @@ type controls =
       interprets: GEdit.combo;
       levels: GEdit.combo;
       view_prog: GSourceView.source_view;
+      view_help: GSourceView.source_view;
+      box_help: GPack.box;
       view_mesg: GText.view;
       view_title: GMisc.label;
       view_comment: GMisc.label;
@@ -124,6 +126,7 @@ let label_language = F.x "Language:" []
 let label_level = F.x "Level:" []
 let label_prog = F.x "Program:" []
 let label_mesg = F.x "Messages:" []
+let label_help = F.x "Help:" []
 
 let layout () =
   let scrolled ?(vpolicy=`ALWAYS) packing =
@@ -138,6 +141,14 @@ let layout () =
   vpaned#set_position 450;
   let view_title = label lvbox#pack in
   let view_comment = label lvbox#pack in
+  let box_help = GPack.vbox ~packing:lvbox#pack () in
+  label_txt (Fd.render_raw label_help) box_help#pack;
+  let sw_help = scrolled box_help#pack in
+  let view_help =
+    GSourceView.source_view ~editable:false ~packing:sw_help#add ()
+  in
+  view_help#set_indent 1;
+  view_help#misc#modify_font monofont;
   let rtvbox = GPack.vbox ~packing:vpaned#add1 () in
   let interprets = labeled_combo (Fd.render_raw label_language) rtvbox#pack in
   let levels = labeled_combo (Fd.render_raw label_level) rtvbox#pack in
@@ -180,7 +191,8 @@ let layout () =
     px = px;
     interprets = interprets; levels = levels;
     view_prog = view_prog; view_mesg = view_mesg;
-    view_title = view_title;view_comment = view_comment;
+    box_help = box_help; view_help = view_help;
+    view_title = view_title; view_comment = view_comment;
   }
 
 let make_pixmap tile_size level =
@@ -215,6 +227,15 @@ let display_gtk ?language_list () =
       GMain.Main.quit ()
     in
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
+    let help_update () =
+      begin match Level.help !level with
+      | "" ->
+	  c.box_help#misc#hide ()
+      | help ->
+	  c.view_help#buffer#set_text (bot#help help);
+	  c.box_help#misc#show ()
+      end
+    in
     let newinterpret () =
       let name = c.interprets#entry#text in
       begin match List.mem name language_list with
@@ -228,7 +249,10 @@ let display_gtk ?language_list () =
 	  | Some l ->
 	      c.view_prog#source_buffer#set_language l;
 	      c.view_prog#source_buffer#set_highlight true;
-	  end
+	      c.view_help#source_buffer#set_language l;
+	      c.view_help#source_buffer#set_highlight true;
+	  end;
+	  help_update ();
       | false -> ()
       end
     in
@@ -280,6 +304,7 @@ let display_gtk ?language_list () =
 	  pixmap := make_pixmap ressources.size !level;
 	  c.view_title#set_text (Level.title !level);
 	  c.view_comment#set_text (Level.comment !level);
+	  help_update ();
 	  inactive ();
 	  bot_stop ();
 	  update ();

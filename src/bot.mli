@@ -17,6 +17,7 @@ type t =
       start: bool;
       probe: query option;
       close: unit;
+      help: string -> string;
     >
 
 val make : unit -> t

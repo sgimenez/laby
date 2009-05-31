@@ -19,6 +19,7 @@ type t =
       start: bool;
       probe: query option;
       close: unit;
+      help: string -> string;
     >
 
 type h =
@@ -121,6 +122,13 @@ let input ?(timeout=0.5) errto h =
   read ()
 
 let make () =
+  let subst s =
+    let f s (x, y) =
+      Str.global_replace (Str.regexp_string x) (Fd.render_raw y) s
+    in
+    List.fold_left f s substs
+  in
+
   object (self)
 
     val hr = ref None
@@ -138,12 +146,6 @@ let make () =
       !name
 
     method get_buf =
-      let subst s =
-	let f s (x, y) =
-	  Str.global_replace (Str.regexp_string x) (Fd.render_raw y) s
-	in
-	List.fold_left f s substs
-      in
       begin try Hashtbl.find buffers !name with
       | Not_found ->
 	  let s = ref "" in
@@ -237,4 +239,37 @@ let make () =
       | Some h -> input !errto h
       end
 
+    method help s =
+      let mf =
+	begin try
+	  Some (open_in (Res.get ["run"; !name; "help"]))
+	with
+	| Res.Error _ -> None
+	end
+      in
+      let rec input f blocks lines =
+	begin try
+	  begin match input_line f with
+	  | "" -> input f (List.rev lines :: blocks) []
+	  | l -> input f blocks (l :: lines)
+	  end
+	with
+	| End_of_file -> List.rev (List.rev lines :: blocks)
+	end
+      in
+      let rec app s f blocks =
+	begin match blocks with
+	| [] -> ""
+	| (h :: lines) :: q ->
+	    if h = s then f lines else app s f q
+	| [] :: q -> ""
+	end
+      in
+      begin match mf with
+      | None -> ""
+      | Some f ->
+	  let blocks = input f [] [] in
+	  close_in f;
+	  subst (app (s ^ ":") (String.concat "\n") blocks) ^ "\n"
+      end
   end

@@ -9,7 +9,10 @@ type t
 
 val dummy : t
 val load : string -> t
+
 val size : t -> int * int
 val title : t -> string
 val comment : t -> string
+val help : t -> string
+
 val generate : t -> State.t
