@@ -7,12 +7,19 @@
 
 let log = Log.make ["gfx"]
 
-let tile_size = 40
+let conf =
+  Conf.void
+    (F.x "sound configuration" [])
+
+let conf_tilesize =
+  Conf.int ~p:(conf#plug "tile-size") ~d:40
+    (F.x "size of tiles in pixels" [])
 
 exception Error of F.t
 
 type ressources =
     {
+      size : int;
       void_p : GdkPixbuf.pixbuf;
       exit_p : GdkPixbuf.pixbuf;
       wall_p : GdkPixbuf.pixbuf;
@@ -52,11 +59,13 @@ let gtk_init () =
   Sys.set_signal Sys.sigpipe (Sys.Signal_default);
   Sys.set_signal Sys.sigterm (Sys.Signal_default);
   Sys.set_signal Sys.sigquit (Sys.Signal_default);
+  let tile_size = max 5 conf_tilesize#get in
   let pix p =
     let file = Res.get ["tiles"; p ^ ".svg"] in
     GdkPixbuf.from_file_at_size file tile_size tile_size
   in
   {
+    size = tile_size;
     void_p = pix "void";
     exit_p = pix "exit";
     wall_p = pix "wall";
@@ -71,9 +80,10 @@ let gtk_init () =
   }
 
 let draw_state state ressources (pixmap : GDraw.pixmap) =
+  let size = ressources.size in
   let tile i j p =
     pixmap#put_pixbuf
-      ~x:(tile_size/2+i*tile_size) ~y:(tile_size/2+j*tile_size) p
+      ~x:(size / 2 + i * size) ~y:(size / 2 + j * size) p
   in
   let i0, j0 = State.pos state in
   let disp_tile i j t =
@@ -173,7 +183,7 @@ let layout () =
     view_title = view_title;view_comment = view_comment;
   }
 
-let make_pixmap level =
+let make_pixmap tile_size level =
   let sizex, sizey = Level.size level in
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
@@ -267,7 +277,7 @@ let display_gtk ?language_list () =
       begin match List.mem name levels_list with
       | true ->
 	  level := Level.load (Res.get ["levels"; name]);
-	  pixmap := make_pixmap !level;
+	  pixmap := make_pixmap ressources.size !level;
 	  c.view_title#set_text (Level.title !level);
 	  c.view_comment#set_text (Level.comment !level);
 	  inactive ();

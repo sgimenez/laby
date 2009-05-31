@@ -36,6 +36,7 @@ let opts =
     Version.opt;
     Opt.conf ~short:'l' ~long:"lang" conf_lang;
     Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
+    Opt.conf ~long:"tile-size" Gfx.conf_tilesize;
     Opt.conf_set ~short:'c' ~long:"conf" conf;
     Opt.conf_descr ~long:"conf-descr" conf;
     Opt.conf_dump ~long:"conf-dump" conf;
