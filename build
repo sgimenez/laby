@@ -17,7 +17,7 @@ export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
 OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
 OCAMLFIND=${OCAMLFIND-ocamlfind}
 
-OCB="${OCAMLBUILD} -use-menhir -no-links -no-sanitize -no-hygiene"
+OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene"
 OFQ="${OCAMLFIND} query -r -format -I,%d"
 
 [ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
