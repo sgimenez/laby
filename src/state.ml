@@ -167,5 +167,5 @@ let run action state =
   end
 
 let size state =
-  Array.length state.map.(0),
+  Array.fold_left (fun m e -> max m (Array.length e)) 0 state.map,
   Array.length state.map
