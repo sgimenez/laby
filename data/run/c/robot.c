@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-enum Case {
+enum Tile {
   laby_name_Void,
   laby_name_Wall,
   laby_name_Rock,
@@ -29,7 +29,7 @@ void laby_name_right() { output("right"); free(input()); }
 
 void laby_name_forward() { output("forward"); free(input()); }
 
-enum Case laby_name_look() {
+enum Tile laby_name_look() {
   output("look");
   char *s = input();
   if (strcmp(s, "void\n") == 0) { free(s); return laby_name_Void; }
