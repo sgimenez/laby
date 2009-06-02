@@ -55,8 +55,8 @@ let opt =
 	      [ "full"; "id"; "protocols"; "build"; "status" ]
 	    in
  	    Opt.Invalid (
-	      F.x "version allows arguments: <arguments>" [
-		"arguments", F.h ~sep:(F.s ", ") (List.map F.s argl)
+	      F.x "this option accepts the following arguments: <list>" [
+		"list", F.q (F.h ~sep:(F.s ", ") (List.map F.string argl))
 	      ]
 	    )
 	end
