@@ -275,7 +275,7 @@ fr_FR.UTF-8	valeur de type <type> attendue
 
 text		the given configuration key has type <type>
 en_US.UTF-8	the given configuration key has type <type>
-fr_FR.UTF-8	la clé de configuration donnée à le type <type>
+fr_FR.UTF-8	la clé de configuration donnée a le type <type>
 
 text		the given configuration key cannot be assigned a value
 en_US.UTF-8	the given configuration key cannot be assigned a value
@@ -384,7 +384,7 @@ fr_FR.UTF-8	impossible d'accéder à <path>
 
 text		cannot find resource <resource> in: <list>
 en_US.UTF-8	cannot find resource <resource> in: <list>
-fr_FR.UTF-8	ressource <resource> introuvable dans: <list>
+fr_FR.UTF-8	ressource <resource> introuvable dans : <list>
 
 
 # run.ml
