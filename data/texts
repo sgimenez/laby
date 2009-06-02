@@ -1,3 +1,200 @@
+# say.ml
+
+text		I'm ready.
+en_US.UTF-8	I'm ready.
+fr_FR.UTF-8	Je suis prêt.
+
+text		I can't go through the wall.
+en_US.UTF-8	I can't go through the wall.
+fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
+
+text		I can't go through this rock.
+en_US.UTF-8	I can't go through this rock.
+fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
+
+text		I can't go through the door.
+en_US.UTF-8	I can't go through the door.
+fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
+
+text		Oops, a spider web.
+en_US.UTF-8	Oops, a spider web.
+fr_FR.UTF-8	Oups, une toile d'araignée.
+
+text		I can't move anymore.
+en_US.UTF-8	I can't move anymore.
+fr_FR.UTF-8	Je ne peux plus bouger.
+
+text		Wohoo, the exit!
+en_US.UTF-8	Wohoo, the exit!
+fr_FR.UTF-8	Ourah la sortie !
+
+text		I can't find a door to open.
+en_US.UTF-8	I can't find a door to open.
+fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
+
+text		I can't go out carrying a rock.
+en_US.UTF-8	I can't go out carrying a rock.
+fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
+
+text		There's no rock to take here.
+en_US.UTF-8	There's no rock to take here.
+fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
+
+text		I can't drop the rock here.
+en_US.UTF-8	I can't drop the rock here.
+fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
+
+
+# ascii api names (no funny characters)
+
+text:ascii	Ant
+en_US.UTF-8	Ant
+fr_FR.UTF-8	Fourmi
+
+text:ascii	ant
+en_US.UTF-8	ant
+fr_FR.UTF-8	fourmi
+
+text:ascii	left
+en_US.UTF-8	left
+fr_FR.UTF-8	gauche
+
+text:ascii	right
+en_US.UTF-8	right
+fr_FR.UTF-8	droite
+
+text:ascii	forward
+en_US.UTF-8	forward
+fr_FR.UTF-8	avance
+
+text:ascii	look
+en_US.UTF-8	look
+fr_FR.UTF-8	regarde
+
+text:ascii	door_open
+en_US.UTF-8	door_open
+fr_FR.UTF-8	ouvre
+
+text:ascii	take
+en_US.UTF-8	take
+fr_FR.UTF-8	prend
+
+text:ascii	drop
+en_US.UTF-8	drop
+fr_FR.UTF-8	pose
+
+text:ascii	Void
+en_US.UTF-8	Void
+fr_FR.UTF-8	Vide
+
+text:ascii	Wall
+en_US.UTF-8	Wall
+fr_FR.UTF-8	Mur
+
+text:ascii	Rock
+en_US.UTF-8	Rock
+fr_FR.UTF-8	Caillou
+
+text:ascii	Web
+en_US.UTF-8	Web
+fr_FR.UTF-8	Toile
+
+text:ascii	Exit
+en_US.UTF-8	Exit
+fr_FR.UTF-8	Sortie
+
+
+# gfx.ml
+
+text		Language:
+en_US.UTF-8	Language:
+fr_FR.UTF-8	Langage :
+
+text		Level:
+en_US.UTF-8	Level:
+fr_FR.UTF-8	Niveau :
+
+text		Program:
+en_US.UTF-8	Program:
+fr_FR.UTF-8	Programme :
+
+text		Messages:
+en_US.UTF-8	Messages:
+fr_FR.UTF-8	Messages :
+
+text		Help:
+en_US.UTF-8	Help:
+fr_FR.UTF-8	Aide :
+
+text		graphic interface configuration
+en_US.UTF-8	graphic interface configuration
+fr_FR.UTF-8	configuration de l'interface graphique
+
+
+text		cannot load language file
+en_US.UTF-8	cannot load language file
+fr_FR.UTF-8	impossible de charger le fichier langage
+
+text		size of tiles in pixels
+en_US.UTF-8	size of tiles in pixels
+fr_FR.UTF-8	taille des cases en pixels
+
+
+# sound.ml
+
+text		sound configuration
+en_US.UTF-8	sound configuration
+fr_FR.UTF-8	configuration du son
+
+text		enable or disable sounds
+en_US.UTF-8	enable or disable sounds
+fr_FR.UTF-8	activer ou désactiver le son
+
+
+# level.ml
+
+text		unknown tile
+en_US.UTF-8	unknown tile
+fr_FR.UTF-8	case inconnue
+
+text		mismatching line length
+en_US.UTF-8	mismatching line length
+fr_FR.UTF-8	longueur de ligne non concordante
+
+text		bad level format: <file>
+en_US.UTF-8	bad level format: <file>
+fr_FR.UTF-8	format de fichier erroné: <file>
+
+text		missing level section <name> in: <file>
+en_US.UTF-8	missing level section <name> in: <file>
+fr_FR.UTF-8	section <name> manquante dans le niveau: <file>
+
+
+# laby.ml
+
+text		programming languages
+en_US.UTF-8	programming languages
+fr_FR.UTF-8	langages de programmation
+
+
+# bot.ml
+
+text		execution of interpreter failed
+en_US.UTF-8	execution of interpreter failed
+fr_FR.UTF-8	échec lors de l'exécution de l'interprète
+
+
+# misc
+
+text		display failed
+en_US.UTF-8	display failed
+fr_FR.UTF-8	impossible d'ouvrir une fenêtre
+
+text		gtk error: <error>
+en_US.UTF-8	gtk error: <error>
+fr_FR.UTF-8	erreur gtk: <error>
+
+
 # dtools
 
 text		file <f>, line <l>: <error>
@@ -82,7 +279,7 @@ fr_FR.UTF-8	la clé de configuration donnée à le type <type>
 
 text		the given configuration key cannot be assigned a value
 en_US.UTF-8	the given configuration key cannot be assigned a value
-fr_FR.UTF-8	la clé de configuration donnée ne peut être modifiée
+fr_FR.UTF-8	la clé de configuration donnée ne peut recevoir une valeur
 
 text		assignation syntax is <syntax>
 en_US.UTF-8	assignation syntax is <syntax>
@@ -113,17 +310,6 @@ en_US.UTF-8	subordinate log level
 fr_FR.UTF-8	niveau de ‘log’ subordonné
 
 
-# misc
-
-text		display failed
-en_US.UTF-8	display failed
-fr_FR.UTF-8	impossible d'ouvrir une fenêtre
-
-text		gtk error: <error>
-en_US.UTF-8	gtk error: <error>
-fr_FR.UTF-8	erreur gtk: <error>
-
-
 # opt.ml
 
 text		invalid options: <errors>
@@ -146,13 +332,18 @@ text		multiple exclusive actions specified
 en_US.UTF-8	multiple exclusive actions specified
 fr_FR.UTF-8	plusieurs actions exclusives ont été spécifiées
 
-text		invalid argument to <opt>: <arg>
-en_US.UTF-8	invalid argument to <opt>: <arg>
-fr_FR.UTF-8	argument invalide pour <opt> : <arg>
+text		invalid argument in <exp>: <error>
+en_US.UTF-8	invalid argument in <exp>: <error>
+fr_FR.UTF-8	argument invalide dans <exp> : <error>
 
-text		option <opt> conflicts with a previous option
-en_US.UTF-8	option <opt> conflicts with a previous option
-fr_FR.UTF-8	l'option <opt> est en conflit avec une option précédente
+text		this key cannot be assigned a value
+en_US.UTF-8	this key cannot be assigned a value
+fr_FR.UTF-8	impossible d'assigner une valeur à cette clé
+
+text		expected type for this key is <type>
+en_US.UTF-8	expected type for this key is <type>
+fr_FR.UTF-8	le type attendu pour cette clé est <type>
+
 
 text		display help message
 en_US.UTF-8	display help message
@@ -176,6 +367,10 @@ text		show versioning information
 en_US.UTF-8	show versioning information
 fr_FR.UTF-8	affiche les indications de version
 
+text		this option accepts the following arguments: <list>
+en_US.UTF-8	this option accepts the following arguments: <list>
+fr_FR.UTF-8	cette option accepte les arguments suivants : <list>
+
 
 # data.ml
 
@@ -192,159 +387,8 @@ en_US.UTF-8	cannot find resource <resource> in: <list>
 fr_FR.UTF-8	ressource <resource> introuvable dans: <list>
 
 
-# level.ml
+# run.ml
 
-text		unknown tile
-en_US.UTF-8	unknown tile
-fr_FR.UTF-8	case inconnue
-
-text		mismatching line length
-en_US.UTF-8	mismatching line length
-fr_FR.UTF-8	longueur de ligne non concordante
-
-
-# bot.ml
-
-text		execution of interpreter failed
-en_US.UTF-8	execution of interpreter failed
-fr_FR.UTF-8	échec lors de l'exécution de l'interprète
-
-
-# gfx.ml
-
-text		Language:
-en_US.UTF-8	Language:
-fr_FR.UTF-8	Langage :
-
-text		Level:
-en_US.UTF-8	Level:
-fr_FR.UTF-8	Niveau :
-
-text		Program:
-en_US.UTF-8	Program:
-fr_FR.UTF-8	Programme :
-
-text		Messages:
-en_US.UTF-8	Messages:
-fr_FR.UTF-8	Messages :
-
-text		Help:
-en_US.UTF-8	Help:
-fr_FR.UTF-8	Aide :
-
-text		cannot load language file
-en_US.UTF-8	cannot load language file
-fr_FR.UTF-8	impossible de charger le fichier langage
-
-# laby.ml
-
-text		language
-en_US.UTF-8	language
-fr_FR.UTF-8	langage
-
-
-# say.ml
-
-text		I'm ready.
-en_US.UTF-8	I'm ready.
-fr_FR.UTF-8	Je suis prêt.
-
-text		I can't go through the wall.
-en_US.UTF-8	I can't go through the wall.
-fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
-
-text		I can't go through this rock.
-en_US.UTF-8	I can't go through this rock.
-fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
-
-text		I can't go through the door.
-en_US.UTF-8	I can't go through the door.
-fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
-
-text		Oops, a spider web.
-en_US.UTF-8	Oops, a spider web.
-fr_FR.UTF-8	Oups, une toile d'araignée.
-
-text		I can't move anymore.
-en_US.UTF-8	I can't move anymore.
-fr_FR.UTF-8	Je ne peux plus bouger.
-
-text		Wohoo, the exit!
-en_US.UTF-8	Wohoo, the exit!
-fr_FR.UTF-8	Ourah la sortie !
-
-text		I can't find a door to open.
-en_US.UTF-8	I can't find a door to open.
-fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
-
-text		I can't go out carrying a rock.
-en_US.UTF-8	I can't go out carrying a rock.
-fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
-
-text		There's no rock to take here.
-en_US.UTF-8	There's no rock to take here.
-fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
-
-text		I can't drop the rock here.
-en_US.UTF-8	I can't drop the rock here.
-fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
-
-
-# ascii api names
-
-text:ascii	Ant
-en_US.UTF-8	Ant
-fr_FR.UTF-8	Fourmi
-
-text:ascii	ant
-en_US.UTF-8	ant
-fr_FR.UTF-8	fourmi
-
-text:ascii	left
-en_US.UTF-8	left
-fr_FR.UTF-8	gauche
-
-text:ascii	right
-en_US.UTF-8	right
-fr_FR.UTF-8	droite
-
-text:ascii	forward
-en_US.UTF-8	forward
-fr_FR.UTF-8	avance
-
-text:ascii	look
-en_US.UTF-8	look
-fr_FR.UTF-8	regarde
-
-text:ascii	door_open
-en_US.UTF-8	door_open
-fr_FR.UTF-8	ouvre
-
-text:ascii	take
-en_US.UTF-8	take
-fr_FR.UTF-8	prend
-
-text:ascii	drop
-en_US.UTF-8	drop
-fr_FR.UTF-8	pose
-
-text:ascii	Void
-en_US.UTF-8	Void
-fr_FR.UTF-8	Vide
-
-text:ascii	Wall
-en_US.UTF-8	Wall
-fr_FR.UTF-8	Mur
-
-text:ascii	Rock
-en_US.UTF-8	Rock
-fr_FR.UTF-8	Caillou
-
-text:ascii	Web
-en_US.UTF-8	Web
-fr_FR.UTF-8	Toile
-
-text:ascii	Exit
-en_US.UTF-8	Exit
-fr_FR.UTF-8	Sortie
-
+text		activate debug mode
+en_US.UTF-8	activate debug mode
+fr_FR.UTF-8	activer le mode ‘debug’

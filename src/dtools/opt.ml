@@ -231,8 +231,8 @@ let cmd ?(argv=Sys.argv) opts =
 	  )
       | Invalid m ->
 	  set_err (
-	    F.x "invalid argument to <opt>: <error>" [
-	      "opt", f ?arg:value opt;
+	    F.x "invalid argument in <exp>: <error>" [
+	      "exp", f ?arg:value opt;
 	      "error", F.q m;
 	    ]
 	  )
