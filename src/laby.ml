@@ -10,6 +10,7 @@ let conf =
     ~l:[
       "log", Log.conf#ut;
       "ui", Ui.conf#ut;
+      "gfx", Gfx.conf#ut;
       "res", Res.conf#ut;
       "sound", Sound.conf#ut;
     ]

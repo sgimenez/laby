@@ -1,4 +1,4 @@
-linux: 
+linux:
 
   you need ocaml >= 3.10.0 and lablgtk >= 2.10.0, then execute the
   following commands in this directory:
