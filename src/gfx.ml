@@ -370,7 +370,7 @@ let display_gtk ?language_list () =
     then c.levels#entry#set_text "0.laby";
     newinterpret ();
     newlevel ();
-    c.window#set_default_size 980 745;
+    c.window#set_default_size 980 750;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)
     bg := `COLOR (c.px#misc#style#light `NORMAL);
