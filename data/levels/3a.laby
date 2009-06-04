@@ -13,5 +13,5 @@ en_US.UTF-8	Ahhh webs
 fr_FR.UTF-8	Ahhh des toiles
 
 comment:
-en_US.UTF-8	Web spiders! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How to make sure the robot will reach the exit ? Let's use a “if” conditionnal instruction.
-fr_FR.UTF-8	Des toiles d'araignées ! La petite ne t'empêchera pas de passer, mais la grande te retiendra prisonnier. Attention la grande toile n'est pas toujours du même côté ! Comment être sur que le robot arrive à la sortie ? On va utiliser une conditionnelle “if”.
+en_US.UTF-8	Web spiders! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How to make sure the robot will always reach the exit ? Let's use a “if” conditionnal instruction.
+fr_FR.UTF-8	Des toiles d'araignées ! La petite ne t'empêchera pas de passer, mais la grande te retiendra prisonnier. Attention la grande toile n'est pas toujours du même côté ! Comment être sûr que le robot arrive toujours à la sortie ? On va utiliser une conditionnelle “if”.
