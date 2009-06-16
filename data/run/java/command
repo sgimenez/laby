@@ -1,7 +1,6 @@
 #!/bin/sh
 DIR=$1
 
-cp Robot.java Main.java $DIR/ || exit 1
 sed -f $DIR/subst Robot.java > $DIR/Robot.java || exit 1
 sed -f $DIR/subst Main.java > $DIR/Main.java || exit 1
 cd $DIR || exit 1
