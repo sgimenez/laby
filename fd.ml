@@ -228,10 +228,14 @@ let string format t =
 let render_raw x = string `Raw x
 let render_color x = string `Color x
 
+let render fd x =
+  if Unix.isatty fd then string `Color x else string `Raw x
+
 let stdout x =
-  Printf.printf "%s\n" (render_color x)
+  Printf.printf "%s\n" (render Unix.stdout x)
+
 let stderr x =
-  Printf.eprintf "%s\n" (render_color x)
+  Printf.eprintf "%s\n" (render Unix.stderr x)
 
 let tag_cmd_output = tag "cmd-output"
 let tag_cmd_input = tag "cmd-input"
