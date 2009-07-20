@@ -1,10 +1,3 @@
-type tile =
-  | laby_name_Void
-  | laby_name_Wall
-  | laby_name_Rock
-  | laby_name_Web
-  | laby_name_Exit
-
 let input_ch, output_ch =
   stdin, stdout
 
@@ -27,14 +20,15 @@ let laby_name_right () =
 let laby_name_forward () =
   output "forward"; ignore (input ())
 
-let laby_name_look () =
+let laby_name_look () : [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | `laby_name_Web | `laby_name_Exit ]
+    =
   output "look";
   begin match input () with
-  | "void" -> laby_name_Void
-  | "wall" -> laby_name_Wall
-  | "rock" -> laby_name_Rock
-  | "web" -> laby_name_Web
-  | "exit" -> laby_name_Exit
+  | "void" -> `laby_name_Void
+  | "wall" -> `laby_name_Wall
+  | "rock" -> `laby_name_Rock
+  | "web" -> `laby_name_Web
+  | "exit" -> `laby_name_Exit
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
 
