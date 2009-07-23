@@ -17,6 +17,9 @@ location:
     ~/.config/laby/texts
     /usr/share/laby/texts
 
+  levels stored in data/levels also contains translatable strings
+  using the same format
+
 contributions:
 
   if you wish to contribute new translations or improve existing ones,
