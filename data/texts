@@ -130,7 +130,6 @@ text		graphic interface configuration
 en_US.UTF-8	graphic interface configuration
 fr_FR.UTF-8	configuration de l'interface graphique
 
-
 text		cannot load language file
 en_US.UTF-8	cannot load language file
 fr_FR.UTF-8	impossible de charger le fichier langage
@@ -163,11 +162,11 @@ fr_FR.UTF-8	longueur de ligne non concordante
 
 text		bad level format: <file>
 en_US.UTF-8	bad level format: <file>
-fr_FR.UTF-8	format de fichier erroné: <file>
+fr_FR.UTF-8	format de fichier erroné : <file>
 
 text		missing level section <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
-fr_FR.UTF-8	section <name> manquante dans le niveau: <file>
+fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 
 
 # laby.ml
@@ -192,14 +191,14 @@ fr_FR.UTF-8	impossible d'ouvrir une fenêtre
 
 text		gtk error: <error>
 en_US.UTF-8	gtk error: <error>
-fr_FR.UTF-8	erreur gtk: <error>
+fr_FR.UTF-8	erreur gtk : <error>
 
 
 # dtools
 
 text		file <f>, line <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
-fr_FR.UTF-8	fichier <f>, ligne <l>: <error>
+fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 
 text		line <l>, characters <begin-char>-<end-char>
 en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
@@ -267,7 +266,7 @@ fr_FR.UTF-8	type inconnu
 
 text		failed to load file: <error>
 en_US.UTF-8	failed to load file: <error>
-fr_FR.UTF-8	échec pendant le chargement du fichier: <error>
+fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
 
 text		<type> value expected
 en_US.UTF-8	<type> value expected
