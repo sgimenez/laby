@@ -1,0 +1,15 @@
+
+let laby_name_ant =
+  Robot.laby_name_right ();
+  Robot.laby_name_forward ();
+  Robot.laby_name_take ();
+  Robot.laby_name_left ();
+  Robot.laby_name_forward ();
+  Robot.laby_name_drop ();
+  Robot.laby_name_right ();
+  Robot.laby_name_forward ();
+  Robot.laby_name_left ();
+  Robot.laby_name_forward ();
+  Robot.laby_name_forward ();
+  Robot.laby_name_right ();
+  Robot.laby_name_door_open ()

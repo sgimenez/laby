@@ -1,0 +1,6 @@
+#!/bin/sh
+DIR=$1
+
+sed -f $DIR/subst robot.rb > $DIR/robot.rb || exit 1
+cd $DIR || exit 1
+exec ruby ./program

@@ -1,0 +1,12 @@
+map:
+o o o o o o o o o o o o o o
+o → . r r r r r r r r r . x
+o o o o o o o o o o o o o o
+
+title:
+en_US.UTF-8	Corridor of rocks
+fr_FR.UTF-8	Le couloir des cailloux
+
+comment:
+en_US.UTF-8	Once again a “while” loop will be useful!
+fr_FR.UTF-8	Une fois de plus la boucle “while” va être utile !

@@ -1,0 +1,12 @@
+map:
+o o o o o o o o
+o → . . r . . x
+o o o o o o o o
+
+title:
+en_US.UTF-8	Still one
+fr_FR.UTF-8	Encore un
+
+comment:
+en_US.UTF-8	Again, there is a rock. It's inside a corridor. How do you get through?
+fr_FR.UTF-8	Un caillou au milieu d'un couloir. Comment passer ?

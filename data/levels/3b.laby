@@ -1,0 +1,17 @@
+map:
+o o x o o
+o . . . o
+o R o R o
+o . o . o
+o . o . o
+o W o W o
+o . ↑ . o
+o o o o o
+
+title:
+en_US.UTF-8	Webs and rocks
+fr_FR.UTF-8	Toiles et cailloux
+
+comment:
+en_US.UTF-8	Woh it becomes increasingly complicated!
+fr_FR.UTF-8	Oula ça devient de plus en plus compliqué !

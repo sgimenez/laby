@@ -1,0 +1,23 @@
+basic:
+Robot.laby_name_forward ();
+Robot.laby_name_left ();
+Robot.laby_name_right ();
+Robot.laby_name_door_open ();
+
+rocks:
+Robot.laby_name_take ();
+Robot.laby_name_drop ();
+
+loop:
+while Robot.laby_name_look () = `laby_name_Void do
+  ...
+done;
+
+function:
+let f () =
+  ...
+
+conditional:
+if Robot.laby_name_look () = `laby_name_Web
+then ( ... )
+else ( ... );

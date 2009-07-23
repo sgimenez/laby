@@ -1,0 +1,24 @@
+map:
+o o o o o o o o o o o o o o
+o . . . . . . . . . . . . o
+o . o o o o o o o o o o . o
+o . o . . . . . . . . o . o
+o . o . o o o o o o . o . o
+o . o . o . . . . o . o . o
+o . o . o . o o . o . o . o
+o . o . o . x o . o . o . o
+o . o . o o o o . o . o . o
+o . o . . . . . . o . o . o
+o . o o o o o o o o . o . o
+o . . . . . . . . . . o . o
+o o o o o o o o o o o o . o
+o → . . . . . . . . . . . o
+o o o o o o o o o o o o o o
+
+title:
+en_US.UTF-8	Spiral
+fr_FR.UTF-8	Spirale
+
+comment:
+en_US.UTF-8	The spiral of hell!
+fr_FR.UTF-8	La spirale infernale !

@@ -1,0 +1,17 @@
+map:
+o o o o o x o
+o . . . . . o
+o . . . . . o
+o . ↑ . . . o
+o o o o o o o
+
+help:
+basic
+
+title:
+en_US.UTF-8	First challenge
+fr_FR.UTF-8	Premier défi
+
+comment:
+en_US.UTF-8	This is the first challenge. We start smoothly, no obstacles. You shall write a program to drive the robot toward the exit.
+fr_FR.UTF-8	Ceci est le premier défi. On commence doucement, pas d'obstacles. Il faut écrire un programme qui dirige le robot vers la sortie.
