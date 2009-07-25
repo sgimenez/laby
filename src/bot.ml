@@ -58,18 +58,23 @@ let substs =
     "laby_name_Exit", F.xs "ascii" "Exit" [];
   ]
 
+let rec mktempdir ?(seed=0) ident =
+  let pid = Unix.getpid () in
+  let dir = Printf.sprintf "/tmp/%s-%d:%d/" ident pid seed in
+  begin try Unix.mkdir dir 0o755; dir with
+  | Unix.Unix_error (Unix.EEXIST, _, _) -> mktempdir ~seed:(seed+1) ident
+  end
+
 let dump prog =
-  let tmpdir = Printf.sprintf "/tmp/fourmi-%d/" (Unix.getpid ()) in
-  ignore (Unix.system ("rm -rf " ^ tmpdir));
-  Unix.mkdir tmpdir 0o755;
+  let tmpdir = mktempdir "ant" in
   let write filename s =
-  let fd =
-    Unix.openfile (tmpdir ^ filename)
-      [ Unix.O_CREAT; Unix.O_TRUNC; Unix.O_WRONLY]
-      0o644
-  in
-  ignore (Unix.write fd s 0 (String.length s));
-  Unix.close fd;
+    let fd =
+      Unix.openfile (tmpdir ^ filename)
+	[ Unix.O_CREAT; Unix.O_TRUNC; Unix.O_WRONLY]
+	0o644
+    in
+    ignore (Unix.write fd s 0 (String.length s));
+    Unix.close fd;
   in
   write "program" prog;
   let subst =
