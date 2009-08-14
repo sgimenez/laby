@@ -1,8 +1,8 @@
 public class Main {
 
   public static void main(String[] args) {
-      Fourmi f = new Fourmi();
-      f.run();
+      laby_name_Ant f = new laby_name_Ant();
+      f.laby_name_ant();
   }
 
 }
