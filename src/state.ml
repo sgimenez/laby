@@ -9,7 +9,7 @@ type tile = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
 type dir = [ `N | `E | `S | `W ]
 
 type action =
- [ `None | `Start
+ [ `None
  | `Wall_In | `Rock_In | `Exit_In | `Web_In
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
@@ -31,9 +31,6 @@ let make map pos dir =
     map = map; pos = pos; dir = dir;
     carry = `None; action = `None;
   }
-
-let init s =
-   { s with action = `Start }
 
 let iter_map s p =
     Array.iteri (fun j a -> Array.iteri (fun i t -> p i j t) a) s.map

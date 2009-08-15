@@ -9,7 +9,7 @@ type tile = [ `Void | `Wall | `Exit | `Rock | `Web | `NRock | `NWeb ]
 type dir = [ `N | `E | `S | `W ]
 
 type action =
- [ `None | `Start
+ [ `None
  | `Wall_In | `Rock_In | `Exit_In | `Web_In
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
@@ -21,7 +21,6 @@ type t
 
 val make : tile array array -> int * int -> dir -> t
 val copy : t -> t
-val init : t -> t
 
 val run : string -> t -> string * t
 

@@ -1,8 +1,12 @@
 # say.ml
 
-text		I'm ready.
-en_US.UTF-8	I'm ready.
-fr_FR.UTF-8	Je suis prêt.
+text		I'm ready
+en_US.UTF-8	I'm ready
+fr_FR.UTF-8	Je suis prêt
+
+text		Something went wrong
+en_US.UTF-8	Something went wrong
+fr_FR.UTF-8	Quelque chose ne vas pas
 
 text		I can't go through the wall.
 en_US.UTF-8	I can't go through the wall.

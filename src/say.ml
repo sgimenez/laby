@@ -5,8 +5,11 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
-let start =
-  F.x "I'm ready." []
+let good_start =
+  F.x "I'm ready" []
+
+let bad_start =
+  F.x "Something went wrong" []
 
 let wall_in =
   F.x "I can't go through the wall." []
@@ -43,7 +46,6 @@ let action f =
   | `None -> ()
   | `Rock_Take -> ()
   | `Rock_Drop -> ()
-  | `Start -> f start
   | `Wall_In -> f wall_in
   | `Rock_In -> f rock_in
   | `Exit_In -> f exit_in

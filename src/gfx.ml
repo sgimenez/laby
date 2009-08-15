@@ -227,6 +227,7 @@ let display_gtk ?language_list () =
       GMain.Main.quit ()
     in
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
+    let mesg m = c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n") in
     let help_update () =
       begin match Level.help !level with
       | "" ->
@@ -273,7 +274,10 @@ let display_gtk ?language_list () =
     let bot_start () =
       bot#set_name (c.interprets#entry#text);
       bot#set_buf (c.view_prog#buffer#get_text ());
-      if bot#start then c_state := State.init !c_state
+      if bot#start
+      then mesg (F.h [F.s "——"; Say.good_start; F.s "——"])
+      else mesg (F.h [F.s "——"; Say.bad_start; F.s "——"])
+
     in
     let update ?(first=false) () =
       !pixmap#set_foreground !bg;
@@ -281,9 +285,8 @@ let display_gtk ?language_list () =
       !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
       draw_state !c_state ressources !pixmap;
       c.px#set_pixmap !pixmap;
-      let say msg = c.view_mesg#buffer#insert (Fd.render_raw msg ^ "\n") in
       let action = State.action !c_state in
-      if first then (Say.action say action; Sound.action action)
+      if first then (Say.action mesg action; Sound.action action)
     in
     let inactive () =
       c.button_forward#set_active false;
