@@ -36,6 +36,12 @@ let build () =
     [F.s "ocaml-lablgtksourceview"; F.s Config.build_lablgtksourceview];
   ]
 
+let run () =
+  section "run" [
+    [F.s "os                     "; F.s Sys.os_type];
+    [F.s "ocaml                  "; F.s Sys.ocaml_version];
+  ]
+
 let disp l () =
   F.l "versions" (F.i (List.map (fun f -> f ()) l))
 
@@ -45,14 +51,15 @@ let opt =
     | None -> Opt.Excl (fun () -> version ())
     | Some s ->
 	begin match s with
-	| "f" | "full" -> Opt.Excl (disp [id; protocols; build])
+	| "f" | "full" -> Opt.Excl (disp [id; protocols; build; run])
 	| "i" | "id" -> Opt.Excl id
 	| "p" | "protocols" -> Opt.Excl protocols
 	| "b" | "build" -> Opt.Excl build
+	| "r" | "run" -> Opt.Excl run
 	| "s" | "status" -> Opt.Excl status
 	| _ ->
 	    let argl =
-	      [ "full"; "id"; "protocols"; "build"; "status" ]
+	      [ "full"; "id"; "protocols"; "build"; "run"; "status" ]
 	    in
  	    Opt.Invalid (
 	      F.x "this option accepts the following arguments: <list>" [
