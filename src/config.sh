@@ -1,9 +1,10 @@
 #!/bin/sh
 
-if [ -d "_MTN" ] && mtn automate get_workspace_root > /dev/null; then
+if [ -d "_MTN" ] && mtn automate get_workspace_root 2> /dev/null > /dev/null
+then
 VERSION_BASE=$(mtn automate get_base_revision_id)
 VERSION_CURRENT=$(mtn automate get_current_revision_id)
-VERSION_STATUS=$(mtn status)
+VERSION_STATUS=$(mtn diff | grep ^# | sed 's/"/\\"/g')
 else
 VERSION_BASE="unknown"
 VERSION_CURRENT="unknown"
