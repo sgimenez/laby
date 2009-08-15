@@ -1,9 +1,0 @@
-#!/bin/sh
-DIR=$1
-
-sed -f $DIR/subst robot.c > $DIR/robot.c || exit 1
-sed -f $DIR/subst robot.h > $DIR/robot.h || exit 1
-cd $DIR || exit 1
-cp program fourmi.c || exit 1
-gcc -Wall robot.c fourmi.c -o fourmi || exit 1
-exec ./fourmi

@@ -154,7 +154,7 @@ let make () =
       begin try Hashtbl.find buffers !name with
       | Not_found ->
 	  let s = ref "" in
-	  let f = open_in (Res.get ["run"; !name; "skel"]) in
+	  let f = open_in (Res.get ["mods"; !name; "skel"]) in
 	  begin try
 	    while true do
 	      s := !s ^ input_line f ^ "\n"
@@ -175,9 +175,11 @@ let make () =
     method start =
       self#close;
       let slave h =
-	Unix.chdir (Res.get ["run"; !name]);
+	let libdir = Res.get ["mods"; !name; "lib"] in
+	let command = Res.get ["mods"; !name; "command"] in
+	Unix.chdir h.tmpdir;
 	begin try
-	  Unix.execvp "./command" [| "./command"; h.tmpdir |]
+	  Unix.execvp command [| command; libdir |]
 	with
 	| exn ->
 	    log#error (
@@ -247,7 +249,7 @@ let make () =
     method help s =
       let mf =
 	begin try
-	  Some (open_in (Res.get ["run"; !name; "help"]))
+	  Some (open_in (Res.get ["mods"; !name; "help"]))
 	with
 	| Res.Error _ -> None
 	end

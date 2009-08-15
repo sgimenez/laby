@@ -203,7 +203,7 @@ let make_pixmap tile_size level =
 let display_gtk ?language_list () =
   let language_list =
     begin match language_list with
-    | None | Some [] -> List.sort (compare) (Res.get_list ["run"])
+    | None | Some [] -> List.sort (compare) (Res.get_list ["mods"])
     | Some l -> l
     end
   in
@@ -243,7 +243,7 @@ let display_gtk ?language_list () =
 	  bot#set_buf (c.view_prog#buffer#get_text ());
 	  bot#set_name name;
 	  c.view_prog#buffer#set_text bot#get_buf;
-	  let langf = Res.get ["run"; name; "lang"] in
+	  let langf = Res.get ["mods"; name; "lang"] in
 	  begin match GSourceView.source_language_from_file langf with
 	  | None -> log#warning (F.x "cannot load language file" []);
 	  | Some l ->

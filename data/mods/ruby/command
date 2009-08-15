@@ -1,0 +1,5 @@
+#!/bin/sh
+LIB=$1
+
+sed -f subst $LIB/robot.rb > robot.rb || exit 1
+exec ruby ./program
