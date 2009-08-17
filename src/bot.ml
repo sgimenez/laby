@@ -48,7 +48,7 @@ let substs =
     "laby_name_right", F.xs "ascii" "right" [];
     "laby_name_forward", F.xs "ascii" "forward" [];
     "laby_name_look", F.xs "ascii" "look" [];
-    "laby_name_door_open", F.xs "ascii" "door_open" [];
+    "laby_name_escape", F.xs "ascii" "escape" [];
     "laby_name_take", F.xs "ascii" "take" [];
     "laby_name_drop", F.xs "ascii" "drop" [];
     "laby_name_Void", F.xs "ascii" "Void" [];

@@ -32,8 +32,8 @@ let laby_name_look () : [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | 
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
 
-let laby_name_door_open () =
-  output "open"; ignore (input ())
+let laby_name_escape () =
+  output "escape"; ignore (input ())
 
 let laby_name_take () =
   output "take"; ignore (input ())

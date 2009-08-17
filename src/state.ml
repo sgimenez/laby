@@ -126,7 +126,7 @@ let run action state =
 	end
       in
       ans, state
-  | "open" ->
+  | "escape" ->
       begin match state.carry, get state (front state) with
       | `None, `Exit -> "ok", forward ~toexit:true state
       | _, `Exit -> "error", chg state `Carry_Exit

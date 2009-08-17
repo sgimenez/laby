@@ -55,8 +55,8 @@ public class Robot {
     return Tile.laby_name_Void;
   }
 
-  public void laby_name_door_open() {
-      output("open"); input();
+  public void laby_name_escape() {
+      output("escape"); input();
   }
   public void laby_name_take() {
       output("take"); input();

@@ -15,7 +15,7 @@ public class laby_name_Ant extends Robot {
     laby_name_forward();
     laby_name_forward();
     laby_name_right();
-    laby_name_door_open();
+    laby_name_escape();
   }
 
 }

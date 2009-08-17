@@ -42,7 +42,7 @@ enum Tile laby_name_look() {
   return 0;
 }
 
-void laby_name_door_open() { output("open"); free(input()); }
+void laby_name_escape() { output("escape"); free(input()); }
 
 void laby_name_take() { output("take"); free(input()); }
 

@@ -34,5 +34,5 @@ class Robot
   def laby_name_forward; perform 'forward'; end
   def laby_name_take; perform 'take'; end
   def laby_name_drop; perform 'drop'; end
-  def laby_name_door_open; perform 'open'; end
+  def laby_name_escape; perform 'escape'; end
 end

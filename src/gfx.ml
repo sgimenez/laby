@@ -277,7 +277,6 @@ let display_gtk ?language_list () =
       if bot#start
       then mesg (F.h [F.s "——"; Say.good_start; F.s "——"])
       else mesg (F.h [F.s "——"; Say.bad_start; F.s "——"])
-
     in
     let update ?(first=false) () =
       !pixmap#set_foreground !bg;

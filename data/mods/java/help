@@ -2,7 +2,7 @@ basic:
 laby_name_forward();
 laby_name_left();
 laby_name_right();
-laby_name_door_open();
+laby_name_escape();
 
 rocks:
 laby_name_take();

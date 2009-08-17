@@ -75,8 +75,8 @@ text:ascii	look
 en_US.UTF-8	look
 fr_FR.UTF-8	regarde
 
-text:ascii	door_open
-en_US.UTF-8	door_open
+text:ascii	escape
+en_US.UTF-8	escape
 fr_FR.UTF-8	ouvre
 
 text:ascii	take
