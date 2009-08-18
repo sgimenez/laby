@@ -32,13 +32,12 @@ type h =
       out_ch' : Unix.file_descr;
       err_ch : Unix.file_descr;
       err_ch' : Unix.file_descr;
-      mutable buf_in : string;
-      mutable buf_err: string;
       mutable current: string;
       mutable buf : string list;
     }
 
 let bufsize = 16384
+let buffer = String.create bufsize
 
 let substs =
   [
@@ -87,44 +86,47 @@ let dump prog =
 let clean tmpdir =
   ignore (Unix.system ("rm -rf " ^ tmpdir))
 
+let buf_read fd f =
+  begin match Unix.read fd buffer 0 bufsize with
+  | 0 -> false
+  | i -> f (String.sub buffer 0 i); true
+  end
+
 let input ?(timeout=0.5) errto h =
   let output s =
-    Printf.fprintf (Unix.out_channel_of_descr (h.out_ch)) "%s\n%!" s
+    let str = s ^ "\n" in
+    let len = String.length str in
+    ignore (Unix.write h.out_ch str 0 len)
   in
-  let rec read () =
+  let collect s =
+    for j = 0 to String.length s - 1; do
+      begin match s.[j] with
+      | '\n' ->
+	  h.buf <- h.buf @ [h.current];
+	  h.current <- "";
+      | c -> h.current <- h.current ^ (String.make 1 c)
+      end
+    done
+  in
+  let rec loop () =
     begin match h.buf with
     | a :: q ->
 	h.buf <- q; Some (a, output)
     | [] ->
 	let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] timeout in
-	if List.mem h.err_ch l then
-	  begin
-	    let r = ref 1 in
-	    while !r <> 0 do
-	      r := Unix.read h.err_ch h.buf_err 0 bufsize;
-	      errto (String.sub h.buf_err 0 !r)
-	    done;
-	  end;
-	if List.mem h.in_ch l then
-	  begin
-	    begin match Unix.read h.in_ch h.buf_in 0 bufsize with
-	    | 0 -> None
-	    | i ->
-		for j = 0 to i - 1; do
-		  begin match h.buf_in.[j] with
-		  | '\n' ->
-		      h.buf <- h.buf @ [h.current];
-		      h.current <- ""
-		  | c -> h.current <- h.current ^ (String.make 1 c)
-		  end
-		done;
-		read ();
-	    end
-	  end
-	else None
+	if l = [] then (errto "..."; None)
+	else (
+	  if List.mem h.err_ch l then
+	    ignore (buf_read h.err_ch errto);
+	  if List.mem h.in_ch l then
+	    if buf_read h.in_ch collect
+	    then loop ()
+	    else None
+	  else loop ()
+	)
     end
   in
-  read ()
+  loop ()
 
 let make () =
   let subst s =
@@ -197,8 +199,6 @@ let make () =
 	  in_ch = in_ch; in_ch' = in_ch';
 	  out_ch = out_ch; out_ch' = out_ch';
 	  err_ch = err_ch; err_ch' = err_ch';
-	  buf_in = String.make bufsize ' ';
-	  buf_err = String.make bufsize ' ';
 	  current = "";
 	  buf = [];
 	}
