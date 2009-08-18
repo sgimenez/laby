@@ -227,7 +227,10 @@ let display_gtk ?language_list () =
       GMain.Main.quit ()
     in
     bot#errto (fun s -> c.view_mesg#buffer#insert s);
-    let mesg m = c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n") in
+    let mesg m =
+      c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
+      c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n")
+    in
     let help_update () =
       begin match Level.help !level with
       | "" ->
