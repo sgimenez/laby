@@ -4,6 +4,7 @@ class Robot
   laby_name_Rock = 2
   laby_name_Web = 3
   laby_name_Exit = 4
+  laby_name_Unknown = 5
 
   def initialize
     perform "start"
@@ -26,7 +27,7 @@ class Robot
 
   def laby_name_look
     tile = perform('look')
-    self.class.const_get tile rescue "unknown tile : #{tile}"
+    self.class.const_get tile rescue laby_name_Unknown
   end
 
   def laby_name_left; perform 'left'; end

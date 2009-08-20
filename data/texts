@@ -107,6 +107,10 @@ text:ascii	Exit
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 
+text:ascii	Unknown
+en_US.UTF-8	Unknown
+fr_FR.UTF-8	Inconnu
+
 
 # gfx.ml
 

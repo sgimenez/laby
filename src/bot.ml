@@ -55,6 +55,7 @@ let substs =
     "laby_name_Rock", F.xs "ascii" "Rock" [];
     "laby_name_Web", F.xs "ascii" "Web" [];
     "laby_name_Exit", F.xs "ascii" "Exit" [];
+    "laby_name_Unknown", F.xs "ascii" "Unknown" [];
   ]
 
 let rec mktempdir ?(seed=0) ident =

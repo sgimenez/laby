@@ -8,7 +8,8 @@ enum tile {
   laby_name_Wall,
   laby_name_Rock,
   laby_name_Web,
-  laby_name_Exit
+  laby_name_Exit,
+  laby_name_Unknown
 };
 
 void output(char *s) {
@@ -43,9 +44,7 @@ enum tile laby_name_look() {
   if (strcmp(s, "rock\n") == 0) { free(s); return laby_name_Rock; }
   if (strcmp(s, "web\n") == 0) { free(s); return laby_name_Web; }
   if (strcmp(s, "exit\n") == 0) { free(s); return laby_name_Exit; }
-  fprintf(stderr,"robot: unknown tile : %s\n", s);
-  exit(1);
-  return 0;
+  free(s); return laby_name_Unknown;
 }
 
 void laby_name_ant();

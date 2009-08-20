@@ -31,7 +31,7 @@ let laby_name_escape () =
 
 let laby_name_look () :
     [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | `laby_name_Web
-    | `laby_name_Exit ]
+    | `laby_name_Exit | `laby_name_Unknown ]
     =
   output "look";
   begin match input () with
@@ -40,7 +40,7 @@ let laby_name_look () :
   | "rock" -> `laby_name_Rock
   | "web" -> `laby_name_Web
   | "exit" -> `laby_name_Exit
-  | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
+  | _ -> `laby_name_Unknown
   end
 
 let _ =
