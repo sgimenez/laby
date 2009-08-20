@@ -68,4 +68,8 @@ public class Robot {
     if (ans.equals("exit")) return Tile.laby_name_Exit;
     return Tile.laby_name_Unknown;
   }
+
+  public void laby_name_say(String s) {
+      System.err.format("%s%n", s);
+  }
 }

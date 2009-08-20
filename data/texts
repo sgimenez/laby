@@ -71,14 +71,6 @@ text:ascii	forward
 en_US.UTF-8	forward
 fr_FR.UTF-8	avance
 
-text:ascii	look
-en_US.UTF-8	look
-fr_FR.UTF-8	regarde
-
-text:ascii	escape
-en_US.UTF-8	escape
-fr_FR.UTF-8	ouvre
-
 text:ascii	take
 en_US.UTF-8	take
 fr_FR.UTF-8	prend
@@ -86,6 +78,18 @@ fr_FR.UTF-8	prend
 text:ascii	drop
 en_US.UTF-8	drop
 fr_FR.UTF-8	pose
+
+text:ascii	escape
+en_US.UTF-8	escape
+fr_FR.UTF-8	ouvre
+
+text:ascii	look
+en_US.UTF-8	look
+fr_FR.UTF-8	regarde
+
+text:ascii	say
+en_US.UTF-8	say
+fr_FR.UTF-8	dit
 
 text:ascii	Void
 en_US.UTF-8	Void

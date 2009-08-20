@@ -47,6 +47,10 @@ enum tile laby_name_look() {
   free(s); return laby_name_Unknown;
 }
 
+void laby_name_say(char *s) {
+  fprintf(stderr, "%s\n", s);
+}
+
 void laby_name_ant();
 
 int main() {

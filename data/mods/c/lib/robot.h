@@ -14,4 +14,4 @@ extern void laby_name_escape();
 extern void laby_name_take();
 extern void laby_name_drop();
 extern enum tile laby_name_look();
-
+extern void laby_name_say(char *s);
