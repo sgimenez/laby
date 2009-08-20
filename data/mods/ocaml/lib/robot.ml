@@ -20,7 +20,18 @@ let laby_name_right () =
 let laby_name_forward () =
   output "forward"; ignore (input ())
 
-let laby_name_look () : [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | `laby_name_Web | `laby_name_Exit ]
+let laby_name_take () =
+  output "take"; ignore (input ())
+
+let laby_name_drop () =
+  output "drop"; ignore (input ())
+
+let laby_name_escape () =
+  output "escape"; ignore (input ())
+
+let laby_name_look () :
+    [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | `laby_name_Web
+    | `laby_name_Exit ]
     =
   output "look";
   begin match input () with
@@ -31,15 +42,6 @@ let laby_name_look () : [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | 
   | "exit" -> `laby_name_Exit
   | s -> Printf.eprintf "robot: unknown tile : %s\n" s; assert false
   end
-
-let laby_name_escape () =
-  output "escape"; ignore (input ())
-
-let laby_name_take () =
-  output "take"; ignore (input ())
-
-let laby_name_drop () =
-  output "drop"; ignore (input ())
 
 let _ =
   output "start"; ignore (input ())

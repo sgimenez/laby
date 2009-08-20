@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-enum Tile {
+enum tile {
   laby_name_Void,
   laby_name_Wall,
   laby_name_Rock,
@@ -29,7 +29,13 @@ void laby_name_right() { output("right"); free(input()); }
 
 void laby_name_forward() { output("forward"); free(input()); }
 
-enum Tile laby_name_look() {
+void laby_name_take() { output("take"); free(input()); }
+
+void laby_name_drop() { output("drop"); free(input()); }
+
+void laby_name_escape() { output("escape"); free(input()); }
+
+enum tile laby_name_look() {
   output("look");
   char *s = input();
   if (strcmp(s, "void\n") == 0) { free(s); return laby_name_Void; }
@@ -41,12 +47,6 @@ enum Tile laby_name_look() {
   exit(1);
   return 0;
 }
-
-void laby_name_escape() { output("escape"); free(input()); }
-
-void laby_name_take() { output("take"); free(input()); }
-
-void laby_name_drop() { output("drop"); free(input()); }
 
 void laby_name_ant();
 

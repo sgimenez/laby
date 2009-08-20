@@ -36,11 +36,25 @@ public class Robot {
   public void laby_name_left() {
       output("left"); input();
   }
+
   public void laby_name_right() {
       output("right"); input();
   }
+
   public void laby_name_forward() {
       output("forward"); input();
+  }
+
+  public void laby_name_take() {
+      output("take"); input();
+  }
+
+  public void laby_name_drop() {
+      output("drop"); input();
+  }
+
+  public void laby_name_escape() {
+      output("escape"); input();
   }
 
   public Tile laby_name_look() {
@@ -54,15 +68,4 @@ public class Robot {
     assert false;
     return Tile.laby_name_Void;
   }
-
-  public void laby_name_escape() {
-      output("escape"); input();
-  }
-  public void laby_name_take() {
-      output("take"); input();
-  }
-  public void laby_name_drop() {
-      output("drop"); input();
-  }
-
 }
