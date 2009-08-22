@@ -178,9 +178,9 @@ let make () =
 
     method start =
       self#close;
+      let libdir = Res.get ["mods"; !name; "lib"] in
+      let command = Res.get ["mods"; !name; "command"] in
       let slave h =
-	let libdir = Res.get ["mods"; !name; "lib"] in
-	let command = Res.get ["mods"; !name; "command"] in
 	Unix.chdir h.tmpdir;
 	begin try
 	  Unix.execvp command [| command; libdir |]
