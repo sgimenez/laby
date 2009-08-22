@@ -88,7 +88,14 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
   Res.conf_paths#set_d path;
   begin match conf with
   | None -> ()
-  | Some (conf, res) -> Conf.load ~log:Log.master#warning conf (Res.get res)
+  | Some (conf, res) ->
+      begin try
+	Conf.load ~log:Log.master#warning conf (Res.get res)
+      with
+      | Res.Error msg ->
+	  Log.master#fatal msg;
+	  exit 3
+      end
   end;
   let f () =
     begin match action with
