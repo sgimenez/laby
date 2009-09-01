@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language _name="Prolog" version="1.0" _section="Sources" mimetypes="text/x-prolog">
+
+  <string _name = "String" style = "String" end-at-line-end = "TRUE">
+    <start-regex>&quot;</start-regex>
+    <end-regex>&quot;</end-regex>
+  </string>
+  
+  <string _name = "String 2" style = "String" end-at-line-end = "TRUE">
+    <start-regex>&apos;</start-regex>
+    <end-regex>&apos;</end-regex>
+  </string>
+
+
+  <line-comment _name = "Line Comment" style= "Comment">
+    <start-regex>%</start-regex>
+  </line-comment>
+
+  <block-comment _name = "Block Comment" style = "Comment">
+    <start-regex>/\*</start-regex>
+    <end-regex>\*/</end-regex>
+  </block-comment>
+
+  
+  <pattern-item _name = "variable" style = "variable" case-sensitive="TRUE">
+    <regex>(_|[A-Z][A-Za-z0-9_]*)</regex>
+  </pattern-item>
+
+  <pattern-item _name = "Decimal" style = "Decimal">
+    <regex>\b[0-9]+(\.[0-9]+)?\b</regex>
+  </pattern-item>
+  
+  <keyword-list _name = "Keywords" style = "Keyword" case-sensitive="TRUE">
+      <keyword>mod</keyword>
+      <keyword>div</keyword>
+      <keyword>abs</keyword>
+      <keyword>exp</keyword>
+      <keyword>ln</keyword>
+      <keyword>log</keyword>
+      <keyword>sqrt</keyword>
+      <keyword>round</keyword>
+      <keyword>trunc</keyword>
+      <keyword>val</keyword>
+      <keyword>cos</keyword>
+      <keyword>sin</keyword>
+      <keyword>tan</keyword>
+      <keyword>arctan</keyword>
+      <keyword>random</keyword>
+      <keyword>randominit</keyword>
+      <keyword>module</keyword>
+      <keyword>meta_predicate</keyword>
+      <keyword>multifile</keyword>
+      <keyword>dynamic</keyword>
+      <keyword>abolish</keyword>
+      <keyword>current_output</keyword>
+      <keyword>peek_code</keyword>
+      <keyword>append</keyword>
+      <keyword>current_predicate</keyword>
+      <keyword>put_byte</keyword>
+      <keyword>arg</keyword>
+      <keyword>current_prolog_flag</keyword>
+      <keyword>put_char</keyword>
+      <keyword>asserta</keyword>
+      <keyword>fail</keyword>
+      <keyword>put_code</keyword>
+      <keyword>assertz</keyword>
+      <keyword>findall</keyword>
+      <keyword>read</keyword>
+      <keyword>at_end_of_stream</keyword>
+      <keyword>float</keyword>
+      <keyword>read_term</keyword>
+      <keyword>atom</keyword>
+      <keyword>flush_output</keyword>
+      <keyword>repeat</keyword>
+      <keyword>atom_chars</keyword>
+      <keyword>functor</keyword>
+      <keyword>retract</keyword>
+      <keyword>atom_codes</keyword>
+      <keyword>get_byte</keyword>
+      <keyword>set_input</keyword>
+      <keyword>atom_concat</keyword>
+      <keyword>get_char</keyword>
+      <keyword>set_output</keyword>
+      <keyword>atom_length</keyword>
+      <keyword>get_code</keyword>
+      <keyword>set_prolog_flag</keyword>
+      <keyword>atomic</keyword>
+      <keyword>halt</keyword>
+      <keyword>set_stream_position</keyword>
+      <keyword>bagof</keyword>
+      <keyword>integer</keyword>
+      <keyword>setof</keyword>
+      <keyword>call</keyword>
+      <keyword>is</keyword>
+      <keyword>stream_property</keyword>
+      <keyword>catch</keyword>
+      <keyword>nl</keyword>
+      <keyword>sub_atom</keyword>
+      <keyword>char_code</keyword>
+      <keyword>nonvar</keyword>
+      <keyword>throw</keyword>
+      <keyword>char_conversion</keyword>
+      <keyword>number</keyword>
+      <keyword>clause</keyword>
+      <keyword>number_chars</keyword>
+      <keyword>unify_with_occurs_check</keyword>
+      <keyword>close</keyword>
+      <keyword>number_codes</keyword>
+      <keyword>var</keyword>
+      <keyword>compound</keyword>
+      <keyword>once</keyword>
+      <keyword>copy_term</keyword>
+      <keyword>op</keyword>
+      <keyword>write</keyword>
+      <keyword>write_canonical</keyword>
+      <keyword>write_term</keyword>
+      <keyword>writeq</keyword>
+      <keyword>current_char_conversion</keyword>
+      <keyword>open</keyword>
+      <keyword>current_input</keyword>
+      <keyword>peek_byte</keyword>
+      <keyword>current_op</keyword>
+      <keyword>peek_char</keyword>
+      <keyword>false</keyword>
+      <keyword>true</keyword>
+      <keyword>consult</keyword>
+  </keyword-list>
+
+</language>
