@@ -43,5 +43,6 @@ let action =
   | `Rock_Drop -> play "rock-drop"
   | `Rock_No_Take -> play "rock-no-take"
   | `Rock_No_Drop -> play "rock-no-drop"
+  | `Say _ -> ()
   end
 

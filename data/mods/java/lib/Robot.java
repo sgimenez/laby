@@ -70,6 +70,6 @@ public class Robot {
   }
 
   public void laby_name_say(String s) {
-      System.err.format("%s%n", s);
+      System.out.format("say %s%n", s); input();
   }
 }

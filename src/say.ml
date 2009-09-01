@@ -56,5 +56,6 @@ let action f =
   | `Carry_Exit -> f carry_exit
   | `Rock_No_Take -> f rock_no_take
   | `Rock_No_Drop -> f rock_no_drop
+  | `Say s -> f (F.s s)
   end
 

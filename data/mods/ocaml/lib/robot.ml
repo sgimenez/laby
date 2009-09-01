@@ -44,7 +44,7 @@ let laby_name_look () :
   end
 
 let laby_name_say s =
-  Printf.eprintf "%s\n%!" s
+  output ("say " ^ s); ignore (input ())
 
 let _ =
   output "start"; ignore (input ())

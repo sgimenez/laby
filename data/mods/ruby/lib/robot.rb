@@ -37,8 +37,5 @@ class Robot
   def laby_name_drop; perform 'drop'; end
   def laby_name_escape; perform 'escape'; end
 
-  def laby_name_say s
-    $stderr.puts s
-    $stderr.flush
-  end
+  def laby_name_say s; perform ('say ' + s) end
 end

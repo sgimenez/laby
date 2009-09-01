@@ -15,6 +15,7 @@ type action =
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
  | `Rock_No_Take | `Rock_No_Drop
+ | `Say of string
  ]
 
 type t

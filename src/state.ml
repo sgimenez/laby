@@ -15,6 +15,7 @@ type action =
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
  | `Rock_No_Take | `Rock_No_Drop
+ | `Say of string
  ]
 
 type t =
@@ -155,6 +156,8 @@ let run action state =
 	  }
       |  _, _ -> "error", chg state `Rock_No_Drop
       end
+  | a when String.length a > 4 && String.sub a 0 4 = "say " ->
+      "ok", chg state (`Say (String.sub a 4 (String.length a - 4)))
   | a ->
       log_protocol#error (
 	F.x "unknown action: <action>" [

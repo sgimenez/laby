@@ -48,7 +48,9 @@ enum tile laby_name_look() {
 }
 
 void laby_name_say(char *s) {
-  fprintf(stderr, "%s\n", s);
+  printf("say %s\n", s);
+  fflush(stdout);
+  free(input());
 }
 
 void laby_name_ant();
