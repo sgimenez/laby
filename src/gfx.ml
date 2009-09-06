@@ -41,7 +41,7 @@ type controls =
       button_play: GButton.toggle_tool_button;
       button_backward: GButton.toggle_tool_button;
       button_forward: GButton.toggle_tool_button;
-      button_refresh: GButton.tool_button;
+      button_execute: GButton.button;
       px: GMisc.image;
       interprets: GEdit.combo;
       levels: GEdit.combo;
@@ -135,12 +135,13 @@ let layout () =
   let monofont = Pango.Font.from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
   let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
-  hpaned#set_position 640;
+  hpaned#set_position 620;
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
   vpaned#set_position 450;
   let view_title = label lvbox#pack in
   let view_comment = label lvbox#pack in
+  let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let box_help = GPack.vbox ~packing:lvbox#pack () in
   label_txt (Fd.render_raw label_help) box_help#pack;
   let sw_help = scrolled box_help#pack in
@@ -164,9 +165,8 @@ let layout () =
   let sw_mesg = scrolled rbvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
-  let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
-  let toolbar = GButton.toolbar ~packing:lvbox#pack ~style:`BOTH () in
+  let toolbar = GButton.toolbar ~packing:rbvbox#pack ~style:`BOTH () in
   let button stock = GButton.tool_button ~packing:toolbar#insert ~stock () in
   let tbutton stock =
     GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
@@ -174,20 +174,22 @@ let layout () =
   let sti = GButton.separator_tool_item in
   let button_prev = button `GO_BACK in
   let button_next = button `GO_FORWARD in
-  ignore (sti ~expand:false ~draw:true ~packing:toolbar#insert ());
+  (* ignore (sti ~expand:false ~draw:true ~packing:toolbar#insert ()); *)
+  ignore (sti ~expand:true ~draw:false ~packing:toolbar#insert ());
   let button_backward = tbutton `MEDIA_REWIND in
   let button_play = tbutton `MEDIA_PLAY in
   let button_forward = tbutton `MEDIA_FORWARD in
-  ignore (sti ~expand:true ~draw:false ~packing:toolbar#insert ());
   view_prog#misc#grab_focus ();
-  let button_refresh = button `REFRESH in
+  let bbox = GPack.hbox ~packing:rtvbox#pack () in
+  let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
+  button_execute#set_focus_on_click false;
   {
     window = window;
     button_prev = button_prev; button_next = button_next;
     button_play = button_play;
     button_backward = button_backward;
     button_forward = button_forward;
-    button_refresh = button_refresh;
+    button_execute = button_execute;
     px = px;
     interprets = interprets; levels = levels;
     view_prog = view_prog; view_mesg = view_mesg;
@@ -240,6 +242,8 @@ let display_gtk ?language_list () =
 	  c.box_help#misc#show ()
       end
     in
+    let show_execute () = c.button_execute#set_relief `NORMAL in
+    let hide_execute () = c.button_execute#set_relief `NONE in
     let newinterpret () =
       let name = c.interprets#entry#text in
       begin match List.mem name language_list with
@@ -295,11 +299,12 @@ let display_gtk ?language_list () =
       c.button_backward#set_active false;
       c.button_play#set_active false
     in
-    let refresh () =
+    let execute () =
       inactive ();
       bot_stop ();
       bot_start ();
       update ~first:true ();
+      hide_execute ();
     in
     let newlevel () =
       let name = c.levels#entry#text in
@@ -356,16 +361,18 @@ let display_gtk ?language_list () =
 	end
       end
     in
-    ignore (c.window#event#connect#delete ~callback:(fun _ -> destroy(); true));
+    let altdestroy _ = destroy (); true in
+    ignore (c.window#event#connect#delete ~callback:altdestroy);
     ignore (c.window#connect#destroy ~callback:destroy);
     ignore (c.button_prev#connect#clicked ~callback:prev);
     ignore (c.button_next#connect#clicked ~callback:next);
     ignore (c.button_play#connect#toggled ~callback:(play `Forward 500));
     ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
     ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
-    ignore (c.button_refresh#connect#clicked ~callback:refresh);
+    ignore (c.button_execute#connect#clicked ~callback:execute);
     ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
+    ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
     (* now we must have everything up *)
     c.interprets#set_popdown_strings language_list;
     if List.mem "ocaml" language_list
@@ -375,7 +382,7 @@ let display_gtk ?language_list () =
     then c.levels#entry#set_text "0.laby";
     newinterpret ();
     newlevel ();
-    c.window#set_default_size 980 750;
+    c.window#set_default_size 1000 750;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)
     bg := `COLOR (c.px#misc#style#light `NORMAL);
