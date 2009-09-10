@@ -5,6 +5,11 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
+val conf : Conf.ut
+val conf_selected : string Conf.t
+
+val get_list : unit -> string list
+
 type query = string * (string -> unit)
 
 type t =
@@ -21,4 +26,3 @@ type t =
     >
 
 val make : unit -> t
-

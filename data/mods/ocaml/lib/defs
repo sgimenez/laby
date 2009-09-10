@@ -1,0 +1,18 @@
+#!/bin/sh
+
+mod_info()
+{
+    need_command ocamlc
+}
+
+mod_prep()
+{
+    fetch_t robot.ml
+    spawn program.ml
+}
+
+mod_run()
+{
+    ocamlc robot.ml program.ml -o program || error
+    exec ./program
+}

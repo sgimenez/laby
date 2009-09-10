@@ -18,7 +18,7 @@ let dev_null =
 
 let play name =
   if conf_enabled#get then
-    let sound_play = Res.get ["sound-play"] in
+    let sound_play = Res.get ["scripts"; "sound-play"] in
     let sound_file = Res.get ["sound"; name ^ ".wav"] in
     let wait pid = ignore (Unix.waitpid [] pid) in
     let pid =

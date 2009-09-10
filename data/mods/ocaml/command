@@ -1,7 +1,0 @@
-#!/bin/sh
-LIB=$1
-
-sed -f subst $LIB/robot.ml > robot.ml || exit 1
-mv program program.ml || exit 1
-ocamlc robot.ml program.ml -o program || exit 1
-exec ./program

@@ -1,8 +1,0 @@
-#!/bin/sh
-LIB=$1
-
-sed -f subst $LIB/Robot.java > Robot.java || exit 1
-sed -f subst $LIB/Main.java > Main.java || exit 1
-mv program $(echo 'laby_name_Ant' | sed -f subst).java || exit 1
-javac Main.java || exit 1
-exec java Main

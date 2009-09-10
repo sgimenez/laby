@@ -1,7 +1,0 @@
-#!/bin/sh
-LIB=$1
-
-sed -f subst $LIB/robot.pl > robot.pl || exit 1
-mv program program.pl || exit 1
-gplc --no-top-level robot.pl program.pl -o program 1>&2  || exit 1
-exec ./program

@@ -202,17 +202,12 @@ let make_pixmap tile_size level =
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
 
-let display_gtk ?language_list () =
-  let language_list =
-    begin match language_list with
-    | None | Some [] -> List.sort (compare) (Res.get_list ["mods"])
-    | Some l -> l
-    end
-  in
+let display_gtk () =
+  let language_list = List.sort (compare) (Mod.get_list ()) in
   let levels_list =
     List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
-  let bot = Bot.make () in
+  let lmod = Mod.make () in
   let level = ref Level.dummy in
   let generate () = Level.generate !level in
   let b_states = ref [] in
@@ -224,11 +219,11 @@ let display_gtk ?language_list () =
     let c = layout () in
     let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
     let destroy () =
-      bot#close;
+      lmod#close;
       c.window#destroy ();
       GMain.Main.quit ()
     in
-    bot#errto (fun s -> c.view_mesg#buffer#insert s);
+    lmod#errto (fun s -> c.view_mesg#buffer#insert s);
     let mesg m =
       c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
       c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n")
@@ -238,7 +233,7 @@ let display_gtk ?language_list () =
       | "" ->
 	  c.box_help#misc#hide ()
       | help ->
-	  c.view_help#buffer#set_text (bot#help help);
+	  c.view_help#buffer#set_text (lmod#help help);
 	  c.box_help#misc#show ()
       end
     in
@@ -248,9 +243,9 @@ let display_gtk ?language_list () =
       let name = c.interprets#entry#text in
       begin match List.mem name language_list with
       | true ->
-	  bot#set_buf (c.view_prog#buffer#get_text ());
-	  bot#set_name name;
-	  c.view_prog#buffer#set_text bot#get_buf;
+	  lmod#set_buf (c.view_prog#buffer#get_text ());
+	  lmod#set_name name;
+	  c.view_prog#buffer#set_text lmod#get_buf;
 	  let langf = Res.get ["mods"; name; "lang"] in
 	  begin match GSourceView.source_language_from_file langf with
 	  | None -> log#warning (F.x "cannot load language file" []);
@@ -265,7 +260,7 @@ let display_gtk ?language_list () =
       end
     in
     let step state =
-      begin match bot#probe with
+      begin match lmod#probe with
       | None -> None
       | Some (action, reply) ->
 	  let answer, newstate = State.run action state in
@@ -273,15 +268,15 @@ let display_gtk ?language_list () =
 	  Some newstate
       end
     in
-    let bot_stop () =
-      bot#close;
+    let lmod_stop () =
+      lmod#close;
       c.view_mesg#buffer#set_text "";
       b_states := []; c_state := generate (); n_states := [];
     in
-    let bot_start () =
-      bot#set_name (c.interprets#entry#text);
-      bot#set_buf (c.view_prog#buffer#get_text ());
-      if bot#start
+    let lmod_start () =
+      lmod#set_name (c.interprets#entry#text);
+      lmod#set_buf (c.view_prog#buffer#get_text ());
+      if lmod#start
       then mesg (F.h [F.s "——"; Say.good_start; F.s "——"])
       else mesg (F.h [F.s "——"; Say.bad_start; F.s "——"])
     in
@@ -301,8 +296,8 @@ let display_gtk ?language_list () =
     in
     let execute () =
       inactive ();
-      bot_stop ();
-      bot_start ();
+      lmod_stop ();
+      lmod_start ();
       update ~first:true ();
       hide_execute ();
     in
@@ -316,7 +311,7 @@ let display_gtk ?language_list () =
 	  c.view_comment#set_text (Level.comment !level);
 	  help_update ();
 	  inactive ();
-	  bot_stop ();
+	  lmod_stop ();
 	  update ();
       | false -> ()
       end

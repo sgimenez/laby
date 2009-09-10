@@ -1,0 +1,20 @@
+#!/bin/sh
+
+mod_info()
+{
+    need_command javac
+    need_command java
+}
+
+mod_prep()
+{
+    fetch_t Robot.java
+    fetch_t Main.java
+    spawn $(laby_name Ant).java
+}
+
+mod_run()
+{
+    javac Main.java || error
+    exec java Main
+}

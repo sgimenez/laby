@@ -10,4 +10,4 @@ val conf_tilesize : int Conf.t
 
 exception Error of F.t
 
-val display_gtk : ?language_list:string list -> unit -> unit
+val display_gtk : unit -> unit

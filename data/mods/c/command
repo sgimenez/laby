@@ -1,8 +1,0 @@
-#!/bin/sh
-LIB=$1
-
-sed -f subst $LIB/robot.c > robot.c || exit 1
-sed -f subst $LIB/robot.h > robot.h || exit 1
-mv program program.c || exit 1
-gcc -Wall robot.c program.c -o program || exit 1
-exec ./program

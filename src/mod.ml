@@ -5,7 +5,44 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
-let log = Log.make ["bot"]
+let log = Log.make ["mod"]
+
+let conf =
+  Conf.void
+    (F.x "mods configuration" [])
+
+let conf_selected =
+  Conf.string ~p:(conf#plug "selected") ~d:""
+    (F.x "select a specific programming mod" [])
+
+let check m =
+  let command = Res.get ["scripts"; "mod"] in
+  begin try
+    let modlib = Res.get ["mods"; m; "lib"] in
+    begin match flush_all (); Unix.fork () with
+    | 0 ->
+	Unix.execvp command [| command; modlib; "info" |]
+    | pid ->
+	let _, status = Unix.waitpid [] pid in
+	status = Unix.WEXITED 0
+    end
+  with
+  | Res.Error _ -> false
+  end
+
+let get_list () =
+  begin match conf_selected#get with
+  | "" ->
+      List.filter check (Res.get_list ["mods"])
+  | m ->
+      if check m then [m]
+      else
+	Run.fatal (
+	  F.x "selected mod cannot be found: <mod>" [
+	    "mod", F.string m;
+	  ]
+	)
+  end
 
 type query = string * (string -> unit)
 
@@ -24,14 +61,10 @@ type t =
 
 type h =
     {
-      pid: int;
-      tmpdir: string;
+      mutable close : unit -> unit;
       in_ch : Unix.file_descr;
-      in_ch' : Unix.file_descr;
       out_ch : Unix.file_descr;
-      out_ch' : Unix.file_descr;
       err_ch : Unix.file_descr;
-      err_ch' : Unix.file_descr;
       mutable current: string;
       mutable buf : string list;
     }
@@ -63,7 +96,7 @@ let rec mktempdir ?(seed=0) ident =
   let pid = Unix.getpid () in
   let dir = Printf.sprintf "/tmp/%s-%d:%d/" ident pid seed in
   begin try Unix.mkdir dir 0o755; dir with
-  | Unix.Unix_error (Unix.EEXIST, _, _) -> mktempdir ~seed:(seed+1) ident
+  | Unix.Unix_error (Unix.EEXIST, _, _) -> mktempdir ~seed:(seed + 1) ident
   end
 
 let dump prog =
@@ -137,7 +170,6 @@ let make () =
     in
     List.fold_left f s substs
   in
-
   object (self)
 
     val hr = ref None
@@ -178,68 +210,70 @@ let make () =
 
     method start =
       self#close;
-      let libdir = Res.get ["mods"; !name; "lib"] in
-      let command = Res.get ["mods"; !name; "command"] in
-      let slave h =
-	Unix.chdir h.tmpdir;
-	begin try
-	  Unix.execvp command [| command; libdir |]
-	with
-	| exn ->
-	    log#error (
-	      F.x "execution of interpreter failed" []
-	    );
+      let modlib = Res.get ["mods"; !name; "lib"] in
+      let command = Res.get ["scripts"; "mod"] in
+      let tmpdir = dump self#get_buf in
+      let out_ch', out_ch = Unix.pipe () in
+      let in_ch, in_ch' = Unix.pipe () in
+      let err_ch, err_ch' = Unix.pipe () in
+      let prep () =
+	begin match flush_all (); Unix.fork () with
+	| 0 ->
+	    Unix.chdir tmpdir;
+	    Unix.execvp command [| command; modlib; "prep" |]
+	| pid ->
+	    let _, status = Unix.waitpid [] pid in
+	    status = Unix.WEXITED 0
 	end
       in
-      let in_ch, in_ch' = Unix.pipe () in
-      let out_ch', out_ch = Unix.pipe () in
-      let err_ch, err_ch' = Unix.pipe () in
-      let h =
-	{
-	  pid = 0;
-	  tmpdir = dump self#get_buf;
-	  in_ch = in_ch; in_ch' = in_ch';
-	  out_ch = out_ch; out_ch' = out_ch';
-	  err_ch = err_ch; err_ch' = err_ch';
-	  current = "";
-	  buf = [];
-	}
+      let run () =
+	begin match flush_all (); Unix.fork () with
+	| 0 ->
+	    Unix.dup2 in_ch' Unix.stdout;
+	    Unix.dup2 out_ch' Unix.stdin;
+	    Unix.dup2 err_ch' Unix.stderr;
+	    Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
+	    Unix.chdir tmpdir;
+	    begin try
+	      Unix.execvp command [| command; modlib; "run" |]
+	    with
+	    | exn ->
+		log#error (
+		  F.x "execution of interpreter failed" []
+		);
+		assert false
+	    end
+	| pid ->
+	    Unix.close in_ch'; Unix.close out_ch'; Unix.close err_ch';
+	    let close () =
+	      Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
+	      clean tmpdir;
+	      Unix.kill pid Sys.sigterm;
+	      ignore (Unix.waitpid [] pid)
+	    in
+	    let h =
+	      {
+		close = close;
+		in_ch = in_ch; out_ch = out_ch; err_ch = err_ch;
+		current = ""; buf = [];
+	      }
+	    in
+	    begin match input ~timeout:5. !errto h with
+	    | Some ("start", output) ->
+		output "go";
+		hr := Some h;
+		true
+	    | _ ->
+		false
+	    end
+	end
       in
-      begin match flush_all (); Unix.fork () with
-      | 0 ->
-	  Unix.dup2 h.in_ch' Unix.stdout;
-	  Unix.dup2 h.out_ch' Unix.stdin;
-	  Unix.dup2 h.err_ch' Unix.stderr;
-	  Unix.close h.in_ch;
-	  Unix.close h.out_ch;
-	  Unix.close h.err_ch;
-	  slave h;
-	  assert false
-      | pid ->
-	  Unix.close in_ch';
-	  Unix.close out_ch';
-	  Unix.close err_ch';
-	  begin match input ~timeout:5. !errto h with
-	  | Some ("start", output) ->
-	      output "go";
-	      hr := Some { h with pid = pid };
-	      true
-	  | _ ->
-	      false
-	  end
-      end
+      prep () && run ()
 
     method close =
       begin match !hr with
       | None -> ()
-      | Some h ->
-	  Unix.close h.in_ch;
-	  Unix.close h.out_ch;
-	  Unix.close h.err_ch;
-	  clean h.tmpdir;
-	  Unix.kill h.pid Sys.sigterm;
-	  ignore (Unix.waitpid [] h.pid);
-	  hr := None
+      | Some h -> h.close (); hr := None
       end
 
     method probe =
@@ -281,4 +315,5 @@ let make () =
 	  close_in f;
 	  subst (app (s ^ ":") (String.concat "\n") blocks) ^ "\n"
       end
+
   end

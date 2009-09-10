@@ -8,6 +8,7 @@
 let conf =
   Conf.void
     ~l:[
+      "mod", Mod.conf#ut;
       "log", Log.conf#ut;
       "ui", Ui.conf#ut;
       "gfx", Gfx.conf#ut;
@@ -16,13 +17,9 @@ let conf =
     ]
     (F.x "laby configuration" [])
 
-let conf_lang =
-  Conf.list ~p:(conf#plug "lang") ~d:[]
-    (F.x "programming languages" [])
-
 let proceed _ =
   begin try
-    Gfx.display_gtk ~language_list:conf_lang#get ()
+    Gfx.display_gtk ()
   with
   | Gfx.Error f ->
       Run.fatal (
@@ -35,7 +32,7 @@ let proceed _ =
 let opts =
   [
     Version.opt;
-    Opt.conf ~short:'l' ~long:"lang" conf_lang;
+    Opt.conf ~short:'m' ~long:"mod" Mod.conf_selected;
     Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
     Opt.conf ~long:"tile-size" Gfx.conf_tilesize;
     Opt.conf_set ~short:'c' ~long:"conf" conf;
