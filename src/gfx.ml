@@ -313,6 +313,7 @@ let display_gtk () =
 	  inactive ();
 	  lmod_stop ();
 	  update ();
+	  show_execute ();
       | false -> ()
       end
     in
