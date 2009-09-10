@@ -9,10 +9,10 @@ take,
 drop.
 
 loop:
-go :- look(X), X=void -> (...); (...).
+go :- look(void) -> (...), go; true.
 
 function:
 f(X) :- (...).
 
 conditional:
-X=rock -> (...);(...).
+look(rock) -> (...); (...).
