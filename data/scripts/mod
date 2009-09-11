@@ -8,7 +8,7 @@ mod_api()
 
 need_command()
 {
-    which $1 &> /dev/null || exit 1
+    which $1 > /dev/null 2> /dev/null || exit 1
 }
 
 error()
@@ -36,7 +36,7 @@ laby_name()
     $(echo 'laby_name_'$1 | sed -f subst)
 }
 
-source $MOD_LIB/defs
+. $MOD_LIB/defs
 
 case $2 in
   info) mod_info;;
