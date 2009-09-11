@@ -149,7 +149,7 @@ let input ?(timeout=0.5) errto h =
 	h.buf <- q; Some (a, output)
     | [] ->
 	let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] timeout in
-	if l = [] then (errto "..."; None)
+	if l = [] then (errto "...\n"; None)
 	else (
 	  if List.mem h.err_ch l then
 	    ignore (buf_read h.err_ch errto);

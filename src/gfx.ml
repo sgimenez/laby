@@ -239,10 +239,47 @@ let display_gtk () =
     in
     let show_execute () = c.button_execute#set_relief `NORMAL in
     let hide_execute () = c.button_execute#set_relief `NONE in
-    let newinterpret () =
+    let ctrl_sensitive b =
+      c.button_backward#misc#set_sensitive b;
+      c.button_forward#misc#set_sensitive b;
+      c.button_play#misc#set_sensitive b;
+      c.button_prev#misc#set_sensitive b;
+      c.button_next#misc#set_sensitive b;
+    in
+    let update ?(first=false) () =
+      !pixmap#set_foreground !bg;
+      let width, height = !pixmap#size in
+      !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+      draw_state !c_state ressources !pixmap;
+      c.px#set_pixmap !pixmap;
+      let action = State.action !c_state in
+      if first then (Say.action mesg action; Sound.action action)
+    in
+    let lmod_stop () =
+      lmod#close;
+      c.view_mesg#buffer#set_text "";
+      ctrl_sensitive false;
+      b_states := []; c_state := generate (); n_states := [];
+      update ();
+      show_execute ()
+    in
+    let lmod_start () =
+      lmod#set_name (c.interprets#entry#text);
+      lmod#set_buf (c.view_prog#buffer#get_text ());
+      begin match lmod#start with
+      | true ->
+	  mesg (F.h [F.s "——"; Say.good_start; F.s "——"]);
+	  ctrl_sensitive true
+      | false ->
+	  mesg (F.h [F.s "——"; Say.bad_start; F.s "——"]);
+	  ctrl_sensitive false
+      end
+    in
+    let newmod () =
       let name = c.interprets#entry#text in
       begin match List.mem name language_list with
       | true ->
+	  lmod_stop ();
 	  lmod#set_buf (c.view_prog#buffer#get_text ());
 	  lmod#set_name name;
 	  c.view_prog#buffer#set_text lmod#get_buf;
@@ -268,27 +305,6 @@ let display_gtk () =
 	  Some newstate
       end
     in
-    let lmod_stop () =
-      lmod#close;
-      c.view_mesg#buffer#set_text "";
-      b_states := []; c_state := generate (); n_states := [];
-    in
-    let lmod_start () =
-      lmod#set_name (c.interprets#entry#text);
-      lmod#set_buf (c.view_prog#buffer#get_text ());
-      if lmod#start
-      then mesg (F.h [F.s "——"; Say.good_start; F.s "——"])
-      else mesg (F.h [F.s "——"; Say.bad_start; F.s "——"])
-    in
-    let update ?(first=false) () =
-      !pixmap#set_foreground !bg;
-      let width, height = !pixmap#size in
-      !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-      draw_state !c_state ressources !pixmap;
-      c.px#set_pixmap !pixmap;
-      let action = State.action !c_state in
-      if first then (Say.action mesg action; Sound.action action)
-    in
     let inactive () =
       c.button_forward#set_active false;
       c.button_backward#set_active false;
@@ -298,7 +314,6 @@ let display_gtk () =
       inactive ();
       lmod_stop ();
       lmod_start ();
-      update ~first:true ();
       hide_execute ();
     in
     let newlevel () =
@@ -312,8 +327,6 @@ let display_gtk () =
 	  help_update ();
 	  inactive ();
 	  lmod_stop ();
-	  update ();
-	  show_execute ();
       | false -> ()
       end
     in
@@ -366,7 +379,7 @@ let display_gtk () =
     ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
     ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
     ignore (c.button_execute#connect#clicked ~callback:execute);
-    ignore (c.interprets#entry#connect#changed ~callback:newinterpret);
+    ignore (c.interprets#entry#connect#changed ~callback:newmod);
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
     ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
     (* now we must have everything up *)
@@ -376,7 +389,7 @@ let display_gtk () =
     c.levels#set_popdown_strings levels_list;
     if List.mem "0.laby" levels_list
     then c.levels#entry#set_text "0.laby";
-    newinterpret ();
+    newmod ();
     newlevel ();
     c.window#set_default_size 1000 750;
     c.window#show ();
