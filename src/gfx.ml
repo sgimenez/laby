@@ -209,10 +209,6 @@ let display_gtk () =
   in
   let lmod = Mod.make () in
   let level = ref Level.dummy in
-  let generate () = Level.generate !level in
-  let b_states = ref [] in
-  let c_state = ref (generate ()) in
-  let n_states = ref [] in
   let bg = ref `WHITE in
   begin try
     let ressources = gtk_init () in
@@ -228,6 +224,17 @@ let display_gtk () =
       c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
       c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n")
     in
+    let step state =
+      begin match lmod#probe with
+      | None -> None
+      | Some (action, reply) ->
+	  let answer, newstate = State.run action state in
+	  reply answer;
+	  Some newstate
+      end
+    in
+    let trace_init () = Trace.init (Level.generate !level) step in
+    let trace = ref (trace_init ()) in
     let help_update () =
       begin match Level.help !level with
       | "" ->
@@ -246,20 +253,22 @@ let display_gtk () =
       c.button_prev#misc#set_sensitive b;
       c.button_next#misc#set_sensitive b;
     in
-    let update ?(first=false) () =
+    let update () =
       !pixmap#set_foreground !bg;
       let width, height = !pixmap#size in
       !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-      draw_state !c_state ressources !pixmap;
-      c.px#set_pixmap !pixmap;
-      let action = State.action !c_state in
-      if first then (Say.action mesg action; Sound.action action)
+      draw_state (Trace.current !trace) ressources !pixmap;
+      c.px#set_pixmap !pixmap
+    in
+    let effects () =
+      let action = State.action (Trace.current !trace) in
+      Say.action mesg action; Sound.action action
     in
     let lmod_stop () =
       lmod#close;
       c.view_mesg#buffer#set_text "";
       ctrl_sensitive false;
-      b_states := []; c_state := generate (); n_states := [];
+      trace := trace_init ();
       update ();
       show_execute ()
     in
@@ -296,22 +305,13 @@ let display_gtk () =
       | false -> ()
       end
     in
-    let step state =
-      begin match lmod#probe with
-      | None -> None
-      | Some (action, reply) ->
-	  let answer, newstate = State.run action state in
-	  reply answer;
-	  Some newstate
-      end
-    in
-    let inactive () =
+    let play_inactive () =
       c.button_forward#set_active false;
       c.button_backward#set_active false;
       c.button_play#set_active false
     in
     let execute () =
-      inactive ();
+      play_inactive ();
       lmod_stop ();
       lmod_start ();
       hide_execute ();
@@ -325,31 +325,22 @@ let display_gtk () =
 	  c.view_title#set_text (Level.title !level);
 	  c.view_comment#set_text (Level.comment !level);
 	  help_update ();
-	  inactive ();
+	  play_inactive ();
 	  lmod_stop ();
       | false -> ()
       end
     in
     let prev () =
-      begin match !b_states with
-      | [] -> inactive ()
-      | x :: q ->
-	  b_states := q; n_states := !c_state :: !n_states; c_state := x;
-	  update ()
+      begin match Trace.prev !trace with
+      | `None -> play_inactive ()
+      | `Old t -> trace := t; update ()
       end
     in
     let next () =
-      begin match !n_states with
-      | [] ->
-	  begin match step !c_state with
-	  | Some x ->
-	      b_states := !c_state :: !b_states; c_state := x;
-	      update ~first:true ()
-	  | None -> inactive ()
-	  end
-      | x :: q ->
-	  b_states := !c_state :: !b_states; c_state := x; n_states := q;
-	  update ()
+      begin match Trace.next !trace with
+      | `None -> play_inactive ()
+      | `New t -> trace := t; update (); effects ()
+      | `Old t -> trace := t; update ()
       end
     in
     let play =
@@ -365,7 +356,7 @@ let display_gtk () =
 	    in
 	    rid := Some (GMain.Timeout.add ~ms:speed ~callback);
 	| Some id ->
-	    inactive ();
+	    play_inactive ();
 	    GMain.Timeout.remove id; rid := None
 	end
       end
