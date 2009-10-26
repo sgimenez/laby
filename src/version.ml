@@ -33,7 +33,6 @@ let build () =
   section "build" [
     [F.s "ocaml                  "; F.s Config.build_ocaml];
     [F.s "ocaml-lablgtk          "; F.s Config.build_lablgtk];
-    [F.s "ocaml-lablgtksourceview"; F.s Config.build_lablgtksourceview];
   ]
 
 let run () =

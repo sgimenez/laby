@@ -45,8 +45,8 @@ type controls =
       px: GMisc.image;
       interprets: GEdit.combo;
       levels: GEdit.combo;
-      view_prog: GSourceView.source_view;
-      view_help: GSourceView.source_view;
+      view_prog: GSourceView2.source_view;
+      view_help: GSourceView2.source_view;
       box_help: GPack.box;
       view_mesg: GText.view;
       view_title: GMisc.label;
@@ -56,7 +56,7 @@ type controls =
 let gtk_init () =
   let _ = GtkMain.Main.init () in
   GtkSignal.user_handler := Pervasives.raise;
-  (* work around messed up lablgtk *)
+  (* work around messed up gtk/lablgtk *)
   Sys.catch_break false;
   Sys.set_signal Sys.sigpipe (Sys.Signal_default);
   Sys.set_signal Sys.sigterm (Sys.Signal_default);
@@ -146,7 +146,7 @@ let layout () =
   label_txt (Fd.render_raw label_help) box_help#pack;
   let sw_help = scrolled box_help#pack in
   let view_help =
-    GSourceView.source_view ~editable:false ~packing:sw_help#add ()
+    GSourceView2.source_view ~editable:false ~packing:sw_help#add ()
   in
   view_help#set_indent 1;
   view_help#misc#modify_font monofont;
@@ -156,7 +156,9 @@ let layout () =
   label_txt (Fd.render_raw label_prog) rtvbox#pack;
   let sw_prog = scrolled rtvbox#add in
   let view_prog =
-    GSourceView.source_view ~show_line_numbers:true ~packing:sw_prog#add ()
+    GSourceView2.source_view
+      ~auto_indent:true ~indent_width:2 ~insert_spaces_instead_of_tabs:true
+      ~show_line_numbers:true ~packing:sw_prog#add ()
   in
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
@@ -174,8 +176,7 @@ let layout () =
   let sti = GButton.separator_tool_item in
   let button_prev = button `GO_BACK in
   let button_next = button `GO_FORWARD in
-  (* ignore (sti ~expand:false ~draw:true ~packing:toolbar#insert ()); *)
-  ignore (sti ~expand:true ~draw:false ~packing:toolbar#insert ());
+  let _ = sti ~expand:true ~draw:false ~packing:toolbar#insert () in
   let button_backward = tbutton `MEDIA_REWIND in
   let button_play = tbutton `MEDIA_PLAY in
   let button_forward = tbutton `MEDIA_FORWARD in
@@ -292,14 +293,19 @@ let display_gtk () =
 	  lmod#set_buf (c.view_prog#buffer#get_text ());
 	  lmod#set_name name;
 	  c.view_prog#buffer#set_text lmod#get_buf;
-	  let langf = Res.get ["mods"; name; "lang"] in
-	  begin match GSourceView.source_language_from_file langf with
-	  | None -> log#warning (F.x "cannot load language file" []);
+	  let syntaxd = Res.get ["syntax"] in
+	  let m = GSourceView2.source_language_manager false in
+	  m#set_search_path (syntaxd :: m#search_path);
+	  begin match m#language name with
+	  | None ->
+	      log#warning (
+		F.x "cannot load syntax for <name> mod" [
+		  "name", F.string name;
+		]
+	      );
 	  | Some l ->
-	      c.view_prog#source_buffer#set_language l;
-	      c.view_prog#source_buffer#set_highlight true;
-	      c.view_help#source_buffer#set_language l;
-	      c.view_help#source_buffer#set_highlight true;
+	      c.view_prog#source_buffer#set_language (Some l);
+	      c.view_help#source_buffer#set_language (Some l);
 	  end;
 	  help_update ();
       | false -> ()
@@ -376,12 +382,12 @@ let display_gtk () =
     (* now we must have everything up *)
     c.interprets#set_popdown_strings language_list;
     if List.mem "ocaml" language_list
-    then c.interprets#entry#set_text "ocaml";
+    then c.interprets#entry#set_text "ocaml"
+    else newmod ();
     c.levels#set_popdown_strings levels_list;
     if List.mem "0.laby" levels_list
-    then c.levels#entry#set_text "0.laby";
-    newmod ();
-    newlevel ();
+    then c.levels#entry#set_text "0.laby"
+    else newlevel ();
     c.window#set_default_size 1000 750;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)

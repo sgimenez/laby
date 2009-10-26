@@ -13,7 +13,6 @@ fi
 
 
 BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
-BUILD_LABLGTKSOURCEVIEW=$(${PKG_VERSION} lablgtksourceview)
 
 [ "${THREADS}" = "yes" ] && echo "let threads = T_thread.main"
 
@@ -26,7 +25,6 @@ let version_status = "${VERSION_STATUS}"
 
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
-let build_lablgtksourceview = "${BUILD_LABLGTKSOURCEVIEW}"
 let conf_path = Sys.getenv "HOME" ^ "/.config/${PROJECT_NAME}/"
 let sys_data_path = "${SYSDATADIR}/${PROJECT_NAME}/"
 EOF

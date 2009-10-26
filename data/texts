@@ -142,9 +142,9 @@ text		graphic interface configuration
 en_US.UTF-8	graphic interface configuration
 fr_FR.UTF-8	configuration de l'interface graphique
 
-text		cannot load language file
-en_US.UTF-8	cannot load language file
-fr_FR.UTF-8	impossible de charger le fichier langage
+text		cannot load syntax for <name> mod
+en_US.UTF-8	cannot load syntax for <name> mod
+fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
 
 text		size of tiles in pixels
 en_US.UTF-8	size of tiles in pixels
