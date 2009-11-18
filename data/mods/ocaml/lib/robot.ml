@@ -1,3 +1,7 @@
+type tile =
+  | laby_name_Void | laby_name_Wall | laby_name_Rock
+  | laby_name_Web | laby_name_Exit | laby_name_Unknown
+
 let input_ch, output_ch =
   stdin, stdout
 
@@ -29,18 +33,15 @@ let laby_name_drop () =
 let laby_name_escape () =
   output "escape"; ignore (input ())
 
-let laby_name_look () :
-    [ `laby_name_Void | `laby_name_Wall | `laby_name_Rock | `laby_name_Web
-    | `laby_name_Exit | `laby_name_Unknown ]
-    =
+let laby_name_look () =
   output "look";
   begin match input () with
-  | "void" -> `laby_name_Void
-  | "wall" -> `laby_name_Wall
-  | "rock" -> `laby_name_Rock
-  | "web" -> `laby_name_Web
-  | "exit" -> `laby_name_Exit
-  | _ -> `laby_name_Unknown
+  | "void" -> laby_name_Void
+  | "wall" -> laby_name_Wall
+  | "rock" -> laby_name_Rock
+  | "web" -> laby_name_Web
+  | "exit" -> laby_name_Exit
+  | _ -> laby_name_Unknown
   end
 
 let laby_name_say s =

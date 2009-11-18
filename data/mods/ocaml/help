@@ -1,15 +1,15 @@
 basic:
-Robot.laby_name_forward ();
-Robot.laby_name_left ();
-Robot.laby_name_right ();
-Robot.laby_name_escape ();
+laby_name_forward ();
+laby_name_left ();
+laby_name_right ();
+laby_name_escape ();
 
 rocks:
-Robot.laby_name_take ();
-Robot.laby_name_drop ();
+laby_name_take ();
+laby_name_drop ();
 
 loop:
-while Robot.laby_name_look () = `laby_name_Void do
+while laby_name_look () = laby_name_Void do
   ...
 done;
 
@@ -18,6 +18,6 @@ let f () =
   ...
 
 conditional:
-if Robot.laby_name_look () = `laby_name_Web
+if laby_name_look () = laby_name_Web
 then ( ... )
 else ( ... );
