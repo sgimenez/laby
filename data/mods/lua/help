@@ -1,0 +1,26 @@
+basic:
+laby_name_forward();
+laby_name_left();
+laby_name_right();
+laby_name_escape();
+
+rocks:
+laby_name_take();
+laby_name_drop();
+
+loop:
+while laby_name_look() == laby_name_Void do
+  ...
+end
+
+function:
+function f()
+  ...
+end
+
+conditional:
+if laby_name_look() == laby_name_Web then
+  ...
+else
+  ...
+end
