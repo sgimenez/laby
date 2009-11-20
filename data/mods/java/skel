@@ -1,8 +1,7 @@
 public class laby_name_Ant extends Robot {
 
-  laby_name_Ant() {}
-
-  public void laby_name_ant() {
+  public void laby_name_ant()
+  {
     laby_name_right();
     laby_name_forward();
     laby_name_take();

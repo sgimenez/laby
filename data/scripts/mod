@@ -33,7 +33,7 @@ spawn()
 
 laby_name()
 {
-    $(echo 'laby_name_'$1 | sed -f subst)
+    echo 'laby_name_'$1 | sed -f subst
 }
 
 . $MOD_LIB/defs

@@ -1,6 +1,7 @@
 #include "robot.h"
 
-void laby_name_ant() {
+void laby_name_ant()
+{
   laby_name_right();
   laby_name_forward();
   laby_name_take();
