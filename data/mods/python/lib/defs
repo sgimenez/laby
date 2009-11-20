@@ -1,0 +1,17 @@
+#!/bin/sh
+
+mod_info()
+{
+    need_command python
+}
+
+mod_prep()
+{
+    fetch_t robot.py
+    spawn program.py
+}
+
+mod_run()
+{
+    exec python program.py
+}
