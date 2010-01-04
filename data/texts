@@ -4,61 +4,73 @@ text		I'm ready
 en_US.UTF-8	I'm ready
 fr_FR.UTF-8	Je suis prêt
 hu_HU.UTF-8	Készen vagyok
+sv_SV.UTF-8	Jag är redo
 
 text		Something went wrong
 en_US.UTF-8	Something went wrong
 fr_FR.UTF-8	Quelque chose ne vas pas
 hu_HU.UTF-8	Valami hibás
+sv_SV.UTF-8	Något gick fel
 
 text		I can't go through the wall.
 en_US.UTF-8	I can't go through the wall.
 fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
 hu_HU.UTF-8	Nem tudok átmenni a falon.
+sv_SV.UTF-8	Jag kan inte gå genom väggen.
 
 text		I can't go through this rock.
 en_US.UTF-8	I can't go through this rock.
 fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
 hu_HU.UTF-8	Nem tudok átmenni a kövön.
+sv_SV.UTF-8	Jag kan inte gå genom den här stenen.
 
 text		I can't go through the door.
 en_US.UTF-8	I can't go through the door.
 fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
 hu_HU.UTF-8	Nem tudok átmenni az ajtón.
+sv_SV.UTF-8	Jag kan inte gå genom dörren.
 
 text		Oops, a spider web.
 en_US.UTF-8	Oops, a spider web.
 fr_FR.UTF-8	Oups, une toile d'araignée.
 hu_HU.UTF-8	Upsz! Egy pókháló!
+sv_SV.UTF-8	Oj, ett spindelväv.
 
 text		I can't move anymore.
 en_US.UTF-8	I can't move anymore.
 fr_FR.UTF-8	Je ne peux plus bouger.
 hu_HU.UTF-8	Nem tudok többet mozogni.
+sv_SV.UTF-8	Jag kan inte röra mig mer.
 
 text		Wohoo, the exit!
 en_US.UTF-8	Wohoo, the exit!
 fr_FR.UTF-8	Ourah la sortie !
 hu_HU.UTF-8	Szuper!!! Kijutottam!!!
+sv_SV.UTF-8	Wohoo, utgången!
 
 text		I can't find a door to open.
 en_US.UTF-8	I can't find a door to open.
 fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
 hu_HU.UTF-8	Nem találom az ajtót, hogy kinyissam.
+sv_SV.UTF-8	Jag kan inte hitta en dörr att öppna.
 
 text		I can't go out carrying a rock.
 en_US.UTF-8	I can't go out carrying a rock.
 fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
 hu_HU.UTF-8	Nem tudom felvenni a követ.
+sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
 
 text		There's no rock to take here.
 en_US.UTF-8	There's no rock to take here.
 fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
 hu_HU.UTF-8	Nincs kő, amit leraknék.
+sv_SV.UTF-8	Det finns ingen sten att bära här.
 
 text		I can't drop the rock here.
 en_US.UTF-8	I can't drop the rock here.
 fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 hu_HU.UTF-8	Nem tudom ide lerakni a követ.
+sv_SV.UTF-8	Jag kan inte släppa stenen här.
 
 
 # ascii api names (no funny characters)
@@ -67,81 +79,97 @@ text:ascii	Ant
 en_US.UTF-8	Ant
 fr_FR.UTF-8	Fourmi
 hu_HU.UTF-8	Hangya
+sv_SV.UTF-8	Myra
 
 text:ascii	ant
 en_US.UTF-8	ant
 fr_FR.UTF-8	fourmi
 hu_HU.UTF-8	hangya
+sv_SV.UTF-8	myra
 
 text:ascii	left
 en_US.UTF-8	left
 fr_FR.UTF-8	gauche
 hu_HU.UTF-8	balra
+sv_SV.UTF-8	vanster
 
 text:ascii	right
 en_US.UTF-8	right
 fr_FR.UTF-8	droite
 hu_HU.UTF-8	jobbra
+sv_SV.UTF-8	hoger
 
 text:ascii	forward
 en_US.UTF-8	forward
 fr_FR.UTF-8	avance
 hu_HU.UTF-8	elore
+sv_SV.UTF-8	framat
 
 text:ascii	take
 en_US.UTF-8	take
 fr_FR.UTF-8	prend
 hu_HU.UTF-8	felvesz
+sv_SV.UTF-8	bara
 
 text:ascii	drop
 en_US.UTF-8	drop
 fr_FR.UTF-8	pose
 hu_HU.UTF-8	letesz
+sv_SV.UTF-8	slapp
 
 text:ascii	escape
 en_US.UTF-8	escape
 fr_FR.UTF-8	ouvre
 hu_HU.UTF-8	kimegy
+sv_SV.UTF-8	rymma
 
 text:ascii	look
 en_US.UTF-8	look
 fr_FR.UTF-8	regarde
 hu_HU.UTF-8	nez
+sv_SV.UTF-8	titta
 
 text:ascii	say
 en_US.UTF-8	say
 fr_FR.UTF-8	dit
 hu_HU.UTF-8	mondja
+sv_SV.UTF-8	sag
 
 text:ascii	Void
 en_US.UTF-8	Void
 fr_FR.UTF-8	Vide
 hu_HU.UTF-8	Semmi
+sv_SV.UTF-8	Tomt
 
 text:ascii	Wall
 en_US.UTF-8	Wall
 fr_FR.UTF-8	Mur
 hu_HU.UTF-8	Fal
+sv_SV.UTF-8	Vagg
 
 text:ascii	Rock
 en_US.UTF-8	Rock
 fr_FR.UTF-8	Caillou
 hu_HU.UTF-8	Ko
+sv_SV.UTF-8	Sten
 
 text:ascii	Web
 en_US.UTF-8	Web
 fr_FR.UTF-8	Toile
 hu_HU.UTF-8	Halo
+sv_SV.UTF-8	Spindelvav
 
 text:ascii	Exit
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 hu_HU.UTF-8	Kilep
+sv_SV.UTF-8	Utgang
 
 text:ascii	Unknown
 en_US.UTF-8	Unknown
 fr_FR.UTF-8	Inconnu
 hu_HU.UTF-8	Ismeretlen
+sv_SV.UTF-8	Okand
 
 
 # gfx.ml
@@ -150,40 +178,48 @@ text		Language:
 en_US.UTF-8	Language:
 fr_FR.UTF-8	Langage :
 hu_HU.UTF-8	Nyelv :
+sv_SV.UTF-8	Språk:
 
 text		Level:
 en_US.UTF-8	Level:
 fr_FR.UTF-8	Niveau :
 hu_HU.UTF-8	Szint :
+sv_SV.UTF-8	Nivå:
 
 text		Program:
 en_US.UTF-8	Program:
 fr_FR.UTF-8	Programme :
 hu_HU.UTF-8	Program :
+sv_SV.UTF-8	Program:
 
 text		Messages:
 en_US.UTF-8	Messages:
 fr_FR.UTF-8	Messages :
 hu_HU.UTF-8	Üzenet :
+sv_SV.UTF-8	Medelande:
 
 text		Help:
 en_US.UTF-8	Help:
 fr_FR.UTF-8	Aide :
 hu_HU.UTF-8	Segítség :
+sv_SV.UTF-8	Hjälp:
 
 text		graphic interface configuration
 en_US.UTF-8	graphic interface configuration
 fr_FR.UTF-8	configuration de l'interface graphique
 hu_HU.UTF-8	grafikus beállítások
+sv_SV.UTF-8	grafiskt gränssnitt konfiguration
 
 text		cannot load syntax for <name> mod
 en_US.UTF-8	cannot load syntax for <name> mod
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
+sv_SV.UTF-8	Kan inte ladda syntax för <name> mod
 
 text		size of tiles in pixels
 en_US.UTF-8	size of tiles in pixels
 fr_FR.UTF-8	taille des cases en pixels
 hu_HU.UTF-8	térképek nagysága pixelben
+sv_SV.UTF-8	Storlek av tile i pixlar
 
 
 # sound.ml
@@ -192,11 +228,13 @@ text		sound configuration
 en_US.UTF-8	sound configuration
 fr_FR.UTF-8	configuration du son
 hu_HU.UTF-8	hangbeállítások
+sv_SV.UTF-8	ljud konfiguration
 
 text		enable or disable sounds
 en_US.UTF-8	enable or disable sounds
 fr_FR.UTF-8	activer ou désactiver le son
 hu_HU.UTF-8	hang be/ki
+sv_SV.UTF-8	Aktivera eller avaktivera ljud
 
 
 # level.ml
@@ -205,21 +243,25 @@ text		unknown tile
 en_US.UTF-8	unknown tile
 fr_FR.UTF-8	case inconnue
 hu_HU.UTF-8	ismeretlen térkép
+sv_SV.UTF-8	Okänd tile
 
 text		mismatching line length
 en_US.UTF-8	mismatching line length
 fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
+sv_SV.UTF-8	Fel i linje längden
 
 text		bad level format: <file>
 en_US.UTF-8	bad level format: <file>
 fr_FR.UTF-8	format de fichier erroné : <file>
 hu_HU.UTF-8	rossz szint-formátum: <file>
+sv_SV.UTF-8	Fel nivå format: <file>
 
 text		missing level section <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
+sv_SV.UTF-8	Saknar nivå sektion <name> i: <file>
 
 
 # laby.ml
@@ -228,6 +270,7 @@ text		programming languages
 en_US.UTF-8	programming languages
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
+sv_SV.UTF-8	Programmerings språk
 
 
 # bot.ml
@@ -236,6 +279,7 @@ text		execution of interpreter failed
 en_US.UTF-8	execution of interpreter failed
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
+sv_SV.UTF-8	utförande av tolk misslyckades
 
 
 # misc
@@ -244,11 +288,13 @@ text		display failed
 en_US.UTF-8	display failed
 fr_FR.UTF-8	impossible d'ouvrir une fenêtre
 hu_HU.UTF-8	megjelenítás sikertelen
+sv_SV.UTF-8	visning misslyckades
 
 text		gtk error: <error>
 en_US.UTF-8	gtk error: <error>
 fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
+sv_SV.UTF-8	gtk fel: <error>
 
 
 # dtools
@@ -257,76 +303,92 @@ text		file <f>, line <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
 fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
+sv_SV.UTF-8	fil <f>, linje <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
 en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
 fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
+sv_SV.UTF-8	linje <l>, karaktär <begin-char>-<end-char>
 
 text		line <l>, character <char>
 en_US.UTF-8	line <l>, character <char>
 fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
+sv_SV.UTF-8	linje <l>, karaktär <char>
 
 text		lexical error
 en_US.UTF-8	lexical error
 fr_FR.UTF-8	erreur lexicale
 hu_HU.UTF-8	lexikális hiba
+sv_SV.UTF-8	lexikala fel
+
 
 text		syntax error
 en_US.UTF-8	syntax error
 fr_FR.UTF-8	erreur de syntaxe
 hu_HU.UTF-8	szintaxis hiba
+sv_SV.UTF-8	fel i syntax
 
 text		<status>: <message>
 en_US.UTF-8	<status>: <message>
 fr_FR.UTF-8	<status> : <message>
 hu_HU.UTF-8	<status> : <message>
+sv_SV.UTF-8	<status> : <message>
 
 text		exception
 en_US.UTF-8	exception
 fr_FR.UTF-8	exception
 hu_HU.UTF-8	kivétel
+sv_SV.UTF-8	undantag
 
 text		internal error
 en_US.UTF-8	internal error
 fr_FR.UTF-8	erreur interne
 hu_HU.UTF-8	belső hiba
+sv_SV.UTF-8	internt fel
 
 text		fatal error
 en_US.UTF-8	fatal error
 fr_FR.UTF-8	erreur fatale
 hu_HU.UTF-8	súlyos hiba
+sv_SV.UTF-8	fatalt fel
 
 text		error
 en_US.UTF-8	error
 fr_FR.UTF-8	erreur
 hu_HU.UTF-8	hiba
+sv_SV.UTF-8	fel
 
 text		warning
 en_US.UTF-8	warning
 fr_FR.UTF-8	avertissement
 hu_HU.UTF-8	figyelmeztetés
+sv_SV.UTF-8	varning
 
 text		debug
 en_US.UTF-8	debug
 fr_FR.UTF-8	debug
 hu_HU.UTF-8	hibakeresés
+sv_SV.UTF-8	debug
 
 text		failure
 en_US.UTF-8	failure
 fr_FR.UTF-8	échec
 hu_HU.UTF-8	sikertelen
+sv_SV.UTF-8	misslyckade
 
 text		done
 en_US.UTF-8	done
 fr_FR.UTF-8	fait
 hu_HU.UTF-8	kész
+sv_SV.UTF-8	klart
 
 text		line <l>
 en_US.UTF-8	line <l>
 fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
+sv_SV.UTF-8	linje <l>
 
 text		unknown token
 en_US.UTF-8	unknown token
@@ -337,26 +399,31 @@ text		unknown type
 en_US.UTF-8	unknown type
 fr_FR.UTF-8	type inconnu
 hu_HU.UTF-8	ismeretlen típus
+sv_SV.UTF-8	ökänd typ
 
 text		failed to load file: <error>
 en_US.UTF-8	failed to load file: <error>
 fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
 hu_HU.UTF-8	sikertelen fájlbetöltés: <error>
+sv_SV.UTF-8	misslyckades med att ladda fil: <error>
 
 text		<type> value expected
 en_US.UTF-8	<type> value expected
 fr_FR.UTF-8	valeur de type <type> attendue
 hu_HU.UTF-8	<type> típust várok
+sv_SV.UTF-8	<type> värde förväntades
 
 text		the given configuration key has type <type>
 en_US.UTF-8	the given configuration key has type <type>
 fr_FR.UTF-8	la clé de configuration donnée a le type <type>
 hu_HU.UTF-8	a megadott konfigurációs billentyű <type> típusú
+sv_SV.UTF-8	viss konfiguration nyckeln typ <type>
 
 text		the given configuration key cannot be assigned a value
 en_US.UTF-8	the given configuration key cannot be assigned a value
 fr_FR.UTF-8	la clé de configuration donnée ne peut recevoir une valeur
 hu_HU.UTF-8	a megadott konfigurációs billentyűhöz nem rendelhető érték
+sv_SV.UTF-8	den givna konfiguration nyckeln kan inte få värdet
 
 text		assignation syntax is <syntax>
 en_US.UTF-8	assignation syntax is <syntax>
