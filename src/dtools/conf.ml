@@ -365,22 +365,20 @@ let set (t: ut) s =
 
 exception File_Error of F.t
 
+
+
 let load ?(log=fun _ -> ()) t s =
-  let nb = Pervasives.ref 0 in
-  begin try
-    let f = open_in s in
-    while true do
-      nb := !nb + 1;
+  let rec get_confs ?(lineno=1) f =
+    begin try
       let l = input_line f in
-      if Str.string_match comment_regexp l 0
-      then ()
-      else
+      if not (Str.string_match comment_regexp l 0)
+      then
 	begin try set t l () with
 	| Wrong_Conf (x, msg) ->
 	    log (
 	      F.x "file <f>, line <l>: <error>" [
 		"f", F.string s;
-		"l", F.int (!nb);
+		"l", F.int lineno;
 		"error", msg;
 	      ]
 	    )
@@ -393,14 +391,20 @@ let load ?(log=fun _ -> ()) t s =
 	    log (
 	      F.x "file <f>, line <l>: <error>" [
 		"f", F.string s;
-		"l", F.int (!nb);
+		"l", F.int lineno;
 		"error", F.v [err];
 	      ]
 	    )
-	end
-    done
+	end;
+      get_confs ~lineno:(lineno + 1) f
+    with
+    | End_of_file -> close_in f;
+    end
+  in
+  begin try
+    let f = open_in s in
+    get_confs f
   with
-  | End_of_file -> ()
   | Sys_error m ->
       raise (
 	File_Error (
