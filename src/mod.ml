@@ -264,6 +264,7 @@ let make () =
 		hr := Some h;
 		true
 	    | _ ->
+		h.close ();
 		false
 	    end
 	end
