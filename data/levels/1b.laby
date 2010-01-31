@@ -11,7 +11,9 @@ rocks
 title:
 en_US.UTF-8	Oh a rock
 fr_FR.UTF-8	Oh le caillou
+hu_HU.UTF-8	Óóó, egy szikla
 
 comment:
 en_US.UTF-8	A rock is in the way. Use specific instructions to take and drop rocks.
 fr_FR.UTF-8	Un caillou te barre la route. Il faut utiliser les instructions qui permettent de prendre et de poser les cailloux.
+hu_HU.UTF-8	Egy szikla van az utadban. Használd a különleges utasításokat, hogy felemeld és letedd a sziklát.

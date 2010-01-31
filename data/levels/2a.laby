@@ -9,7 +9,9 @@ loop
 title:
 en_US.UTF-8	So far
 fr_FR.UTF-8	Que c'est loin
+hu_HU.UTF-8	Messze van még
 
 comment:
 en_US.UTF-8	Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.
 fr_FR.UTF-8	Simple pas vrai ? Le but du jeu ici c'est d'écrire un programme court en utilisant une boucle “while” qui dit au robot d'avancer tant que la case devant lui est vide.
+hu_HU.UTF-8	Egyszerű, mi? A cél, hogy írj egy rövidke programot a "while" ciklus használatával, amely megmondja a robotnak, hogy menjen előre, amíg nincs előtte akadály.
