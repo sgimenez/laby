@@ -1,7 +1,8 @@
 linux:
 
-  you need ocaml >= 3.10.0 and lablgtk >= 2.10.0, then execute the
-  following commands in this directory:
+  you need ocaml >= 3.10.0 and lablgtk >= 2.14.0 (with support for
+  gtksourceview2), then execute the following commands in this
+  directory:
 
     make
     ln -s ${PWD}/data ${HOME}/.config/laby
@@ -20,6 +21,6 @@ windows (not supported yet, won't work without big amounts of hacking):
 
     - ocaml >= 3.10.0 :
         http://caml.inria.fr/download.en.html
-    - lablgtk >= 2.10.0 :
+    - lablgtk >= 2.14.0 :
         http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/lablgtk.html
 
