@@ -72,6 +72,9 @@ fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 hu_HU.UTF-8	Nem tudom ide lerakni a követ.
 sv_SV.UTF-8	Jag kan inte släppa stenen här.
 
+text		I have nothing to drop.
+en_US.UTF-8	I have nothing to drop.
+fr_FR.UTF-8	Je n'ai rien à poser.
 
 # ascii api names (no funny characters)
 

@@ -42,7 +42,8 @@ let action =
   | `Rock_Take -> play "rock-take"
   | `Rock_Drop -> play "rock-drop"
   | `Rock_No_Take -> play "rock-no-take"
-  | `Rock_No_Drop -> play "rock-no-drop"
+  | `Drop_Nothing -> play "drop-nothing"
+  | `Drop_No_Space -> play "drop-no-space"
   | `Say _ -> ()
   end
 

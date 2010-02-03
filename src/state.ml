@@ -14,7 +14,7 @@ type action =
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
- | `Rock_No_Take | `Rock_No_Drop
+ | `Rock_No_Take | `Drop_Nothing | `Drop_No_Space
  | `Say of string
  ]
 
@@ -154,7 +154,8 @@ let run action state =
             carry = `None;
 	    action = `Rock_Drop;
 	  }
-      |  _, _ -> "error", chg state `Rock_No_Drop
+      | `None, _ -> "error", chg state `Drop_Nothing
+      |  _, _ -> "error", chg state `Drop_No_Space
       end
   | a when String.length a > 4 && String.sub a 0 4 = "say " ->
       "ok", chg state (`Say (String.sub a 4 (String.length a - 4)))
