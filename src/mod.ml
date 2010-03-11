@@ -15,47 +15,17 @@ let conf_selected =
   Conf.string ~p:(conf#plug "selected") ~d:""
     (F.x "select a specific programming mod" [])
 
-let check m =
-  let command = Res.get ["scripts"; "mod"] in
-  begin try
-    let modlib = Res.get ["mods"; m; "lib"] in
-    begin match flush_all (); Unix.fork () with
-    | 0 ->
-	Unix.execvp command [| command; modlib; "info" |]
-    | pid ->
-	let _, status = Unix.waitpid [] pid in
-	status = Unix.WEXITED 0
-    end
-  with
-  | Res.Error _ -> false
-  end
-
-let get_list () =
-  begin match conf_selected#get with
-  | "" ->
-      List.filter check (Res.get_list ["mods"])
-  | m ->
-      if check m then [m]
-      else
-	Run.fatal (
-	  F.x "selected mod cannot be found: <mod>" [
-	    "mod", F.string m;
-	  ]
-	)
-  end
-
 type query = string * (string -> unit)
 
 type t =
     <
-      set_name: string -> unit;
-      get_name: string;
-      errto: (string -> unit) -> unit;
+      name: string;
+      check: bool;
       set_buf: string -> unit;
       get_buf: string;
-      start: bool;
-      probe: query option;
-      close: unit;
+      start: (string -> unit) -> bool;
+      probe: (string -> unit) -> query option;
+      stop: unit;
       help: string -> string;
     >
 
@@ -65,256 +35,323 @@ type h =
       in_ch : Unix.file_descr;
       out_ch : Unix.file_descr;
       err_ch : Unix.file_descr;
-      mutable current: string;
+      mutable current: char list;
       mutable buf : string list;
     }
 
-let bufsize = 16384
-let buffer = String.create bufsize
-
 let substs =
   [
-    "laby_name_ant", F.xs "ascii" "ant" [];
-    "laby_name_Ant", F.xs "ascii" "Ant" [];
-    "laby_name_left", F.xs "ascii" "left" [];
-    "laby_name_right", F.xs "ascii" "right" [];
-    "laby_name_forward", F.xs "ascii" "forward" [];
-    "laby_name_take", F.xs "ascii" "take" [];
-    "laby_name_drop", F.xs "ascii" "drop" [];
-    "laby_name_escape", F.xs "ascii" "escape" [];
-    "laby_name_look", F.xs "ascii" "look" [];
-    "laby_name_say", F.xs "ascii" "say" [];
-    "laby_name_Void", F.xs "ascii" "Void" [];
-    "laby_name_Wall", F.xs "ascii" "Wall" [];
-    "laby_name_Rock", F.xs "ascii" "Rock" [];
-    "laby_name_Web", F.xs "ascii" "Web" [];
-    "laby_name_Exit", F.xs "ascii" "Exit" [];
-    "laby_name_Unknown", F.xs "ascii" "Unknown" [];
+    "ant", F.xs "ascii" "ant" [];
+    "Ant", F.xs "ascii" "Ant" [];
+    "left", F.xs "ascii" "left" [];
+    "right", F.xs "ascii" "right" [];
+    "forward", F.xs "ascii" "forward" [];
+    "take", F.xs "ascii" "take" [];
+    "drop", F.xs "ascii" "drop" [];
+    "escape", F.xs "ascii" "escape" [];
+    "look", F.xs "ascii" "look" [];
+    "say", F.xs "ascii" "say" [];
+    "Void", F.xs "ascii" "Void" [];
+    "Wall", F.xs "ascii" "Wall" [];
+    "Rock", F.xs "ascii" "Rock" [];
+    "Web", F.xs "ascii" "Web" [];
+    "Exit", F.xs "ascii" "Exit" [];
+    "Unknown", F.xs "ascii" "Unknown" [];
   ]
+
+let ln_regexp =
+  Str.regexp "laby_name_[a-zA-Z0-9]"
+
+let subst : string -> string =
+  let repl x =
+    let s = Str.matched_string x in
+    let ss = String.sub s 10 (String.length s - 10) in
+    begin try
+      Fd.render_raw (List.assoc ss substs)
+    with
+    | Not_found -> ss
+    end
+  in
+  Str.global_substitute ln_regexp repl
 
 let rec mktempdir ?(seed=0) ident =
   let pid = Unix.getpid () in
-  let dir = Printf.sprintf "/tmp/%s-%d:%d/" ident pid seed in
+  let dir =
+    begin match Sys.os_type with
+    | "Unix" | "Cygwin" ->
+	Printf.sprintf "/tmp/%s-%d--%d" ident pid seed
+    | "Win32" ->
+	Printf.sprintf "%s\\%s-%d--%d" (Sys.getenv "TEMP") ident pid seed
+    | _ -> assert false
+    end
+  in
   begin try Unix.mkdir dir 0o755; dir with
   | Unix.Unix_error (Unix.EEXIST, _, _) -> mktempdir ~seed:(seed + 1) ident
   end
 
-let dump prog =
-  let tmpdir = mktempdir "ant" in
-  let write filename s =
-    let fd =
-      Unix.openfile (tmpdir ^ filename)
-	[ Unix.O_CREAT; Unix.O_TRUNC; Unix.O_WRONLY]
-	0o644
-    in
-    ignore (Unix.write fd s 0 (String.length s));
-    Unix.close fd;
-  in
-  write "program" prog;
-  let subst =
-    let f (x, y) = "s/" ^ x ^ "/" ^ Fd.render_raw y ^ "/g" in
-    String.concat "\n" (List.map f substs);
-  in
-  write "subst" subst;
-  tmpdir
+let clean tmp =
+  begin try
+    let rm n = Unix.unlink (Res.path [tmp; n]) in
+    Array.iter rm (Sys.readdir tmp);
+    Unix.rmdir tmp
+  with
+  | Sys_error _ | Unix.Unix_error _ -> ()
+  end
 
-let clean tmpdir =
-  ignore (Unix.system ("rm -rf " ^ tmpdir))
-
+let bufsize = 16384
+let buffer = String.create bufsize
 let buf_read fd f =
   begin match Unix.read fd buffer 0 bufsize with
   | 0 -> false
   | i -> f (String.sub buffer 0 i); true
   end
 
-let input ?(timeout=0.5) errto h =
-  let output s =
-    let str = s ^ "\n" in
-    let len = String.length str in
-    ignore (Unix.write h.out_ch str 0 len)
-  in
+let output fd s =
+  let str = s ^ "\n" in
+  let len = String.length str in
+  ignore (Unix.write fd str 0 len)
+
+let input ?(timeout=0.5) err h =
   let collect s =
     for j = 0 to String.length s - 1; do
       begin match s.[j] with
+      | '\r' -> ()
       | '\n' ->
-	  h.buf <- h.buf @ [h.current];
-	  h.current <- "";
-      | c -> h.current <- h.current ^ (String.make 1 c)
+	  let l = List.rev h.current in
+	  let nbuf = String.concat "" (List.map (String.make 1) l) in
+	  h.buf <- h.buf @ [nbuf];
+	  h.current <- [];
+      | c -> h.current <- c :: h.current
       end
     done
   in
   let rec loop () =
     begin match h.buf with
     | a :: q ->
-	h.buf <- q; Some (a, output)
+	h.buf <- q; Some (a, output h.out_ch)
     | [] ->
-	let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] timeout in
-	if l = [] then (errto "...\n"; None)
-	else (
-	  if List.mem h.err_ch l then
-	    ignore (buf_read h.err_ch errto);
-	  if List.mem h.in_ch l then
-	    if buf_read h.in_ch collect
-	    then loop ()
-	    else None
-	  else loop ()
-	)
+	begin match Sys.os_type with
+	| "Win32" -> (* no select... so forget about err_ch for now *)
+	    if buf_read h.in_ch collect then loop () else None
+	| _ ->
+	    let l, _, _ = Unix.select [h.in_ch; h.err_ch] [] [] timeout in
+	    begin match l with
+	    | [] -> err "...\n"; None
+	    | _ ->
+		if List.mem h.err_ch l then
+		  ignore (buf_read h.err_ch err);
+		if List.mem h.in_ch l then
+		  if buf_read h.in_ch collect
+		  then loop ()
+		  else None
+		else loop ()
+	    end
+	end
     end
   in
-  loop ()
+  begin try loop () with
+  | Unix.Unix_error (Unix.EPIPE, _, _) ->
+      begin match Sys.os_type with
+      | "Win32" -> (* dump all err_ch on failure *)
+	  begin try ignore (buf_read h.err_ch err)  with
+	  | Unix.Unix_error (Unix.EPIPE, _, _) -> ()
+	  end;
+      | _ -> ()
+      end;
+      None
+  end
 
-let make () =
-  let subst s =
-    let f s (x, y) =
-      Str.global_replace (Str.regexp_string x) (Fd.render_raw y) s
-    in
-    List.fold_left f s substs
+let tab_regexp = Str.regexp "[ \t]+"
+
+let exe =
+  begin match Sys.os_type with
+  | "Win32" -> ".exe"
+  | _ -> ""
+  end
+
+let need x =
+  Res.get_bin x <> None
+
+let fetch (tmp, lib, prg, err) x =
+  let f = open_out (Res.path [tmp; subst x]) in
+  output_string f (subst (Res.read_full (Res.path [lib; x])));
+  close_out f;
+  true
+
+let dump (tmp, lib, prg, err) x =
+  let f = open_out (Res.path [tmp; subst x]) in
+  output_string f prg;
+  close_out f;
+  true
+
+let exec (tmp, lib, prg, err) p pl =
+  let r, w = Unix.pipe () in
+  let pid =
+    Unix.chdir tmp;
+    Unix.create_process (p ^ exe) (Array.of_list (p :: pl)) Unix.stdin w w
   in
+  let status =
+    begin match snd (Unix.waitpid [] pid) with
+    | Unix.WEXITED 0 ->
+	true
+    | Unix.WEXITED i ->
+	log#debug 1 (
+	  F.x "exection of <command> returned: <errno>" [
+	    "errno", F.int i;
+	    "command", F.string p;
+	  ]);
+	false
+    | _ ->
+	log#debug 1 (
+	  F.x "execution of <command> failed" [
+	    "command", F.string p;
+	  ]
+	);
+	false
+    end
+  in
+  Unix.close w;
+  begin try ignore(buf_read r err) with
+  | Unix.Unix_error (Unix.EPIPE, _, _) -> ()
+  end;
+  Unix.close r;
+  status
+
+let make name : t =
+  let rules = Res.read_blocks (Res.get ["mods"; name; "lib"; "rules"]) in
+  let skel = Res.read_full (Res.get ["mods"; name; "skel"]) in
+  let find_tab s b =
+    begin match rules s with
+    | None -> []
+    | Some l -> List.map (Str.split tab_regexp) l
+    end
+  in
+  let info = find_tab "info:" rules in
+  let steps = find_tab "run:" rules in
+  let fail l =
+    Run.fatal (
+      F.x "invalid directive: <line>" [
+	"line", F.string (String.concat " " l);
+      ]
+    )
+  in
+  let check_one l =
+    begin match l with
+    | ["need"; x] -> need x
+    | _ -> fail l
+    end
+  in
+  let rec run a l =
+    begin match l with
+    | ["fetch"; x] :: q -> if fetch a x then run a q else None
+    | ["dump"; x] :: q -> if dump a x then run a q else None
+    | ("exec" :: p :: pl) :: q -> if exec a p pl then run a q else None
+    | ["spawn" :: p :: pl] -> Some (false, p, pl)
+    | ["spawnl" :: p :: pl] -> Some (true, p, pl)
+    | [] -> fail ["spawn"]
+    | _ -> fail (List.hd l)
+    end
+  in
+  let check = List.for_all check_one info in
   object (self)
 
     val hr = ref None
+    val buffer = ref (subst skel)
 
-    val buffers = Hashtbl.create 64
+    method name = name
 
-    val errto = ref (fun s -> ())
+    method check = check
 
-    val name = ref "demo"
+    method get_buf = !buffer
 
-    method set_name n =
-      name := n
+    method set_buf buf = buffer := buf
 
-    method get_name =
-      !name
-
-    method get_buf =
-      begin try Hashtbl.find buffers !name with
-      | Not_found ->
-	  let s = ref "" in
-	  let f = open_in (Res.get ["mods"; !name; "skel"]) in
-	  begin try
-	    while true do
-	      s := !s ^ input_line f ^ "\n"
-	    done
-	  with
-	  | End_of_file -> ()
-	  end;
-	  close_in f;
-	  subst !s
+    method start err =
+      self#stop;
+      let lib = Res.get ["mods"; name; "lib"] in
+      let prg = self#get_buf in
+      let tmp = mktempdir "ant" in
+      begin match run (tmp, lib, prg, err) steps with
+      | None -> false
+      | Some (local, p, pl) ->
+	  let bin =
+	    begin match local with
+	    | true ->
+		let path = Res.path [tmp; p] in
+		begin match Sys.os_type with
+		| "Win32" -> Unix.rename path (path ^ exe); path ^ exe
+		| _ -> path
+		end
+	    | false -> p ^ exe
+	    end
+	  in
+	  let out_ch', out_ch = Unix.pipe () in
+	  let in_ch, in_ch' = Unix.pipe () in
+	  let err_ch, err_ch' = Unix.pipe () in
+	  let pid =
+	    Unix.chdir tmp;
+	    let args = Array.of_list (p :: pl) in
+	    Unix.create_process bin args out_ch' in_ch' err_ch'
+	  in
+	  Unix.close in_ch'; Unix.close out_ch'; Unix.close err_ch';
+	  let close () =
+	    begin match Sys.os_type with
+	    | "Unix" | "Cygwin" ->
+		Unix.kill pid Sys.sigterm;
+		ignore (Unix.waitpid [] pid)
+	    | "Win32" ->
+		begin try output out_ch "quit" with
+		| Unix.Unix_error (_, _, _) -> ()
+		end;
+		(* either the process kindly terminates or we'll be stuck *)
+		ignore (Unix.waitpid [] pid)
+	    | _ -> assert false
+	    end;
+	    Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
+	    clean tmp;
+	  in
+	  let h =
+	    {
+	      close = close;
+	      in_ch = in_ch; out_ch = out_ch; err_ch = err_ch;
+	      current = []; buf = [];
+	    }
+	  in
+	  begin match input ~timeout:5. err h with
+	  | Some ("start", output) ->
+	      output "go";
+	      hr := Some h;
+	      true
+	  | _ ->
+	      h.close ();
+	      false
+	  end
       end
 
-    method set_buf buf =
-      Hashtbl.replace buffers !name buf
-
-    method errto f =
-      errto := f
-
-    method start =
-      self#close;
-      let modlib = Res.get ["mods"; !name; "lib"] in
-      let command = Res.get ["scripts"; "mod"] in
-      let tmpdir = dump self#get_buf in
-      let out_ch', out_ch = Unix.pipe () in
-      let in_ch, in_ch' = Unix.pipe () in
-      let err_ch, err_ch' = Unix.pipe () in
-      let prep () =
-	begin match flush_all (); Unix.fork () with
-	| 0 ->
-	    Unix.chdir tmpdir;
-	    Unix.execvp command [| command; modlib; "prep" |]
-	| pid ->
-	    let _, status = Unix.waitpid [] pid in
-	    status = Unix.WEXITED 0
-	end
-      in
-      let run () =
-	begin match flush_all (); Unix.fork () with
-	| 0 ->
-	    Unix.dup2 in_ch' Unix.stdout;
-	    Unix.dup2 out_ch' Unix.stdin;
-	    Unix.dup2 err_ch' Unix.stderr;
-	    Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
-	    Unix.chdir tmpdir;
-	    begin try
-	      Unix.execvp command [| command; modlib; "run" |]
-	    with
-	    | exn ->
-		log#error (
-		  F.x "execution of interpreter failed" []
-		);
-		assert false
-	    end
-	| pid ->
-	    Unix.close in_ch'; Unix.close out_ch'; Unix.close err_ch';
-	    let close () =
-	      Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
-	      clean tmpdir;
-	      Unix.kill pid Sys.sigterm;
-	      ignore (Unix.waitpid [] pid)
-	    in
-	    let h =
-	      {
-		close = close;
-		in_ch = in_ch; out_ch = out_ch; err_ch = err_ch;
-		current = ""; buf = [];
-	      }
-	    in
-	    begin match input ~timeout:5. !errto h with
-	    | Some ("start", output) ->
-		output "go";
-		hr := Some h;
-		true
-	    | _ ->
-		h.close ();
-		false
-	    end
-	end
-      in
-      prep () && run ()
-
-    method close =
+    method stop =
       begin match !hr with
       | None -> ()
       | Some h -> h.close (); hr := None
       end
 
-    method probe =
+    method probe err =
       begin match !hr with
       | None -> None
-      | Some h -> input !errto h
+      | Some h -> input err h
       end
 
     method help s =
-      let mf =
-	begin try
-	  Some (open_in (Res.get ["mods"; !name; "help"]))
-	with
-	| Res.Error _ -> None
-	end
-      in
-      let rec input f blocks lines =
-	begin try
-	  begin match input_line f with
-	  | "" -> input f (List.rev lines :: blocks) []
-	  | l -> input f blocks (l :: lines)
-	  end
-	with
-	| End_of_file -> List.rev (List.rev lines :: blocks)
-	end
-      in
-      let rec app s f blocks =
-	begin match blocks with
-	| [] -> ""
-	| (h :: lines) :: q ->
-	    if h = s then f lines else app s f q
-	| [] :: q -> ""
-	end
-      in
-      begin match mf with
+      let sections = Res.read_blocks (Res.get ["mods"; name; "help"]) in
+      begin match sections (s ^ ":") with
       | None -> ""
-      | Some f ->
-	  let blocks = input f [] [] in
-	  close_in f;
-	  subst (app (s ^ ":") (String.concat "\n") blocks) ^ "\n"
+      | Some l -> subst (String.concat "\n" l) ^ "\n"
       end
 
   end
+
+let pool () =
+  begin match conf_selected#get with
+  | "" -> List.map make (Res.get_list ["mods"])
+  | name -> [make name]
+  end
+

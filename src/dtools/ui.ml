@@ -92,10 +92,8 @@ let read_texts path file =
 let load_texts () =
   if lang <> "" then
   begin try
-    Res.use [conf_texts#get] (
-      fun filename file ->
-	read_texts filename file;
-    )
+    let path = Res.get [conf_texts#get] in
+    Res.read_chan path (read_texts path)
   with
   | Res.Error msg ->
       log#warning msg
@@ -103,8 +101,8 @@ let load_texts () =
 
 let load_theme () =
   begin try
-    let filename = Res.get [conf_theme#get] in
-    Conf.load ~log:(log#debug 2) Fd.conf_tags#ut filename
+    let path = Res.get [conf_theme#get] in
+    Conf.load ~log:(log#debug 2) Fd.conf_tags#ut path
   with
   | Res.Error msg ->
       log#warning msg

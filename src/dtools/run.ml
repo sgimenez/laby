@@ -83,9 +83,9 @@ let exit_when_root () =
   if Unix.geteuid () = 0 then security "root euid";
   if Unix.getegid () = 0 then security "root egid"
 
-let init ?(prohibit_root=false) ?path ?conf ?services action =
+let init ?(prohibit_root=false) ?name ?conf ?services action =
   if prohibit_root then exit_when_root ();
-  Res.conf_paths#set_d path;
+  Res.conf_domain#set_d name;
   begin match conf with
   | None -> ()
   | Some (conf, res) ->
@@ -118,11 +118,15 @@ let init ?(prohibit_root=false) ?path ?conf ?services action =
     end
   in
   Sys.catch_break true;
-  Sys.set_signal Sys.sigpipe (Sys.Signal_handle signal);
+  begin match Sys.os_type with
+  | "Unix" ->
+      Sys.set_signal Sys.sigpipe (Sys.Signal_handle signal);
+      Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);
+      Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
+      Sys.set_signal Sys.sighup Sys.Signal_ignore;
+  | _ -> ()
+  end;
   Sys.set_signal Sys.sigterm (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sigquit (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
-  Sys.set_signal Sys.sighup Sys.Signal_ignore;
   let clean =
     begin match conf_daemon#get with
     | false -> fun () -> ()
@@ -187,10 +191,14 @@ let hook f a h =
   end
 
 let timeout ?(seconds=2) f a h =
-  ignore (Unix.alarm seconds);
-  Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
-  let start () = (try f a with Signal i when i = Sys.sigalrm -> h ()) in
-  hook start () (fun () ->
-    Sys.set_signal Sys.sigalrm Sys.Signal_ignore
-  )
+  begin match Sys.os_type with
+  | "Unix" | "Cygwin" ->
+      ignore (Unix.alarm seconds);
+      Sys.set_signal Sys.sigalrm (Sys.Signal_handle signal);
+      let start () = (try f a with Signal i when i = Sys.sigalrm -> h ()) in
+      hook start () (fun () ->
+        Sys.set_signal Sys.sigalrm Sys.Signal_ignore
+      )
+  | _ -> f a
+  end
 

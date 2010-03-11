@@ -18,33 +18,65 @@ val conf : Conf.ut
      Resource configuration key.
   *)
 
-val conf_paths : string list Conf.t
+val conf_domain : string Conf.t
+  (**
+     Global resource domain.
+  *)
+
+val conf_data_dirs : string list Conf.t
+  (**
+     Global resource paths.
+  *)
+
+val conf_bin_dirs : string list Conf.t
   (**
      Global resource paths.
   *)
 
 exception Error of F.t
   (**
-     Execption raised when resources cannot be found/acceced.
+     Execption raised when resources cannot be found/accessed.
   *)
+
+
+type path = string
+
+val path : string list -> path
+
+
+(* Data units *)
+
 
 type t = string list
   (**
-     Resources paths.
+     Resource unit
   *)
 
-val get : t -> string
+val get : t -> path
   (**
-     Return a filename for the given resource.
+     Return a filename for the given resource unit.
   *)
 
 val get_list : ?ext:string -> t -> string list
   (**
      Return a list of subresources (with given extention) for the
-     given resource.
+     given resource unit.
   *)
 
-val use : t -> (string -> in_channel -> unit) -> unit
-  (**
-     Easy resource accessor.
-  *)
+
+(* Easy resource accessors *)
+
+
+val read_chan : path -> (in_channel -> unit) -> unit
+
+val read_full : path -> string
+
+val read_lines : path -> string list
+
+val read_blocks : path -> string -> string list option
+
+
+(* Binaries *)
+
+val get_bin : string -> path option
+

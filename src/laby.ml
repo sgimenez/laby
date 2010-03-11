@@ -43,7 +43,7 @@ let opts =
 
 let _ =
   Run.init
-    ~path:[Config.conf_path; Config.sys_data_path;]
+    ~name:Config.project_name
     ~conf:(conf, ["conf"])
     ~services:[Ui.theme; Ui.texts]
     (`Opts (opts, proceed))

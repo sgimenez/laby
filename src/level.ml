@@ -89,46 +89,28 @@ let rec get_sentence default lines =
   end
 
 let load file =
-  let f = open_in file in
-  let rec input blocks lines =
-    begin try
-      begin match input_line f with
-      | "" -> input (List.rev lines :: blocks) []
-      | l -> input blocks (l :: lines)
-      end
-    with
-    | End_of_file -> List.rev (List.rev lines :: blocks)
+  let sections = Res.read_blocks file in
+  let map, antpos, dir, mrocks, mwebs =
+    get_map (match sections "map:" with None -> [] | Some l -> l)
+  in
+  let title =
+    begin match sections "title:" with
+    | None -> "?"
+    | Some l -> get_sentence "" l
     end
   in
-  let rec app ?default s f blocks =
-    begin match blocks with
-    | [] ->
-	begin match default with
-	| Some x -> x
-	| None ->
-	    Run.fatal (
-	      F.x "missing level section <name> in: <file>" [
-		"name", F.string s;
-		"file", F.string file;
-	      ];
-	    );
-	end
-    | (h :: lines) :: q ->
-	if h = s then f lines else app ?default s f q
-    | [] :: q ->
-	Run.fatal (
-	  F.x "bad level format: <file>" [
-	    "file", F.string file;
-	  ];
-	);
+  let comment =
+    begin match sections "comment:" with
+    | None -> "?"
+    | Some l -> get_sentence "" l
     end
   in
-  let blocks = input [] [] in
-  close_in f;
-  let map, antpos, dir, mrocks, mwebs = app "map:" get_map blocks in
-  let title = app "title:" (get_sentence "") blocks in
-  let comment = app "comment:" (get_sentence "") blocks in
-  let help = app ~default:"" "help:" (String.concat " ") blocks in
+  let help =
+    begin match sections "help:" with
+    | None -> ""
+    | Some l -> String.concat " " l
+    end
+  in
   {
     map = map; pos = antpos; dir = dir;
     mrocks = mrocks; mwebs = mwebs;

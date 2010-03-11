@@ -8,21 +8,19 @@
 val conf : Conf.ut
 val conf_selected : string Conf.t
 
-val get_list : unit -> string list
-
 type query = string * (string -> unit)
 
 type t =
     <
-      set_name: string -> unit;
-      get_name: string;
-      errto: (string -> unit) -> unit;
+      name: string;
+      check: bool;
       set_buf: string -> unit;
       get_buf: string;
-      start: bool;
-      probe: query option;
-      close: unit;
+      start: (string -> unit) -> bool;
+      probe: (string -> unit) -> query option;
+      stop: unit;
       help: string -> string;
     >
 
-val make : unit -> t
+val pool : unit -> t list
+

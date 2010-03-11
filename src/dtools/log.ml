@@ -242,9 +242,12 @@ let init () =
     | _ -> ()
     end
   in
-  (* Re-open log file on SIGUSR1 -- for logrotate *)
-  Sys.set_signal Sys.sigusr1
-    (Sys.Signal_handle (fun _ -> mutexify reopen ()));
+  begin match Sys.os_type with
+  | "Unix" ->  (* Re-open log file on SIGUSR1 -- for logrotate *)
+      Sys.set_signal Sys.sigusr1
+	(Sys.Signal_handle (fun _ -> mutexify reopen ()));
+  | _ -> ()
+  end;
   mutexify proceed ()
 
 let start = Srv.make ~name:"srv-log-start" ~before:[Srv.start] init

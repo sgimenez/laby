@@ -54,17 +54,27 @@ type controls =
     }
 
 let gtk_init () =
-  let _ = GtkMain.Main.init () in
   GtkSignal.user_handler := Pervasives.raise;
+  let _ = GtkMain.Main.init () in
   (* work around messed up gtk/lablgtk *)
   Sys.catch_break false;
-  Sys.set_signal Sys.sigpipe (Sys.Signal_default);
+  begin match Sys.os_type with
+  | "Unix" ->
+      Sys.set_signal Sys.sigpipe (Sys.Signal_default);
+      Sys.set_signal Sys.sigquit (Sys.Signal_default);
+  | _ -> ()
+  end;
   Sys.set_signal Sys.sigterm (Sys.Signal_default);
-  Sys.set_signal Sys.sigquit (Sys.Signal_default);
   let tile_size = max 5 conf_tilesize#get in
   let pix p =
     let file = Res.get ["tiles"; p ^ ".svg"] in
-    GdkPixbuf.from_file_at_size file tile_size tile_size
+    begin try
+      GdkPixbuf.from_file_at_size file tile_size tile_size
+    with
+    | GdkPixbuf.GdkPixbufError(GdkPixbuf.ERROR_UNKNOWN_TYPE, _) ->
+	let file = Res.get ["tiles"; p ^ ".png"] in
+	GdkPixbuf.from_file_at_size file tile_size tile_size
+    end
   in
   {
     size = tile_size;
@@ -204,29 +214,34 @@ let make_pixmap tile_size level =
   GDraw.pixmap ~width ~height ()
 
 let display_gtk () =
-  let language_list = List.sort (compare) (Mod.get_list ()) in
+  let amods = Mod.pool () in
+  let mods = List.filter (fun x -> x#check) amods in
+  let language_list =
+    List.sort (compare) (List.map (fun x -> x#name) mods)
+  in
+  if mods = [] then
+    Run.fatal (
+      F.x "no mod is available among: <list>" [
+	"list", F.v (List.map (fun x -> F.string x#name) amods);
+      ]
+    );
+  let lmod = ref (List.hd mods) in
+  let sel_mod m = lmod := List.find (fun x -> x#name = m) mods in
   let levels_list =
     List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
-  let lmod = Mod.make () in
   let level = ref Level.dummy in
   let bg = ref `WHITE in
   begin try
     let ressources = gtk_init () in
     let c = layout () in
     let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
-    let destroy () =
-      lmod#close;
-      c.window#destroy ();
-      GMain.Main.quit ()
-    in
-    lmod#errto (fun s -> c.view_mesg#buffer#insert s);
     let mesg m =
       c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
       c.view_mesg#buffer#insert (Fd.render_raw m ^ "\n")
     in
     let step state =
-      begin match lmod#probe with
+      begin match !lmod#probe c.view_mesg#buffer#insert with
       | None -> None
       | Some (action, reply) ->
 	  let answer, newstate = State.run action state in
@@ -241,7 +256,7 @@ let display_gtk () =
       | "" ->
 	  c.box_help#misc#hide ()
       | help ->
-	  c.view_help#buffer#set_text (lmod#help help);
+	  c.view_help#buffer#set_text (!lmod#help help);
 	  c.box_help#misc#show ()
       end
     in
@@ -266,7 +281,7 @@ let display_gtk () =
       Say.action mesg action; Sound.action action
     in
     let lmod_stop () =
-      lmod#close;
+      !lmod#stop;
       c.view_mesg#buffer#set_text "";
       ctrl_sensitive false;
       trace := trace_init ();
@@ -274,9 +289,8 @@ let display_gtk () =
       show_execute ()
     in
     let lmod_start () =
-      lmod#set_name (c.interprets#entry#text);
-      lmod#set_buf (c.view_prog#buffer#get_text ());
-      begin match lmod#start with
+      !lmod#set_buf (c.view_prog#buffer#get_text ());
+      begin match !lmod#start c.view_mesg#buffer#insert with
       | true ->
 	  mesg (F.h [F.s "——"; Say.good_start; F.s "——"]);
 	  ctrl_sensitive true
@@ -285,29 +299,34 @@ let display_gtk () =
 	  ctrl_sensitive false
       end
     in
+    let lmod_save () =
+      lmod_stop ();
+      !lmod#set_buf (c.view_prog#buffer#get_text ())
+    in
+    let lmod_load () =
+      sel_mod c.interprets#entry#text;
+      c.view_prog#buffer#set_text !lmod#get_buf;
+      let syntaxd = Res.get ["syntax"] in
+      let m = GSourceView2.source_language_manager false in
+      m#set_search_path (syntaxd :: m#search_path);
+      let name = !lmod#name in
+      begin match m#language name with
+      | None ->
+	  log#warning (
+	    F.x "cannot load syntax for <name> mod" [
+	      "name", F.string name;
+	    ]
+	  );
+      | Some l ->
+	  c.view_prog#source_buffer#set_language (Some l);
+	  c.view_help#source_buffer#set_language (Some l);
+      end;
+      help_update ()
+    in
     let newmod () =
       let name = c.interprets#entry#text in
       begin match List.mem name language_list with
-      | true ->
-	  lmod_stop ();
-	  lmod#set_buf (c.view_prog#buffer#get_text ());
-	  lmod#set_name name;
-	  c.view_prog#buffer#set_text lmod#get_buf;
-	  let syntaxd = Res.get ["syntax"] in
-	  let m = GSourceView2.source_language_manager false in
-	  m#set_search_path (syntaxd :: m#search_path);
-	  begin match m#language name with
-	  | None ->
-	      log#warning (
-		F.x "cannot load syntax for <name> mod" [
-		  "name", F.string name;
-		]
-	      );
-	  | Some l ->
-	      c.view_prog#source_buffer#set_language (Some l);
-	      c.view_help#source_buffer#set_language (Some l);
-	  end;
-	  help_update ();
+      | true -> lmod_save (); lmod_load ()
       | false -> ()
       end
     in
@@ -367,7 +386,19 @@ let display_gtk () =
 	end
       end
     in
+    let destroy () =
+      lmod_save ();
+      c.window#destroy ();
+      GMain.Main.quit ()
+    in
     let altdestroy _ = destroy (); true in
+    c.interprets#set_popdown_strings language_list;
+    if List.mem "ocaml" language_list
+    then c.interprets#entry#set_text "ocaml";
+    c.levels#set_popdown_strings levels_list;
+    if List.mem "0.laby" levels_list
+    then c.levels#entry#set_text "0.laby";
+    (* declaring callbacks *)
     ignore (c.window#event#connect#delete ~callback:altdestroy);
     ignore (c.window#connect#destroy ~callback:destroy);
     ignore (c.button_prev#connect#clicked ~callback:prev);
@@ -380,14 +411,8 @@ let display_gtk () =
     ignore (c.levels#entry#connect#changed ~callback:newlevel);
     ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
     (* now we must have everything up *)
-    c.interprets#set_popdown_strings language_list;
-    if List.mem "ocaml" language_list
-    then c.interprets#entry#set_text "ocaml"
-    else newmod ();
-    c.levels#set_popdown_strings levels_list;
-    if List.mem "0.laby" levels_list
-    then c.levels#entry#set_text "0.laby"
-    else newlevel ();
+    lmod_load ();
+    newlevel ();
     c.window#set_default_size 1000 750;
     c.window#show ();
     (* bg color has to be retrieved after c.window#show *)

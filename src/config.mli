@@ -15,5 +15,4 @@ val version_status : string
 val build_ocaml : string
 val build_lablgtk : string
 
-val conf_path : string
-val sys_data_path : string
+val sys_data_dir : string

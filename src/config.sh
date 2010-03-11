@@ -25,6 +25,5 @@ let version_status = "${VERSION_STATUS}"
 
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
-let conf_path = Sys.getenv "HOME" ^ "/.config/${PROJECT_NAME}/"
-let sys_data_path = "${SYSDATADIR}/${PROJECT_NAME}/"
+let sys_data_dir = "${SYSDATADIR}"
 EOF

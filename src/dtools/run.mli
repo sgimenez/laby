@@ -18,7 +18,7 @@ val opt_daemon : Opt.t
 
 val init :
   ?prohibit_root:bool ->
-  ?path:string list ->
+  ?name:string  ->
   ?conf:(Conf.ut * Res.t) ->
   ?services:Srv.t list ->
   [
