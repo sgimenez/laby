@@ -4,7 +4,9 @@ function output(s)
 end
 
 function input()
-    return io.read();
+    r = io.read();
+    if (r == "quit") then exit(0) end;
+    return r;
 end
 
 function laby_name_left()

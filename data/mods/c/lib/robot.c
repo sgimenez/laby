@@ -21,6 +21,7 @@ char *input() {
   char *line = NULL;
   size_t len = 0;
   getline(&line, &len, stdin);
+  if (strcmp(line, "quit\n") == 0) exit(0);
   return line;
 }
 

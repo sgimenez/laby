@@ -5,27 +5,41 @@
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
 
+let log = Log.make ["sound"]
+
 let conf =
   Conf.void
     (F.x "sound configuration" [])
 
 let conf_enabled =
-  Conf.bool ~p:(conf#plug "enabled") ~d:true
+  Conf.bool ~p:(conf#plug "enabled") ~d:(Sys.os_type <> "Win32")
     (F.x "enable or disable sounds" [])
 
-let dev_null =
-  Unix.openfile "/dev/null" [Unix.O_RDWR] 0
+let conf_script =
+  Conf.string ~p:(conf#plug "script") ~d:"sound"
+    (F.x "script to play sound files" [])
 
 let play name =
-  if conf_enabled#get then
-    let sound_play = Res.get ["scripts"; "sound-play"] in
+  let script = conf_script#get in
+  if conf_enabled#get && script <> "" then
+    let path = Res.get ["scripts"; script] in
     let sound_file = Res.get ["sound"; name ^ ".wav"] in
-    let wait pid = ignore (Unix.waitpid [] pid) in
-    let pid =
-      Unix.create_process sound_play [| sound_play; sound_file |]
-	dev_null dev_null dev_null
-    in
-    wait pid
+    let i_r, i_w = Unix.pipe () in
+    let o_r, o_w = Unix.pipe () in
+    begin try
+      let pid =
+	Unix.create_process path [| script; sound_file |] i_r o_w o_w
+      in
+      ignore (Unix.waitpid [] pid);
+    with
+    | Unix.Unix_error (_, _, _) ->
+	log#warning (
+	  F.x "failed to play sound file using <name> script" [
+	    "name", F.string script;
+	  ]
+	)
+    end;
+    Unix.close i_r; Unix.close i_w; Unix.close o_r; Unix.close o_w
 
 let action =
   begin function
