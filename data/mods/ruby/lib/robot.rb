@@ -17,7 +17,9 @@ class Robot
   end
 
   def input
-    gets rescue ""
+    l = gets rescue ""
+    if l == "quit\n" then exit(1) end;
+    l
   end
 
   def perform action

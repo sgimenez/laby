@@ -5,7 +5,9 @@ def output(s):
   sys.stdout.flush();
 
 def input():
-    return sys.stdin.readline();
+  l = sys.stdin.readline();
+  if l == "quit": exit(0);
+  return l;
 
 def laby_name_left():
   output("left");

@@ -27,10 +27,13 @@ public class Robot {
 
   String input() {
       try {
-	  return r.readLine();
+	  String s = r.readLine();
+	  if (s.equals("quit")) System.exit(0);
+	  return s;
       }
       catch (java.io.IOException e) {
-	  return "";
+	  System.exit(1);
+	  return null;
       }
   }
 
