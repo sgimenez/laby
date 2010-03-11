@@ -1,8 +1,8 @@
 linux:
 
   you need ocaml >= 3.10.0 and lablgtk >= 2.14.0 (with support for
-  gtksourceview2), then execute the following commands in this
-  directory:
+  gtksourceview2), then execute the following commands in the archive
+  main directory:
 
     make
     ln -s ${PWD}/data ${HOME}/.config/laby
