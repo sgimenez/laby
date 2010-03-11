@@ -1,5 +1,5 @@
 (*
-   Copyright (C) 2007-2009 Stéphane Gimenez
+   Copyright (C) 2007-2010 Stéphane Gimenez
    You have permission to copy, modify, and redistribute under the
    terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
 *)
@@ -18,7 +18,13 @@ let texts : (string * string, (string * F.t) list -> F.t) Hashtbl.t =
 let env_term =
   begin try Some (Sys.getenv "TERM") with Not_found -> None end
 
-let escape c = "\027[" ^ c ^ "m", "\027[0m"
+let escape =
+  begin match env_term with
+  | Some ("xterm" | "xterm-color"
+    | "rxvt-256color" | "rxvt-unicode" | "rxvt") ->
+      (fun c -> "\027[" ^ c ^ "m", "\027[0m")
+  | _ -> (fun _ -> "", "")
+  end
 
 let color, bcolor =
   begin match env_term with
