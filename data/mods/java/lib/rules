@@ -1,0 +1,10 @@
+info:
+need	javac
+need	java
+
+run:
+fetch	Robot.java
+fetch	Main.java
+dump	laby_name_Ant.java
+exec	javac Main.java
+spawn	java Main

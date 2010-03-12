@@ -1,0 +1,7 @@
+info:
+need	python
+
+run:
+fetch	robot.py
+dump	program.py
+spawn	python program.py

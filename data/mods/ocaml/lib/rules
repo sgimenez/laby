@@ -1,0 +1,8 @@
+info:
+need	ocamlc
+
+run:
+fetch	robot.ml
+dump	program.ml
+exec	ocamlc robot.ml program.ml -o program
+spawnl	program

@@ -1,0 +1,8 @@
+info:
+need	gplc
+
+run:
+fetch	robot.pl
+dump	program.pl
+exec	gplc --no-top-level robot.pl program.pl -o program
+spawnl	program

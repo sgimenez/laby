@@ -1,0 +1,9 @@
+info:
+need	gcc
+
+run:
+fetch	robot.c
+fetch	robot.h
+dump	program.c
+exec	gcc -Wall robot.c program.c -o program
+spawnl	program

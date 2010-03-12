@@ -1,0 +1,7 @@
+info:
+need	 ruby
+
+run:
+fetch	robot.rb
+dump	program.rb
+spawn	ruby program.rb

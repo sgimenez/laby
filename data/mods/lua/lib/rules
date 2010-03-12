@@ -1,0 +1,7 @@
+info:
+need	lua
+
+run:
+fetch	robot.lua
+dump	program.lua
+spawn	lua program.lua
