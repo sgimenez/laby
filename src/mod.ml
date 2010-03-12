@@ -60,7 +60,7 @@ let substs =
   ]
 
 let ln_regexp =
-  Str.regexp "laby_name_[a-zA-Z0-9]"
+  Str.regexp "laby_name_[a-zA-Z0-9]*"
 
 let subst : string -> string =
   let repl x =
@@ -73,30 +73,6 @@ let subst : string -> string =
     end
   in
   Str.global_substitute ln_regexp repl
-
-let rec mktempdir ?(seed=0) ident =
-  let pid = Unix.getpid () in
-  let dir =
-    begin match Sys.os_type with
-    | "Unix" | "Cygwin" ->
-	Printf.sprintf "/tmp/%s-%d--%d" ident pid seed
-    | "Win32" ->
-	Printf.sprintf "%s\\%s-%d--%d" (Sys.getenv "TEMP") ident pid seed
-    | _ -> assert false
-    end
-  in
-  begin try Unix.mkdir dir 0o755; dir with
-  | Unix.Unix_error (Unix.EEXIST, _, _) -> mktempdir ~seed:(seed + 1) ident
-  end
-
-let clean tmp =
-  begin try
-    let rm n = Unix.unlink (Res.path [tmp; n]) in
-    Array.iter rm (Sys.readdir tmp);
-    Unix.rmdir tmp
-  with
-  | Sys_error _ | Unix.Unix_error _ -> ()
-  end
 
 let bufsize = 16384
 let buffer = String.create bufsize
@@ -270,7 +246,7 @@ let make name : t =
       self#stop;
       let lib = Res.get ["mods"; name; "lib"] in
       let prg = self#get_buf in
-      let tmp = mktempdir "ant" in
+      let tmp = Res.mktempdir "ant" in
       begin match run (tmp, lib, prg, err) steps with
       | None -> false
       | Some (local, p, pl) ->
@@ -308,7 +284,7 @@ let make name : t =
 	    | _ -> assert false
 	    end;
 	    Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
-	    clean tmp;
+	    Res.rmtempdir tmp;
 	  in
 	  let h =
 	    {

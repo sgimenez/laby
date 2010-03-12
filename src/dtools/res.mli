@@ -78,5 +78,14 @@ val read_blocks : path -> string -> string list option
 
 (* Binaries *)
 
+
 val get_bin : string -> path option
+
+
+(* Temporary *)
+
+
+val mktempdir : string -> path
+val rmtempdir : path -> unit
+
 

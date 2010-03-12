@@ -235,3 +235,29 @@ let get_bin x =
   in
   aux (conf_bin_dirs#get @ sys_bin_dirs)
 
+let rec mktempdir ident =
+  let pid = Unix.getpid () in
+  let rec aux seed =
+    let dir =
+      begin match Sys.os_type with
+      | "Unix" | "Cygwin" ->
+	  Printf.sprintf "/tmp/%s-%d-%d" ident pid seed
+      | "Win32" ->
+	  Printf.sprintf "%s\\%s-%d-%d" (Sys.getenv "TEMP") ident pid seed
+      | _ -> assert false
+    end
+    in
+    begin try Unix.mkdir dir 0o755; dir with
+    | Unix.Unix_error (Unix.EEXIST, _, _) -> aux (seed + 1)
+    end
+  in
+  aux 0
+
+let rmtempdir tmp =
+  begin try
+    let rm n = Unix.unlink (path [tmp; n]) in
+    Array.iter rm (Sys.readdir tmp);
+    Unix.rmdir tmp
+  with
+  | Sys_error _ | Unix.Unix_error _ -> ()
+  end
