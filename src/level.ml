@@ -80,7 +80,7 @@ let rec get_sentence default lines =
 	let comment_str =
 	  String.sub l (last + 1) (String.length l - last - 1)
 	in
-	if default = "" || lang_str = Ui.lang
+	if default = "" || lang_str = Ui.conf_lang#get
 	then get_sentence comment_str q
 	else get_sentence default q
       with

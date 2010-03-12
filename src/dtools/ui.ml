@@ -22,7 +22,7 @@ let conf_theme =
   Conf.string ~p:(conf#plug "theme") ~d:"theme"
     (F.x "path for theme" [])
 
-let lang =
+let sys_lang =
   begin try Sys.getenv "LC_MESSAGES" with Not_found ->
     begin try Sys.getenv "LC_ALL" with Not_found ->
       begin try Sys.getenv "LANG" with Not_found ->
@@ -30,6 +30,10 @@ let lang =
       end
     end
   end
+
+let conf_lang =
+  Conf.string ~p:(conf#plug "lang") ~d:sys_lang
+    (F.x "language" [])
 
 let line_regexp =
   Str.regexp
@@ -56,6 +60,7 @@ let texts_line key s =
   end
 
 let read_texts path file =
+  let lang = conf_lang#get in
   let error line f =
     log#error (
       F.x "file <f>, line <l>: <error>" [
@@ -90,7 +95,7 @@ let read_texts path file =
 
 
 let load_texts () =
-  if lang <> "" then
+  if conf_lang#get <> "" then
   begin try
     let path = Res.get [conf_texts#get] in
     Res.read_chan path (read_texts path)

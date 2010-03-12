@@ -18,7 +18,7 @@ val conf : Conf.ut
      Ui configuration key.
   *)
 
-val lang : string
+val conf_lang : string Conf.t
   (**
      Locale string.
   *)
