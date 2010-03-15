@@ -97,23 +97,24 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
 	  exit 3
       end
   end;
-  let f () =
+  let f =
     begin match action with
-    | `Main f -> f ()
+    | `Main f -> f
     | `Opts (opts, proceed) ->
 	begin match Opt.cmd opts with
 	| `Errors ml ->
-	    Log.master#error (
-	      F.x "invalid options: <errors>" [
-		"errors", F.v ml;
-	      ]
-	    ) ;
-	    exit 1;
+	    begin fun () ->
+	      Log.master#error (
+		F.x "invalid options: <errors>" [
+		  "errors", F.v ml;
+		]
+	      );
+	      exit 1
+	    end
 	| `Excl fn ->
-	    Fd.stdout (fn ());
-	    exit 0;
+	    (fun () -> Fd.stdout (fn ()))
 	| `Proceed list ->
-	    proceed list
+	    (fun () -> proceed list)
 	end
     end
   in
