@@ -103,27 +103,32 @@ let def_text key str =
   let str = str ^ "\n" in
   let state = ref `Elem in
   let p = ref 0 in
-  let elem = ref "" in
-  let arg = ref "" in
-  let push c str = str := !str ^ String.make 1 c in
+  let elem = Buffer.create 256 in
+  let arg = Buffer.create 32 in
   let l = ref [] in
   let add_elem () =
-    if !elem <> "" then  l := !l @ [ `Elem !elem ]; elem := ""
+    if Buffer.length elem <> 0
+    then l := `Elem (Buffer.contents elem) :: !l;
+    Buffer.clear elem
   in
-  let add_arg () = l := !l @ [ `Arg !arg ]; arg := "" in
+  let add_arg () =
+    l := `Arg (Buffer.contents arg) :: !l;
+    Buffer.clear arg
+  in
   let eos = String.length str in
-  while !p < eos do state :=
-    begin match !state, str.[!p] with
-    | `Elem, '<' -> incr p; add_elem (); `Arg
-    | `Elem, '\n' -> incr p; add_elem (); `Elem
-    | `Elem, c -> push c elem; incr p; `Elem
-    | `Arg, '>' -> incr p; add_arg (); `Elem
-    | `Arg, '\n' -> `Error
-    | `Arg, c -> push c arg; incr p; `Arg
-    | `Error, _ -> p := eos; `Error
-    end
+  while !p < eos do
+    state :=
+      begin match !state, str.[!p] with
+      | `Elem, '<' -> incr p; add_elem (); `Arg
+      | `Elem, '\n' -> incr p; add_elem (); `Elem
+      | `Elem, c -> Buffer.add_char elem c; incr p; `Elem
+      | `Arg, '>' -> incr p; add_arg (); `Elem
+      | `Arg, '\n' -> `Error
+      | `Arg, c -> Buffer.add_char arg c; incr p; `Arg
+      | `Error, _ -> p := eos; `Error
+      end
   done;
-  let list = !l in
+  let list = List.rev !l in
   begin match !state with
   | `Elem ->
       let msg vars =

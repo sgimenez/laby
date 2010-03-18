@@ -31,12 +31,12 @@ type t =
 
 type h =
     {
-      mutable close : unit -> unit;
+      close : unit -> unit;
       in_ch : Unix.file_descr;
       out_ch : Unix.file_descr;
       err_ch : Unix.file_descr;
-      mutable current: char list;
-      mutable buf : string list;
+      current: Buffer.t;
+      buf : string Queue.t;
     }
 
 let substs =
@@ -93,19 +93,15 @@ let input ?(timeout=0.5) err h =
       begin match s.[j] with
       | '\r' -> ()
       | '\n' ->
-	  let l = List.rev h.current in
-	  let nbuf = String.concat "" (List.map (String.make 1) l) in
-	  h.buf <- h.buf @ [nbuf];
-	  h.current <- [];
-      | c -> h.current <- c :: h.current
+	  Queue.push (Buffer.contents h.current) h.buf;
+	  Buffer.clear h.current
+      | c -> Buffer.add_char h.current c
       end
     done
   in
   let rec loop () =
-    begin match h.buf with
-    | a :: q ->
-	h.buf <- q; Some (a, output h.out_ch)
-    | [] ->
+    begin try Some (Queue.pop h.buf, output h.out_ch) with
+    | Queue.Empty ->
 	begin match Sys.os_type with
 	| "Win32" -> (* no select... so forget about err_ch for now *)
 	    if buf_read h.in_ch collect then loop () else None
@@ -290,7 +286,7 @@ let make name : t =
 	    {
 	      close = close;
 	      in_ch = in_ch; out_ch = out_ch; err_ch = err_ch;
-	      current = []; buf = [];
+	      current = Buffer.create 64; buf = Queue.create ();
 	    }
 	  in
 	  begin match input ~timeout:5. err h with
