@@ -35,8 +35,8 @@ type h =
       in_ch : Unix.file_descr;
       out_ch : Unix.file_descr;
       err_ch : Unix.file_descr;
-      current: Buffer.t;
-      buf : string Queue.t;
+      buffer : Buffer.t;
+      queue : string Queue.t;
     }
 
 let substs =
@@ -93,14 +93,14 @@ let input ?(timeout=0.5) err h =
       begin match s.[j] with
       | '\r' -> ()
       | '\n' ->
-	  Queue.push (Buffer.contents h.current) h.buf;
-	  Buffer.clear h.current
-      | c -> Buffer.add_char h.current c
+	  Queue.push (Buffer.contents h.buffer) h.queue;
+	  Buffer.clear h.buffer
+      | c -> Buffer.add_char h.buffer c
       end
     done
   in
   let rec loop () =
-    begin try Some (Queue.pop h.buf, output h.out_ch) with
+    begin try Some (Queue.pop h.queue, output h.out_ch) with
     | Queue.Empty ->
 	begin match Sys.os_type with
 	| "Win32" -> (* no select... so forget about err_ch for now *)
@@ -271,7 +271,7 @@ let make name : t =
 	    | "Unix" | "Cygwin" ->
 		Unix.kill pid Sys.sigterm;
 		ignore (Unix.waitpid [] pid)
-	    | "Win32" ->
+	    | "Win32" -> (* no kill signal *)
 		begin try output out_ch "quit" with
 		| Unix.Unix_error (_, _, _) -> ()
 		end;
@@ -286,7 +286,7 @@ let make name : t =
 	    {
 	      close = close;
 	      in_ch = in_ch; out_ch = out_ch; err_ch = err_ch;
-	      current = Buffer.create 64; buf = Queue.create ();
+	      buffer = Buffer.create 64; queue = Queue.create ();
 	    }
 	  in
 	  begin match input ~timeout:5. err h with
