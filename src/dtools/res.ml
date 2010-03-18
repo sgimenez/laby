@@ -25,7 +25,7 @@ let conf_domain =
     (F.x "ressources domain" [])
 
 let conf_data =
-  Conf.list
+  Conf.void
     ~p:(conf#plug "data")
     (F.x "data ressources" [])
 
@@ -35,7 +35,7 @@ let conf_data_dirs =
     (F.x "data paths" [])
 
 let conf_bin =
-  Conf.list
+  Conf.void
     ~p:(conf#plug "bin")
     (F.x "binary ressources" [])
 
@@ -72,12 +72,14 @@ let check_file f =
 let init_dir =
   Sys.getcwd ()
 
+let sys_data_dir = ref "/usr/share"
+let sys_tmp_dir = ref "/tmp"
+
 let data_dirs () =
   let domain = conf_domain#get in
   let sys_data_dirs =
     begin match Sys.os_type with
-    | "Unix" -> [path ["/usr/share"; domain]]
-    | "Cygwin" -> [path ["/usr/share"; domain]]
+    | "Unix" | "Cygwin" -> [path [!sys_data_dir; domain]]
     | "Win32" -> [path [init_dir; "data"]]
     | _ -> assert false
     end
@@ -85,8 +87,7 @@ let data_dirs () =
   let user_data_dirs =
     begin try
       begin match Sys.os_type with
-      | "Unix" -> [path [Sys.getenv "HOME"; ".config"; domain]]
-      | "Cygwin" -> [path [Sys.getenv "HOME"; ".config"; domain]]
+      | "Unix" | "Cygwin" -> [path [Sys.getenv "HOME"; ".config"; domain]]
       | "Win32" -> [path [Sys.getenv "APPDATA"; domain]]
       | _ -> assert false
       end
@@ -237,16 +238,15 @@ let get_bin x =
 
 let rec mktempdir ident =
   let pid = Unix.getpid () in
-  let rec aux seed =
-    let dir =
-      begin match Sys.os_type with
-      | "Unix" | "Cygwin" ->
-	  Printf.sprintf "/tmp/%s-%d-%d" ident pid seed
-      | "Win32" ->
-	  Printf.sprintf "%s\\%s-%d-%d" (Sys.getenv "TEMP") ident pid seed
-      | _ -> assert false
+  let tmp_dir =
+    begin match Sys.os_type with
+    | "Unix" | "Cygwin" -> !sys_tmp_dir
+    | "Win32" -> Sys.getenv "TEMP"
+    | _ -> assert false
     end
-    in
+  in
+  let rec aux seed =
+    let dir = path [tmp_dir; Printf.sprintf "%s-%d-%d" ident pid seed] in
     begin try Unix.mkdir dir 0o755; dir with
     | Unix.Unix_error (Unix.EEXIST, _, _) -> aux (seed + 1)
     end

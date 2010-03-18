@@ -33,6 +33,9 @@ val conf_bin_dirs : string list Conf.t
      Global resource paths.
   *)
 
+val sys_data_dir : string ref
+val sys_tmp_dir : string ref
+
 exception Error of F.t
   (**
      Execption raised when resources cannot be found/accessed.

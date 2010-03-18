@@ -25,5 +25,6 @@ let version_status = "${VERSION_STATUS}"
 
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
-let sys_data_dir = "${SYSDATADIR}"
+let _ = Res.sys_data_dir := "${SYSDATADIR}"
+let _ = Res.sys_tmp_dir := "${SYSTMPDIR}"
 EOF

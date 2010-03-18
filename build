@@ -8,6 +8,7 @@ source build.conf
 
 export PREFIX=${PREFIX-/usr}
 export SYSDATADIR=${SYSDATADIR-${PREFIX}/share}
+export SYSTMPDIR=${SYSTMPDIR-/tmp}
 
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
