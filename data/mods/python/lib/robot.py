@@ -6,7 +6,7 @@ def output(s):
 
 def input():
   l = sys.stdin.readline();
-  if l == "quit": exit(0);
+  if l == "quit\n": exit(0);
   return l;
 
 def laby_name_left():
