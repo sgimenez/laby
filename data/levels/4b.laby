@@ -11,10 +11,12 @@ o o o o o o o o o o o o .
 
 title:
 en_US.UTF-8	Which way?
+es_MX.UTF-8	A donde?
 fr_FR.UTF-8	Par où passer ?
 hu_HU.UTF-8	Melyik út?
 
 comment:
 en_US.UTF-8	The last challenge!
+es_MX.UTF-8	El último reto:
 fr_FR.UTF-8	Le dernier défi !
 hu_HU.UTF-8	Az utolsó kihívás!
