@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.0"
-   width="32"
-   height="32"
-   id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     id="layer1">
-    <path
-       d="M 4.1964286,2.9821428 L 4.1071429,30.125 L 28.839285,30.75 L 27.857143,1.3749999 L 4.1964286,2.9821428 z"
-       id="path1876"
-       style="fill:#d35f5f;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <path
-       d="M 22.589286,14.232143 C 21.255679,15.204167 22.120254,17.038105 23.303571,17.714286 C 24.553571,18.428572 25.982143,16.910715 25.803571,15.571429 C 25.626173,14.240945 23.865292,13.302103 22.589286,14.232143 z"
-       id="path1878"
-       style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-  </g>
+<svg id="svg2" xmlns="http://www.w3.org/2000/svg" height="32" width="32" version="1.0">
+ <g id="layer1" stroke-linejoin="miter" fill-rule="evenodd" stroke="#000" stroke-linecap="butt" stroke-width="1px">
+  <path id="path1" d="M4.1964,2.9821l-0.0893,27.143,24.732,0.625-0.982-29.375-23.661,1.6071z" fill="#d35f5f"/>
+  <path id="path2" d="M22.589,14.232c-1.333,0.972-0.469,2.806,0.715,3.482,1.25,0.715,2.678-0.803,2.5-2.143-0.178-1.33-1.939-2.269-3.215-1.339z" fill="#FFF"/>
+ </g>
 </svg>
