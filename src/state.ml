@@ -14,7 +14,7 @@ type action =
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
- | `Rock_No_Take | `Drop_Nothing | `Drop_No_Space
+ | `Take_Nothing | `Drop_Nothing | `Drop_No_Space
  | `Say of string
  ]
 
@@ -142,7 +142,7 @@ let run action state =
             carry = `Rock;
 	    action = `Rock_Take;
 	  }
-      |  _, _ -> "error", chg state `Rock_No_Take
+      |  _, _ -> "error", chg state `Take_Nothing
       end
   | "drop" ->
       begin match state.carry, get state (front state) with

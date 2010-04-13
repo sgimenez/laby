@@ -55,7 +55,7 @@ let action =
   | `Carry_Exit -> play "carry-exit"
   | `Rock_Take -> play "rock-take"
   | `Rock_Drop -> play "rock-drop"
-  | `Rock_No_Take -> play "rock-no-take"
+  | `Take_Nothing -> play "take-nothing"
   | `Drop_Nothing -> play "drop-nothing"
   | `Drop_No_Space -> play "drop-no-space"
   | `Say _ -> ()
