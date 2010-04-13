@@ -40,12 +40,14 @@ void laby_name_escape() { output("escape"); free(input()); }
 enum tile laby_name_look() {
   output("look");
   char *s = input();
-  if (strcmp(s, "void\n") == 0) { free(s); return laby_name_Void; }
-  if (strcmp(s, "wall\n") == 0) { free(s); return laby_name_Wall; }
-  if (strcmp(s, "rock\n") == 0) { free(s); return laby_name_Rock; }
-  if (strcmp(s, "web\n") == 0) { free(s); return laby_name_Web; }
-  if (strcmp(s, "exit\n") == 0) { free(s); return laby_name_Exit; }
-  free(s); return laby_name_Unknown;
+  enum tile answer = laby_name_Unknown;
+  if (strcmp(s, "void\n") == 0) answer = laby_name_Void;
+  if (strcmp(s, "wall\n") == 0) answer = laby_name_Wall;
+  if (strcmp(s, "rock\n") == 0) answer = laby_name_Rock;
+  if (strcmp(s, "web\n") == 0) answer = laby_name_Web;
+  if (strcmp(s, "exit\n") == 0) answer = laby_name_Exit;
+  free(s);
+  return answer;
 }
 
 void laby_name_say(char *s) {
