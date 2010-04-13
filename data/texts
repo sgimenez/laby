@@ -251,15 +251,27 @@ text		cannot load syntax for <name> mod
 en_US.UTF-8	cannot load syntax for <name> mod
 es_MX.UTF-8	imposible cargar la sintaxis del mod <name>
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
-sv_SV.UTF-8	Kan inte ladda syntax för <name> mod
+sv_SV.UTF-8	kan inte ladda syntax för <name> mod
+
+# command line options
+
+text		select a specific programming mod
+en_US.UTF-8	select a specific programming mod
+fr_FR.UTF-8	se restreindre à un mode de programmation donné
 
 text		size of tiles in pixels
 en_US.UTF-8	size of tiles in pixels
 es_MX.UTF-8	tamaño del patrón en pixeles
 fr_FR.UTF-8	taille des cases en pixels
 hu_HU.UTF-8	térképek nagysága pixelben
-sv_SV.UTF-8	Storlek av tile i pixlar
+sv_SV.UTF-8	storlek av tile i pixlar
 
+text		language
+en_US.UTF-8	language
+es_MX.UTF-8	idioma
+fr_FR.UTF-8	langage
+hu_HU.UTF-8	nyelv
+sv_SV.UTF-8	språk
 
 # sound.ml
 
@@ -275,7 +287,7 @@ en_US.UTF-8	enable or disable sounds
 es_MX.UTF-8	activar o desactivar el sonido
 fr_FR.UTF-8	activer ou désactiver le son
 hu_HU.UTF-8	hang be/ki
-sv_SV.UTF-8	Aktivera eller avaktivera ljud
+sv_SV.UTF-8	aktivera eller avaktivera ljud
 
 
 # level.ml
@@ -285,28 +297,28 @@ en_US.UTF-8	unknown tile
 es_MX.UTF-8	patrón desconocido
 fr_FR.UTF-8	case inconnue
 hu_HU.UTF-8	ismeretlen térkép
-sv_SV.UTF-8	Okänd tile
+sv_SV.UTF-8	okänd tile
 
 text		mismatching line length
 en_US.UTF-8	mismatching line length
 es_MX.UTF-8	longitud de linea no concuerda
 fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
-sv_SV.UTF-8	Fel i linje längden
+sv_SV.UTF-8	fel i linje längden
 
 text		bad level format: <file>
 en_US.UTF-8	bad level format: <file>
 es_MX.UTF-8	mal formato de nivel: <file>
 fr_FR.UTF-8	format de fichier erroné : <file>
 hu_HU.UTF-8	rossz szint-formátum: <file>
-sv_SV.UTF-8	Fel nivå format: <file>
+sv_SV.UTF-8	fel nivå format: <file>
 
 text		missing level section <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
 es_MX.UTF-8	sección <name> faltante en el nivel: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
-sv_SV.UTF-8	Saknar nivå sektion <name> i: <file>
+sv_SV.UTF-8	saknar nivå sektion <name> i: <file>
 
 
 # laby.ml
@@ -316,7 +328,7 @@ en_US.UTF-8	programming languages
 es_MX.UTF-8	idioma de programación
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
-sv_SV.UTF-8	Programmerings språk
+sv_SV.UTF-8	programmerings språk
 
 
 # bot.ml
