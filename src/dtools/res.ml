@@ -135,29 +135,28 @@ let get r =
 
 let get_list ?ext r =
   let f = Unix.opendir (get r) in
-  let list = ref [] in
-  let add e =
+  let accept e =
     begin match ext with
-    | None -> list := e :: !list
+    | None -> true
     | Some ext ->
 	let l = String.length ext + 1 in
-	if String.length e >= l then
-	  if String.sub e (String.length e - l) l = "." ^ ext then
-	    list := e :: !list
+	String.length e >= l &&
+	  String.sub e (String.length e - l) l = "." ^ ext
     end
   in
-  begin try
-    while true do
+  let rec get l =
+    begin try
       begin match Unix.readdir f with
-      | "." | ".." -> ()
-      | e -> add e
+      | "." | ".." -> get l
+      | e -> get (if accept e then e :: l else l)
       end
-    done;
-  with
-  | End_of_file -> ()
-  end;
+    with
+    | End_of_file -> l
+    end
+  in
+  let l = get [] in
   Unix.closedir f;
-  !list
+  l
 
 let read_chan filename f =
   begin try

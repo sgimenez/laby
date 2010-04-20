@@ -77,7 +77,7 @@ let tag s =
   in
   let tstr = ref None in
   let tag m =
-    if !tstr = None then
+    (* if !tstr = None then *)
       tstr := Some (String.concat ";" (List.map codes c#get));
     begin match !tstr with
     | Some tstr when tstr <> "" ->
@@ -99,38 +99,49 @@ let bad key =
   fun vars ->
     F.h [tag_msg_bad (F.s "<!>"); F.s (snd key); F.v (List.map arg vars)]
 
+let list_of_string s =
+  let rec aux x s l =
+    if x < 0 then l else aux (x - 1) s (s.[x] :: l)
+  in
+  aux (String.length s - 1) s []
+
 let def_text key str =
-  let str = str ^ "\n" in
-  let state = ref `Elem in
-  let p = ref 0 in
-  let elem = Buffer.create 256 in
-  let arg = Buffer.create 32 in
-  let l = ref [] in
-  let add_elem () =
-    if Buffer.length elem <> 0
-    then l := `Elem (Buffer.contents elem) :: !l;
-    Buffer.clear elem
+  let b = Buffer.create 256 in
+  let push c = Buffer.add_char b c in
+  let take () = let c = Buffer.contents b in Buffer.clear b; c in
+  let rec elem stream out =
+    begin match stream with
+    | '>' :: q -> `Error
+    | '<' :: q ->
+	begin match take () with
+	| "" -> arg q out
+	| s -> arg q (`Elem s :: out)
+	end
+    | '\n' :: q -> `Error
+    |  c :: q -> push c; elem q out
+    | _ ->
+	let l =
+	  begin match take () with
+	  | "" -> out
+	  | s -> `Elem s :: out
+	  end
+	in `Ok (List.rev l)
+    end
+  and arg stream out =
+    begin match stream with
+    | '>' :: q ->
+	begin match take () with
+	| "" -> elem q out
+	| s -> elem q (`Arg s :: out)
+	end
+    | '<' :: q -> `Error
+    | '\n' :: q -> `Error
+    |  c :: q -> push c; arg q out
+    | _ -> `Error
+    end
   in
-  let add_arg () =
-    l := `Arg (Buffer.contents arg) :: !l;
-    Buffer.clear arg
-  in
-  let eos = String.length str in
-  while !p < eos do
-    state :=
-      begin match !state, str.[!p] with
-      | `Elem, '<' -> incr p; add_elem (); `Arg
-      | `Elem, '\n' -> incr p; add_elem (); `Elem
-      | `Elem, c -> Buffer.add_char elem c; incr p; `Elem
-      | `Arg, '>' -> incr p; add_arg (); `Elem
-      | `Arg, '\n' -> `Error
-      | `Arg, c -> Buffer.add_char arg c; incr p; `Arg
-      | `Error, _ -> p := eos; `Error
-      end
-  done;
-  let list = List.rev !l in
-  begin match !state with
-  | `Elem ->
+  begin match elem (list_of_string str) [] with
+  | `Ok list ->
       let msg vars =
 	let map =
 	  begin function
@@ -146,7 +157,6 @@ let def_text key str =
       Hashtbl.add texts key msg
   | `Error ->
       Hashtbl.add texts key (bad key)
-  | _ -> assert false
   end
 
 let string format t =
