@@ -44,7 +44,7 @@ let conf_timestamps_format =
       F.x "<item> for human readable timestamps in local timezone"
 	["item", F.string "localized" ]
       ;
-      F.x "<item> for subsecond accuracy, and is timezone independant"
+      F.x "<item> for subsecond accuracy, and is timezone independent"
 	["item", F.string "unix" ]
       ;
     ]
