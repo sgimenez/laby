@@ -327,3 +327,14 @@ let pool () =
   | name -> [make name]
   end
 
+let dummy =
+object
+  method name = ""
+  method check = false
+  method set_buf _ = ()
+  method get_buf = ""
+  method start _ = false
+  method probe _ = None
+  method stop = ()
+  method help _ = ""
+end

@@ -6,13 +6,19 @@
  *)
 
 type t
+  (* type of levels *)
 
-val dummy : t
 val load : string -> t
+  (* loads a given file *)
 
 val size : t -> int * int
+  (* width and height of the level *)
+
 val title : t -> string
 val comment : t -> string
 val help : t -> string
 
 val generate : t -> State.t
+  (* generates a initial labyrinth state for the given level *)
+
+val dummy : t

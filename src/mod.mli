@@ -24,3 +24,4 @@ type t =
 
 val pool : unit -> t list
 
+val dummy : t

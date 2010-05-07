@@ -23,11 +23,11 @@ let dummy =
   {
     map =
       [|
-	[| `Wall; `Wall; `Wall; `Wall |];
-	[| `Wall; `Void; `Void; `Exit |];
-	[| `Wall; `Void; `Void; `Wall |];
-	[| `Wall; `Void; `Void; `Wall |];
-	[| `Wall; `Wall; `Wall; `Wall |];
+	[| `Wall; `Exit; `Wall |];
+	[| `Wall; `Void; `Wall |];
+	[| `Wall; `Void; `Wall |];
+	[| `Wall; `Void; `Wall |];
+	[| `Wall; `Wall; `Wall |];
       |];
     pos = 1, 3; dir = `N;
     mrocks = []; mwebs = [];
