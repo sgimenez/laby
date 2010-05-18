@@ -40,7 +40,7 @@ type 'a result =
     | Failed of F.t
     | Exn of exn
 
-val exec : (unit -> 'a) -> 'a result
+val exec : ('a -> 'b) -> 'a -> 'b result
 
 val hook : ('a -> 'b) -> 'a -> (unit -> unit) -> 'b
 

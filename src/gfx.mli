@@ -10,4 +10,4 @@ val conf_tilesize : int Conf.t
 
 exception Error of F.t
 
-val display_gtk : unit -> unit
+val run_gtk : unit -> unit

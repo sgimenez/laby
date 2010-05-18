@@ -88,28 +88,22 @@ let mutexify : ('a -> 'b) -> 'a -> 'b =
   end
 
 let to_ch ch s1 s2 =
-  Printf.fprintf ch "%s %s\n%!" s1 s2
+  Printf.fprintf ch "%s %s\n%!" (Fd.render_raw s1) (Fd.render_raw s1)
 
 let to_stdout s1 s2 =
-  if conf_stdout#get then
-    Printf.printf "%s %s\n%!" s1 s2
+    if Unix.isatty Unix.stdout then
+      Printf.printf "%s %s\n%!" (Fd.render_color s1) (Fd.render_color s2)
+    else
+      Printf.printf "%s %s\n%!" (Fd.render_raw s1) (Fd.render_raw s2)
 
 let print h x =
+  if conf_stdout#get then
+    to_stdout h x;
   if conf_file#get then
     begin match !state with
-    | `Buffer l ->
-	state := `Buffer (x :: l);
-	if conf_stdout#get then
-	  to_stdout (Fd.render_color h) (Fd.render_color x)
-    | `Chan ch ->
-	let s1 = Fd.render_color h in
-	let s2 = Fd.render_color x in
-	to_stdout s1 s2;
-	to_ch ch s1 s2
+    | `Buffer l -> state := `Buffer (x :: l);
+    | `Chan ch -> to_ch ch h x
     end
-  else
-    if conf_stdout#get then
-      to_stdout (Fd.render_color h) (Fd.render_color x)
 
 let build ?level path =
   let rec aux p l (t : Conf.ut) =
@@ -227,7 +221,7 @@ let init () =
 	begin match !state with
 	| `Buffer l -> ()
 	| `Chan ch ->
-	    let send x = to_ch ch (Fd.render_color x) "" in
+	    let send x = to_ch ch x F.n in
 	    send (
 	      F.x ">>> LOG START <time>" ["time", F.time time]
 	    );
@@ -256,7 +250,7 @@ let close () =
   let time = Unix.gettimeofday () in
   begin match !state with
   | `Chan ch ->
-      let send x = to_ch ch (Fd.render_color x) "" in
+      let send x = to_ch ch x F.n in
       let proceed () =
 	send (
 	  F.x ">>> LOG END <time>" ["time", F.time time]

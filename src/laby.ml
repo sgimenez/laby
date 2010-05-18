@@ -19,7 +19,7 @@ let conf =
 
 let proceed _ =
   begin try
-    Gfx.display_gtk ()
+    Gfx.run_gtk ()
   with
   | Gfx.Error f ->
       Run.fatal (

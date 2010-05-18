@@ -138,6 +138,7 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
     Srv.launch ?services f
   with
   | Fail msg ->
+      Log.master#fatal msg;
       clean ();
       exit 2
   | Res.Error msg ->
@@ -171,7 +172,6 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
   clean ()
 
 let fatal msg =
-  Log.master#fatal msg;
   raise (Fail msg)
 
 type 'a result =
@@ -179,8 +179,8 @@ type 'a result =
     | Failed of F.t
     | Exn of exn
 
-let exec f =
-  begin try Done (f ()) with
+let exec f a =
+  begin try Done (f a) with
   | (Sys.Break | Signal _) as exn -> raise exn
   | Fail msg -> Failed msg
   | exn -> Exn exn

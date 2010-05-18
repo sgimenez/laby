@@ -213,17 +213,26 @@ let make_pixmap tile_size level =
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
 
+let report_fail m =
+  if not (Unix.isatty Unix.stdout) then
+    let title =
+      F.x "fatal error" []
+    in
+    let w =
+      GWindow.message_dialog
+	~title:("laby: " ^ Fd.render_raw title)
+	~buttons:GWindow.Buttons.ok
+	~message:(Fd.render_raw m)
+	~message_type:`ERROR
+	()
+    in
+    let _ = w#run () in w#destroy ()
 
-let display_gtk () =
+
+let display_gtk ressources =
 
   let amods = Mod.pool () in
   let mods = List.filter (fun x -> x#check) amods in
-  if mods = [] then
-    Run.fatal (
-      F.x "no mod is available among: <list>" [
-	"list", F.v (List.map (fun x -> F.string x#name) amods);
-      ]
-    );
   let language_list =
     List.sort (compare) (List.map (fun x -> x#name) mods)
   in
@@ -231,182 +240,195 @@ let display_gtk () =
     List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
 
+  if mods = [] then Run.fatal (
+    F.x "no mod is available among: <list>" [
+      "list", F.v (List.map (fun x -> F.string x#name) amods);
+    ]
+  );
+
   let bg = ref `WHITE in
-  begin try
-    let ressources = gtk_init () in
-    let c = layout () in
-    let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
-    let level_load name =
-      let l = Level.load (Res.get ["levels"; name]) in
-      pixmap := make_pixmap ressources.size l; l
-    in
+  let c = layout () in
+  let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
+  let level_load name =
+    let l = Level.load (Res.get ["levels"; name]) in
+    pixmap := make_pixmap ressources.size l; l
+  in
 
-    (* gui outputs *)
+  (* gui outputs *)
 
-    let msg str =
-      c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
-      c.view_mesg#buffer#insert (str ^ "\n")
-    in
-    let f_msg m = msg (Fd.render_raw m) in
-    let help h =
-      begin match h with
-      | None ->
-	  c.box_help#misc#hide ()
-      | Some help ->
-	  c.view_help#buffer#set_text help;
-	  c.box_help#misc#show ()
-      end
-    in
-    let draw state =
-      !pixmap#set_foreground !bg;
-      let width, height = !pixmap#size in
-      !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-      draw_state (state) ressources !pixmap;
-      c.px#set_pixmap !pixmap
-    in
+  let msg str =
+    c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
+    c.view_mesg#buffer#insert (str ^ "\n")
+  in
+  let f_msg m = msg (Fd.render_raw m) in
+  let help h =
+    begin match h with
+    | None ->
+	c.box_help#misc#hide ()
+    | Some help ->
+	c.view_help#buffer#set_text help;
+	c.box_help#misc#show ()
+    end
+  in
+  let draw state =
+    !pixmap#set_foreground !bg;
+    let width, height = !pixmap#size in
+    !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+    draw_state (state) ressources !pixmap;
+    c.px#set_pixmap !pixmap
+  in
 
-    (* game creation *)
+  (* game creation *)
 
-    let command = Game.play msg help draw in
+  let command = Game.play msg help draw in
 
-    (* gui inputs *)
+  (* gui inputs *)
 
-    let show_execute () = c.button_execute#set_relief `NORMAL in
-    let hide_execute () = c.button_execute#set_relief `NONE in
-    let ctrl_sensitive b =
-      c.button_backward#misc#set_sensitive b;
-      c.button_forward#misc#set_sensitive b;
-      c.button_play#misc#set_sensitive b;
-      c.button_prev#misc#set_sensitive b;
-      c.button_next#misc#set_sensitive b;
-    in
-    let play_inactive () =
-      c.button_forward#set_active false;
-      c.button_backward#set_active false;
-      c.button_play#set_active false
-    in
-    let clear () =
-      c.view_mesg#buffer#set_text "";
-      ctrl_sensitive false;
-      show_execute ();
-      play_inactive ();
-    in
-    let setupmod () =
-      let name = c.interprets#entry#text in
-      begin match List.mem name language_list with
-      | true ->
-	  let lmod = List.find (fun x -> x#name = name) mods in
-	  c.view_prog#buffer#set_text (command#chg_mod lmod);
-	  let syntaxd = Res.get ["syntax"] in
-	  let m = GSourceView2.source_language_manager false in
-	  m#set_search_path (syntaxd :: m#search_path);
-	  begin match m#language name with
-	  | None ->
-	      log#warning (
-		F.x "cannot load syntax for <name> mod" [
-		  "name", F.string name;
-		]
-	      );
-	  | Some l ->
-	      c.view_prog#source_buffer#set_language (Some l);
-	      c.view_help#source_buffer#set_language (Some l);
-	  end
-      | false -> ()
-      end
-    in
-    let newmod () =
-      command#chg_program (c.view_prog#buffer#get_text ());
-      setupmod ();
-      clear ()
-    in
-    let execute () =
-      clear ();
-      command#chg_program (c.view_prog#buffer#get_text ());
-      begin match command#run with
-      | true ->
-	  f_msg (F.h [F.s "——"; Say.good_start; F.s "——"]);
-	  ctrl_sensitive true
-      | false ->
-	  f_msg (F.h [F.s "——"; Say.bad_start; F.s "——"]);
-	  ctrl_sensitive false
-      end;
-      hide_execute ();
-    in
-    let newlevel () =
-      let name = c.levels#entry#text in
-      begin match List.mem name levels_list with
-      | true ->
-	  let l = level_load name in
-	  c.view_title#set_text (Level.title l);
-	  c.view_comment#set_text (Level.comment l);
-	  command#chg_level l;
-	  clear ()
-      | false -> ()
-      end
-    in
-    let prev () = if not command#prev then play_inactive () in
-    let next () = if not command#next then play_inactive () in
-    let play =
-      let rid = ref None in
-      begin fun direction speed () ->
-	begin match !rid with
+  let show_execute () = c.button_execute#set_relief `NORMAL in
+  let hide_execute () = c.button_execute#set_relief `NONE in
+  let ctrl_sensitive b =
+    c.button_backward#misc#set_sensitive b;
+    c.button_forward#misc#set_sensitive b;
+    c.button_play#misc#set_sensitive b;
+    c.button_prev#misc#set_sensitive b;
+    c.button_next#misc#set_sensitive b;
+  in
+  let play_inactive () =
+    c.button_forward#set_active false;
+    c.button_backward#set_active false;
+    c.button_play#set_active false
+  in
+  let clear () =
+    c.view_mesg#buffer#set_text "";
+    ctrl_sensitive false;
+    show_execute ();
+    play_inactive ();
+  in
+  let setupmod () =
+    let name = c.interprets#entry#text in
+    begin match List.mem name language_list with
+    | true ->
+	let lmod = List.find (fun x -> x#name = name) mods in
+	c.view_prog#buffer#set_text (command#chg_mod lmod);
+	let syntaxd = Res.get ["syntax"] in
+	let m = GSourceView2.source_language_manager false in
+	m#set_search_path (syntaxd :: m#search_path);
+	begin match m#language name with
 	| None ->
-	    let callback () =
-	      begin match direction with
-	      |	`Forward -> next (); true
-	      | `Backward -> prev (); true
-	      end
-	    in
-	    rid := Some (GMain.Timeout.add ~ms:speed ~callback);
-	| Some id ->
-	    play_inactive ();
-	    GMain.Timeout.remove id; rid := None
+	    log#warning (
+	      F.x "cannot load syntax for <name> mod" [
+		"name", F.string name;
+	      ]
+	    );
+	| Some l ->
+	    c.view_prog#source_buffer#set_language (Some l);
+	    c.view_help#source_buffer#set_language (Some l);
 	end
-      end
-    in
-    let destroy () =
-      command#quit;
-      c.window#destroy ();
-      GMain.Main.quit ()
-    in
-    let altdestroy _ = destroy (); true in
-
-    c.interprets#set_popdown_strings language_list;
-    if List.mem "ocaml" language_list
-    then c.interprets#entry#set_text "ocaml";
-    c.levels#set_popdown_strings levels_list;
-    if List.mem "0.laby" levels_list
-    then c.levels#entry#set_text "0.laby";
-
-    (* declaring callbacks *)
-
-    ignore (c.window#event#connect#delete ~callback:altdestroy);
-    ignore (c.window#connect#destroy ~callback:destroy);
-    ignore (c.button_prev#connect#clicked ~callback:prev);
-    ignore (c.button_next#connect#clicked ~callback:next);
-    ignore (c.button_play#connect#toggled ~callback:(play `Forward 500));
-    ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
-    ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
-    ignore (c.button_execute#connect#clicked ~callback:execute);
-    ignore (c.interprets#entry#connect#changed ~callback:newmod);
-    ignore (c.levels#entry#connect#changed ~callback:newlevel);
-    ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
-
-    (* now we must have everything up *)
-
+    | false -> ()
+    end
+  in
+  let newmod () =
+    command#chg_program (c.view_prog#buffer#get_text ());
     setupmod ();
-    c.window#set_default_size 1000 750;
-    c.window#show ();
-    (* bg color has to be retrieved after c.window#show *)
-    bg := `COLOR (c.px#misc#style#light `NORMAL);
-    newlevel ();
-    ignore (GMain.Main.main ())
+    clear ()
+  in
+  let execute () =
+    clear ();
+    command#chg_program (c.view_prog#buffer#get_text ());
+    begin match command#run with
+    | true ->
+	f_msg (F.h [F.s "——"; Say.good_start; F.s "——"]);
+	ctrl_sensitive true
+    | false ->
+	f_msg (F.h [F.s "——"; Say.bad_start; F.s "——"]);
+	ctrl_sensitive false
+    end;
+    hide_execute ();
+  in
+  let newlevel () =
+    let name = c.levels#entry#text in
+    begin match List.mem name levels_list with
+    | true ->
+	let l = level_load name in
+	c.view_title#set_text (Level.title l);
+	c.view_comment#set_text (Level.comment l);
+	command#chg_level l;
+	clear ()
+    | false -> ()
+    end
+  in
+  let prev () = if not command#prev then play_inactive () in
+  let next () = if not command#next then play_inactive () in
+  let play =
+    let rid = ref None in
+    begin fun direction speed () ->
+      begin match !rid with
+      | None ->
+	  let callback () =
+	    begin match direction with
+	    |	`Forward -> next (); true
+	    | `Backward -> prev (); true
+	    end
+	  in
+	  rid := Some (GMain.Timeout.add ~ms:speed ~callback);
+      | Some id ->
+	  play_inactive ();
+	  GMain.Timeout.remove id; rid := None
+      end
+    end
+  in
+  let destroy () =
+    command#quit;
+    c.window#destroy ();
+    GMain.Main.quit ()
+  in
+  let altdestroy _ = destroy (); true in
 
-  with
-  | Gtk.Error m ->
-      raise (
-	Error (
-	  F.x "gtk error: <error>" ["error", F.q (F.string m)]
+  c.interprets#set_popdown_strings language_list;
+  if List.mem "ocaml" language_list
+  then c.interprets#entry#set_text "ocaml";
+  c.levels#set_popdown_strings levels_list;
+  if List.mem "0.laby" levels_list
+  then c.levels#entry#set_text "0.laby";
+
+  (* declaring callbacks *)
+
+  ignore (c.window#event#connect#delete ~callback:altdestroy);
+  ignore (c.window#connect#destroy ~callback:destroy);
+  ignore (c.button_prev#connect#clicked ~callback:prev);
+  ignore (c.button_next#connect#clicked ~callback:next);
+  ignore (c.button_play#connect#toggled ~callback:(play `Forward 500));
+  ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
+  ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
+  ignore (c.button_execute#connect#clicked ~callback:execute);
+  ignore (c.interprets#entry#connect#changed ~callback:newmod);
+  ignore (c.levels#entry#connect#changed ~callback:newlevel);
+  ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
+
+  (* now we must have everything up *)
+
+  setupmod ();
+  c.window#set_default_size 1000 750;
+  c.window#show ();
+  (* bg color has to be retrieved after c.window#show *)
+  bg := `COLOR (c.px#misc#style#light `NORMAL);
+  newlevel ();
+  ignore (GMain.Main.main ())
+
+let run_gtk () =
+  let ressources =
+    begin try gtk_init () with
+    | Gtk.Error m ->
+	raise (
+	  Error (
+	    F.x "gtk error: <error>" ["error", F.q (F.string m)]
+	  )
 	)
-      )
+    end
+  in
+  begin match Run.exec display_gtk ressources with
+  | Run.Done () -> ()
+  | Run.Failed m -> report_fail m; Run.fatal m
+  | Run.Exn e -> report_fail (F.exn e); raise e
   end
+
