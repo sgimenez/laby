@@ -157,6 +157,7 @@ let dump (tmp, lib, prg, err) x =
   true
 
 let exec (tmp, lib, prg, err) p pl =
+  let pl = List.map subst pl in
   let r, w = Unix.pipe () in
   let pid =
     Unix.chdir tmp;
@@ -228,6 +229,7 @@ let make name : t =
   object (self)
 
     val hr = ref None
+    val tmpdir = ref None
     val buffer = ref (subst skel)
 
     method name = name
@@ -243,6 +245,7 @@ let make name : t =
       let lib = Res.get ["mods"; name; "lib"] in
       let prg = self#get_buf in
       let tmp = Res.mktempdir "ant" in
+      tmpdir := Some tmp;
       begin match run (tmp, lib, prg, err) steps with
       | None -> false
       | Some (local, p, pl) ->
@@ -280,7 +283,6 @@ let make name : t =
 	    | _ -> assert false
 	    end;
 	    Unix.close in_ch; Unix.close out_ch; Unix.close err_ch;
-	    Res.rmtempdir tmp;
 	  in
 	  let h =
 	    {
@@ -295,12 +297,16 @@ let make name : t =
 	      hr := Some h;
 	      true
 	  | _ ->
-	      h.close ();
+	      close ();
 	      false
 	  end
       end
 
     method stop =
+      begin match !tmpdir with
+      | None -> ()
+      | Some tmp -> Res.rmtempdir tmp; tmpdir := None
+      end;
       begin match !hr with
       | None -> ()
       | Some h -> h.close (); hr := None
