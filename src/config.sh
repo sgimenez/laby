@@ -23,6 +23,8 @@ let version_base = "${VERSION_BASE}"
 let version_current = "${VERSION_CURRENT}"
 let version_status = "${VERSION_STATUS}"
 
+let build_system = "${OCAML_SYSTEM}"
+let build_arch = "${OCAML_ARCH}"
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
 let _ = Res.sys_data_dir := "${SYSDATADIR}"

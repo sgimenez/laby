@@ -12,5 +12,7 @@ val version_current : string
 val version_base : string
 val version_status : string
 
+val build_system : string
+val build_arch : string
 val build_ocaml : string
 val build_lablgtk : string

@@ -13,10 +13,17 @@ export SYSTMPDIR=${SYSTMPDIR-/tmp}
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
-export OCAML_SYSTEM=$(${OCAMLC-ocamlc} -config | grep 'system:' | sed 's/^system: //' | tr -c -d '[:alnum:]')
+
+ocaml_config () {
+echo $(${OCAMLC-ocamlc} -config | grep "$1:" | sed 's/^'"$1"': //' | tr -c -d '[:alnum:]')
+}
+
+export OCAML_SYSTEM=$(ocaml_config system)
+export OCAML_ARCH=$(ocaml_config architecture)
+
 export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
 
-BUILDDIR="_build_${OCAML_SYSTEM}"
+BUILDDIR="_build-${OCAML_SYSTEM}-${OCAML_ARCH}"
 
 OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
 OCAMLFIND=${OCAMLFIND-ocamlfind}
@@ -95,7 +102,7 @@ for i in ${LIBTARGETS}; do
 done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
-echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${OCAML_SYSTEM}:" ${FILES}
+echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${OCAML_SYSTEM}-${OCAML_ARCH}:" ${FILES}
 export THREADS
 [ -f "${CONF}.sh" ] && sh "${CONF}.sh" > "${CONF}.ml"
 

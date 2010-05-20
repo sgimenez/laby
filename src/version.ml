@@ -14,9 +14,10 @@ let version () =
 
 let id () =
   section "id"
-    [[F.s "string       "; F.s Config.version_string];
-     [F.s "base         "; F.s Config.version_base];
-     [F.s "current      "; F.s Config.version_current]]
+    [[F.s "project             "; F.s Config.project_name];
+     [F.s "string              "; F.s Config.version_string];
+     [F.s "base                "; F.s Config.version_base];
+     [F.s "current             "; F.s Config.version_current]]
 
 let status () =
   F.s Config.version_status
@@ -27,18 +28,22 @@ let register_protocol protocol version =
   protocols := [F.string protocol; F.s version] :: !protocols
 
 let protocols () =
-  section "protocols" !protocols
+  if !protocols <> []
+  then section "protocols" !protocols
+  else F.n
 
 let build () =
   section "build" [
-    [F.s "ocaml                  "; F.s Config.build_ocaml];
-    [F.s "ocaml-lablgtk          "; F.s Config.build_lablgtk];
+    [F.s "system              "; F.s Config.build_system];
+    [F.s "architecture        "; F.s Config.build_arch];
+    [F.s "ocaml               "; F.s Config.build_ocaml];
+    [F.s "ocaml-lablgtk       "; F.s Config.build_lablgtk];
   ]
 
 let run () =
   section "run" [
-    [F.s "os                     "; F.s Sys.os_type];
-    [F.s "ocaml                  "; F.s Sys.ocaml_version];
+    [F.s "os                  "; F.s Sys.os_type];
+    [F.s "ocaml               "; F.s Sys.ocaml_version];
   ]
 
 let disp l () =
