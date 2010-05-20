@@ -190,9 +190,19 @@ let exec (tmp, lib, prg, err) p pl =
   Unix.close r;
   status
 
+exception Incomplete
+
 let make name : t =
-  let rules = Res.read_blocks (Res.get ["mods"; name; "lib"; "rules"]) in
-  let skel = Res.read_full (Res.get ["mods"; name; "skel"]) in
+  let res = Res.get ["mods"; name] in
+  let pathres p =
+    let path = Res.path (res ::  p) in
+    if not (Sys.file_exists path) then raise Incomplete;
+    path
+  in
+  let rules = Res.read_blocks (pathres ["rules"]) in
+  let skel = Res.read_full (pathres ["skel"]) in
+  let help = Res.read_blocks (pathres ["help"]) in
+  let lib = pathres ["lib"] in
   let find_tab s b =
     begin match rules s with
     | None -> []
@@ -242,7 +252,6 @@ let make name : t =
 
     method start err =
       self#stop;
-      let lib = Res.get ["mods"; name; "lib"] in
       let prg = self#get_buf in
       let tmp = Res.mktempdir "ant" in
       tmpdir := Some tmp;
@@ -319,18 +328,11 @@ let make name : t =
       end
 
     method help s =
-      let sections = Res.read_blocks (Res.get ["mods"; name; "help"]) in
-      begin match sections (s ^ ":") with
+      begin match help (s ^ ":") with
       | None -> ""
       | Some l -> subst (String.concat "\n" l) ^ "\n"
       end
 
-  end
-
-let pool () =
-  begin match conf_selected#get with
-  | "" -> List.map make (Res.get_list ["mods"])
-  | name -> [make name]
   end
 
 let dummy =
@@ -344,3 +346,20 @@ object
   method stop = ()
   method help _ = ""
 end
+
+let try_make f name =
+  begin try make name with
+  | Incomplete ->
+      f (
+	F.x "mod <name> is incomplete" [
+	  "name", F.string name;
+	]
+      );
+      dummy
+  end
+
+let pool () =
+  begin match conf_selected#get with
+  | "" -> List.map (try_make Run.error) (Res.get_list ["mods"])
+  | name -> [try_make Run.fatal name]
+  end
