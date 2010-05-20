@@ -152,7 +152,7 @@ let def_text key str =
 	      end
 	  end
 	in
-	F.h ~sep:F.n (List.map map list)
+	F.b (List.map map list)
       in
       Hashtbl.add texts key msg
   | `Error ->

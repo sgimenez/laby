@@ -45,7 +45,7 @@ let f ?arg (short, long, _, _) =
     | None, Some l -> l_f l
     | Some s, None -> s_f s
     | Some s, Some l ->
-	F.h ~sep:F.n [l_f l; F.s "("; s_f s; F.s ")"]
+	F.h [l_f l; F.b [F.s "("; s_f s; F.s ")"]]
     end
   in
   begin match arg with
@@ -65,7 +65,7 @@ let help_opt opts : t =
     let program = F.s (Sys.argv.(0)) in
     let options_f = List.map pl usage in
     F.l "usage" (
-      F.h [program; F.s "[options]"; F.v options_f]
+      F.h [program; F.s "--option[=parameter] ..."; F.v options_f]
     )
   in
   Some 'h', Some "help", `Excl_unit action, F.n
