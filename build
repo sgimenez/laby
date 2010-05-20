@@ -13,12 +13,15 @@ export SYSTMPDIR=${SYSTMPDIR-/tmp}
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
+export OCAML_SYSTEM=$(${OCAMLC-ocamlc} -config | grep 'system:' | sed 's/^system: //' | tr -c -d '[:alnum:]')
 export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
+
+BUILDDIR="_build_${OCAML_SYSTEM}"
 
 OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
 OCAMLFIND=${OCAMLFIND-ocamlfind}
 
-OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ocamlc -ocamlopt ocamlopt"
+OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ocamlc -ocamlopt ocamlopt -build-dir ${BUILDDIR}"
 OFQ="${OCAMLFIND} query -r -format -I,%d"
 
 [ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
@@ -92,7 +95,7 @@ for i in ${LIBTARGETS}; do
 done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
-echo building "${PROJECT_NAME}-${PROJECT_VERSION}:" ${FILES}
+echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${OCAML_SYSTEM}:" ${FILES}
 export THREADS
 [ -f "${CONF}.sh" ] && sh "${CONF}.sh" > "${CONF}.ml"
 
@@ -100,7 +103,7 @@ for i in ${TARGETS}; do rm -f $(basename "$i"); done
 
 ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
-for i in ${TARGETS}; do cp "_build/$i" $(basename "$i"); done
+for i in ${TARGETS}; do cp "$BUILDDIR/$i" $(basename "$i"); done
 
 [ -n ${LNK} ] &&
 for i in ${BINTARGETS}; do ln -sf $i.${LNK} $i; done
