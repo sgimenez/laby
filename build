@@ -14,8 +14,12 @@ export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
 
+[ -n "${OCAML_VERSION}" ] || \
+  (echo "compilation requires ocaml compilers" && exit 1)
+
 ocaml_config () {
-echo $(${OCAMLC-ocamlc} -config | grep "$1:" | sed 's/^'"$1"': //' | tr -c -d '[:alnum:]')
+  echo $(${OCAMLC-ocamlc} -config | grep "$1:" \
+  | sed 's/^'"$1"': //' | tr -c -d '[:alnum:]')
 }
 
 export OCAML_SYSTEM=$(ocaml_config system)
@@ -23,7 +27,8 @@ export OCAML_ARCH=$(ocaml_config architecture)
 
 export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
 
-BUILDDIR="_build-${OCAML_SYSTEM}-${OCAML_ARCH}"
+SYSARCH="${OCAML_SYSTEM}-${OCAML_ARCH}"
+BUILDDIR="_build-${SYSARCH}"
 
 OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
 OCAMLFIND=${OCAMLFIND-ocamlfind}
@@ -67,7 +72,7 @@ case ${ACT} in
       echo "  --clean (-c)"
       exit 0;;
   --clean|-c)
-      ${OCAMLBUILD} -clean
+      ${OCBI} -clean
       [ -f "${CONF}.sh" ] && rm -rf "${CONF}.ml"
       for i in ${AUXTARGETS}; do
         rm -rf $i
@@ -91,9 +96,7 @@ case ${ACT} in
 esac
 
 TARGETS=""
-for i in ${AUXTARGETS}; do
-  TARGETS="${TARGETS} ${REP}/$i";
-done;
+
 for i in ${BINTARGETS}; do
   for j in ${BINEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
 done;
@@ -102,18 +105,36 @@ for i in ${LIBTARGETS}; do
 done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
-echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${OCAML_SYSTEM}-${OCAML_ARCH}:" ${FILES}
+echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${SYSARCH}:" ${FILES}
 export THREADS
 [ -f "${CONF}.sh" ] && sh "${CONF}.sh" > "${CONF}.ml"
 
-for i in ${TARGETS}; do rm -f $(basename "$i"); done
+for i in ${BINTARGETS}; do
+  for j in ${BINEXT}; do rm -rf "$i-${SYSARCH}.$j"; done;
+done;
+for i in ${LIBTARGETS}; do
+  for j in ${LIBEXT}; do rm -rf "$i-${SYSARCH}.$j"; done;
+done;
 
 ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
-for i in ${TARGETS}; do cp "$BUILDDIR/$i" $(basename "$i"); done
+for i in ${BINTARGETS}; do
+  for j in ${BINEXT};
+  do cp "${BUILDDIR}/${REP}/$i.$j" "$i-${SYSARCH}.$j"; done
+done;
+for i in ${LIBTARGETS}; do
+  for j in ${LIBEXT};
+  do cp "${BUILDDIR}/${REP}/$i.$j" "$i-${SYSARCH}.$j"; done
+done;
+
+# linking
 
 [ -n ${LNK} ] &&
-for i in ${BINTARGETS}; do ln -sf $i.${LNK} $i; done
+for i in ${BINTARGETS}; do ln -sf "$i-${SYSARCH}.${LNK}" "$i"; done
+
+for i in ${LIBTARGETS}; do
+  for j in ${LIBEXT}; do ln -sf "$i-${SYSARCH}.$j" "$i.$j"; done;
+done;
 
 exit 0
 
