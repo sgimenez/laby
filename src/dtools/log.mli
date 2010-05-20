@@ -31,11 +31,6 @@ val make : ?level:int -> Conf.path -> t
      Make a logger labeled according to the given path.
   *)
 
-val master : t
-  (**
-     Root logger.
-  *)
-
 val start : Srv.t
   (**
      An atom that starts the logging.

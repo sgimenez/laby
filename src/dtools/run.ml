@@ -30,10 +30,12 @@ let opt_daemon =
     (F.x "run in daemon mode" [])
 
 
+let log = Log.make []
+
 exception Signal of int
 
 let signal i =
-  Log.master#debug 1 (
+  log#debug 1 (
     F.x "received signal <number>" [
       "number", F.int i;
     ]
@@ -73,7 +75,7 @@ let daemonize () =
 
 let exit_when_root () =
   let security s =
-    Log.master#fatal (
+    log#fatal (
       F.x "security exit: <msg>" [
 	"msg", F.string s;
       ]
@@ -90,10 +92,10 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
   | None -> ()
   | Some (conf, res) ->
       begin try
-	Conf.load ~log:Log.master#warning conf (Res.get res)
+	Conf.load ~log:log#warning conf (Res.get res)
       with
       | Res.Error msg ->
-	  Log.master#fatal msg;
+	  log#fatal msg;
 	  exit 3
       end
   end;
@@ -104,7 +106,7 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
 	begin match Opt.cmd opts with
 	| `Errors ml ->
 	    begin fun () ->
-	      Log.master#error (
+	      log#error (
 		F.x "invalid options: <errors>" [
 		  "errors", F.v ml;
 		]
@@ -138,31 +140,31 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
     Srv.launch ?services f
   with
   | Fail msg ->
-      Log.master#fatal msg;
+      log#fatal msg;
       clean ();
       exit 2
   | Res.Error msg ->
-      Log.master#fatal msg;
+      log#fatal msg;
       clean ();
       exit 3
   | Signal i when i = Sys.sigterm || i = Sys.sigquit -> ()
   | Sys.Break -> ()
   | Srv.StartError (e) ->
-      Log.master#internal (
+      log#internal (
 	F.x "exception encountered during start phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
       clean ();
       raise e
   | Srv.StopError (e) ->
-      Log.master#internal (
+      log#internal (
 	F.x "exception encountered during stop phase: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
       clean ();
       raise e
   | e ->
-      Log.master#internal (
+      log#internal (
 	F.x "exception: <exn>"
 	  ["exn", F.v [F.exn e]]
       );
@@ -173,6 +175,15 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
 
 let fatal msg =
   raise (Fail msg)
+
+let error msg =
+  log#error msg
+
+let warning msg =
+  log#warning msg
+
+let info msg =
+  log#info msg
 
 type 'a result =
     | Done of 'a

@@ -47,4 +47,7 @@ val hook : ('a -> 'b) -> 'a -> (unit -> unit) -> 'b
 val timeout : ?seconds:int -> ('a -> 'b) -> 'a -> (unit -> 'b) -> 'b
 
 val fatal : F.t -> 'a
+val error : F.t -> unit
+val warning : F.t -> unit
+val info : F.t -> unit
 
