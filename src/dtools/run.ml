@@ -185,6 +185,9 @@ let warning msg =
 let info msg =
   log#info msg
 
+let report f =
+  log#report f
+
 type 'a result =
     | Done of 'a
     | Failed of F.t

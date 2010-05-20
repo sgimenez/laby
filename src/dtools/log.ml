@@ -11,6 +11,7 @@
 
 type t =
     <
+      report: (int -> F.t -> F.t -> unit) -> unit;
       internal: F.t -> unit;
       fatal: F.t -> unit;
       error: F.t -> unit;
@@ -142,62 +143,63 @@ let make ?level path : t =
   let dbracketize m l =
     F.b [F.s "["; m ; F.s ":"; l; F.s "]"]
   in
-  let proceed h x =
-    mutexify (fun () -> print h x) ()
+  let triggers = ref [] in
+  let proceed n h x =
+    mutexify (fun () -> print h x) ();
+    List.iter (fun f -> f n h x) !triggers
   in
-object (self : t)
-  val print =
+  let msg n =
     begin fun heads x ->
       let time = Unix.gettimeofday () in
       let ts = if conf_timestamps#get then [timestamp time] else [] in
       let lb =
 	if path_str <> "" then [tag_label (F.s (path_str ^ ":"))] else []
       in
-      proceed (F.h (ts @ lb @ heads)) x
+      proceed n (F.h (ts @ lb @ heads)) x
     end
-  val active =
-    begin fun lvl ->
-      let rec aux l =
-	begin match l with
-	| [] -> false
-	| t :: q ->
-	    begin try lvl <= (Conf.as_int t)#get with
-	    | Conf.Undefined _ -> aux q
-	    end
-	end
-      in
-      aux confs
-    end
-  method internal =
-    begin match active (-4) with
-    | true -> print [tag_internal_error (bracketize (F.x "internal error" []))]
+  in
+  let h_internal_error =
+    tag_internal_error (bracketize (F.x "internal error" []))
+  in
+  let h_fatal_error =
+    tag_fatal_error (bracketize (F.x "fatal error" []))
+  in
+  let h_error =
+    tag_error (bracketize (F.x "error" []))
+  in
+  let h_warning =
+    tag_warning (bracketize (F.x "warning" []))
+  in
+  let h_debug lvl =
+    tag_debug (dbracketize (F.x "debug" []) (F.int lvl))
+  in
+  let active lvl =
+    let rec aux l =
+      begin match l with
+      | [] -> false
+      | t :: q ->
+	  begin try lvl <= (Conf.as_int t)#get with
+	  | Conf.Undefined _ -> aux q
+	  end
+      end
+    in
+    aux confs
+  in
+  let activate n h =
+    begin match active n with
+    | true -> msg n h
     | false -> (fun _ -> ())
     end
-  method fatal =
-    begin match active (-3) with
-    | true -> print [tag_fatal_error (bracketize (F.x "fatal error" []))]
-    | false -> (fun _ -> ())
-    end
-  method error =
-    begin match active (-2) with
-    | true -> print [tag_error (bracketize (F.x "error" []))]
-    | false -> (fun _ -> ())
-    end
-  method warning =
-    begin match active (-1) with
-    | true -> print [tag_warning (bracketize (F.x "warning" []))]
-    | false -> (fun _ -> ())
-    end
-  method info =
-    begin match active 0 with
-    | true -> print []
-    | false -> (fun _ -> ())
-    end
-  method debug lvl =
-    begin match active lvl with
-    | true -> print [tag_debug (dbracketize (F.x "debug" []) (F.int lvl))]
-    | false -> (fun _ -> ())
-    end
+  in
+object (self : t)
+  method report f =
+    triggers := f :: !triggers
+  method internal = activate (-4) [h_internal_error]
+  method fatal = activate (-3) [h_fatal_error]
+  method error = activate (-2) [h_error]
+  method warning = activate (-1) [h_warning]
+  method info = activate 0 []
+  method debug lvl = activate lvl [h_debug lvl]
 end
 
 let master = make []

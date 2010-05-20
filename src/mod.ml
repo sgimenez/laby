@@ -12,8 +12,21 @@ let conf =
     (F.x "mods configuration" [])
 
 let conf_selected =
-  Conf.string ~p:(conf#plug "selected") ~d:""
+  Conf.string ~p:(conf#plug "selected") ~d:"ocaml"
     (F.x "select a specific programming mod" [])
+
+let conf_exclusive =
+  Conf.bool ~p:(conf#plug "exclusive") ~d:false
+    (F.x "force the selected programming mod" [])
+
+let opt =
+  let action i =
+    conf_selected#set i;
+    conf_exclusive#set true
+  in
+  Opt.make ~short:'m' ~long:"mod" (`Do_string action)
+    (F.x "exclusive use of the chosen mod" [])
+
 
 type query = string * (string -> unit)
 
@@ -335,9 +348,9 @@ let make name : t =
 
   end
 
-let dummy =
+let dummy name =
 object
-  method name = ""
+  method name = name
   method check = false
   method set_buf _ = ()
   method get_buf = ""
@@ -355,11 +368,10 @@ let try_make f name =
 	  "name", F.string name;
 	]
       );
-      dummy
+      dummy name
   end
 
 let pool () =
-  begin match conf_selected#get with
-  | "" -> List.map (try_make Run.error) (Res.get_list ["mods"])
-  | name -> [try_make Run.fatal name]
-  end
+  if conf_exclusive#get
+  then [try_make Run.fatal conf_selected#get]
+  else List.map (try_make Run.error) (Res.get_list ["mods"])

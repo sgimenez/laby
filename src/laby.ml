@@ -32,7 +32,7 @@ let proceed _ =
 let opts =
   [
     Version.opt;
-    Opt.conf ~short:'m' ~long:"mod" Mod.conf_selected;
+    Mod.opt;
     Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
     Opt.conf ~long:"tile-size" Gfx.conf_tilesize;
     Opt.conf ~short:'l' ~long:"lang" Ui.conf_lang;

@@ -51,3 +51,7 @@ val error : F.t -> unit
 val warning : F.t -> unit
 val info : F.t -> unit
 
+val report : (int -> F.t -> F.t -> unit) -> unit
+
+
+

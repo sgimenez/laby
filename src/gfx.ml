@@ -15,6 +15,18 @@ let conf_tilesize =
   Conf.int ~p:(conf#plug "tile-size") ~d:40
     (F.x "size of tiles in pixels" [])
 
+let conf_window =
+  Conf.void ~p:(conf#plug "window")
+    (F.x "initial window geometry" [])
+
+let conf_window_width =
+  Conf.int ~p:(conf_window#plug "width") ~d:1000
+    (F.x "width of window" [])
+
+let conf_window_height =
+  Conf.int ~p:(conf_window#plug "height") ~d:750
+    (F.x "height of window" [])
+
 exception Error of F.t
 
 type ressources =
@@ -53,9 +65,23 @@ type controls =
       view_comment: GMisc.label;
     }
 
+let messages l h m =
+  if (l <= 0) && not (Unix.isatty Unix.stdout) then
+    let message_type =
+      match l with -4 | -3 | -2 -> `ERROR | -1 -> `WARNING | _ -> `INFO
+    in
+    let w =
+      GWindow.message_dialog
+	~title:("laby: message") ~buttons:GWindow.Buttons.ok
+	~message:(Fd.render_raw h ^ "\n\n" ^ Fd.render_raw m)
+	~message_type ()
+    in
+    let _ = w#run () in w#destroy ()
+
 let gtk_init () =
   GtkSignal.user_handler := Pervasives.raise;
   let _ = GtkMain.Main.init () in
+  Run.report messages;
   (* work around messed up gtk/lablgtk *)
   Sys.catch_break false;
   begin match Sys.os_type with
@@ -212,21 +238,6 @@ let make_pixmap tile_size level =
   let sizex, sizey = Level.size level in
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
   GDraw.pixmap ~width ~height ()
-
-let report_fail m =
-  if not (Unix.isatty Unix.stdout) then
-    let title =
-      F.x "fatal error" []
-    in
-    let w =
-      GWindow.message_dialog
-	~title:("laby: " ^ Fd.render_raw title)
-	~buttons:GWindow.Buttons.ok
-	~message:(Fd.render_raw m)
-	~message_type:`ERROR
-	()
-    in
-    let _ = w#run () in w#destroy ()
 
 
 let display_gtk ressources =
@@ -385,8 +396,9 @@ let display_gtk ressources =
   let altdestroy _ = destroy (); true in
 
   c.interprets#set_popdown_strings language_list;
-  if List.mem "ocaml" language_list
-  then c.interprets#entry#set_text "ocaml";
+  let smod = Mod.conf_selected#get in
+  if List.mem smod language_list
+  then c.interprets#entry#set_text smod;
   c.levels#set_popdown_strings levels_list;
   if List.mem "0.laby" levels_list
   then c.levels#entry#set_text "0.laby";
@@ -408,7 +420,7 @@ let display_gtk ressources =
   (* now we must have everything up *)
 
   setupmod ();
-  c.window#set_default_size 1000 750;
+  c.window#set_default_size conf_window_width#get conf_window_height#get;
   c.window#show ();
   (* bg color has to be retrieved after c.window#show *)
   bg := `COLOR (c.px#misc#style#light `NORMAL);
@@ -426,9 +438,6 @@ let run_gtk () =
 	)
     end
   in
-  begin match Run.exec display_gtk ressources with
-  | Run.Done () -> ()
-  | Run.Failed m -> report_fail m; Run.fatal m
-  | Run.Exn e -> report_fail (F.exn e); raise e
-  end
+  display_gtk ressources
+
 

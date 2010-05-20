@@ -7,6 +7,9 @@
 
 val conf : Conf.ut
 val conf_selected : string Conf.t
+val conf_exclusive : bool Conf.t
+
+val opt : Opt.t
 
 type query = string * (string -> unit)
 
@@ -24,4 +27,4 @@ type t =
 
 val pool : unit -> t list
 
-val dummy : t
+val dummy : string -> t

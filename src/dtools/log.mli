@@ -15,6 +15,7 @@
 
 type t =
     <
+      report: (int -> F.t -> F.t -> unit) -> unit;
       internal: F.t -> unit;
       fatal: F.t -> unit;
       error: F.t -> unit;

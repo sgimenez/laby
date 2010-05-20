@@ -18,7 +18,7 @@ let play ~msg ~help ~draw =
   let mktrace lmod level =
     Trace.init (Level.generate level) (step lmod msg)
   in
-  let lmod = ref Mod.dummy in
+  let lmod = ref (Mod.dummy "") in
   let level = ref Level.dummy in
   let trace = ref (mktrace !lmod !level) in
 
