@@ -303,13 +303,13 @@ let make name : t =
       end
 
     method stop =
-      begin match !tmpdir with
-      | None -> ()
-      | Some tmp -> Res.rmtempdir tmp; tmpdir := None
-      end;
       begin match !hr with
       | None -> ()
       | Some h -> h.close (); hr := None
+      end;
+      begin match !tmpdir with
+      | None -> ()
+      | Some tmp -> Res.rmtempdir tmp; tmpdir := None
       end
 
     method probe err =
