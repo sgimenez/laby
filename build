@@ -60,6 +60,21 @@ for i in $*; do
   done;
 done
 
+tclean () {
+      for i in ${AUXTARGETS}; do
+        rm -rf $i
+      done
+      for i in ${BINTARGETS}; do
+	  rm -rf "$i";
+	  for j in byte native d.byte p.native ${BINEXT};
+	  do rm -rf "$i-${SYSARCH}.$j"; done;
+      done;
+      for i in ${LIBTARGETS}; do
+	  for j in cma cmxa d.cma p.cmxa;
+          do rm -rf "$i-${SYSARCH}.$j"; done;
+      done;
+}
+
 case ${ACT} in
   --help|-h)
       echo "usage: $0 action [targets]"
@@ -74,15 +89,7 @@ case ${ACT} in
   --clean|-c)
       ${OCBI} -clean
       [ -f "${CONF}.sh" ] && rm -rf "${CONF}.ml"
-      for i in ${AUXTARGETS}; do
-        rm -rf $i
-      done
-      for i in ${BINTARGETS}; do
-        rm -rf $i $i.{byte,native,d.byte,p.native};
-      done
-      for i in ${LIBTARGETS}; do
-	rm -rf $i.{cma,cmxa,.d.cma,p.cmxa};
-      done
+      tclean
       exit 0;;
   --target|-t)
       ${OCBI} $*
@@ -109,12 +116,7 @@ echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${SYSARCH}:" ${FILES}
 export THREADS
 [ -f "${CONF}.sh" ] && sh "${CONF}.sh" > "${CONF}.ml"
 
-for i in ${BINTARGETS}; do
-  for j in ${BINEXT}; do rm -rf "$i-${SYSARCH}.$j"; done;
-done;
-for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do rm -rf "$i-${SYSARCH}.$j"; done;
-done;
+tclean
 
 ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
