@@ -1,8 +1,8 @@
 linux:
 
-  you need ocaml >= 3.10.0 and lablgtk >= 2.14.0 (with support for
-  gtksourceview2), then execute the following commands in the archive
-  main directory:
+  to compile laby, you need ocaml >= 3.10.0 and lablgtk >= 2.14.0
+  (with support for gtksourceview2), then execute the following
+  commands in the archive main directory:
 
     make
     ln -s ${PWD}/data ${HOME}/.config/laby
@@ -15,9 +15,15 @@ linux:
     ./laby
 
 
-windows (not supported yet, won't work without big amounts of hacking):
+windows:
 
-  laby installation requires:
+  the best advice is to use pre-compiled binaries available on the web:
+    http://www.pps.jussieu.fr/~gimenez/laby
+  those binaries are cross-compiled using mingw-ocaml.
+
+  if you want to compile them by yourself on windows, you will
+  probably need patience and a lot of good luck and the following
+  software:
 
     - ocaml >= 3.10.0 :
         http://caml.inria.fr/download.en.html
