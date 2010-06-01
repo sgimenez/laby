@@ -66,7 +66,7 @@ type controls =
     }
 
 let messages l h m =
-  if (l <= 0) && not (Unix.isatty Unix.stdout) then
+  if (l <= 0) && (Sys.os_type = "Win32" || not (Unix.isatty Unix.stdout)) then
     let message_type =
       match l with -4 | -3 | -2 -> `ERROR | -1 -> `WARNING | _ -> `INFO
     in
