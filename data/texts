@@ -278,7 +278,7 @@ sv_SV.UTF-8	kan inte ladda syntax för <name> mod
 
 text		select a specific programming mod
 en_US.UTF-8	select a specific programming mod
-fr_FR.UTF-8	se restreindre à un mode de programmation donné
+fr_FR.UTF-8	choisir un mode de programmation donné
 ru_RU.UTF-8	выбор программного мода
 
 text		size of tiles in pixels

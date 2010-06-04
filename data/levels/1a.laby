@@ -13,7 +13,7 @@ en_US.UTF-8	First challenge
 es_MX.UTF-8	Primeros obstaculos
 fr_FR.UTF-8	Premier défi
 hu_HU.UTF-8	Első próba
-ru_RU.UTF-8	Первре задание
+ru_RU.UTF-8	Первое задание
 
 comment:
 en_US.UTF-8	This is the first challenge. We start smoothly, no obstacles. You shall write a program to drive the robot toward the exit.

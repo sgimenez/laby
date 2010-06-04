@@ -21,7 +21,7 @@ windows:
     http://www.pps.jussieu.fr/~gimenez/laby
   those binaries are cross-compiled using mingw-ocaml.
 
-  if you want to compile them by yourself on windows, you will
+  if you plan to compile them by yourself on windows, you will
   probably need patience and a lot of good luck and the following
   software:
 
