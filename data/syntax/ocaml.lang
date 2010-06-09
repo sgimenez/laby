@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- vim: set sts=2 sw=2: -->
 <!--
-
  Author: Eric Cooper <ecc@cmu.edu>
  Copyright (C) 2007 Eric Cooper <ecc@cmu.edu>
  Copyright (C) 2007 Eric Norige <thelema314@gmail.com>
+ Copyright (C) 2009 Alexandr Kuleshov <sterh@live.ru>
 
  This library is free software; you can redistribute it and/or
  modify it under the terms of the GNU Library General Public
@@ -20,7 +20,6 @@
  License along with this library; if not, write to the
  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  Boston, MA 02111-1307, USA.
-
 -->
 <language id="ocaml" _name="Objective Caml" version="2.0" _section="Sources">
   <metadata>
@@ -49,23 +48,26 @@
     <style id="escape" _name="Escaped Character" map-to="def:special-char"/>
     <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
     <style id="error" _name="Error" map-to="def:error"/>
+    <style id="std-modules" _name="Standart Modules" map-to="def:type"/>
   </styles>
 
   <definitions>
     <define-regex id="cap-ident">\b[A-Z][A-Za-z0-9_']*</define-regex>
     <define-regex id="low-ident">\b[a-z][A-Za-z0-9_']*</define-regex>
     <define-regex id="char-esc">\\((\\|"|'|n|t|b|r)|[0-9]{3}|x[0-9a-fA-F]{2})</define-regex>
+
     <context id="escape-seq" style-ref="escape">
       <match>\%{char-esc}</match>
     </context>
+
     <!-- here's the main context -->
-    <context id="ocaml">
+    <context id="ocaml" class="no-spell-check">
       <include>
 	<context id="ocamldoc" style-ref="ocamldoc">
 	  <start>\(\*\*</start>
 	  <end>\*\)</end>
 	  <include>
-	    <context id="comment-in-comment" style-ref="comment">
+	    <context id="comment-in-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
 	      <start>\(\*</start>
 	      <end>\*\)</end>
 	      <include>
@@ -78,7 +80,7 @@
 	    <context ref="def:in-comment:*"/>
 	  </include>
 	</context>
-	<context id="comment" style-ref="comment">
+	<context id="comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
 	  <start>\(\*</start>
 	  <end>\*\)</end>
 	  <include>
@@ -229,7 +231,67 @@
 	  <keyword>list</keyword>
 	  <keyword>string</keyword>
 	  <keyword>unit</keyword>
-	  <!-- note: Some and None are highlighted as variants -->
+	</context>
+	<context id="standart-modules" style-ref="std-modules">
+	  <!--Standart modules -->
+	  <keyword>arg</keyword>
+	  <keyword>arith_status</keyword>
+	  <keyword>array</keyword>
+	  <keyword>arrayLabels</keyword>
+	  <keyword>big_int</keyword>
+	  <keyword>bigarray</keyword>
+	  <keyword>buffer</keyword>
+	  <keyword>callback</keyword>
+	  <keyword>camlinternalMod</keyword>
+	  <keyword>camlinternalOO</keyword>
+	  <keyword>char</keyword>
+	  <keyword>complex</keyword>
+	  <keyword>condition</keyword>
+	  <keyword>dbm</keyword>
+	  <keyword>digest</keyword>
+	  <keyword>dynLink</keyword>
+	  <keyword>event</keyword>
+	  <keyword>filename</keyword>
+	  <keyword>format</keyword>
+	  <keyword>gc</keyword>
+	  <keyword>genlex</keyword>
+	  <keyword>graphics</keyword>
+	  <keyword>graphicsX11</keyword>
+	  <keyword>hashtbl</keyword>
+	  <keyword>int32</keyword>
+	  <keyword>int64</keyword>
+	  <keyword>largeFile</keyword>
+	  <keyword>lazy</keyword>
+	  <keyword>lexing</keyword>
+	  <keyword>list</keyword>
+	  <keyword>listLabels</keyword>
+	  <keyword>map</keyword>
+	  <keyword>marshal</keyword>
+	  <keyword>moreLabels</keyword>
+	  <keyword>mutex</keyword>
+	  <keyword>mativeint</keyword>
+	  <keyword>num</keyword>
+	  <keyword>oo</keyword>
+	  <keyword>parsing</keyword>
+	  <keyword>printexc</keyword>
+	  <keyword>printf</keyword>
+	  <keyword>queue</keyword>
+	  <keyword>random</keyword>
+	  <keyword>scanf</keyword>
+	  <keyword>set</keyword>
+	  <keyword>sort</keyword>
+	  <keyword>stack</keyword>
+	  <keyword>stdLabels</keyword>
+	  <keyword>str</keyword>
+	  <keyword>stream</keyword>
+	  <keyword>stringLabels</keyword>
+	  <keyword>sys</keyword>
+	  <keyword>thread</keyword>
+	  <keyword>threadUnix</keyword>
+	  <keyword>unix</keyword>
+	  <keyword>unixLabels</keyword>
+	  <keyword>weak</keyword>
+	  <!-- Standart modules -->
 	</context>
       </include>
     </context>
