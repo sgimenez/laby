@@ -35,6 +35,7 @@ let opts =
     Mod.opt;
     Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
     Opt.conf ~long:"tile-size" Gfx.conf_tilesize;
+    Opt.conf ~long:"highlight-style" Gfx.conf_highlight_style;
     Opt.conf ~short:'l' ~long:"lang" Ui.conf_lang;
     Opt.conf_set ~short:'c' ~long:"conf" conf;
     Opt.conf_descr ~long:"conf-descr" conf;

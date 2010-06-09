@@ -15,6 +15,10 @@ let conf_tilesize =
   Conf.int ~p:(conf#plug "tile-size") ~d:40
     (F.x "size of tiles in pixels" [])
 
+let conf_highlight_style =
+  Conf.string ~p:(conf#plug "highlight-style") ~d:"classic"
+    (F.x "syntax highlighting style" [])
+
 let conf_window =
   Conf.void ~p:(conf#plug "window")
     (F.x "initial window geometry" [])
@@ -322,6 +326,9 @@ let display_gtk ressources =
 	let lmod = List.find (fun x -> x#name = name) mods in
 	c.view_prog#buffer#set_text (command#chg_mod lmod);
 	let syntaxd = Res.get ["syntax"] in
+	let sm = GSourceView2.source_style_scheme_manager true in
+	sm#prepend_search_path (Res.path [syntaxd; "styles"]);
+	let style = sm#style_scheme conf_highlight_style#get in
 	let m = GSourceView2.source_language_manager false in
 	m#set_search_path (syntaxd :: m#search_path);
 	begin match m#language name with
@@ -332,6 +339,8 @@ let display_gtk ressources =
 	      ]
 	    );
 	| Some l ->
+	    c.view_prog#source_buffer#set_style_scheme style;
+	    c.view_help#source_buffer#set_style_scheme style;
 	    c.view_prog#source_buffer#set_language (Some l);
 	    c.view_help#source_buffer#set_language (Some l);
 	end
