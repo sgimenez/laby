@@ -5,6 +5,7 @@ o o o o o o o o o o o o o o
 
 title:
 en_US.UTF-8	Corridor of rocks
+de_DE.UTF-8	Gang voller Steine
 es_MX.UTF-8	El corredor con piedras
 fr_FR.UTF-8	Le couloir des cailloux
 hu_HU.UTF-8	Sziklák folyosója
@@ -12,7 +13,8 @@ ru_RU.UTF-8	Коридор камней
 
 comment:
 en_US.UTF-8	Once again a “while” loop will be useful!
-es_MX.UTF-8	Una vez mas el bucle "while" será útil!
+de_DE.UTF-8	Auch hier ist eine “while”-Schleife nützlich!
+es_MX.UTF-8	Una vez mas el bucle “while” será útil!
 fr_FR.UTF-8	Une fois de plus la boucle “while” va être utile !
 hu_HU.UTF-8	Egy “while” ciklus megkönnyíti az életed!
 ru_RU.UTF-8	И снова нам поможет цикл “while”!

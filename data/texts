@@ -1,110 +1,137 @@
 # say.ml
 
 text		I'm ready
+de_DE.UTF-8	Ich bin bereit
 en_US.UTF-8	I'm ready
 es_MX.UTF-8	Estoy listo
 fr_FR.UTF-8	Je suis prêt
 hu_HU.UTF-8	Készen vagyok
 ru_RU.UTF-8	Я готов
 sv_SV.UTF-8	Jag är redo
+uk_UA.UTF-8	Я готовий
 
 text		Something went wrong
+de_DE.UTF-8	Da hat was nicht geklappt
 en_US.UTF-8	Something went wrong
 es_MX.UTF-8	Algo fallo
 fr_FR.UTF-8	Quelque chose ne vas pas
 hu_HU.UTF-8	Valami hibás
 ru_RU.UTF-8	Что-то пошло не так
 sv_SV.UTF-8	Något gick fel
+uk_UA.UTF-8	Щось не так
 
 text		I can't go through the wall.
+de_DE.UTF-8	Ich kann nicht durch die Wand gehen.
 en_US.UTF-8	I can't go through the wall.
 es_MX.UTF-8	No puedo atravesar la pared.
 fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
 hu_HU.UTF-8	Nem tudok átmenni a falon.
 ru_RU.UTF-8	Я не могу пройти сквозь стену.
 sv_SV.UTF-8	Jag kan inte gå genom väggen.
+uk_UA.UTF-8	Я не можу пройти крізь стіну
 
 text		I can't go through this rock.
+de_DE.UTF-8	Ich kann nicht durch diesen Stein gehen.
 en_US.UTF-8	I can't go through this rock.
 es_MX.UTF-8	No puedo atravezar esta piedra.
 fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
 hu_HU.UTF-8	Nem tudok átmenni a kövön.
 ru_RU.UTF-8	Я не могу пройти через этот камень.
 sv_SV.UTF-8	Jag kan inte gå genom den här stenen.
+uk_UA.UTF-8	Я не можу пройти крізь цей камінь.
 
 text		I can't go through the door.
+de_DE.UTF-8	Ich kann nicht durch die Tür gehen.
 en_US.UTF-8	I can't go through the door.
 es_MX.UTF-8	No puedo atravezar esta puerta.
 fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
 hu_HU.UTF-8	Nem tudok átmenni az ajtón.
 ru_RU.UTF-8	Я не могу пройти через дверь.
 sv_SV.UTF-8	Jag kan inte gå genom dörren.
+ru_RU.UTF-8	Я не могу пройти через дверь.
 
 text		Oops, a spider web.
+de_DE.UTF-8	Ups, ein Spinnennetz!
 en_US.UTF-8	Oops, a spider web.
 es_MX.UTF-8	Oops, una telaraña.
 fr_FR.UTF-8	Oups, une toile d'araignée.
 hu_HU.UTF-8	Upsz! Egy pókháló!
 ru_RU.UTF-8	Ой! Паутина!
 sv_SV.UTF-8	Oj, ett spindelväv.
+uk_UA.UTF-8	Ой, павутина!
 
 text		I can't move anymore.
+de_DE.UTF-8	Ich kann mich nicht mehr bewegen.
 en_US.UTF-8	I can't move anymore.
 es_MX.UTF-8	No me puedo mover.
 fr_FR.UTF-8	Je ne peux plus bouger.
 hu_HU.UTF-8	Nem tudok többet mozogni.
 ru_RU.UTF-8	Я не могу двинуться.
 sv_SV.UTF-8	Jag kan inte röra mig mer.
+uk_UA.UTF-8	Я не можу рухатися.
 
 text		Wohoo, the exit!
+de_DE.UTF-8	Juhu, der Ausgang!
 en_US.UTF-8	Wohoo, the exit!
 es_MX.UTF-8	Wohoo, la salida!
 fr_FR.UTF-8	Hourra la sortie !
 hu_HU.UTF-8	Szuper!!! Kijutottam!!!
 ru_RU.UTF-8	Ура! Выход!
 sv_SV.UTF-8	Wohoo, utgången!
+uk_UA.UTF-8	Ура! Вихід!
 
 text		I can't find a door to open.
+de_DE.UTF-8	Ich kann keine Tür finden, die ich öffnen kann.
 en_US.UTF-8	I can't find a door to open.
 es_MX.UTF-8	No puedo encontrar una puerta y abrirla.
 fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
 hu_HU.UTF-8	Nem találom az ajtót, hogy kinyissam.
 ru_RU.UTF-8	Не могу найти дверь, чтобы её открыть.
 sv_SV.UTF-8	Jag kan inte hitta en dörr att öppna.
+uk_UA.UTF-8	Не можу знайти двері, щоб їх відкрити.
 
 text		I can't go out carrying a rock.
+de_DE.UTF-8	Ich kann hier nicht raus während ich einen Stein trage.
 en_US.UTF-8	I can't go out carrying a rock.
 es_MX.UTF-8	No puedo salir cargando la piedra.
 fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
 hu_HU.UTF-8	Nem tudom felvenni a követ.
 ru_RU.UTF-8	Я не могу выйти с камнем.
 sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
+uk_UA.UTF-8	Я не можу вийти з каменем.
 
 text		There's no rock to take here.
+de_DE.UTF-8	Da ist kein Stein den ich aufheben kann.
 en_US.UTF-8	There's no rock to take here.
 es_MX.UTF-8	No hay una piedra para agarrar.
 fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
 hu_HU.UTF-8	Nincs kő, amit leraknék.
 ru_RU.UTF-8	Здесь нет ни одного камня.
 sv_SV.UTF-8	Det finns ingen sten att bära här.
+uk_UA.UTF-8	Тут немає жодного каменя.
 
 text		I can't drop the rock here.
+de_DE.UTF-8	Ich kann den Stein hier nicht ablegen.
 en_US.UTF-8	I can't drop the rock here.
 es_MX.UTF-8	No puedo dejar la piedra aquí.
 fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 hu_HU.UTF-8	Nem tudom ide lerakni a követ.
 ru_RU.UTF-8	Я не могу бросить сюда камень.
 sv_SV.UTF-8	Jag kan inte släppa stenen här.
+uk_UA.UTF-8	Я не можу кинути сюди камінь.
 
 text		I have nothing to drop.
+de_DE.UTF-8	Ich habe nichts zum ablegen.
 en_US.UTF-8	I have nothing to drop.
 es_MX.UTF-8	No tengo nada que dejar.
 fr_FR.UTF-8	Je n'ai rien à poser.
 ru_RU.UTF-8	Мне нечего бросить.
+uk_UA.UTF-8	Мені нічого кидати.
 
 # ascii api names (no funny characters)
 
 text:ascii	Ant
+de_DE.UTF-8	Ameise
 en_US.UTF-8	Ant
 es_MX.UTF-8	Hormiga
 fr_FR.UTF-8	Fourmi
@@ -112,6 +139,7 @@ hu_HU.UTF-8	Hangya
 sv_SV.UTF-8	Myra
 
 text:ascii	ant
+de_DE.UTF-8	ameise
 en_US.UTF-8	ant
 es_MX.UTF-8	hormiga
 fr_FR.UTF-8	fourmi
@@ -119,6 +147,7 @@ hu_HU.UTF-8	hangya
 sv_SV.UTF-8	myra
 
 text:ascii	left
+de_DE.UTF-8	links
 en_US.UTF-8	left
 es_MX.UTF-8	izquierda
 fr_FR.UTF-8	gauche
@@ -126,6 +155,7 @@ hu_HU.UTF-8	balra
 sv_SV.UTF-8	vanster
 
 text:ascii	right
+de_DE.UTF-8	rechts
 en_US.UTF-8	right
 es_MX.UTF-8	derecha
 fr_FR.UTF-8	droite
@@ -133,6 +163,7 @@ hu_HU.UTF-8	jobbra
 sv_SV.UTF-8	hoger
 
 text:ascii	forward
+de_DE.UTF-8	vorwarts
 en_US.UTF-8	forward
 es_MX.UTF-8	avanzar
 fr_FR.UTF-8	avance
@@ -140,6 +171,7 @@ hu_HU.UTF-8	elore
 sv_SV.UTF-8	framat
 
 text:ascii	take
+de_DE.UTF-8	aufheben
 en_US.UTF-8	take
 es_MX.UTF-8	tomar
 fr_FR.UTF-8	prend
@@ -147,6 +179,7 @@ hu_HU.UTF-8	felvesz
 sv_SV.UTF-8	bara
 
 text:ascii	drop
+de_DE.UTF-8	ablegen
 en_US.UTF-8	drop
 es_MX.UTF-8	dejar
 fr_FR.UTF-8	pose
@@ -154,6 +187,7 @@ hu_HU.UTF-8	letesz
 sv_SV.UTF-8	slapp
 
 text:ascii	escape
+de_DE.UTF-8	entkommen
 en_US.UTF-8	escape
 es_MX.UTF-8	escapar
 fr_FR.UTF-8	ouvre
@@ -161,6 +195,7 @@ hu_HU.UTF-8	kimegy
 sv_SV.UTF-8	rymma
 
 text:ascii	look
+de_DE.UTF-8	schau
 en_US.UTF-8	look
 es_MX.UTF-8	mirar
 fr_FR.UTF-8	regarde
@@ -168,6 +203,7 @@ hu_HU.UTF-8	nez
 sv_SV.UTF-8	titta
 
 text:ascii	say
+de_DE.UTF-8	sage
 en_US.UTF-8	say
 es_MX.UTF-8	decir
 fr_FR.UTF-8	dit
@@ -175,12 +211,14 @@ hu_HU.UTF-8	mondja
 sv_SV.UTF-8	sag
 
 text:ascii	Void
+de_DE.UTF-8	Leer
 en_US.UTF-8	Void
 fr_FR.UTF-8	Vide
 hu_HU.UTF-8	Semmi
 sv_SV.UTF-8	Tomt
 
 text:ascii	Wall
+de_DE.UTF-8	Wand
 en_US.UTF-8	Wall
 es_MX.UTF-8	Pared
 fr_FR.UTF-8	Mur
@@ -188,6 +226,7 @@ hu_HU.UTF-8	Fal
 sv_SV.UTF-8	Vagg
 
 text:ascii	Rock
+de_DE.UTF-8	Stein
 en_US.UTF-8	Rock
 es_MX.UTF-8	Piedra
 fr_FR.UTF-8	Caillou
@@ -195,6 +234,7 @@ hu_HU.UTF-8	Ko
 sv_SV.UTF-8	Sten
 
 text:ascii	Web
+de_DE.UTF-8	Netz
 en_US.UTF-8	Web
 es_MX.UTF-8	Telarana
 fr_FR.UTF-8	Toile
@@ -202,6 +242,7 @@ hu_HU.UTF-8	Halo
 sv_SV.UTF-8	Spindelvav
 
 text:ascii	Exit
+de_DE.UTF-8	Ausgang
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 hu_HU.UTF-8	Kilep
@@ -209,6 +250,7 @@ sv_SV.UTF-8	Utgang
 es_MX.UTF-8	Salir
 
 text:ascii	Unknown
+de_DE.UTF-8	Unbekannt
 en_US.UTF-8	Unknown
 es_MX.UTF-8	Desconocido
 fr_FR.UTF-8	Inconnu
@@ -219,120 +261,148 @@ sv_SV.UTF-8	Okand
 # gfx.ml
 
 text		Language:
+de_DE.UTF-8	Sprache:
 en_US.UTF-8	Language:
 es_MX.UTF-8	Idioma:
 fr_FR.UTF-8	Langage :
 hu_HU.UTF-8	Nyelv :
 ru_RU.UTF-8	Язык:
 sv_SV.UTF-8	Språk:
+uk_UA.UTF-8	Мова:
 
 text		Level:
+de_DE.UTF-8	Level:
 en_US.UTF-8	Level:
 es_MX.UTF-8	Nive:
 fr_FR.UTF-8	Niveau :
 hu_HU.UTF-8	Szint :
 ru_RU.UTF-8	Уровень:
 sv_SV.UTF-8	Nivå:
+uk_UA.UTF-8	Рівень:
 
 text		Program:
+de_DE.UTF-8	Praogramm:
 en_US.UTF-8	Program:
 es_MX.UTF-8	Programa:
 fr_FR.UTF-8	Programme :
 hu_HU.UTF-8	Program :
 ru_RU.UTF-8	Программа:
 sv_SV.UTF-8	Program:
+uk_UA.UTF-8	Програма:
 
 text		Messages:
+de_DE.UTF-8	Benachrichtigungen:
 en_US.UTF-8	Messages:
 es_MX.UTF-8	Mensajes:
 fr_FR.UTF-8	Messages :
 hu_HU.UTF-8	Üzenet :
 ru_RU.UTF-8	Сообщения:
 sv_SV.UTF-8	Medelande:
+uk_UA.UTF-8	Повідомлення:
 
 text		Help:
+de_DE.UTF-8	Tipp:
 en_US.UTF-8	Help:
 es_MX.UTF-8	Ayudar:
 fr_FR.UTF-8	Aide :
 hu_HU.UTF-8	Segítség :
 ru_RU.UTF-8	Помощь:
 sv_SV.UTF-8	Hjälp:
+uk_UA.UTF-8	Допомога:
 
 text		graphic interface configuration
+de_DE.UTF-8	Benutzeroberfläche konfigurieren
 en_US.UTF-8	graphic interface configuration
 es_MX.UTF-8	configruacion de la interfaz gráfica
 fr_FR.UTF-8	configuration de l'interface graphique
 hu_HU.UTF-8	grafikus beállítások
 ru_RU.UTF-8	настройки интерфейса
 sv_SV.UTF-8	grafiskt gränssnitt konfiguration
+uk_UA.UTF-8	налаштування інтерфейсу
 
 text		cannot load syntax for <name> mod
+de_DE.UTF-8	Kann keine Syntax für <name> mod laden
 en_US.UTF-8	cannot load syntax for <name> mod
 es_MX.UTF-8	imposible cargar la sintaxis del mod <name>
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
 ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
 sv_SV.UTF-8	kan inte ladda syntax för <name> mod
+uk_UA.UTF-8	не можу завантажити синтаксис для мод <name>
 
 
 # command line options
 
 text		select a specific programming mod
+de_DE.UTF-8	Wähle ein Programmier Mod aus
 en_US.UTF-8	select a specific programming mod
 fr_FR.UTF-8	choisir un mode de programmation donné
 ru_RU.UTF-8	выбор программного мода
+uk_UA.UTF-8	обрати програмний мод
 
 text		size of tiles in pixels
+de_DE.UTF-8	Kachelgröße in Pixeln
 en_US.UTF-8	size of tiles in pixels
 es_MX.UTF-8	tamaño del patrón en pixeles
 fr_FR.UTF-8	taille des cases en pixels
 hu_HU.UTF-8	térképek nagysága pixelben
 ru_RU.UTF-8	размер ячейки в пикселях
 sv_SV.UTF-8	storlek av tile i pixlar
+uk_UA.UTF-8	розмір комірки в пікселях
 
 text		language
+de_DE.UTF-8	Sprache
 en_US.UTF-8	language
 es_MX.UTF-8	idioma
 fr_FR.UTF-8	langage
 hu_HU.UTF-8	nyelv
 ru_RU.UTF-8	язык
 sv_SV.UTF-8	språk
+uk_UA.UTF-8	мова
 
 
 # sound.ml
 
 text		sound configuration
+de_DE.UTF-8	Sound Konfiguration
 en_US.UTF-8	sound configuration
 es_MX.UTF-8	configuración de sonido
 fr_FR.UTF-8	configuration du son
 hu_HU.UTF-8	hangbeállítások
 ru_RU.UTF-8	настройка звука
 sv_SV.UTF-8	ljud konfiguration
+uk_UA.UTF-8	налаштування звуку
 
 text		enable or disable sounds
+de_DE.UTF-8	Sounds aktivieren/deaktivieren
 en_US.UTF-8	enable or disable sounds
 es_MX.UTF-8	activar o desactivar el sonido
 fr_FR.UTF-8	activer ou désactiver le son
 hu_HU.UTF-8	hang be/ki
 ru_RU.UTF-8	включить или выключить звук
 sv_SV.UTF-8	aktivera eller avaktivera ljud
+uk_UA.UTF-8	ввімкнути чи вимкнути звук
 
 
 # level.ml
 
 text		unknown tile
+de_DE.UTF-8	Unbekanntes Teil
 en_US.UTF-8	unknown tile
 es_MX.UTF-8	patrón desconocido
 fr_FR.UTF-8	case inconnue
 hu_HU.UTF-8	ismeretlen térkép
 ru_RU.UTF-8	неизвестная ячейка
 sv_SV.UTF-8	okänd tile
+uk_UA.UTF-8	невідома комірка
 
 text		mismatching line length
+de_DE.UTF-8	Zeilenlänge verfehlt
 en_US.UTF-8	mismatching line length
 es_MX.UTF-8	longitud de linea no concuerda
 fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
 sv_SV.UTF-8	fel i linje längden
+uk_UA.UTF-8	невідповідна довжина рядка
 
 text		bad level format: <file>
 en_US.UTF-8	bad level format: <file>
@@ -341,201 +411,248 @@ fr_FR.UTF-8	format de fichier erroné : <file>
 hu_HU.UTF-8	rossz szint-formátum: <file>
 ru_RU.UTF-8	неверный формат уровня: <file>
 sv_SV.UTF-8	fel nivå format: <file>
+uk_UA.UTF-8	помилковий формат рівня: <file>
 
 text		missing level section <name> in: <file>
+de_DE.UTF-8	Fehlende Levelsektion <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
 es_MX.UTF-8	sección <name> faltante en el nivel: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
 ru_RU.UTF-8	отсутствует секция уровня <name> в: <file>
 sv_SV.UTF-8	saknar nivå sektion <name> i: <file>
+uk_UA.UTF-8	відсутня секція рівня <name> в: <file>
 
 
 # laby.ml
 
 text		programming languages
+de_DE.UTF-8	Programmiersprachen
 en_US.UTF-8	programming languages
 es_MX.UTF-8	idioma de programación
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
 ru_RU.UTF-8	языки программирования
 sv_SV.UTF-8	programmerings språk
+uk_UA.UTF-8	мова програмування
 
 
 # bot.ml
 
 text		execution of interpreter failed
+de_DE.UTF-8	Ausführung des Interpreters fehlgeschlagen
 en_US.UTF-8	execution of interpreter failed
 es_MX.UTF-8	ejecución del interprete ha fallado
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
 sv_SV.UTF-8	utförande av tolk misslyckades
+uk_UA.UTF-8	помилка в роботі інтерпретатора
 
 
 # misc
 
 text		display failed
+de_DE.UTF-8	Anzeige fehlgeschlagen
 en_US.UTF-8	display failed
 es_MX.UTF-8	no se puede mostrar
 fr_FR.UTF-8	impossible d'ouvrir une fenêtre
 hu_HU.UTF-8	megjelenítás sikertelen
 ru_RU.UTF-8	невозможно открыть окно
 sv_SV.UTF-8	visning misslyckades
+uk_UA.UTF-8	неможливо відкрити вікно
 
 text		gtk error: <error>
+de_DE.UTF-8	gtk Fehler: <error>
 en_US.UTF-8	gtk error: <error>
 es_MX.UTF-8	error gtk: <error>
 fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
 ru_RU.UTF-8	ошибка gtk: <error>
 sv_SV.UTF-8	gtk fel: <error>
+uk_UA.UTF-8	помилка gtk: <error>
 
 
 # dtools
 
 text		file <f>, line <l>: <error>
+de_DE.UTF-8	Datei <f>, Zeile <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
 es_MX.UTF-8	archivo <f>, linea <l>: <error>
 fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
 ru_RU.UTF-8	файл <f>, строка <l>: <error>
 sv_SV.UTF-8	fil <f>, linje <l>: <error>
+uk_UA.UTF-8	файл <f>, рядок <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
+de_DE.UTF-8	Zeile <l>, Zeichen <begin-char>-<end-char>
 en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
 es_MX.UTF-8	linea <l>, caracter <begin-char>-<end-char>
 fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
 ru_RU.UTF-8	строка <l>, позиция <begin-char>-<end-char>
 sv_SV.UTF-8	linje <l>, karaktär <begin-char>-<end-char>
+uk_UA.UTF-8	рядок <l>, позиція <begin-char>-<end-char>
 
 text		line <l>, character <char>
+de_DE.UTF-8	Zeile <l>, Zeichen <char>
 en_US.UTF-8	line <l>, character <char>
 es_MX.UTF-8	linea <l>, caractér <char>
 fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
 ru_RU.UTF-8	строка <l>, позиция <char>
 sv_SV.UTF-8	linje <l>, karaktär <char>
+uk_UA.UTF-8	рядок <l>, позиція <char>
 
 text		lexical error
+de_DE.UTF-8	Lexikalischer Fehler
 en_US.UTF-8	lexical error
 es_MX.UTF-8	error lexico
 fr_FR.UTF-8	erreur lexicale
 hu_HU.UTF-8	lexikális hiba
 ru_RU.UTF-8	лексическая ошибка
 sv_SV.UTF-8	lexikala fel
+uk_UA.UTF-8	лексична помилка
 
 text		syntax error
+de_DE.UTF-8	Syntax Fehler
 en_US.UTF-8	syntax error
 es_MX.UTF-8	error de sintaxis
 fr_FR.UTF-8	erreur de syntaxe
 hu_HU.UTF-8	szintaxis hiba
 sv_SV.UTF-8	fel i syntax
 ru_RU.UTF-8	синтаксическая ошибка
+uk_UA.UTF-8	синтаксична помилка
 
 text		<status>: <message>
+de_DE.UTF-8	<status>: <message>
 en_US.UTF-8	<status>: <message>
 es_MX.UTF-8	<status>: <message>
 fr_FR.UTF-8	<status> : <message>
 hu_HU.UTF-8	<status> : <message>
 ru_RU.UTF-8	<status> : <message>
 sv_SV.UTF-8	<status> : <message>
+uk_UA.UTF-8	<status> : <message>
 
 text		exception
+de_DE.UTF-8	Ausnahme
 en_US.UTF-8	exception
 es_MX.UTF-8	excepción
 fr_FR.UTF-8	exception
 hu_HU.UTF-8	kivétel
 ru_RU.UTF-8	исключение
 sv_SV.UTF-8	undantag
+uk_UA.UTF-8	виключення
 
 text		internal error
+de_DE.UTF-8	Interner Fehler
 en_US.UTF-8	internal error
 es_MX.UTF-8	error interno
 fr_FR.UTF-8	erreur interne
 hu_HU.UTF-8	belső hiba
 ru_RU.UTF-8	внутренняя ошибка
 sv_SV.UTF-8	internt fel
+uk_UA.UTF-8	внутрішня помилка
 
 text		fatal error
+de_DE.UTF-8	Fataler Fehler
 en_US.UTF-8	fatal error
 es_MX.UTF-8	error fatal
 fr_FR.UTF-8	erreur fatale
 hu_HU.UTF-8	súlyos hiba
 ru_RU.UTF-8	фатальная ошибка
 sv_SV.UTF-8	fatalt fel
+uk_UA.UTF-8	фатальна помилка
 
 text		error
+de_DE.UTF-8	Fehler
 en_US.UTF-8	error
 es_MX.UTF-8	error
 fr_FR.UTF-8	erreur
 hu_HU.UTF-8	hiba
 ru_RU.UTF-8	ошибка
 sv_SV.UTF-8	fel
+uk_UA.UTF-8	помилка
 
 text		warning
+de_DE.UTF-8	Achtung
 en_US.UTF-8	warning
 es_MX.UTF-8	aviso
 fr_FR.UTF-8	avertissement
 hu_HU.UTF-8	figyelmeztetés
 ru_RU.UTF-8	предупреждение
 sv_SV.UTF-8	varning
+uk_UA.UTF-8	попередження
 
 text		debug
+de_DE.UTF-8	Debug
 en_US.UTF-8	debug
 es_MX.UTF-8	debug
 fr_FR.UTF-8	debug
 hu_HU.UTF-8	hibakeresés
 ru_RU.UTF-8	отладка
 sv_SV.UTF-8	debug
+uk_UA.UTF-8	налагодження
 
 text		failure
+de_DE.UTF-8	Fehlschlag
 en_US.UTF-8	failure
 es_MX.UTF-8	fallo
 fr_FR.UTF-8	échec
 hu_HU.UTF-8	sikertelen
 ru_RU.UTF-8	сбой
 sv_SV.UTF-8	misslyckade
+uk_UA.UTF-8	збій
 
 text		done
+de_DE.UTF-8	fertig
 en_US.UTF-8	done
 es_MX.UTF-8	listo
 fr_FR.UTF-8	fait
 hu_HU.UTF-8	kész
 ru_RU.UTF-8	готово
 sv_SV.UTF-8	klart
+uk_UA.UTF-8	готово
 
 text		line <l>
+de_DE.UTF-8	Zeile <l>
 en_US.UTF-8	line <l>
 es_MX.UTF-8	linea <l>
 fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
 ru_RU.UTF-8	строка <l>
 sv_SV.UTF-8	linje <l>
+uk_UA.UTF-8	рядок <l>
 
 text		unknown token
+de_DE.UTF-8	Unbekanntes Zeichen
 en_US.UTF-8	unknown token
 es_MX.UTF-8	token desconocido
 fr_FR.UTF-8	lexème inconnu
 hu_HU.UTF-8	ismeretlen jelölés
 ru_RU.UTF-8	неизвестный токен
 sv_SV.UTF-8	ökänt tecken
+uk_UA.UTF-8	невідомий токен
 
 text		unknown type
+de_DE.UTF-8	Unbekannter Typ
 en_US.UTF-8	unknown type
 es_MX.UTF-8	tipo desconocido
 fr_FR.UTF-8	type inconnu
 hu_HU.UTF-8	ismeretlen típus
 ru_RU.UTF-8	неизвестный тип
 sv_SV.UTF-8	ökänd typ
+uk_UA.UTF-8	невідомий тип
 
 text		failed to load file: <error>
+de_DE.UTF-8	Fehler beim Laden der Datei: <error>
 en_US.UTF-8	failed to load file: <error>
 es_MX.UTF-8	no se pudo cargar el archivo: <error>
 fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
 hu_HU.UTF-8	sikertelen fájlbetöltés: <error>
 ru_RU.UTF-8	ошибка загрузки файла: <error>
 sv_SV.UTF-8	misslyckades med att ladda fil: <error>
+uk_UA.UTF-8	помилка завантаження файлу: <error>
 
 text		<type> value expected
 en_US.UTF-8	<type> value expected
@@ -621,7 +738,7 @@ hu_HU.UTF-8	több kizárólagos akció van leírva
 text		invalid argument in <exp>: <error>
 en_US.UTF-8	invalid argument in <exp>: <error>
 fr_FR.UTF-8	argument invalide dans <exp> : <error>
-hu_HU.UTF-8	helytelen argumentum:   <exp>: <error>
+hu_HU.UTF-8	helytelen argumentum: <exp>: <error>
 
 text		this key cannot be assigned a value
 en_US.UTF-8	this key cannot be assigned a value

@@ -10,6 +10,7 @@ conditional
 
 title:
 en_US.UTF-8	Ahhh webs
+de_DE.UTF-8	Hilfe, Spinnennetze!
 es_MX.UTF-8	Ahhh telarañas!!
 fr_FR.UTF-8	Ahhh des toiles
 hu_HU.UTF-8	Áááá!!! Pókhálók!!!
@@ -17,7 +18,8 @@ ru_RU.UTF-8	А-а-а! Паутина!
 
 comment:
 en_US.UTF-8	Spider webs! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How can you make sure the robot will reach the exit? Let's use an “if” conditional instruction.
-es_MX.UTF-8	Telarañas! Las pequeñas no te agarrarán, pero las grandes te tomarán prisionero. Ten cuidad que las telarañas grandes no siempre del mismo lado! Como puedes asegurar que el robot llegará a la salida? Vamos a usar una instrucción condicional "if".
+de_DE.UTF-8	Spinnennetze! Das Kleine kann dich nicht fangen, aber das Große wird dich zum Gefangenen machen. Achtung! Das große Netz ist nicht immer auf der gleichen Seite! Wie kannst du sicherstellen, dass der Roboter den Ausgang erreicht? Lass uns eine “if”-Bedingung benutzen.
+es_MX.UTF-8	Telarañas! Las pequeñas no te agarrarán, pero las grandes te tomarán prisionero. Ten cuidad que las telarañas grandes no siempre del mismo lado! Como puedes asegurar que el robot llegará a la salida? Vamos a usar una instrucción condicional “if”.
 fr_FR.UTF-8	Des toiles d'araignées ! La petite ne t'empêchera pas de passer, mais la grande te retiendra prisonnier. Attention la grande toile n'est pas toujours du même côté ! Comment être sûr que le robot arrive toujours à la sortie ? On va utiliser une conditionnelle “if”.
 hu_HU.UTF-8	Pókhálók! A kicsin át tudsz haladni, de a nagyba belegabalyodsz! Előre szólok, hogy a nagy háló nem mindig ugyanazon az oldalon van! Tudsz olyan programot írni, amelyik mindig elvezeti a robotot a kijárathoz? Használd az “if” feltételes elágazást.
 ru_RU.UTF-8	Паутина! Маленькая не сможет нас поймать, но большая захватит нас в плен. Помните, что большая паутина не всегда на той же стороне! Как быть увереным, что робот добрался до выхода? Используйте условную инструкцию “if”.

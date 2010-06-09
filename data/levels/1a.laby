@@ -10,6 +10,7 @@ basic
 
 title:
 en_US.UTF-8	First challenge
+de_DE.UTF-8	Erste Herausforderung
 es_MX.UTF-8	Primeros obstaculos
 fr_FR.UTF-8	Premier défi
 hu_HU.UTF-8	Első próba
@@ -17,6 +18,7 @@ ru_RU.UTF-8	Первое задание
 
 comment:
 en_US.UTF-8	This is the first challenge. We start smoothly, no obstacles. You shall write a program to drive the robot toward the exit.
+de_DE.UTF-8	Dies ist die erste Herausforderung. Wir starten einfach, keine Hindernisse. Schreibe ein Programm um den Roboter aus dem Labyrinth zu führen.
 fr_FR.UTF-8	Ceci est le premier défi. On commence doucement, pas d'obstacles. Il faut écrire un programme qui dirige le robot vers la sortie.
 hu_HU.UTF-8	Ez az első próbád. Kezdjünk akadályok nélkül. Írj egy programot, ami elvezeti a robotot a kijárathoz.
 ru_RU.UTF-8	Это первое задание. Мы начнём спокойно, без препятствий. Напишите программу, подводящую робота к выходу.
