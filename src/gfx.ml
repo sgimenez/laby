@@ -327,10 +327,11 @@ let display_gtk ressources =
 	c.view_prog#buffer#set_text (command#chg_mod lmod);
 	let syntaxd = Res.get ["syntax"] in
 	let sm = GSourceView2.source_style_scheme_manager true in
-	sm#prepend_search_path (Res.path [syntaxd; "styles"]);
+	let add_search_path m l = m#set_search_path (l @ m#search_path) in
+	add_search_path sm [syntaxd; Res.path [syntaxd; "styles"]];
 	let style = sm#style_scheme conf_highlight_style#get in
 	let m = GSourceView2.source_language_manager false in
-	m#set_search_path (syntaxd :: m#search_path);
+	add_search_path sm [syntaxd; Res.path [syntaxd; "language-specs"]];
 	begin match m#language name with
 	| None ->
 	    log#warning (
