@@ -232,67 +232,6 @@
 	  <keyword>string</keyword>
 	  <keyword>unit</keyword>
 	</context>
-	<context id="standart-modules" style-ref="std-modules">
-	  <!--Standart modules -->
-	  <keyword>arg</keyword>
-	  <keyword>arith_status</keyword>
-	  <keyword>array</keyword>
-	  <keyword>arrayLabels</keyword>
-	  <keyword>big_int</keyword>
-	  <keyword>bigarray</keyword>
-	  <keyword>buffer</keyword>
-	  <keyword>callback</keyword>
-	  <keyword>camlinternalMod</keyword>
-	  <keyword>camlinternalOO</keyword>
-	  <keyword>char</keyword>
-	  <keyword>complex</keyword>
-	  <keyword>condition</keyword>
-	  <keyword>dbm</keyword>
-	  <keyword>digest</keyword>
-	  <keyword>dynLink</keyword>
-	  <keyword>event</keyword>
-	  <keyword>filename</keyword>
-	  <keyword>format</keyword>
-	  <keyword>gc</keyword>
-	  <keyword>genlex</keyword>
-	  <keyword>graphics</keyword>
-	  <keyword>graphicsX11</keyword>
-	  <keyword>hashtbl</keyword>
-	  <keyword>int32</keyword>
-	  <keyword>int64</keyword>
-	  <keyword>largeFile</keyword>
-	  <keyword>lazy</keyword>
-	  <keyword>lexing</keyword>
-	  <keyword>list</keyword>
-	  <keyword>listLabels</keyword>
-	  <keyword>map</keyword>
-	  <keyword>marshal</keyword>
-	  <keyword>moreLabels</keyword>
-	  <keyword>mutex</keyword>
-	  <keyword>mativeint</keyword>
-	  <keyword>num</keyword>
-	  <keyword>oo</keyword>
-	  <keyword>parsing</keyword>
-	  <keyword>printexc</keyword>
-	  <keyword>printf</keyword>
-	  <keyword>queue</keyword>
-	  <keyword>random</keyword>
-	  <keyword>scanf</keyword>
-	  <keyword>set</keyword>
-	  <keyword>sort</keyword>
-	  <keyword>stack</keyword>
-	  <keyword>stdLabels</keyword>
-	  <keyword>str</keyword>
-	  <keyword>stream</keyword>
-	  <keyword>stringLabels</keyword>
-	  <keyword>sys</keyword>
-	  <keyword>thread</keyword>
-	  <keyword>threadUnix</keyword>
-	  <keyword>unix</keyword>
-	  <keyword>unixLabels</keyword>
-	  <keyword>weak</keyword>
-	  <!-- Standart modules -->
-	</context>
       </include>
     </context>
   </definitions>
