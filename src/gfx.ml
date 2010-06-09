@@ -15,9 +15,9 @@ let conf_tilesize =
   Conf.int ~p:(conf#plug "tile-size") ~d:40
     (F.x "size of tiles in pixels" [])
 
-let conf_highlight_style =
-  Conf.string ~p:(conf#plug "highlight-style") ~d:"classic"
-    (F.x "syntax highlighting style" [])
+let conf_source_style =
+  Conf.string ~p:(conf#plug "source-style") ~d:"classic"
+    (F.x "highlighting style to use for source code" [])
 
 let conf_window =
   Conf.void ~p:(conf#plug "window")
@@ -268,6 +268,14 @@ let display_gtk ressources =
     let l = Level.load (Res.get ["levels"; name]) in
     pixmap := make_pixmap ressources.size l; l
   in
+  let syntaxd = Res.get ["syntax"] in
+  let add_search_path m l = m#set_search_path (l @ m#search_path) in
+  let ssm = GSourceView2.source_style_scheme_manager true in
+  add_search_path ssm [syntaxd; Res.path [syntaxd; "styles"]];
+  let style = ssm#style_scheme conf_source_style#get in
+  let slm = GSourceView2.source_language_manager false in
+  add_search_path slm [syntaxd; Res.path [syntaxd; "language-specs"]];
+
 
   (* gui outputs *)
 
@@ -325,14 +333,7 @@ let display_gtk ressources =
     | true ->
 	let lmod = List.find (fun x -> x#name = name) mods in
 	c.view_prog#buffer#set_text (command#chg_mod lmod);
-	let syntaxd = Res.get ["syntax"] in
-	let sm = GSourceView2.source_style_scheme_manager true in
-	let add_search_path m l = m#set_search_path (l @ m#search_path) in
-	add_search_path sm [syntaxd; Res.path [syntaxd; "styles"]];
-	let style = sm#style_scheme conf_highlight_style#get in
-	let m = GSourceView2.source_language_manager false in
-	add_search_path sm [syntaxd; Res.path [syntaxd; "language-specs"]];
-	begin match m#language name with
+	begin match slm#language name with
 	| None ->
 	    log#warning (
 	      F.x "cannot load syntax for <name> mod" [

@@ -25,7 +25,7 @@ let opt =
     conf_exclusive#set true
   in
   Opt.make ~short:'m' ~long:"mod" (`Do_string action)
-    (F.x "exclusive use of the chosen mod" [])
+    (F.x "exclusive use of the chosen programming mod" [])
 
 
 type query = string * (string -> unit)

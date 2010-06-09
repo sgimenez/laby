@@ -7,7 +7,7 @@
 
 val conf : Conf.ut
 val conf_tilesize : int Conf.t
-val conf_highlight_style : string Conf.t
+val conf_source_style : string Conf.t
 
 exception Error of F.t
 
