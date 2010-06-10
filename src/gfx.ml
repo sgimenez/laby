@@ -273,6 +273,8 @@ let display_gtk ressources =
   let ssm = GSourceView2.source_style_scheme_manager true in
   add_search_path ssm [syntaxd; Res.path [syntaxd; "styles"]];
   let style = ssm#style_scheme conf_source_style#get in
+  c.view_prog#source_buffer#set_style_scheme style;
+  c.view_help#source_buffer#set_style_scheme style;
   let slm = GSourceView2.source_language_manager false in
   add_search_path slm [syntaxd; Res.path [syntaxd; "language-specs"]];
 
@@ -333,19 +335,15 @@ let display_gtk ressources =
     | true ->
 	let lmod = List.find (fun x -> x#name = name) mods in
 	c.view_prog#buffer#set_text (command#chg_mod lmod);
-	begin match slm#language name with
-	| None ->
-	    log#warning (
-	      F.x "cannot load syntax for <name> mod" [
-		"name", F.string name;
-	      ]
-	    );
-	| Some l ->
-	    c.view_prog#source_buffer#set_style_scheme style;
-	    c.view_help#source_buffer#set_style_scheme style;
-	    c.view_prog#source_buffer#set_language (Some l);
-	    c.view_help#source_buffer#set_language (Some l);
-	end
+	let l = slm#language name in
+	if l = None then
+	  log#warning (
+	    F.x "cannot load syntax for <name> mod" [
+	      "name", F.string name;
+	    ]
+	  );
+	c.view_prog#source_buffer#set_language l;
+	c.view_help#source_buffer#set_language l;
     | false -> ()
     end
   in
