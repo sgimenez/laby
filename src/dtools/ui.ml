@@ -59,6 +59,29 @@ let texts_line key s =
       if (s <> "\n" && s.[0] <> '#') then `Error else `Skip
   end
 
+let split_locale l =
+  let len = String.length l in
+  begin try
+    let dot = String.rindex l '.' in
+    let und = try String.index l '_' with Not_found -> dot in
+    String.sub l 0 und,
+    String.sub l und (dot - und),
+    String.sub l (dot + 1) (len - dot - 1)
+  with
+  | Not_found ->
+      let und = try String.index l '_' with Not_found -> len in
+      String.sub l 0 und,
+      String.sub l und (len - und),
+      ""
+  end
+
+let choose_locale l c cod (ol, oc, ocod) (nl, nc, ncod) =
+  (* hackish *)
+  if cod <> "" then
+    ncod = cod && nl = l && (ol = "" || ol <> l)
+  else
+    nl = l && ol <> l
+
 let read_texts path file =
   let lang = conf_lang#get in
   let error line f =
@@ -71,20 +94,32 @@ let read_texts path file =
     )
   in
   let lnb = ref 0 in
+  let l, c, cod = split_locale lang in
+  log#debug 1 (
+    F.x "chosen locale lang=<lang> country=<country> coding=<coding>" [
+      "lang", F.string l;
+      "country", F.string c;
+      "coding", F.string cod;
+    ]
+  );
   begin try
     let k = ref ("", "") in
     while true do
       let str = incr lnb; input_line file ^ "\n" in
       begin match texts_line k str with
-      | `Entry (msg_lang, key, msg) ->
+      | `Entry (locale, key, msg) ->
 	  log#debug 5 (
-	    F.x "message special=<id> lang=<lang>: <text>" [
+	    F.x "message special=<id> locale=<locale>: <text>" [
 	      "id", F.string (fst key);
-	      "lang", F.string msg_lang;
+	      "locale", F.string locale;
 	      "text", F.q (F.s (snd key));
 	    ]
 	  );
-	  if lang = msg_lang then Fd.def_text key msg
+	  let o_locale = Fd.get_text_locale key in
+	  if locale = lang ||
+	    o_locale <> lang &&
+	    choose_locale l c cod (split_locale o_locale) (split_locale locale)
+	  then Fd.def_text key (locale, msg)
       | `Skip -> ()
       | `Error -> error !lnb (F.x "syntax error" [])
       end

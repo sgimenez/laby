@@ -12,7 +12,7 @@
 let conf_tags =
   Conf.void (F.x "theme" [])
 
-let texts : (string * string, (string * F.t) list -> F.t) Hashtbl.t =
+let texts : (string * string, string * ((string * F.t) list -> F.t)) Hashtbl.t =
   Hashtbl.create 1024
 
 let env_term =
@@ -105,7 +105,10 @@ let list_of_string s =
   in
   aux (String.length s - 1) s []
 
-let def_text key str =
+let get_text_locale key =
+  try fst (Hashtbl.find texts key) with Not_found -> ""
+
+let def_text key (locale, str) =
   let b = Buffer.create 256 in
   let push c = Buffer.add_char b c in
   let take () = let c = Buffer.contents b in Buffer.clear b; c in
@@ -154,9 +157,9 @@ let def_text key str =
 	in
 	F.b (List.map map list)
       in
-      Hashtbl.add texts key msg
+      Hashtbl.add texts key (locale, msg)
   | `Error ->
-      Hashtbl.add texts key (bad key)
+      Hashtbl.add texts key (locale, bad key)
   end
 
 let string format t =
@@ -212,10 +215,10 @@ let string format t =
 	let key = (special, mstr) in
 	let t =
 	  begin try
-	    begin try (Hashtbl.find texts key) vars with
+	    begin try (snd (Hashtbl.find texts key)) vars with
 	    | Not_found ->
-		def_text key mstr;
-		(Hashtbl.find texts key) vars
+		def_text key ("", mstr);
+		(snd (Hashtbl.find texts key)) vars
 	    end
 	  with
 	  | Not_found -> bad key vars

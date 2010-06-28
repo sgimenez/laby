@@ -16,8 +16,9 @@ o → . . . . . . . . . . . o
 o o o o o o o o o o o o o o
 
 title:
-en_US.UTF-8	Spiral
+text		Spiral
 de_DE.UTF-8	Spirale
+en_US.UTF-8	Spiral
 es_MX.UTF-8	Espiral
 fr_FR.UTF-8	Spirale
 hu_HU.UTF-8	Spirál
@@ -25,8 +26,9 @@ pt_BR.UTF-8	Espiral
 ru_RU.UTF-8	Спираль
 
 comment:
-en_US.UTF-8	The spiral of hell!
+text		The spiral of hell!
 de_DE.UTF-8	Die höllische Spirale!
+en_US.UTF-8	The spiral of hell!
 es_MX.UTF-8	La espiral infernal!
 fr_FR.UTF-8	La spirale infernale !
 hu_HU.UTF-8	A Pokol Spirálja!

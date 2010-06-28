@@ -7,8 +7,9 @@ o . ↑ . r o
 o o o o o o
 
 title:
-en_US.UTF-8	Demo
+text		Demo
 de_DE.UTF-8	Demo
+en_US.UTF-8	Demo
 es_MX.UTF-8	Demo
 fr_FR.UTF-8	Démo
 hu_HU.UTF-8	Demó
@@ -16,8 +17,9 @@ pt_BR.UTF-8	Demo
 ru_RU.UTF-8	Демо
 
 comment:
-en_US.UTF-8	This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
+text		This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
 de_DE.UTF-8	Dieses Labyrinth ist eine Demonstration. Das vorgegebene Programm sagt dem Ameisenroboter, wie er aus dem Labyrinth kommt. Er wird sich kurz mit dem Stein beschäftigen und vermeiden, im Spinnennetz gefangen zu werden. Klick auf den Button um das Programm auf den Roboter zu übertragen, und benutze die Pfeile, um einzelne Schritte auszuführen.
+en_US.UTF-8	This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
 es_MX.UTF-8	Este laberito es una demo. El programa inicial permite que la hormiga robot salga del laberito. Estara jugando un poco con la piedra y evita ser capturado por la telaraña. Haz clic en el boton para cargar el programa dentro del robot, y usa las flechas para dar pasos individuales.
 fr_FR.UTF-8	Ce labyrinthe sert de démonstration. Le programme initial permet au robot fourmi de sortir de ce labyrinthe. Il va s'amuser un peu avec le caillou et éviter la toile d'araignée. Appuie sur le bouton qui permet de charger le programme dans le robot, et fait défiler le temps avec les flèches.
 hu_HU.UTF-8	Ez egy demó labirintus. Az inícializáló program kivezeti a hangya-robotot a labirintusból. Egy kis nehézség benne a szikla és a pókháló kikerülése. Kattints a gombra a program robotba töltéséhez, és használd a nyilakat a lépésenkénti végrehajtáshoz.

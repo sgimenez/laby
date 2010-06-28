@@ -10,8 +10,9 @@ o → . . . . . . . . . o .
 o o o o o o o o o o o o .
 
 title:
-en_US.UTF-8	Which way?
+text		Which way?
 de_DE.UTF-8	Welcher Weg?
+en_US.UTF-8	Which way?
 es_MX.UTF-8	A donde?
 fr_FR.UTF-8	Par où passer ?
 hu_HU.UTF-8	Melyik út?
@@ -19,8 +20,9 @@ pt_BR.UTF-8	Qual caminho?
 ru_RU.UTF-8	Куда пойти?
 
 comment:
-en_US.UTF-8	The last challenge!
+text		The last challenge!
 de_DE.UTF-8	Die letzte Herausforderung!
+en_US.UTF-8	The last challenge!
 es_MX.UTF-8	El último reto!
 fr_FR.UTF-8	Le dernier défi !
 hu_HU.UTF-8	Az utolsó kihívás!

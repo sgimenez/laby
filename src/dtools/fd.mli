@@ -14,7 +14,8 @@
 *)
 
 val tag : string -> F.t -> F.t
-val def_text : (string * string) -> string -> unit
+val def_text : string * string -> string * string -> unit
+val get_text_locale : string * string -> string
 
 val render_raw : F.t -> string
 val render_color : F.t -> string
