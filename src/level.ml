@@ -96,13 +96,13 @@ let load file =
   let title =
     begin match sections "title:" with
     | None -> "?"
-    | Some l -> get_sentence "" l
+    | Some l -> Ui.read_text file l
     end
   in
   let comment =
     begin match sections "comment:" with
     | None -> "?"
-    | Some l -> get_sentence "" l
+    | Some l -> Ui.read_text file l
     end
   in
   let help =

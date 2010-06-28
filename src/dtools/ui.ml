@@ -84,6 +84,14 @@ let choose_locale l c cod (ol, oc, ocod) (nl, nc, ncod) =
 
 let read_texts path file =
   let lang = conf_lang#get in
+  let l, c, cod = split_locale lang in
+  log#debug 1 (
+    F.x "chosen locale lang=<lang> country=<country> coding=<coding>" [
+      "lang", F.string l;
+      "country", F.string c;
+      "coding", F.string cod;
+    ]
+  );
   let error line f =
     log#error (
       F.x "file <f>, line <l>: <error>" [
@@ -94,14 +102,6 @@ let read_texts path file =
     )
   in
   let lnb = ref 0 in
-  let l, c, cod = split_locale lang in
-  log#debug 1 (
-    F.x "chosen locale lang=<lang> country=<country> coding=<coding>" [
-      "lang", F.string l;
-      "country", F.string c;
-      "coding", F.string cod;
-    ]
-  );
   begin try
     let k = ref ("", "") in
     while true do
@@ -127,6 +127,31 @@ let read_texts path file =
   with
   | End_of_file -> ()
   end
+
+let read_text file lines =
+  let lang = conf_lang#get in
+  let l, c, cod = split_locale lang in
+  let rec get_sentence o_locale default lines =
+    begin match lines with
+    | [] -> default
+    | line :: q ->
+      begin try
+	let locale = String.sub line 0 (String.index line '\t') in
+	let last = String.rindex line '\t' in
+	let comment_str =
+	  String.sub line (last + 1) (String.length line - last - 1)
+	in
+	if default = "" || locale = lang ||
+	  o_locale <> lang &&
+	  choose_locale l c cod (split_locale o_locale) (split_locale locale)
+	then get_sentence locale comment_str q
+	else get_sentence o_locale default q
+	with
+	| Not_found -> get_sentence o_locale default q
+      end
+    end
+  in
+  get_sentence "" "" lines
 
 
 let load_texts () =

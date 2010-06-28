@@ -172,9 +172,14 @@ let dump (tmp, lib, prg, err) x =
 let exec (tmp, lib, prg, err) p pl =
   let pl = List.map subst pl in
   let r, w = Unix.pipe () in
+  let bin = p ^ exe in
+  log#debug 1 (
+    F.x "execution of <command>..." [
+      "command", F.string bin;
+    ]);
   let pid =
     Unix.chdir tmp;
-    Unix.create_process (p ^ exe) (Array.of_list (p :: pl)) Unix.stdin w w
+    Unix.create_process bin (Array.of_list (p :: pl)) Unix.stdin w w
   in
   let status =
     begin match snd (Unix.waitpid [] pid) with
@@ -182,15 +187,15 @@ let exec (tmp, lib, prg, err) p pl =
 	true
     | Unix.WEXITED i ->
 	log#debug 1 (
-	  F.x "exection of <command> returned: <errno>" [
+	  F.x "execution of <command> returned: <errno>" [
+	    "command", F.string bin;
 	    "errno", F.int i;
-	    "command", F.string p;
 	  ]);
 	false
     | _ ->
 	log#debug 1 (
 	  F.x "execution of <command> failed" [
-	    "command", F.string p;
+	    "command", F.string bin;
 	  ]
 	);
 	false
@@ -285,6 +290,10 @@ let make name : t =
 	  let out_ch', out_ch = Unix.pipe () in
 	  let in_ch, in_ch' = Unix.pipe () in
 	  let err_ch, err_ch' = Unix.pipe () in
+	  log#debug 1 (
+	    F.x "execution of <command>..." [
+	      "command", F.string bin;
+	    ]);
 	  let pid =
 	    Unix.chdir tmp;
 	    let args = Array.of_list (p :: pl) in

@@ -32,3 +32,5 @@ val texts: Srv.t
   (**
      Atom to load texts.
   *)
+
+val read_text : string -> string list -> string
