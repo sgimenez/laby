@@ -17,8 +17,6 @@ type t =
       help: string;
     }
 
-let log = Log.make ["level"]
-
 let dummy =
   {
     map =
