@@ -23,6 +23,7 @@ fr_FR.UTF-8	Zig Zag
 hu_HU.UTF-8	Cikk-cakk
 pt_BR.UTF-8	Zig zag
 ru_RU.UTF-8	Зиг Заг
+sv_SV.UTF-8	Sick-sack
 
 comment:
 text		Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.

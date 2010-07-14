@@ -17,6 +17,7 @@ fr_FR.UTF-8	Ahhh des toiles
 hu_HU.UTF-8	Áááá!!! Pókhálók!!!
 pt_BR.UTF-8	Ahhh! Teias!
 ru_RU.UTF-8	А-а-а! Паутина!
+sv_SV.UTF-8	Spindelnät!
 
 comment:
 text		Spider webs! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How can you make sure the robot will reach the exit? Let's use an “if” conditional instruction.

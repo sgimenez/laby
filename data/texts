@@ -139,6 +139,7 @@ es_MX.UTF-8	No tengo nada que dejar.
 fr_FR.UTF-8	Je n'ai rien à poser.
 pt_BR.UTF-8	Não tenho nada para largar.
 ru_RU.UTF-8	Мне нечего бросить.
+sv_SV.UTF-8	Jag har inget att släppa.
 uk_UA.UTF-8	Мені нічого кидати.
 
 # ascii api names (no funny characters)
@@ -195,7 +196,7 @@ es_MX.UTF-8	tomar
 fr_FR.UTF-8	prend
 hu_HU.UTF-8	felvesz
 pt_BR.UTF-8	pegar
-sv_SV.UTF-8	bara
+sv_SV.UTF-8	ta
 
 text:ascii	drop
 de_DE.UTF-8	ablegen
@@ -213,7 +214,7 @@ es_MX.UTF-8	escapar
 fr_FR.UTF-8	ouvre
 hu_HU.UTF-8	kimegy
 pt_BR.UTF-8	escapar
-sv_SV.UTF-8	rymma
+sv_SV.UTF-8	fly
 
 text:ascii	look
 de_DE.UTF-8	schau
@@ -330,7 +331,7 @@ fr_FR.UTF-8	Messages :
 hu_HU.UTF-8	Üzenet :
 pt_BR.UTF-8	Mensagens:
 ru_RU.UTF-8	Сообщения:
-sv_SV.UTF-8	Medelande:
+sv_SV.UTF-8	Medelanden:
 uk_UA.UTF-8	Повідомлення:
 
 text		Help:
@@ -352,7 +353,7 @@ fr_FR.UTF-8	configuration de l'interface graphique
 hu_HU.UTF-8	grafikus beállítások
 pt_BR.UTF-8	configuração da interface gráfica
 ru_RU.UTF-8	настройки интерфейса
-sv_SV.UTF-8	grafiskt gränssnitt konfiguration
+sv_SV.UTF-8	grafiskt gränssnittskonfiguration
 uk_UA.UTF-8	налаштування інтерфейсу
 
 text		cannot load syntax for <name> mod
@@ -362,7 +363,7 @@ es_MX.UTF-8	imposible cargar la sintaxis del mod <name>
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
 pt_BR.UTF-8	não foi possível carregar sintaxe do mod <name>
 ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
-sv_SV.UTF-8	kan inte ladda syntax för <name> mod
+sv_SV.UTF-8	kan inte ladda syntax för <name> modden
 uk_UA.UTF-8	не можу завантажити синтаксис для мод <name>
 
 
@@ -374,6 +375,7 @@ en_US.UTF-8	select a specific programming mod
 fr_FR.UTF-8	choisir un mode de programmation donné
 pt_BR.UTF-8	selecione um mod específico
 ru_RU.UTF-8	выбор программного мода
+sv_SV.UTF-8	välj en specifik programmerings-modd
 uk_UA.UTF-8	обрати програмний мод
 
 text		size of tiles in pixels
@@ -409,7 +411,7 @@ fr_FR.UTF-8	configuration du son
 hu_HU.UTF-8	hangbeállítások
 pt_BR.UTF-8	configuração de áudio
 ru_RU.UTF-8	настройка звука
-sv_SV.UTF-8	ljud konfiguration
+sv_SV.UTF-8	ljudkonfiguration
 uk_UA.UTF-8	налаштування звуку
 
 text		enable or disable sounds
@@ -479,7 +481,7 @@ fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
 pt_BR.UTF-8	linguagens de programação
 ru_RU.UTF-8	языки программирования
-sv_SV.UTF-8	programmerings språk
+sv_SV.UTF-8	programmeringsspråk
 uk_UA.UTF-8	мова програмування
 
 
@@ -492,7 +494,7 @@ es_MX.UTF-8	ejecución del interprete ha fallado
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
 pt_BR.UTF-8	execução do interpretador falhou
-sv_SV.UTF-8	utförande av tolk misslyckades
+sv_SV.UTF-8	misslyckades med att köra tolk
 uk_UA.UTF-8	помилка в роботі інтерпретатора
 
 
@@ -517,7 +519,7 @@ fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
 pt_BR.UTF-8	erro gtk: <error>
 ru_RU.UTF-8	ошибка gtk: <error>
-sv_SV.UTF-8	gtk fel: <error>
+sv_SV.UTF-8	gtk-fel: <error>
 uk_UA.UTF-8	помилка gtk: <error>
 
 
@@ -531,7 +533,7 @@ fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
 pt_BR.UTF-8	arquivo <f>, linha <l>: <error>
 ru_RU.UTF-8	файл <f>, строка <l>: <error>
-sv_SV.UTF-8	fil <f>, linje <l>: <error>
+sv_SV.UTF-8	fil <f>, rad <l>: <error>
 uk_UA.UTF-8	файл <f>, рядок <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
@@ -542,7 +544,7 @@ fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
 pt_BR.UTF-8	linha <l>, caracteres <begin-char>-<end-char>
 ru_RU.UTF-8	строка <l>, позиция <begin-char>-<end-char>
-sv_SV.UTF-8	linje <l>, karaktär <begin-char>-<end-char>
+sv_SV.UTF-8	rad <l>, bokstav <begin-char>-<end-char>
 uk_UA.UTF-8	рядок <l>, позиція <begin-char>-<end-char>
 
 text		line <l>, character <char>
@@ -553,7 +555,7 @@ fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
 pt_BR.UTF-8	linha <l>, caracter <char>
 ru_RU.UTF-8	строка <l>, позиция <char>
-sv_SV.UTF-8	linje <l>, karaktär <char>
+sv_SV.UTF-8	rad <l>, bokstaäver <char>
 uk_UA.UTF-8	рядок <l>, позиція <char>
 
 text		lexical error
@@ -574,7 +576,7 @@ es_MX.UTF-8	error de sintaxis
 fr_FR.UTF-8	erreur de syntaxe
 hu_HU.UTF-8	szintaxis hiba
 pt_BR.UTF-8	erro sintático
-sv_SV.UTF-8	fel i syntax
+sv_SV.UTF-8	syntaxfel
 ru_RU.UTF-8	синтаксическая ошибка
 uk_UA.UTF-8	синтаксична помилка
 
@@ -663,7 +665,7 @@ fr_FR.UTF-8	échec
 hu_HU.UTF-8	sikertelen
 pt_BR.UTF-8	falha
 ru_RU.UTF-8	сбой
-sv_SV.UTF-8	misslyckade
+sv_SV.UTF-8	misslyckande
 uk_UA.UTF-8	збій
 
 text		done
@@ -685,7 +687,7 @@ fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
 pt_BR.UTF-8	linha <l>
 ru_RU.UTF-8	строка <l>
-sv_SV.UTF-8	linje <l>
+sv_SV.UTF-8	rad <l>
 uk_UA.UTF-8	рядок <l>
 
 text		unknown token
@@ -696,7 +698,7 @@ fr_FR.UTF-8	lexème inconnu
 hu_HU.UTF-8	ismeretlen jelölés
 pt_BR.UTF-8	token desconhecido
 ru_RU.UTF-8	неизвестный токен
-sv_SV.UTF-8	ökänt tecken
+sv_SV.UTF-8	okänt tecken
 uk_UA.UTF-8	невідомий токен
 
 text		unknown type
@@ -707,7 +709,7 @@ fr_FR.UTF-8	type inconnu
 hu_HU.UTF-8	ismeretlen típus
 pt_BR.UTF-8	tipo desconhecido
 ru_RU.UTF-8	неизвестный тип
-sv_SV.UTF-8	ökänd typ
+sv_SV.UTF-8	okänd typ
 uk_UA.UTF-8	невідомий тип
 
 text		failed to load file: <error>

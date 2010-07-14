@@ -18,6 +18,7 @@ fr_FR.UTF-8	Par où passer ?
 hu_HU.UTF-8	Melyik út?
 pt_BR.UTF-8	Qual caminho?
 ru_RU.UTF-8	Куда пойти?
+sv_SV.UTF-8	Vilken väg?
 
 comment:
 text		The last challenge!
@@ -28,3 +29,4 @@ fr_FR.UTF-8	Le dernier défi !
 hu_HU.UTF-8	Az utolsó kihívás!
 pt_BR.UTF-8	O último desafio!
 ru_RU.UTF-8	Последнее задание!
+sv_SV.UTF-8	Den sista utmaningen!

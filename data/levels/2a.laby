@@ -14,7 +14,8 @@ es_MX.UTF-8	Hasta ahora
 fr_FR.UTF-8	Que c'est loin
 hu_HU.UTF-8	Messze van még
 pt_BR.UTF-8	Até agora
-ru_RU.UTF-8	Далеко...
+ru_RU.UTF-8	Далеко…
+sv_SV.UTF-8	Så långt…
 
 comment:
 text		Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.

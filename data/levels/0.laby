@@ -15,6 +15,7 @@ fr_FR.UTF-8	Démo
 hu_HU.UTF-8	Demó
 pt_BR.UTF-8	Demo
 ru_RU.UTF-8	Демо
+sv_SV.UTF-8	Demo
 
 comment:
 text		This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
