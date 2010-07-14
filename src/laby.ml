@@ -44,6 +44,7 @@ let opts =
   ]
 
 let _ =
+  Printexc.record_backtrace true;
   Run.init
     ~name:Config.project_name
     ~conf:(conf, ["conf"])

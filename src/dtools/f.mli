@@ -62,7 +62,7 @@ val int : int -> t
 (** integer atom, with specified zero padding *)
 val float : float -> t
 (** float atom, with specified zero padding *)
-val exn : exn -> t
+val exn : ?bt:string -> exn -> t
 (** exn atom *)
 val time : float -> t
 (** timestamp atom *)
@@ -98,7 +98,7 @@ val use : t ->
   | `Float of float
   | `String of string
   | `Bool of bool
-  | `Exn of exn
+  | `Exn of string * exn
   | `Time of float
   | `Lazy of (unit -> t)
   ]

@@ -37,6 +37,8 @@ OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ocamlc -ocamlopt o
 OFQ="${OCAMLFIND} query -r -format -I,%d"
 
 [ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
+[ "${DEBUG}" = "yes" ] && OCBF="${OCBF} -tag debug"
+[ -n "${JOBS}" ] && OCBF="${OCBF} -j ${JOBS}"
 
 DIRS=$(${OFQ} ${PACKAGES})
 for i in ${DIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done;

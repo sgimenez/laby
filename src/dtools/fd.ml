@@ -239,8 +239,14 @@ let string format t =
 	    date.Unix.tm_hour date.Unix.tm_min date.Unix.tm_sec
 	in
 	add state stime
-    | `Exn e ->
-	add state (Printexc.to_string e)
+    | `Exn (bt, e) ->
+        if bt = ""
+	then add state (Printexc.to_string e)
+	else
+	  let fbt =
+	    F.v (List.map F.s (Str.split (Str.regexp_string "\n") bt))
+	  in
+	  str (F.h [F.s (Printexc.to_string e); fbt]) state
     | `Lazy fn ->
 	str (fn ()) state
     | _ -> add state "<unknown>"

@@ -76,14 +76,23 @@ let messages l h m =
     in
     let w =
       GWindow.message_dialog
-	~title:("laby: message") ~buttons:GWindow.Buttons.ok
-	~message:(Fd.render_raw h ^ "\n\n" ^ Fd.render_raw m)
+	~title:("laby: " ^ Fd.render_raw h) ~buttons:GWindow.Buttons.ok
+	~message:(Fd.render_raw m)
 	~message_type ()
     in
     let _ = w#run () in w#destroy ()
 
+
+let exception_handler e =
+  let bt = Printexc.get_backtrace () in
+  Run.error (
+    F.x "exception: <exn>" [
+      "exn", F.exn ~bt e;
+    ]
+  )
+
 let gtk_init () =
-  GtkSignal.user_handler := Pervasives.raise;
+  GtkSignal.user_handler := exception_handler;
   let _ = GtkMain.Main.init () in
   Run.report messages;
   (* work around messed up gtk/lablgtk *)

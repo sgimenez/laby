@@ -23,7 +23,7 @@ type t =
     | Float of float
     | String of string
     | Bool of bool
-    | Exn of exn
+    | Exn of string * exn
     | Time of float
     | Lazy of (unit -> t)
 
@@ -80,8 +80,8 @@ let string s =
 let bool b =
   Bool b
 
-let exn e =
-  Exn e
+let exn ?(bt="") e =
+  Exn (bt, e)
 
 let time f =
   Time f
@@ -101,7 +101,7 @@ let use x =
     | Float f -> `Float f
     | String s -> `String s
     | Bool b -> `Bool b
-    | Exn e -> `Exn e
+    | Exn (bt, e) -> `Exn (bt, e)
     | Time f -> `Time f
     | Lazy fn -> `Lazy fn
   end

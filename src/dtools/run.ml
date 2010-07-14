@@ -150,26 +150,23 @@ let init ?(prohibit_root=false) ?name ?conf ?services action =
   | Signal i when i = Sys.sigterm || i = Sys.sigquit -> ()
   | Sys.Break -> ()
   | Srv.StartError (e) ->
+      let bt = Printexc.get_backtrace () in
       log#internal (
-	F.x "exception encountered during start phase: <exn>"
-	  ["exn", F.v [F.exn e]]
+	F.x "exception in start phase: <exn>"
+	  ["exn", F.exn ~bt e]
       );
-      clean ();
-      raise e
   | Srv.StopError (e) ->
+      let bt = Printexc.get_backtrace () in
       log#internal (
-	F.x "exception encountered during stop phase: <exn>"
-	  ["exn", F.v [F.exn e]]
+	F.x "exception in stop phase: <exn>"
+	  ["exn", F.exn ~bt e]
       );
-      clean ();
-      raise e
   | e ->
+      let bt = Printexc.get_backtrace () in
       log#internal (
 	F.x "exception: <exn>"
-	  ["exn", F.v [F.exn e]]
+	  ["exn", F.exn ~bt e]
       );
-      clean ();
-      raise e
   end;
   clean ()
 
