@@ -147,7 +147,8 @@ let run action state =
   | "drop" ->
       begin match state.carry, get state (front state) with
       | `Rock, `Void
-      | `Rock, `Web ->
+      | `Rock, `Web
+      | `Rock, `NWeb ->
 	  "ok",
 	  { state with
             map = set state (front state) `Rock;
