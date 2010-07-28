@@ -21,7 +21,12 @@ ru_RU.UTF-8	Куда пойти?
 sv_SV.UTF-8	Vilken väg?
 
 comment:
-text		A challenge!
-en_US.UTF-8	A challenge!
-es_MX.UTF-8	Un reto!
-fr_FR.UTF-8	Un défi !
+text		The last challenge!
+de_US.UTF-8	Die letzte Herausforderung!
+en_US.UTF-8	The last challenge!
+fr_FR.UTF-8	Le dernier défi !
+hu_HU.UTF-8	Az utolsó kihívás!
+es_MX.UTF-8     El último reto:
+ru_RU.UTF-8	Последнее задание!
+sv_SV.UTF-8	Den sista utmaningen!
+pt_BR.UTF-8	O último desafio!
