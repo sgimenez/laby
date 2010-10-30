@@ -6,6 +6,7 @@ en_US.UTF-8	I'm ready
 es_MX.UTF-8	Estoy listo
 fr_FR.UTF-8	Je suis prêt
 hu_HU.UTF-8	Készen vagyok
+it_IT.UTF-8	Sono pronto
 pt_BR.UTF-8	Estou pronto
 ru_RU.UTF-8	Я готов
 sv_SV.UTF-8	Jag är redo
@@ -17,6 +18,7 @@ en_US.UTF-8	Something went wrong
 es_MX.UTF-8	Algo fallo
 fr_FR.UTF-8	Quelque chose ne vas pas
 hu_HU.UTF-8	Valami hibás
+it_IT.UTF-8	Qualcosa è andato storto
 pt_BR.UTF-8	Algo não está certo
 ru_RU.UTF-8	Что-то пошло не так
 sv_SV.UTF-8	Något gick fel
@@ -28,6 +30,7 @@ en_US.UTF-8	I can't go through the wall.
 es_MX.UTF-8	No puedo atravesar la pared.
 fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
 hu_HU.UTF-8	Nem tudok átmenni a falon.
+it_IT.UTF-8	Non posso attraversare il muro.
 pt_BR.UTF-8	Não posso atravessar a parede.
 ru_RU.UTF-8	Я не могу пройти сквозь стену.
 sv_SV.UTF-8	Jag kan inte gå genom väggen.
@@ -39,6 +42,7 @@ en_US.UTF-8	I can't go through this rock.
 es_MX.UTF-8	No puedo atravezar esta piedra.
 fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
 hu_HU.UTF-8	Nem tudok átmenni a kövön.
+it_IT.UTF-8	Non posso superare questa roccia.
 pt_BR.UTF-8	Não posso atravessar essa pedra.
 ru_RU.UTF-8	Я не могу пройти через этот камень.
 sv_SV.UTF-8	Jag kan inte gå genom den här stenen.
@@ -50,6 +54,7 @@ en_US.UTF-8	I can't go through the door.
 es_MX.UTF-8	No puedo atravezar esta puerta.
 fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
 hu_HU.UTF-8	Nem tudok átmenni az ajtón.
+it_IT.UTF-8	Non posso attraversare la porta.
 pt_BR.UTF-8	Não posso atravessar a porta.
 ru_RU.UTF-8	Я не могу пройти через дверь.
 sv_SV.UTF-8	Jag kan inte gå genom dörren.
@@ -61,6 +66,7 @@ en_US.UTF-8	Oops, a spider web.
 es_MX.UTF-8	Oops, una telaraña.
 fr_FR.UTF-8	Oups, une toile d'araignée.
 hu_HU.UTF-8	Upsz! Egy pókháló!
+it_IT.UTF-8	Oh, no! La ragnatela!
 pt_BR.UTF-8	Opa, uma teia de aranha.
 ru_RU.UTF-8	Ой! Паутина!
 sv_SV.UTF-8	Oj, ett spindelväv.
@@ -72,6 +78,7 @@ en_US.UTF-8	I can't move anymore.
 es_MX.UTF-8	No me puedo mover.
 fr_FR.UTF-8	Je ne peux plus bouger.
 hu_HU.UTF-8	Nem tudok többet mozogni.
+it_IT.UTF-8	Non posso più muovermi.
 pt_BR.UTF-8	Não posso mais me mover.
 ru_RU.UTF-8	Я не могу двинуться.
 sv_SV.UTF-8	Jag kan inte röra mig mer.
@@ -83,6 +90,7 @@ en_US.UTF-8	Wohoo, the exit!
 es_MX.UTF-8	Wohoo, la salida!
 fr_FR.UTF-8	Hourra la sortie !
 hu_HU.UTF-8	Szuper!!! Kijutottam!!!
+it_IT.UTF-8	Evviva! L'uscita!
 pt_BR.UTF-8	Uhu, a saída!
 ru_RU.UTF-8	Ура! Выход!
 sv_SV.UTF-8	Wohoo, utgången!
@@ -94,6 +102,7 @@ en_US.UTF-8	I can't find a door to open.
 es_MX.UTF-8	No puedo encontrar una puerta y abrirla.
 fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
 hu_HU.UTF-8	Nem találom az ajtót, hogy kinyissam.
+it_IT.UTF-8	Non trovo una porta da aprire.
 pt_BR.UTF-8	Não encontro uma porta para abri-la.
 ru_RU.UTF-8	Не могу найти дверь, чтобы её открыть.
 sv_SV.UTF-8	Jag kan inte hitta en dörr att öppna.
@@ -105,6 +114,7 @@ en_US.UTF-8	I can't go out carrying a rock.
 es_MX.UTF-8	No puedo salir cargando la piedra.
 fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
 hu_HU.UTF-8	Nem tudom felvenni a követ.
+it_IT.UTF-8	Non posso uscire trasportando una pietra.
 pt_BR.UTF-8	Não posso sair carregando uma pedra.
 ru_RU.UTF-8	Я не могу выйти с камнем.
 sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
@@ -116,6 +126,7 @@ en_US.UTF-8	There's no rock to take here.
 es_MX.UTF-8	No hay una piedra para agarrar.
 fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
 hu_HU.UTF-8	Nincs kő, amit leraknék.
+it_IT.UTF-8	Non ci sono rocce da raccogliere.
 pt_BR.UTF-8	Não tem uma pedra para ser carregada aí.
 ru_RU.UTF-8	Здесь нет ни одного камня.
 sv_SV.UTF-8	Det finns ingen sten att bära här.
@@ -127,6 +138,7 @@ en_US.UTF-8	I can't drop the rock here.
 es_MX.UTF-8	No puedo dejar la piedra aquí.
 fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 hu_HU.UTF-8	Nem tudom ide lerakni a követ.
+it_IT.UTF-8	Non posso posare la pietra qui.
 pt_BR.UTF-8	Não posso largar a pedra aqui.
 ru_RU.UTF-8	Я не могу бросить сюда камень.
 sv_SV.UTF-8	Jag kan inte släppa stenen här.
@@ -137,6 +149,7 @@ de_DE.UTF-8	Ich habe nichts zum ablegen.
 en_US.UTF-8	I have nothing to drop.
 es_MX.UTF-8	No tengo nada que dejar.
 fr_FR.UTF-8	Je n'ai rien à poser.
+it_IT.UTF-8	Non ho nulla da scaricare.
 pt_BR.UTF-8	Não tenho nada para largar.
 ru_RU.UTF-8	Мне нечего бросить.
 sv_SV.UTF-8	Jag har inget att släppa.
@@ -150,6 +163,7 @@ en_US.UTF-8	Ant
 es_MX.UTF-8	Hormiga
 fr_FR.UTF-8	Fourmi
 hu_HU.UTF-8	Hangya
+it_IT.UTF-8	Formica
 pt_BR.UTF-8	Formiga
 sv_SV.UTF-8	Myra
 
@@ -159,6 +173,7 @@ en_US.UTF-8	ant
 es_MX.UTF-8	hormiga
 fr_FR.UTF-8	fourmi
 hu_HU.UTF-8	hangya
+it_IT.UTF-8	formica
 pt_BR.UTF-8	formiga
 sv_SV.UTF-8	myra
 
@@ -168,6 +183,7 @@ en_US.UTF-8	left
 es_MX.UTF-8	izquierda
 fr_FR.UTF-8	gauche
 hu_HU.UTF-8	balra
+it_IT.UTF-8	sinistra
 pt_BR.UTF-8	esquerda
 sv_SV.UTF-8	vanster
 
@@ -177,6 +193,7 @@ en_US.UTF-8	right
 es_MX.UTF-8	derecha
 fr_FR.UTF-8	droite
 hu_HU.UTF-8	jobbra
+it_IT.UTF-8	destra
 pt_BR.UTF-8	direita
 sv_SV.UTF-8	hoger
 
@@ -186,6 +203,7 @@ en_US.UTF-8	forward
 es_MX.UTF-8	avanzar
 fr_FR.UTF-8	avance
 hu_HU.UTF-8	elore
+it_IT.UTF-8	avanti
 pt_BR.UTF-8	frente
 sv_SV.UTF-8	framat
 
@@ -194,6 +212,7 @@ de_DE.UTF-8	aufheben
 en_US.UTF-8	take
 es_MX.UTF-8	tomar
 fr_FR.UTF-8	prend
+it_IT.UTF-8	raccogli
 hu_HU.UTF-8	felvesz
 pt_BR.UTF-8	pegar
 sv_SV.UTF-8	ta
@@ -204,6 +223,7 @@ en_US.UTF-8	drop
 es_MX.UTF-8	dejar
 fr_FR.UTF-8	pose
 hu_HU.UTF-8	letesz
+it_IT.UTF-8	lascia
 pt_BR.UTF-8	largar
 sv_SV.UTF-8	slapp
 
@@ -213,6 +233,7 @@ en_US.UTF-8	escape
 es_MX.UTF-8	escapar
 fr_FR.UTF-8	ouvre
 hu_HU.UTF-8	kimegy
+it_IT.UTF-8	esci
 pt_BR.UTF-8	escapar
 sv_SV.UTF-8	fly
 
@@ -222,6 +243,7 @@ en_US.UTF-8	look
 es_MX.UTF-8	mirar
 fr_FR.UTF-8	regarde
 hu_HU.UTF-8	nez
+it_IT.UTF-8	guarda
 pt_BR.UTF-8	olhar
 sv_SV.UTF-8	titta
 
@@ -231,6 +253,7 @@ en_US.UTF-8	say
 es_MX.UTF-8	decir
 fr_FR.UTF-8	dit
 hu_HU.UTF-8	mondja
+it_IT.UTF-8	parla
 pt_BR.UTF-8	dizer
 sv_SV.UTF-8	sag
 
@@ -239,6 +262,7 @@ de_DE.UTF-8	Leer
 en_US.UTF-8	Void
 fr_FR.UTF-8	Vide
 hu_HU.UTF-8	Semmi
+it_IT.UTF-8	Vuoto
 pt_BR.UTF-8	Vazio
 sv_SV.UTF-8	Tomt
 
@@ -248,6 +272,7 @@ en_US.UTF-8	Wall
 es_MX.UTF-8	Pared
 fr_FR.UTF-8	Mur
 hu_HU.UTF-8	Fal
+it_IT.UTF-8	Muro
 pt_BR.UTF-8	Parede
 sv_SV.UTF-8	Vagg
 
@@ -257,6 +282,7 @@ en_US.UTF-8	Rock
 es_MX.UTF-8	Piedra
 fr_FR.UTF-8	Caillou
 hu_HU.UTF-8	Ko
+it_IT.UTF-8	Roccia
 pt_BR.UTF-8	Pedra
 sv_SV.UTF-8	Sten
 
@@ -266,6 +292,7 @@ en_US.UTF-8	Web
 es_MX.UTF-8	Telarana
 fr_FR.UTF-8	Toile
 hu_HU.UTF-8	Halo
+it_IT.UTF-8	Ragnatela
 pt_BR.UTF-8	Teia
 sv_SV.UTF-8	Spindelvav
 
@@ -274,6 +301,7 @@ de_DE.UTF-8	Ausgang
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 hu_HU.UTF-8	Kilep
+it_IT.UTF-8	Uscita
 pt_BR.UTF-8	Saída
 sv_SV.UTF-8	Utgang
 es_MX.UTF-8	Salir
@@ -284,6 +312,7 @@ en_US.UTF-8	Unknown
 es_MX.UTF-8	Desconocido
 fr_FR.UTF-8	Inconnu
 hu_HU.UTF-8	Ismeretlen
+it_IT.UTF-8	Sconosciuto
 pt_BR.UTF-8	Desconhecido
 sv_SV.UTF-8	Okand
 
@@ -296,6 +325,7 @@ en_US.UTF-8	Language:
 es_MX.UTF-8	Idioma:
 fr_FR.UTF-8	Langage :
 hu_HU.UTF-8	Nyelv :
+it_IT.UTF-8	Linguaggio:
 pt_BR.UTF-8	Linguagem:
 ru_RU.UTF-8	Язык:
 sv_SV.UTF-8	Språk:
@@ -307,6 +337,7 @@ en_US.UTF-8	Level:
 es_MX.UTF-8	Nive:
 fr_FR.UTF-8	Niveau :
 hu_HU.UTF-8	Szint :
+it_IT.UTF-8	Livello:
 pt_BR.UTF-8	Nível:
 ru_RU.UTF-8	Уровень:
 sv_SV.UTF-8	Nivå:
@@ -318,6 +349,7 @@ en_US.UTF-8	Program:
 es_MX.UTF-8	Programa:
 fr_FR.UTF-8	Programme :
 hu_HU.UTF-8	Program :
+it_IT.UTF-8	Programma:
 pt_BR.UTF-8	Programa:
 ru_RU.UTF-8	Программа:
 sv_SV.UTF-8	Program:
@@ -329,6 +361,7 @@ en_US.UTF-8	Messages:
 es_MX.UTF-8	Mensajes:
 fr_FR.UTF-8	Messages :
 hu_HU.UTF-8	Üzenet :
+it_IT.UTF-8	Messaggi:
 pt_BR.UTF-8	Mensagens:
 ru_RU.UTF-8	Сообщения:
 sv_SV.UTF-8	Medelanden:
@@ -340,6 +373,7 @@ en_US.UTF-8	Help:
 es_MX.UTF-8	Ayudar:
 fr_FR.UTF-8	Aide :
 hu_HU.UTF-8	Segítség :
+it_IT.UTF-8	Aiuto:
 pt_BR.UTF-8	Dicas:
 ru_RU.UTF-8	Помощь:
 sv_SV.UTF-8	Hjälp:
@@ -351,6 +385,7 @@ en_US.UTF-8	graphic interface configuration
 es_MX.UTF-8	configruacion de la interfaz gráfica
 fr_FR.UTF-8	configuration de l'interface graphique
 hu_HU.UTF-8	grafikus beállítások
+it_IT.UTF-8	configurazione grafica
 pt_BR.UTF-8	configuração da interface gráfica
 ru_RU.UTF-8	настройки интерфейса
 sv_SV.UTF-8	grafiskt gränssnittskonfiguration
@@ -361,6 +396,7 @@ de_DE.UTF-8	Kann keine Syntax für <name> mod laden
 en_US.UTF-8	cannot load syntax for <name> mod
 es_MX.UTF-8	imposible cargar la sintaxis del mod <name>
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
+it_IT.UTF-8	impossibile caricare il modulo di sintassi <name>
 pt_BR.UTF-8	não foi possível carregar sintaxe do mod <name>
 ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
 sv_SV.UTF-8	kan inte ladda syntax för <name> modden
@@ -373,6 +409,7 @@ text		select a specific programming mod
 de_DE.UTF-8	Wähle ein Programmier Mod aus
 en_US.UTF-8	select a specific programming mod
 fr_FR.UTF-8	choisir un mode de programmation donné
+it_IT.UTF-8	seleziona un modulo di programmazione
 pt_BR.UTF-8	selecione um mod específico
 ru_RU.UTF-8	выбор программного мода
 sv_SV.UTF-8	välj en specifik programmerings-modd
@@ -384,6 +421,7 @@ en_US.UTF-8	size of tiles in pixels
 es_MX.UTF-8	tamaño del patrón en pixeles
 fr_FR.UTF-8	taille des cases en pixels
 hu_HU.UTF-8	térképek nagysága pixelben
+it_IT.UTF-8	dimensioni delle tessere in pixel
 pt_BR.UTF-8	tamanho do bloco em pixels
 ru_RU.UTF-8	размер ячейки в пикселях
 sv_SV.UTF-8	storlek av tile i pixlar
@@ -395,6 +433,7 @@ en_US.UTF-8	language
 es_MX.UTF-8	idioma
 fr_FR.UTF-8	langage
 hu_HU.UTF-8	nyelv
+it_IT.UTF-8	linguaggio
 pt_BR.UTF-8	linguagem
 ru_RU.UTF-8	язык
 sv_SV.UTF-8	språk
@@ -409,6 +448,7 @@ en_US.UTF-8	sound configuration
 es_MX.UTF-8	configuración de sonido
 fr_FR.UTF-8	configuration du son
 hu_HU.UTF-8	hangbeállítások
+it_IT.UTF-8	configurazione sonora
 pt_BR.UTF-8	configuração de áudio
 ru_RU.UTF-8	настройка звука
 sv_SV.UTF-8	ljudkonfiguration
@@ -420,6 +460,7 @@ en_US.UTF-8	enable or disable sounds
 es_MX.UTF-8	activar o desactivar el sonido
 fr_FR.UTF-8	activer ou désactiver le son
 hu_HU.UTF-8	hang be/ki
+it_IT.UTF-8	abilita o disabilita i suoni
 pt_BR.UTF-8	ativar ou desativar sons
 ru_RU.UTF-8	включить или выключить звук
 sv_SV.UTF-8	aktivera eller avaktivera ljud
@@ -434,6 +475,7 @@ en_US.UTF-8	unknown tile
 es_MX.UTF-8	patrón desconocido
 fr_FR.UTF-8	case inconnue
 hu_HU.UTF-8	ismeretlen térkép
+it_IT.UTF-8	tessera sconosciuta
 pt_BR.UTF-8	bloco desconhecido
 ru_RU.UTF-8	неизвестная ячейка
 sv_SV.UTF-8	okänd tile
@@ -445,6 +487,7 @@ en_US.UTF-8	mismatching line length
 es_MX.UTF-8	longitud de linea no concuerda
 fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
+it_IT.UTF-8	fine linea non corretto
 pt_BR.UTF-8	comprimento da linha incorreto
 sv_SV.UTF-8	fel i linje längden
 uk_UA.UTF-8	невідповідна довжина рядка
@@ -454,6 +497,7 @@ en_US.UTF-8	bad level format: <file>
 es_MX.UTF-8	mal formato de nivel: <file>
 fr_FR.UTF-8	format de fichier erroné : <file>
 hu_HU.UTF-8	rossz szint-formátum: <file>
+it_IT.UTF-8	formato del livello non funzionante: <file>
 pt_BR.UTF-8	formato do nível incorreto: <file>
 ru_RU.UTF-8	неверный формат уровня: <file>
 sv_SV.UTF-8	fel nivå format: <file>
@@ -465,6 +509,7 @@ en_US.UTF-8	missing level section <name> in: <file>
 es_MX.UTF-8	sección <name> faltante en el nivel: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
+it_IT.UTF-8	sezione <name> del livello mancante: <file>
 pt_BR.UTF-8	falta sessão <name> no nível: <file>
 ru_RU.UTF-8	отсутствует секция уровня <name> в: <file>
 sv_SV.UTF-8	saknar nivå sektion <name> i: <file>
@@ -479,6 +524,7 @@ en_US.UTF-8	programming languages
 es_MX.UTF-8	idioma de programación
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
+it_IT.UTF-8	linguaggi di programmazione
 pt_BR.UTF-8	linguagens de programação
 ru_RU.UTF-8	языки программирования
 sv_SV.UTF-8	programmeringsspråk
@@ -493,6 +539,7 @@ en_US.UTF-8	execution of interpreter failed
 es_MX.UTF-8	ejecución del interprete ha fallado
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
+it_IT.UTF-8	esecuzione dell'interprete fallita
 pt_BR.UTF-8	execução do interpretador falhou
 sv_SV.UTF-8	misslyckades med att köra tolk
 uk_UA.UTF-8	помилка в роботі інтерпретатора
@@ -506,6 +553,7 @@ en_US.UTF-8	display failed
 es_MX.UTF-8	no se puede mostrar
 fr_FR.UTF-8	impossible d'ouvrir une fenêtre
 hu_HU.UTF-8	megjelenítás sikertelen
+it_IT.UTF-8	impossibile aprire la finestra
 pt_BR.UTF-8	falha na exibição
 ru_RU.UTF-8	невозможно открыть окно
 sv_SV.UTF-8	visning misslyckades
@@ -517,6 +565,7 @@ en_US.UTF-8	gtk error: <error>
 es_MX.UTF-8	error gtk: <error>
 fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
+it_IT.UTF-8	errore gtk: <error>
 pt_BR.UTF-8	erro gtk: <error>
 ru_RU.UTF-8	ошибка gtk: <error>
 sv_SV.UTF-8	gtk-fel: <error>
@@ -531,6 +580,7 @@ en_US.UTF-8	file <f>, line <l>: <error>
 es_MX.UTF-8	archivo <f>, linea <l>: <error>
 fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
+it_IT.UTF-8	file <f>, linea <l>: <error>
 pt_BR.UTF-8	arquivo <f>, linha <l>: <error>
 ru_RU.UTF-8	файл <f>, строка <l>: <error>
 sv_SV.UTF-8	fil <f>, rad <l>: <error>
@@ -542,6 +592,7 @@ en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
 es_MX.UTF-8	linea <l>, caracter <begin-char>-<end-char>
 fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
+it_IT.UTF-8	linea <l>, caratteri <begin-char>-<end-char>
 pt_BR.UTF-8	linha <l>, caracteres <begin-char>-<end-char>
 ru_RU.UTF-8	строка <l>, позиция <begin-char>-<end-char>
 sv_SV.UTF-8	rad <l>, bokstav <begin-char>-<end-char>
@@ -553,6 +604,7 @@ en_US.UTF-8	line <l>, character <char>
 es_MX.UTF-8	linea <l>, caractér <char>
 fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
+it_IT.UTF-8	linea <l>, carattere <char>
 pt_BR.UTF-8	linha <l>, caracter <char>
 ru_RU.UTF-8	строка <l>, позиция <char>
 sv_SV.UTF-8	rad <l>, bokstaäver <char>
@@ -564,6 +616,7 @@ en_US.UTF-8	lexical error
 es_MX.UTF-8	error lexico
 fr_FR.UTF-8	erreur lexicale
 hu_HU.UTF-8	lexikális hiba
+it_IT.UTF-8	errore lessicale
 pt_BR.UTF-8	erro léxico
 ru_RU.UTF-8	лексическая ошибка
 sv_SV.UTF-8	lexikala fel
@@ -575,6 +628,7 @@ en_US.UTF-8	syntax error
 es_MX.UTF-8	error de sintaxis
 fr_FR.UTF-8	erreur de syntaxe
 hu_HU.UTF-8	szintaxis hiba
+it_IT.UTF-8	errore di sintassi
 pt_BR.UTF-8	erro sintático
 sv_SV.UTF-8	syntaxfel
 ru_RU.UTF-8	синтаксическая ошибка
@@ -586,6 +640,7 @@ en_US.UTF-8	<status>: <message>
 es_MX.UTF-8	<status>: <message>
 fr_FR.UTF-8	<status> : <message>
 hu_HU.UTF-8	<status> : <message>
+it_IT.UTF-8	<status>: <message>
 pt_BR.UTF-8	<status>: <message>
 ru_RU.UTF-8	<status> : <message>
 sv_SV.UTF-8	<status> : <message>
@@ -597,6 +652,7 @@ en_US.UTF-8	exception
 es_MX.UTF-8	excepción
 fr_FR.UTF-8	exception
 hu_HU.UTF-8	kivétel
+it_IT.UTF-8	eccezione
 pt_BR.UTF-8	exceção
 ru_RU.UTF-8	исключение
 sv_SV.UTF-8	undantag
@@ -608,6 +664,7 @@ en_US.UTF-8	internal error
 es_MX.UTF-8	error interno
 fr_FR.UTF-8	erreur interne
 hu_HU.UTF-8	belső hiba
+it_IT.UTF-8	errore interno
 pt_BR.UTF-8	erro interno
 ru_RU.UTF-8	внутренняя ошибка
 sv_SV.UTF-8	internt fel
@@ -619,6 +676,7 @@ en_US.UTF-8	fatal error
 es_MX.UTF-8	error fatal
 fr_FR.UTF-8	erreur fatale
 hu_HU.UTF-8	súlyos hiba
+it_IT.UTF-8	errore fatale
 pt_BR.UTF-8	erro fatal
 ru_RU.UTF-8	фатальная ошибка
 sv_SV.UTF-8	fatalt fel
@@ -630,6 +688,7 @@ en_US.UTF-8	error
 es_MX.UTF-8	error
 fr_FR.UTF-8	erreur
 hu_HU.UTF-8	hiba
+it_IT.UTF-8	errore
 pt_BR.UTF-8	erro
 ru_RU.UTF-8	ошибка
 sv_SV.UTF-8	fel
@@ -641,6 +700,7 @@ en_US.UTF-8	warning
 es_MX.UTF-8	aviso
 fr_FR.UTF-8	avertissement
 hu_HU.UTF-8	figyelmeztetés
+it_IT.UTF-8	attenzione
 pt_BR.UTF-8	aviso
 ru_RU.UTF-8	предупреждение
 sv_SV.UTF-8	varning
@@ -652,6 +712,7 @@ en_US.UTF-8	debug
 es_MX.UTF-8	debug
 fr_FR.UTF-8	debug
 hu_HU.UTF-8	hibakeresés
+it_IT.UTF-8	debug
 pt_BR.UTF-8	depurar
 ru_RU.UTF-8	отладка
 sv_SV.UTF-8	debug
@@ -663,6 +724,7 @@ en_US.UTF-8	failure
 es_MX.UTF-8	fallo
 fr_FR.UTF-8	échec
 hu_HU.UTF-8	sikertelen
+it_IT.UTF-8	fallimento
 pt_BR.UTF-8	falha
 ru_RU.UTF-8	сбой
 sv_SV.UTF-8	misslyckande
@@ -674,6 +736,7 @@ en_US.UTF-8	done
 es_MX.UTF-8	listo
 fr_FR.UTF-8	fait
 hu_HU.UTF-8	kész
+it_IT.UTF-8	fatto
 pt_BR.UTF-8	feito
 ru_RU.UTF-8	готово
 sv_SV.UTF-8	klart
@@ -685,6 +748,7 @@ en_US.UTF-8	line <l>
 es_MX.UTF-8	linea <l>
 fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
+it_IT.UTF-8	linea <l>
 pt_BR.UTF-8	linha <l>
 ru_RU.UTF-8	строка <l>
 sv_SV.UTF-8	rad <l>
@@ -696,6 +760,7 @@ en_US.UTF-8	unknown token
 es_MX.UTF-8	token desconocido
 fr_FR.UTF-8	lexème inconnu
 hu_HU.UTF-8	ismeretlen jelölés
+it_IT.UTF-8	token sconosciuto
 pt_BR.UTF-8	token desconhecido
 ru_RU.UTF-8	неизвестный токен
 sv_SV.UTF-8	okänt tecken
@@ -707,6 +772,7 @@ en_US.UTF-8	unknown type
 es_MX.UTF-8	tipo desconocido
 fr_FR.UTF-8	type inconnu
 hu_HU.UTF-8	ismeretlen típus
+it_IT.UTF-8	tipo sconosciuto
 pt_BR.UTF-8	tipo desconhecido
 ru_RU.UTF-8	неизвестный тип
 sv_SV.UTF-8	okänd typ
@@ -718,6 +784,7 @@ en_US.UTF-8	failed to load file: <error>
 es_MX.UTF-8	no se pudo cargar el archivo: <error>
 fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
 hu_HU.UTF-8	sikertelen fájlbetöltés: <error>
+it_IT.UTF-8	errore nel caricamento del file: <error>
 pt_BR.UTF-8	erro ao carregar arquivo: <error>
 ru_RU.UTF-8	ошибка загрузки файла: <error>
 sv_SV.UTF-8	misslyckades med att ladda fil: <error>
@@ -727,54 +794,64 @@ text		<type> value expected
 en_US.UTF-8	<type> value expected
 fr_FR.UTF-8	valeur de type <type> attendue
 hu_HU.UTF-8	<type> típust várok
+it_IT.UTF-8	atteso valore <type>
 sv_SV.UTF-8	<type> värde förväntades
 
 text		the given configuration key has type <type>
 en_US.UTF-8	the given configuration key has type <type>
 fr_FR.UTF-8	la clé de configuration donnée a le type <type>
 hu_HU.UTF-8	a megadott konfigurációs billentyű <type> típusú
+it_IT.UTF-8	la chiave di configurazione è di tipo <type>
 sv_SV.UTF-8	viss konfiguration nyckeln typ <type>
 
 text		the given configuration key cannot be assigned a value
 en_US.UTF-8	the given configuration key cannot be assigned a value
 fr_FR.UTF-8	la clé de configuration donnée ne peut recevoir une valeur
 hu_HU.UTF-8	a megadott konfigurációs billentyűhöz nem rendelhető érték
+it_IT.UTF-8	impossibile assegnare un valore a questa chiave di configurazione
 sv_SV.UTF-8	den givna konfiguration nyckeln kan inte få värdet
 
 text		assignation syntax is <syntax>
 en_US.UTF-8	assignation syntax is <syntax>
 fr_FR.UTF-8	la syntaxe pour une assignation est <syntax>
 hu_HU.UTF-8	jogosultsági szintaxis: <syntax>
+it_IT.UTF-8	la sintassi di assegnazione è <syntax>
 
 text		set a configuration key
 en_US.UTF-8	set a configuration key
 fr_FR.UTF-8	spécifie une clé de configuration
 hu_HU.UTF-8	konfigurációs billentyű beállítása
+it_IT.UTF-8	imposta una chiave di configurazione
 
 text		describe a configuration key
 en_US.UTF-8	describe a configuration key
 fr_FR.UTF-8	décrit une clé de configuration
 hu_HU.UTF-8	írd le a konfigurációs billentyűt
+it_IT.UTF-8	descrivi una chiave di configurazione
 
 text		dump a configuration key
 en_US.UTF-8	dump a configuration key
 fr_FR.UTF-8	extrait une clé de configuration
 hu_HU.UTF-8	nyomd le a konfigurációs billentyűt
+it_IT.UTF-8	restituisci una chiave di configurazione
 
 text		log configuration
 en_US.UTF-8	log configuration
 fr_FR.UTF-8	configuration des ‘log’s
 hu_HU.UTF-8	‘log’ konfiguráció
+it_IT.UTF-8	log di configurazione
 
 text		general log level
 en_US.UTF-8	general log level
 fr_FR.UTF-8	niveau de ‘log’ général
 hu_HU.UTF-8	általános ‘log’ szint
+it_IT.UTF-8	log generale di livello
 
 text		subordinate log level
 en_US.UTF-8	subordinate log level
 fr_FR.UTF-8	niveau de ‘log’ subordonné
 hu_HU.UTF-8	alárendelt ‘log’ szint
+it_IT.UTF-8	log del sottolivello
 
 
 # opt.ml
@@ -783,61 +860,73 @@ text		invalid options: <errors>
 en_US.UTF-8	invalid options: <errors>
 fr_FR.UTF-8	options incorrectes : <errors>
 hu_HU.UTF-8	rossz opció: <errors>
+it_IT.UTF-8	opzione non valida: <errors>
 
 text		unknown option <opt>
 en_US.UTF-8	unknown option <opt>
 fr_FR.UTF-8	option <opt> inconnue
 hu_HU.UTF-8	ismeretlen <opt> opció
+it_IT.UTF-8	opzione sconosciuta <opt>
 
 text		option <opt> does not take an argument
 en_US.UTF-8	option <opt> does not take an argument
 fr_FR.UTF-8	l'option <opt> ne prend pas d'argument
 hu_HU.UTF-8	<opt> opciónak nincs argumentuma
+it_IT.UTF-8	l'opzione <opt> non accetta argomenti
 
 text		option <opt> requires an argument
 en_US.UTF-8	option <opt> requires an argument
 fr_FR.UTF-8	l'option <opt> nécessite un argument
 hu_HU.UTF-8	<opt> opciónak argumentumra van szüksége
+it_IT.UTF-8	l'opzione <opt> richiede un argomento
 
 text		multiple exclusive actions specified
 en_US.UTF-8	multiple exclusive actions specified
 fr_FR.UTF-8	plusieurs actions exclusives ont été spécifiées
 hu_HU.UTF-8	több kizárólagos akció van leírva
+it_IT.UTF-8	selezionate operazioni esclusive multiple
 
 text		invalid argument in <exp>: <error>
 en_US.UTF-8	invalid argument in <exp>: <error>
 fr_FR.UTF-8	argument invalide dans <exp> : <error>
 hu_HU.UTF-8	helytelen argumentum: <exp>: <error>
+it_IT.UTF-8	argomento non valido in <exp>: <error>
 
 text		this key cannot be assigned a value
 en_US.UTF-8	this key cannot be assigned a value
 fr_FR.UTF-8	impossible d'assigner une valeur à cette clé
 hu_HU.UTF-8	ez a billentyű nem rendelhető értékhez
+it_IT.UTF-8	impossibile assegnare un valore a questa chiave
 
 text		expected type for this key is <type>
 en_US.UTF-8	expected type for this key is <type>
 fr_FR.UTF-8	le type attendu pour cette clé est <type>
 hu_HU.UTF-8	várt érték ehhez a billentyűhöz: <type>
+it_IT.UTF-8	questa chiave accetta valori di tipo <type>
 
 text		display help message
 en_US.UTF-8	display help message
 fr_FR.UTF-8	affiche un message d'aide
 hu_HU.UTF-8	segítő szöveg megjelenítése
+it_IT.UTF-8	mostra messaggio di aiuto
 
 text		output debug information
 en_US.UTF-8	output debug information
 fr_FR.UTF-8	émet des messages de debug
 hu_HU.UTF-8	kimeneti hibakereső információ
+it_IT.UTF-8	output delle informazioni di debug
 
 text		log output to a file
 en_US.UTF-8	log output to a file
 fr_FR.UTF-8	enregistre la sortie vers un fichier
 hu_HU.UTF-8	‘log’ kimenet egy fájlba
+it_IT.UTF-8	log dell'output su file
 
 text		select theme file
 en_US.UTF-8	select theme file
 fr_FR.UTF-8	choix du fichier de thème
 hu_HU.UTF-8	válassz témafájlt
+it_IT.UTF-8	seleziona un file di tema
 
 # version.ml
 
@@ -845,11 +934,13 @@ text		show versioning information
 en_US.UTF-8	show versioning information
 fr_FR.UTF-8	affiche les indications de version
 hu_HU.UTF-8	vercióinformációk megjelenítése
+it_IT.UTF-8	mostra informazioni sulla versione
 
 text		this option accepts the following arguments: <list>
 en_US.UTF-8	this option accepts the following arguments: <list>
 fr_FR.UTF-8	cette option accepte les arguments suivants : <list>
 hu_HU.UTF-8	ez a beállítás a következő argumentumokat fogadja el: <list>
+it_IT.UTF-8	questa opzione accetta i seguenti argomenti: <list>
 
 
 # data.ml
@@ -858,16 +949,19 @@ text		unknown os type
 en_US.UTF-8	unknown os type
 fr_FR.UTF-8	système d'exploitation inconnu
 hu_HU.UTF-8	ismeretlen operációs rendszer
+it_IT.UTF-8	sistema operativo sconosciuto
 
 text		cannot access <path>
 en_US.UTF-8	cannot access <path>
 fr_FR.UTF-8	impossible d'accéder à <path>
 hu_HU.UTF-8	nincs jogosultságod hozzáférni ehhez: <path>
+it_IT.UTF-8	non posos accedere al percorso <path>
 
 text		cannot find resource <resource> in: <list>
 en_US.UTF-8	cannot find resource <resource> in: <list>
 fr_FR.UTF-8	ressource <resource> introuvable dans : <list>
 hu_HU.UTF-8	nem található <resource> eszköz ebben: <list>
+it_IT.UTF-8	non posso trovare il file di risorse <resource> in: <list>
 
 
 # run.ml
@@ -876,3 +970,4 @@ text		activate debug mode
 en_US.UTF-8	activate debug mode
 fr_FR.UTF-8	activer le mode ‘debug’
 hu_HU.UTF-8	hibakereső mód aktiválása
+it_IT.UTF-8	attiva il modo di debug
