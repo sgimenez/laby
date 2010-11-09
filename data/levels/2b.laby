@@ -5,6 +5,7 @@ o o o o o o o o o o o o o o
 
 title:
 text		Corridor of rocks
+da_DK.UTF-8	Stenkorridoren
 de_DE.UTF-8	Gang voller Steine
 en_US.UTF-8	Corridor of rocks
 es_MX.UTF-8	El corredor con piedras
@@ -16,6 +17,7 @@ sv_SV.UTF-8	Stenkorridoren
 
 comment:
 text		Once again a “while” loop will be useful!
+da_DK.UTF-8	Endnu engang vil et “while”-loop være brugbart!
 de_DE.UTF-8	Auch hier ist eine “while”-Schleife nützlich!
 en_US.UTF-8	Once again a “while” loop will be useful!
 es_MX.UTF-8	Una vez mas el bucle “while” será útil!

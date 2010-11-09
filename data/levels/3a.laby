@@ -10,6 +10,7 @@ conditional
 
 title:
 text		Ahhh webs
+da_DK.UTF-8	Åh, spindelvæv
 de_DE.UTF-8	Hilfe, Spinnennetze!
 en_US.UTF-8	Ahhh webs
 es_MX.UTF-8	Ahhh telarañas!!
@@ -21,6 +22,7 @@ sv_SV.UTF-8	Spindelnät!
 
 comment:
 text		Spider webs! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How can you make sure the robot will reach the exit? Let's use an “if” conditional instruction.
+da_DK.UTF-8	Spindelvæv! De små spindelvæv fanger dig ikke, men de store gør. Vær opmærksom på at det store spindelvæv ikke altid er på den samme side. Hvordan kan du sikre dig at robotten kommer frem til udgangen? Lad os bruge en betingende “if”-instruktion.
 de_DE.UTF-8	Spinnennetze! Das Kleine kann dich nicht fangen, aber das Große wird dich zum Gefangenen machen. Achtung! Das große Netz ist nicht immer auf der gleichen Seite! Wie kannst du sicherstellen, dass der Roboter den Ausgang erreicht? Lass uns eine “if”-Bedingung benutzen.
 en_US.UTF-8	Spider webs! The small one won't catch you, but the large one will make you a prisoner. Be warned that the large web is not always on the same side! How can you make sure the robot will reach the exit? Let's use an “if” conditional instruction.
 es_MX.UTF-8	Telarañas! Las pequeñas no te agarrarán, pero las grandes te tomarán prisionero. Ten cuidad que las telarañas grandes no siempre del mismo lado! Como puedes asegurar que el robot llegará a la salida? Vamos a usar una instrucción condicional “if”.

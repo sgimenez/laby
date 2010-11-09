@@ -13,10 +13,12 @@ o o o o o o o o o o o o o o o
 
 title:
 text		This is crazy!
+da_DK.UTF-8	Det er vanvittigt!
 en_US.UTF-8	This is crazy!
 fr_FR.UTF-8	C'est fou !
 
 comment:
-text		Multiple difficulties for the last challenge!
-en_US.UTF-8	Multiple difficulties for the last challenge!
-fr_FR.UTF-8	Les obstacles se multiplient pour le dernier défi !
+text		Multiple difficulties for yet another challenge!
+da_DK.UTF-8	Mange problemer i den sidste udfordring.
+en_US.UTF-8	Multiple difficulties for yet another challenge!
+fr_FR.UTF-8	Les obstacles se multiplient pour un défi de plus !
