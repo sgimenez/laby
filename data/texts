@@ -257,6 +257,7 @@ sv_SV.UTF-8	ta
 
 text:ascii	drop
 cs_CZ.UTF-8	poloz
+da_DK.UTF-8	slip
 de_DE.UTF-8	ablegen
 en_US.UTF-8	drop
 es_MX.UTF-8	dejar
