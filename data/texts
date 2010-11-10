@@ -1,6 +1,7 @@
 # say.ml
 
 text		I'm ready
+cs_CZ.UTF-8	Jsem připraven
 da_DK.UTF-8	Jeg er klar.
 de_DE.UTF-8	Ich bin bereit
 en_US.UTF-8	I'm ready
@@ -14,6 +15,7 @@ sv_SV.UTF-8	Jag är redo
 uk_UA.UTF-8	Я готовий
 
 text		Something went wrong
+cs_CZ.UTF-8	Někde se stala chyba
 da_DK.UTF-8	Noget gik galt.
 de_DE.UTF-8	Da hat was nicht geklappt
 en_US.UTF-8	Something went wrong
@@ -27,6 +29,7 @@ sv_SV.UTF-8	Något gick fel
 uk_UA.UTF-8	Щось не так
 
 text		I can't go through the wall.
+cs_CZ.UTF-8	Nemohu procházet zdí.
 da_DK.UTF-8	Jeg kan ikke gå igennem vægen.
 de_DE.UTF-8	Ich kann nicht durch die Wand gehen.
 en_US.UTF-8	I can't go through the wall.
@@ -40,6 +43,7 @@ sv_SV.UTF-8	Jag kan inte gå genom väggen.
 uk_UA.UTF-8	Я не можу пройти крізь стіну
 
 text		I can't go through this rock.
+cs_CZ.UTF-8	Nemohu projít skrz tento kámen.
 da_DK.UTF-8	Jeg kan ikke gå igennem denne sten.
 de_DE.UTF-8	Ich kann nicht durch diesen Stein gehen.
 en_US.UTF-8	I can't go through this rock.
@@ -53,6 +57,7 @@ sv_SV.UTF-8	Jag kan inte gå genom den här stenen.
 uk_UA.UTF-8	Я не можу пройти крізь цей камінь.
 
 text		I can't go through the door.
+cs_CZ.UTF-8	Nemohu projít těmito dveřmi.
 da_DK.UTF-8	Jeg kan ikke gå igennem døren.
 de_DE.UTF-8	Ich kann nicht durch die Tür gehen.
 en_US.UTF-8	I can't go through the door.
@@ -66,6 +71,7 @@ sv_SV.UTF-8	Jag kan inte gå genom dörren.
 ru_RU.UTF-8	Я не могу пройти через дверь.
 
 text		Oops, a spider web.
+cs_CZ.UTF-8	Ajaj, pavučina.
 da_DK.UTF-8	Ups, et spindelvæv.
 de_DE.UTF-8	Ups, ein Spinnennetz!
 en_US.UTF-8	Oops, a spider web.
@@ -79,6 +85,7 @@ sv_SV.UTF-8	Oj, ett spindelväv.
 uk_UA.UTF-8	Ой, павутина!
 
 text		I can't move anymore.
+cs_CZ.UTF-8	Nemohu se už ani pohnout.
 da_DK.UTF-8	Jeg kan ikke bevæge mig mere.
 de_DE.UTF-8	Ich kann mich nicht mehr bewegen.
 en_US.UTF-8	I can't move anymore.
@@ -92,6 +99,7 @@ sv_SV.UTF-8	Jag kan inte röra mig mer.
 uk_UA.UTF-8	Я не можу рухатися.
 
 text		Wohoo, the exit!
+cs_CZ.UTF-8	Hurá, východ!
 da_DK.UTF-8	Juhuu, udgangen.
 de_DE.UTF-8	Juhu, der Ausgang!
 en_US.UTF-8	Wohoo, the exit!
@@ -105,6 +113,7 @@ sv_SV.UTF-8	Wohoo, utgången!
 uk_UA.UTF-8	Ура! Вихід!
 
 text		I can't find a door to open.
+cs_CZ.UTF-8	Nemohu najít dvěře, které bych otevřel.
 da_DK.UTF-8	Jeg kan ikke finde en dør jeg kan åbne.
 de_DE.UTF-8	Ich kann keine Tür finden, die ich öffnen kann.
 en_US.UTF-8	I can't find a door to open.
@@ -118,6 +127,7 @@ sv_SV.UTF-8	Jag kan inte hitta en dörr att öppna.
 uk_UA.UTF-8	Не можу знайти двері, щоб їх відкрити.
 
 text		I can't go out carrying a rock.
+cs_CZ.UTF-8	Nemohu jít ven s kamenem.
 da_DK.UTF-8	Jeg kan ikke gå ud imens jeg bærer en sten.
 de_DE.UTF-8	Ich kann hier nicht raus während ich einen Stein trage.
 en_US.UTF-8	I can't go out carrying a rock.
@@ -131,6 +141,7 @@ sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
 uk_UA.UTF-8	Я не можу вийти з каменем.
 
 text		There's no rock to take here.
+cs_CZ.UTF-8	Není tu žádný kámen, který bych mohl vzít.
 da_DK.UTF-8	Der er ikke nogen sten jeg kan tage her.
 de_DE.UTF-8	Da ist kein Stein den ich aufheben kann.
 en_US.UTF-8	There's no rock to take here.
@@ -144,6 +155,7 @@ sv_SV.UTF-8	Det finns ingen sten att bära här.
 uk_UA.UTF-8	Тут немає жодного каменя.
 
 text		I can't drop the rock here.
+cs_CZ.UTF-8	Tady nemohu odložit kámen.
 da_DK.UTF-8	Jeg kan ikke lægge stenen her.
 de_DE.UTF-8	Ich kann den Stein hier nicht ablegen.
 en_US.UTF-8	I can't drop the rock here.
@@ -157,6 +169,7 @@ sv_SV.UTF-8	Jag kan inte släppa stenen här.
 uk_UA.UTF-8	Я не можу кинути сюди камінь.
 
 text		I have nothing to drop.
+cs_CZ.UTF-8	Nemám kámen, který bych položil.
 da_DK.UTF-8	Jeg har ikke noget jeg kan slippe.
 de_DE.UTF-8	Ich habe nichts zum ablegen.
 en_US.UTF-8	I have nothing to drop.
@@ -171,6 +184,7 @@ uk_UA.UTF-8	Мені нічого кидати.
 # ascii api names (no funny characters)
 
 text:ascii	Ant
+cs_CZ.UTF-8	Mravenec
 da_DK.UTF-8	Myre
 de_DE.UTF-8	Ameise
 en_US.UTF-8	Ant
@@ -182,6 +196,7 @@ pt_BR.UTF-8	Formiga
 sv_SV.UTF-8	Myra
 
 text:ascii	ant
+cs_CZ.UTF-8	mravenec
 da_DK.UTF-8	myre
 de_DE.UTF-8	ameise
 en_US.UTF-8	ant
@@ -193,6 +208,7 @@ pt_BR.UTF-8	formiga
 sv_SV.UTF-8	myra
 
 text:ascii	left
+cs_CZ.UTF-8	vlevo
 da_DK.UTF-8	venstre
 de_DE.UTF-8	links
 en_US.UTF-8	left
@@ -204,6 +220,7 @@ pt_BR.UTF-8	esquerda
 sv_SV.UTF-8	vanster
 
 text:ascii	right
+cs_CZ.UTF-8	vpravo
 da_DK.UTF-8	hojre
 de_DE.UTF-8	rechts
 en_US.UTF-8	right
@@ -215,6 +232,7 @@ pt_BR.UTF-8	direita
 sv_SV.UTF-8	hoger
 
 text:ascii	forward
+cs_CZ.UTF-8	vpřed
 da_DK.UTF-8	frem
 de_DE.UTF-8	vorwarts
 en_US.UTF-8	forward
@@ -226,6 +244,7 @@ pt_BR.UTF-8	frente
 sv_SV.UTF-8	framat
 
 text:ascii	take
+cs_CZ.UTF-8	vezmi
 da_DK.UTF-8	tag
 de_DE.UTF-8	aufheben
 en_US.UTF-8	take
@@ -237,6 +256,7 @@ pt_BR.UTF-8	pegar
 sv_SV.UTF-8	ta
 
 text:ascii	drop
+cs_CZ.UTF-8	poloz
 de_DE.UTF-8	ablegen
 en_US.UTF-8	drop
 es_MX.UTF-8	dejar
@@ -247,6 +267,7 @@ pt_BR.UTF-8	largar
 sv_SV.UTF-8	slapp
 
 text:ascii	escape
+cs_CZ.UTF-8	vyjdi
 da_DK.UTF-8	undslip
 de_DE.UTF-8	entkommen
 en_US.UTF-8	escape
@@ -258,6 +279,7 @@ pt_BR.UTF-8	escapar
 sv_SV.UTF-8	fly
 
 text:ascii	look
+cs_CZ.UTF-8	divej
 da_DK.UTF-8	kig
 de_DE.UTF-8	schau
 en_US.UTF-8	look
@@ -269,6 +291,7 @@ pt_BR.UTF-8	olhar
 sv_SV.UTF-8	titta
 
 text:ascii	say
+cs_CZ.UTF-8	rekni
 da_DK.UTF-8	sig
 de_DE.UTF-8	sage
 en_US.UTF-8	say
@@ -280,6 +303,7 @@ pt_BR.UTF-8	dizer
 sv_SV.UTF-8	sag
 
 text:ascii	Void
+cs_CZ.UTF-8	Prazdny
 da_DK.UTF-8	Intet
 de_DE.UTF-8	Leer
 en_US.UTF-8	Void
@@ -290,6 +314,7 @@ pt_BR.UTF-8	Vazio
 sv_SV.UTF-8	Tomt
 
 text:ascii	Wall
+cs_CZ.UTF-8	Zed
 da_DK.UTF-8	Mur
 de_DE.UTF-8	Wand
 en_US.UTF-8	Wall
@@ -301,6 +326,7 @@ pt_BR.UTF-8	Parede
 sv_SV.UTF-8	Vagg
 
 text:ascii	Rock
+cs_CZ.UTF-8	Kamen
 da_DK.UTF-8	Sten
 de_DE.UTF-8	Stein
 en_US.UTF-8	Rock
@@ -312,6 +338,7 @@ pt_BR.UTF-8	Pedra
 sv_SV.UTF-8	Sten
 
 text:ascii	Web
+cs_CZ.UTF-8	Pavucina
 da_DK.UTF-8	Spindelvaev
 de_DE.UTF-8	Netz
 en_US.UTF-8	Web
@@ -323,17 +350,19 @@ pt_BR.UTF-8	Teia
 sv_SV.UTF-8	Spindelvav
 
 text:ascii	Exit
+cs_CZ.UTF-8	Vychod
 da_DK.UTF-8	Udgang
 de_DE.UTF-8	Ausgang
 en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 hu_HU.UTF-8	Kilep
 it_IT.UTF-8	Uscita
-pt_BR.UTF-8	Saída
+pt_BR.UTF-8	Saida
 sv_SV.UTF-8	Utgang
 es_MX.UTF-8	Salir
 
 text:ascii	Unknown
+cs_CZ.UTF-8	Neznamy
 da_DK.UTF-8	Ukendt
 de_DE.UTF-8	Unbekannt
 en_US.UTF-8	Unknown
@@ -348,6 +377,7 @@ sv_SV.UTF-8	Okand
 # gfx.ml
 
 text		Language:
+cs_CZ.UTF-8	Jazyk:
 da_DK.UTF-8	Sprog:
 de_DE.UTF-8	Sprache:
 en_US.UTF-8	Language:
@@ -361,6 +391,7 @@ sv_SV.UTF-8	Språk:
 uk_UA.UTF-8	Мова:
 
 text		Level:
+cs_CZ.UTF-8	Úroveň:
 da_DK.UTF-8	Level:
 de_DE.UTF-8	Level:
 en_US.UTF-8	Level:
@@ -374,6 +405,7 @@ sv_SV.UTF-8	Nivå:
 uk_UA.UTF-8	Рівень:
 
 text		Program:
+cs_CZ.UTF-8	Program:
 da_DK.UTF-8	Program:
 de_DE.UTF-8	Praogramm:
 en_US.UTF-8	Program:
@@ -387,6 +419,7 @@ sv_SV.UTF-8	Program:
 uk_UA.UTF-8	Програма:
 
 text		Messages:
+cs_CZ.UTF-8	Zprávy:
 da_DK.UTF-8	Meddelelser:
 de_DE.UTF-8	Benachrichtigungen:
 en_US.UTF-8	Messages:
@@ -400,6 +433,7 @@ sv_SV.UTF-8	Medelanden:
 uk_UA.UTF-8	Повідомлення:
 
 text		Help:
+cs_CZ.UTF-8	Nápověda:
 da_DK.UTF-8	Hjælp:
 de_DE.UTF-8	Tipp:
 en_US.UTF-8	Help:
@@ -413,6 +447,7 @@ sv_SV.UTF-8	Hjälp:
 uk_UA.UTF-8	Допомога:
 
 text		graphic interface configuration
+cs_CZ.UTF-8	nastavení rozhraní
 da_DK.UTF-8	kongiguration af grafisk brugerflade
 de_DE.UTF-8	Benutzeroberfläche konfigurieren
 en_US.UTF-8	graphic interface configuration
@@ -426,6 +461,7 @@ sv_SV.UTF-8	grafiskt gränssnittskonfiguration
 uk_UA.UTF-8	налаштування інтерфейсу
 
 text		cannot load syntax for <name> mod
+cs_CZ.UTF-8	nemohu nahrát syntax pro mód <name>
 da_DK.UTF-8	kan ikke indlæse syntaksen for modulet <name>
 de_DE.UTF-8	Kann keine Syntax für <name> mod laden
 en_US.UTF-8	cannot load syntax for <name> mod
@@ -441,6 +477,7 @@ uk_UA.UTF-8	не можу завантажити синтаксис для мо�
 # command line options
 
 text		select a specific programming mod
+cs_CZ.UTF-8	vyber programovací mód
 da_DK.UTF-8	vælg et specifik programmeringsmodul
 de_DE.UTF-8	Wähle ein Programmier Mod aus
 en_US.UTF-8	select a specific programming mod
@@ -452,6 +489,7 @@ sv_SV.UTF-8	välj en specifik programmerings-modd
 uk_UA.UTF-8	обрати програмний мод
 
 text		size of tiles in pixels
+cs_CZ.UTF-8	velikost polí v pixelech
 da_DK.UTF-8	flisernes størrelse i pixels
 de_DE.UTF-8	Kachelgröße in Pixeln
 en_US.UTF-8	size of tiles in pixels
@@ -465,6 +503,7 @@ sv_SV.UTF-8	storlek av tile i pixlar
 uk_UA.UTF-8	розмір комірки в пікселях
 
 text		language
+cs_CZ.UTF-8	jazyk
 da_DK.UTF-8	sprog
 de_DE.UTF-8	Sprache
 en_US.UTF-8	language
@@ -481,6 +520,7 @@ uk_UA.UTF-8	мова
 # sound.ml
 
 text		sound configuration
+cs_CZ.UTF-8	nastavení zvuku
 da_DK.UTF-8	lydkonfiguration
 de_DE.UTF-8	Sound Konfiguration
 en_US.UTF-8	sound configuration
@@ -494,6 +534,7 @@ sv_SV.UTF-8	ljudkonfiguration
 uk_UA.UTF-8	налаштування звуку
 
 text		enable or disable sounds
+cs_CZ.UTF-8	zapnout nebo vypnout zvuk
 da_DK.UTF-8	aktiver eller deaktiver lyde
 de_DE.UTF-8	Sounds aktivieren/deaktivieren
 en_US.UTF-8	enable or disable sounds
@@ -510,6 +551,7 @@ uk_UA.UTF-8	ввімкнути чи вимкнути звук
 # level.ml
 
 text		unknown tile
+cs_CZ.UTF-8	neznámé pole
 da_DK.UTF-8	ukendt flise
 de_DE.UTF-8	Unbekanntes Teil
 en_US.UTF-8	unknown tile
@@ -523,6 +565,7 @@ sv_SV.UTF-8	okänd tile
 uk_UA.UTF-8	невідома комірка
 
 text		mismatching line length
+cs_CZ.UTF-8	chybná délka řádku
 da_DK.UTF-8	fejl i linjehøjde
 de_DE.UTF-8	Zeilenlänge verfehlt
 en_US.UTF-8	mismatching line length
@@ -535,6 +578,7 @@ sv_SV.UTF-8	fel i linje längden
 uk_UA.UTF-8	невідповідна довжина рядка
 
 text		bad level format: <file>
+cs_CZ.UTF-8	špatný formát úrovně: <file>
 da_DK.UTF-8	fejl i level-format: <file>
 en_US.UTF-8	bad level format: <file>
 es_MX.UTF-8	mal formato de nivel: <file>
@@ -547,6 +591,7 @@ sv_SV.UTF-8	fel nivå format: <file>
 uk_UA.UTF-8	помилковий формат рівня: <file>
 
 text		missing level section <name> in: <file>
+cs_CZ.UTF-8	chybí sekce <name> úrovně>: <file>
 da_DK.UTF-8	manglende level-sektion <name> i: <fil>
 de_DE.UTF-8	Fehlende Levelsektion <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
@@ -563,6 +608,7 @@ uk_UA.UTF-8	відсутня секція рівня <name> в: <file>
 # laby.ml
 
 text		programming languages
+cs_CZ.UTF-8	programovací jazyky
 da_DK.UTF-8	programmeringssprog
 de_DE.UTF-8	Programmiersprachen
 en_US.UTF-8	programming languages
@@ -579,6 +625,7 @@ uk_UA.UTF-8	мова програмування
 # bot.ml
 
 text		execution of interpreter failed
+cs_CZ.UTF-8	selhalo provedení překladače
 da_DK.UTF-8	kørsel af fortolker mislykkedes
 de_DE.UTF-8	Ausführung des Interpreters fehlgeschlagen
 en_US.UTF-8	execution of interpreter failed
@@ -594,6 +641,7 @@ uk_UA.UTF-8	помилка в роботі інтерпретатора
 # misc
 
 text		display failed
+cs_CZ.UTF-8	zobrazení selhalo
 da_DK.UTF-8	visning mislykkedes
 de_DE.UTF-8	Anzeige fehlgeschlagen
 en_US.UTF-8	display failed
@@ -607,6 +655,7 @@ sv_SV.UTF-8	visning misslyckades
 uk_UA.UTF-8	неможливо відкрити вікно
 
 text		gtk error: <error>
+cs_CZ.UTF-8	chyba gtk: <error>
 da_DK.UTF-8	fejl i gtk: <error>
 de_DE.UTF-8	gtk Fehler: <error>
 en_US.UTF-8	gtk error: <error>
@@ -623,6 +672,7 @@ uk_UA.UTF-8	помилка gtk: <error>
 # dtools
 
 text		file <f>, line <l>: <error>
+cs_CZ.UTF-8	soubor <f>, řádek <l>: <error>
 da_DK.UTF-8	fil <f>, linje <l>: <error>
 de_DE.UTF-8	Datei <f>, Zeile <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
@@ -636,6 +686,7 @@ sv_SV.UTF-8	fil <f>, rad <l>: <error>
 uk_UA.UTF-8	файл <f>, рядок <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
+cs_CZ.UTF-8	řádek <l>, znaky <begin-char>-<end-char>
 da_DK.UTF-8	linje <l>, tegn <begin-char>-<end-char>
 de_DE.UTF-8	Zeile <l>, Zeichen <begin-char>-<end-char>
 en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
@@ -649,6 +700,7 @@ sv_SV.UTF-8	rad <l>, bokstav <begin-char>-<end-char>
 uk_UA.UTF-8	рядок <l>, позиція <begin-char>-<end-char>
 
 text		line <l>, character <char>
+cs_CZ.UTF-8	řádek <l>, znak <char>
 da_DK.UTF-8	linje <l>, tegn <char>
 de_DE.UTF-8	Zeile <l>, Zeichen <char>
 en_US.UTF-8	line <l>, character <char>
@@ -662,6 +714,7 @@ sv_SV.UTF-8	rad <l>, bokstaäver <char>
 uk_UA.UTF-8	рядок <l>, позиція <char>
 
 text		lexical error
+cs_CZ.UTF-8	chyba lexikonu
 da_DK.UTF-8	leksikalsk fejl
 de_DE.UTF-8	Lexikalischer Fehler
 en_US.UTF-8	lexical error
@@ -675,6 +728,7 @@ sv_SV.UTF-8	lexikala fel
 uk_UA.UTF-8	лексична помилка
 
 text		syntax error
+cs_CZ.UTF-8	chyba syntaxe
 da_DK.UTF-8	syntaksfejl
 de_DE.UTF-8	Syntax Fehler
 en_US.UTF-8	syntax error
@@ -688,6 +742,7 @@ ru_RU.UTF-8	синтаксическая ошибка
 uk_UA.UTF-8	синтаксична помилка
 
 text		<status>: <message>
+cs_CZ.UTF-8	<status>: <message>
 da_DK.UTF-8	<status>: <message>
 de_DE.UTF-8	<status>: <message>
 en_US.UTF-8	<status>: <message>
@@ -701,6 +756,7 @@ sv_SV.UTF-8	<status> : <message>
 uk_UA.UTF-8	<status> : <message>
 
 text		exception
+cs_CZ.UTF-8	výjimka
 da_DK.UTF-8	undtagelse
 de_DE.UTF-8	Ausnahme
 en_US.UTF-8	exception
@@ -714,6 +770,7 @@ sv_SV.UTF-8	undantag
 uk_UA.UTF-8	виключення
 
 text		internal error
+cs_CZ.UTF-8	vnitřní chyba
 da_DK.UTF-8	intern fejl
 de_DE.UTF-8	Interner Fehler
 en_US.UTF-8	internal error
@@ -727,6 +784,7 @@ sv_SV.UTF-8	internt fel
 uk_UA.UTF-8	внутрішня помилка
 
 text		fatal error
+cs_CZ.UTF-8	fatální chyba
 da_DK.UTF-8	fatal fejl
 de_DE.UTF-8	Fataler Fehler
 en_US.UTF-8	fatal error
@@ -740,6 +798,7 @@ sv_SV.UTF-8	fatalt fel
 uk_UA.UTF-8	фатальна помилка
 
 text		error
+cs_CZ.UTF-8	chyba
 da_DK.UTF-8	fejl
 de_DE.UTF-8	Fehler
 en_US.UTF-8	error
@@ -753,6 +812,7 @@ sv_SV.UTF-8	fel
 uk_UA.UTF-8	помилка
 
 text		warning
+cs_CZ.UTF-8	varování
 da_DK.UTF-8	advarsel
 de_DE.UTF-8	Achtung
 en_US.UTF-8	warning
@@ -766,6 +826,7 @@ sv_SV.UTF-8	varning
 uk_UA.UTF-8	попередження
 
 text		debug
+cs_CZ.UTF-8	debug
 da_DK.UTF-8	fejlfinding
 de_DE.UTF-8	Debug
 en_US.UTF-8	debug
@@ -779,6 +840,7 @@ sv_SV.UTF-8	debug
 uk_UA.UTF-8	налагодження
 
 text		failure
+cs_CZ.UTF-8	selhání
 da_DK.UTF-8	fejl
 de_DE.UTF-8	Fehlschlag
 en_US.UTF-8	failure
@@ -792,6 +854,7 @@ sv_SV.UTF-8	misslyckande
 uk_UA.UTF-8	збій
 
 text		done
+cs_CZ.UTF-8	hotovo
 da_DK.UTF-8	færdig
 de_DE.UTF-8	fertig
 en_US.UTF-8	done
@@ -805,6 +868,7 @@ sv_SV.UTF-8	klart
 uk_UA.UTF-8	готово
 
 text		line <l>
+cs_CZ.UTF-8	řádek <l>
 da_DK.UTF-8	linje <l>
 de_DE.UTF-8	Zeile <l>
 en_US.UTF-8	line <l>
@@ -818,6 +882,7 @@ sv_SV.UTF-8	rad <l>
 uk_UA.UTF-8	рядок <l>
 
 text		unknown token
+cs_CZ.UTF-8	neznámý token
 da_DK.UTF-8	ukendt symbol
 de_DE.UTF-8	Unbekanntes Zeichen
 en_US.UTF-8	unknown token
@@ -831,6 +896,7 @@ sv_SV.UTF-8	okänt tecken
 uk_UA.UTF-8	невідомий токен
 
 text		unknown type
+cs_CZ.UTF-8	neznámý typ
 da_DK.UTF-8	ukendt type
 de_DE.UTF-8	Unbekannter Typ
 en_US.UTF-8	unknown type
@@ -844,6 +910,7 @@ sv_SV.UTF-8	okänd typ
 uk_UA.UTF-8	невідомий тип
 
 text		failed to load file: <error>
+cs_CZ.UTF-8	nepodařilo se nahrát soubor: <error>
 da_DK.UTF-8	filindlæsning mislykkedes: <error>
 de_DE.UTF-8	Fehler beim Laden der Datei: <error>
 en_US.UTF-8	failed to load file: <error>

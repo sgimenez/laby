@@ -11,6 +11,7 @@ o o o o o o o o o o o o .
 
 title:
 text		Which way?
+cs_CZ.UTF-8	Kudy?
 da_DK.UTF-8	Hvilken vej?
 de_DE.UTF-8	Welcher Weg?
 en_US.UTF-8	Which way?
@@ -23,6 +24,7 @@ sv_SV.UTF-8	Vilken väg?
 
 comment:
 text		The last challenge!
+cs_CZ.UTF-8	Poslední výzva!
 da_DK.UTF-8	Den sidste udfordring!
 de_US.UTF-8	Die letzte Herausforderung!
 en_US.UTF-8	The last challenge!

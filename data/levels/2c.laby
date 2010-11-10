@@ -16,6 +16,7 @@ function
 
 title:
 text		Zig Zag
+cs_CZ.UTF-8	Cikcak
 da_DK.UTF-8	Siksak
 de_DE.UTF-8	Zick Zack
 en_US.UTF-8	Zig Zag
@@ -28,6 +29,7 @@ sv_SV.UTF-8	Sick-sack
 
 comment:
 text		Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.
+cs_CZ.UTF-8	Pět dlouhých chodeb! Vyhneme se psaní stejné smyčky pětkrát a použijeme zkratku. Napiš proceduru, podle které robot poběží tak dlouho rovně jak to bude možné. Potom ji můžeme použít vícekrát.
 da_DK.UTF-8	Fem lange strækninger! For at slippe for at skrive det samme loop fem gange, bruger vi en genvej. Lad os skrive en procedure som som får robotten til at løbe så langt lige frem som muligt. Så kan vi kalde den flere gange.
 de_DE.UTF-8	Fünf lange Strecken! Um die gleiche Schleife fünf mal zu schreiben, sollten wir eine Abkürzung benutzen. Lass uns eine Routine schreiben, die den Roboter so weit wie möglich vorwärts gehen lässt. Dann werden wir in der Lage sein diese fünfmal aufzurufen.
 en_US.UTF-8	Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.

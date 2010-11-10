@@ -8,6 +8,7 @@ loop
 
 title:
 text		So far
+cs_CZ.UTF-8	Tak daleko
 da_DK.UTF-8	Så langt
 de_DE.UTF-8	So weit
 en_US.UTF-8	So far
@@ -20,6 +21,7 @@ sv_SV.UTF-8	Så långt…
 
 comment:
 text		Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.
+cs_CZ.UTF-8	Vypadá to jednoduše? Cílem je napsat krátký program s využitím smyčky “while”, která říká robotovi, aby šel vpřed dokud je pole před ním prázdné.
 da_DK.UTF-8	Det er let, er det ikke? Målet her er et skrive et kort program med et “while”-loop, som fortæller robotten at den skal gå frem, så længe flisen foran den er ledig.
 de_DE.UTF-8	Einfach, oder? Hier ist das Ziel, ein kurzes Programm zu schreiben, dass eine “while”-Schleife benutzt, welche dem Roboter sagt, dass er so alnge vorwärts gehen soll, solange das Feld vor ihm frei ist.
 en_US.UTF-8	Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.
