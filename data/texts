@@ -2,7 +2,7 @@
 
 text		I'm ready
 cs_CZ.UTF-8	Jsem připraven
-da_DK.UTF-8	Jeg er klar.
+da_DK.UTF-8	Jeg er klar
 de_DE.UTF-8	Ich bin bereit
 en_US.UTF-8	I'm ready
 es_MX.UTF-8	Estoy listo
@@ -16,7 +16,7 @@ uk_UA.UTF-8	Я готовий
 
 text		Something went wrong
 cs_CZ.UTF-8	Někde se stala chyba
-da_DK.UTF-8	Noget gik galt.
+da_DK.UTF-8	Noget gik galt
 de_DE.UTF-8	Da hat was nicht geklappt
 en_US.UTF-8	Something went wrong
 es_MX.UTF-8	Algo fallo
@@ -232,7 +232,7 @@ pt_BR.UTF-8	direita
 sv_SV.UTF-8	hoger
 
 text:ascii	forward
-cs_CZ.UTF-8	vpřed
+cs_CZ.UTF-8	vpred
 da_DK.UTF-8	frem
 de_DE.UTF-8	vorwarts
 en_US.UTF-8	forward

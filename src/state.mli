@@ -27,7 +27,7 @@ val run : string -> t -> string * t
 
 val iter_map : t -> (int -> int -> tile -> unit) -> unit
 val pos : t -> int * int
-val carry : t -> [`None | `Rock ]
+val carry : t -> [ `None | `Rock ]
 val dir : t -> dir
 val action : t -> action
 

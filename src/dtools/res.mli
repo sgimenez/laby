@@ -38,7 +38,7 @@ val sys_tmp_dir : string ref
 
 exception Error of F.t
   (**
-     Execption raised when resources cannot be found/accessed.
+     Exception raised when resources cannot be found/accessed.
   *)
 
 

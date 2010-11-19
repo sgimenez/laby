@@ -42,15 +42,14 @@ let f ?arg (short, long, _, _) =
   let optf =
     begin match short, long with
     | None, None -> assert false
-    | None, Some l -> l_f l
-    | Some s, None -> s_f s
-    | Some s, Some l ->
-	F.h [l_f l; F.b [F.s "("; s_f s; F.s ")"]]
+    | None, Some l -> [l_f l]
+    | Some s, None -> [s_f s]
+    | Some s, Some l -> [l_f l; F.b [F.s "("; s_f s; F.s ")"]]
     end
   in
   begin match arg with
-  | None -> optf
-  | Some arg -> F.b [optf; F.s "="; F.string arg]
+  | None -> F.h optf
+  | Some arg -> F.b [F.b optf; F.s "="; F.string arg]
   end
 
 let help_opt opts : t =

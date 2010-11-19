@@ -1,10 +1,9 @@
 #!/bin/bash
 
-DIR=$(dirname $0)
-cd ${DIR}
+cd $(dirname $0)
 
 [ -f project.conf ] && source project.conf
-source build.conf
+source build.conf || exit 1
 
 export PREFIX=${PREFIX-/usr}
 export SYSDATADIR=${SYSDATADIR-${PREFIX}/share}
@@ -12,26 +11,27 @@ export SYSTMPDIR=${SYSTMPDIR-/tmp}
 
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
-export OCAML_VERSION=$(${OCAMLC-ocamlc} -version)
 
+export OCAMLC=${OCAMLC-ocamlc}
+export OCAMLOPT=${OCAMLOPT-ocamlopt}
+export OCAMLFIND=${OCAMLFIND-ocamlfind}
+export OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
+
+export OCAML_VERSION=$(${OCAMLC} -version)
 [ -n "${OCAML_VERSION}" ] || \
-  (echo "compilation requires ocaml compilers" && exit 1)
+  { echo "compilation requires ocaml compilers"; exit 1; }
 
 ocaml_config () {
-  echo $(${OCAMLC-ocamlc} -config | grep "$1:" \
-  | sed 's/^'"$1"': //' | tr -c -d '[:alnum:]')
+  ${OCAMLC} -config | sed -n 's/^'"$1"': //p' | tr -c -d '[:alnum:]'
 }
 
 export OCAML_SYSTEM=$(ocaml_config system)
 export OCAML_ARCH=$(ocaml_config architecture)
 
-export PKG_VERSION="${OCAMLFIND-ocamlfind} query -format %v"
+export PKG_VERSION="${OCAMLFIND} query -format %v"
 
 SYSARCH="${OCAML_SYSTEM}-${OCAML_ARCH}"
 BUILDDIR="_build-${SYSARCH}"
-
-OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
-OCAMLFIND=${OCAMLFIND-ocamlfind}
 
 OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ocamlc -ocamlopt ocamlopt -build-dir ${BUILDDIR}"
 OFQ="${OCAMLFIND} query -r -format -I,%d"
@@ -41,14 +41,14 @@ OFQ="${OCAMLFIND} query -r -format -I,%d"
 [ -n "${JOBS}" ] && OCBF="${OCBF} -j ${JOBS}"
 
 DIRS=$(${OFQ} ${PACKAGES})
-for i in ${DIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done;
-for i in ${DEPLIBS}; do OCBF="${OCBF} -lib $i"; done;
-for i in ${SRCDIRS}; do OCBF="${OCBF} -I $i"; done;
+for i in ${DIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done
+for i in ${DEPLIBS}; do OCBF="${OCBF} -lib $i"; done
+for i in ${SRCDIRS}; do OCBF="${OCBF} -I $i"; done
 
 OCBI="${OCB} ${OCBF}"
 
-ACT="${1---all}";
-shift;
+ACT="${1---all}"
+shift
 [ $# == 0 ] && set ${BINS} ${LIBS}
 
 BINTARGETS=""
@@ -56,10 +56,10 @@ LIBTARGETS=""
 for i in $*; do
   for k in ${BINS}; do
     [ "$k" == "$i" ] && BINTARGETS="${BINTARGETS} $i"
-  done;
+  done
   for k in ${LIBS}; do
     [ "$k" == "$i" ] && LIBTARGETS="${LIBTARGETS} $i"
-  done;
+  done
 done
 
 tclean () {
@@ -70,11 +70,11 @@ tclean () {
 	  rm -rf "$i";
 	  for j in byte native d.byte p.native ${BINEXT};
 	  do rm -rf "$i-${SYSARCH}.$j"; done;
-      done;
+      done
       for i in ${LIBTARGETS}; do
 	  for j in cma cmxa d.cma p.cmxa;
           do rm -rf "$i-${SYSARCH}.$j"; done;
-      done;
+      done
 }
 
 case ${ACT} in
@@ -107,10 +107,10 @@ esac
 TARGETS=""
 
 for i in ${BINTARGETS}; do
-  for j in ${BINEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
+  for j in ${BINEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done;
 done;
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${REP}/$i.$j"; done;
+  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done;
 done;
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
@@ -124,11 +124,11 @@ ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
 for i in ${BINTARGETS}; do
   for j in ${BINEXT};
-  do cp "${BUILDDIR}/${REP}/$i.$j" "$i-${SYSARCH}.$j"; done
+  do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
 done;
 for i in ${LIBTARGETS}; do
   for j in ${LIBEXT};
-  do cp "${BUILDDIR}/${REP}/$i.$j" "$i-${SYSARCH}.$j"; done
+  do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
 done;
 
 # linking
