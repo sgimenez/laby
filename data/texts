@@ -593,10 +593,10 @@ uk_UA.UTF-8	помилковий формат рівня: <file>
 
 text		missing level section <name> in: <file>
 cs_CZ.UTF-8	chybí sekce <name> úrovně>: <file>
-da_DK.UTF-8	manglende level-sektion <name> i: <fil>
+da_DK.UTF-8	manglende level-sektion <name> i: <file>
 de_DE.UTF-8	Fehlende Levelsektion <name> in: <file>
 en_US.UTF-8	missing level section <name> in: <file>
-es_MX.UTF-8	sección <name> faltante en el nivel: <file>
+es_MX.UTF-8	la sección <name> falta en el nivel: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
 it_IT.UTF-8	sezione <name> del livello mancante: <file>
@@ -613,7 +613,7 @@ cs_CZ.UTF-8	programovací jazyky
 da_DK.UTF-8	programmeringssprog
 de_DE.UTF-8	Programmiersprachen
 en_US.UTF-8	programming languages
-es_MX.UTF-8	idioma de programación
+es_MX.UTF-8	lenguaje de programación
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
 it_IT.UTF-8	linguaggi di programmazione
@@ -630,7 +630,7 @@ cs_CZ.UTF-8	selhalo provedení překladače
 da_DK.UTF-8	kørsel af fortolker mislykkedes
 de_DE.UTF-8	Ausführung des Interpreters fehlgeschlagen
 en_US.UTF-8	execution of interpreter failed
-es_MX.UTF-8	ejecución del interprete ha fallado
+es_MX.UTF-8	la ejecución del intérprete ha fallado
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
 it_IT.UTF-8	esecuzione dell'interprete fallita
@@ -660,7 +660,7 @@ cs_CZ.UTF-8	chyba gtk: <error>
 da_DK.UTF-8	fejl i gtk: <error>
 de_DE.UTF-8	gtk Fehler: <error>
 en_US.UTF-8	gtk error: <error>
-es_MX.UTF-8	error gtk: <error>
+es_MX.UTF-8	error de gtk: <error>
 fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
 it_IT.UTF-8	errore gtk: <error>
@@ -677,7 +677,7 @@ cs_CZ.UTF-8	soubor <f>, řádek <l>: <error>
 da_DK.UTF-8	fil <f>, linje <l>: <error>
 de_DE.UTF-8	Datei <f>, Zeile <l>: <error>
 en_US.UTF-8	file <f>, line <l>: <error>
-es_MX.UTF-8	archivo <f>, linea <l>: <error>
+es_MX.UTF-8	archivo <f>, línea <l>: <error>
 fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
 it_IT.UTF-8	file <f>, linea <l>: <error>
@@ -691,7 +691,7 @@ cs_CZ.UTF-8	řádek <l>, znaky <begin-char>-<end-char>
 da_DK.UTF-8	linje <l>, tegn <begin-char>-<end-char>
 de_DE.UTF-8	Zeile <l>, Zeichen <begin-char>-<end-char>
 en_US.UTF-8	line <l>, characters <begin-char>-<end-char>
-es_MX.UTF-8	linea <l>, caracter <begin-char>-<end-char>
+es_MX.UTF-8	linea <l>, caracteres <begin-char>-<end-char>
 fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
 it_IT.UTF-8	linea <l>, caratteri <begin-char>-<end-char>
@@ -705,7 +705,7 @@ cs_CZ.UTF-8	řádek <l>, znak <char>
 da_DK.UTF-8	linje <l>, tegn <char>
 de_DE.UTF-8	Zeile <l>, Zeichen <char>
 en_US.UTF-8	line <l>, character <char>
-es_MX.UTF-8	linea <l>, caractér <char>
+es_MX.UTF-8	línea <l>, carácter <char>
 fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
 it_IT.UTF-8	linea <l>, carattere <char>
@@ -719,7 +719,7 @@ cs_CZ.UTF-8	chyba lexikonu
 da_DK.UTF-8	leksikalsk fejl
 de_DE.UTF-8	Lexikalischer Fehler
 en_US.UTF-8	lexical error
-es_MX.UTF-8	error lexico
+es_MX.UTF-8	error léxico
 fr_FR.UTF-8	erreur lexicale
 hu_HU.UTF-8	lexikális hiba
 it_IT.UTF-8	errore lessicale
@@ -831,7 +831,7 @@ cs_CZ.UTF-8	debug
 da_DK.UTF-8	fejlfinding
 de_DE.UTF-8	Debug
 en_US.UTF-8	debug
-es_MX.UTF-8	debug
+es_MX.UTF-8	depuración
 fr_FR.UTF-8	debug
 hu_HU.UTF-8	hibakeresés
 it_IT.UTF-8	debug
@@ -873,7 +873,7 @@ cs_CZ.UTF-8	řádek <l>
 da_DK.UTF-8	linje <l>
 de_DE.UTF-8	Zeile <l>
 en_US.UTF-8	line <l>
-es_MX.UTF-8	linea <l>
+es_MX.UTF-8	línea <l>
 fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
 it_IT.UTF-8	linea <l>
