@@ -18,6 +18,7 @@ da_DK.UTF-8	Tæl stenene
 en_US.UTF-8	Counting the rocks
 es_MX.UTF-8	Contando las piedras
 fr_FR.UTF-8	Compter les cailloux
+tr_TR.UTF-8	Taşları saymak
 
 comment:
 text		This level is easily solved when you can count… The “for” loop is there for you!
@@ -25,3 +26,4 @@ cs_CZ.UTF-8	Tahle úroveň je lehká, když umíš počíta. Smyčka “for” j
 da_DK.UTF-8	Denne bane er let at klare når du kan tælle… “for”-loop'et er der for dig!
 en_US.UTF-8	This level is easily solved when you can count… The “for” loop is there for you!
 fr_FR.UTF-8	Ce niveau se résout facilement quand on peut compter… La boucle “for” est là pour vous !
+tr_TR.UTF-8	Sayabilirsen bu seviyeyi kolaylıkla geçersin… “for” döngüsü senin için burada!

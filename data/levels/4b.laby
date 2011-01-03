@@ -21,6 +21,7 @@ hu_HU.UTF-8	Melyik út?
 pt_BR.UTF-8	Qual caminho?
 ru_RU.UTF-8	Куда пойти?
 sv_SV.UTF-8	Vilken väg?
+tr_TR.UTF-8	Hangi yoldan?
 
 comment:
 text		The last challenge!
@@ -34,3 +35,4 @@ es_MX.UTF-8	¡El último reto!
 ru_RU.UTF-8	Последнее задание!
 sv_SV.UTF-8	Den sista utmaningen!
 pt_BR.UTF-8	O último desafio!
+tr_TR.UTF-8	Son mücadele!

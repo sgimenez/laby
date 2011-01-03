@@ -12,6 +12,7 @@ it_IT.UTF-8	Sono pronto
 pt_BR.UTF-8	Estou pronto
 ru_RU.UTF-8	Я готов
 sv_SV.UTF-8	Jag är redo
+tr_TR.UTF-8	Ben Hazırım
 uk_UA.UTF-8	Я готовий
 
 text		Something went wrong
@@ -26,6 +27,7 @@ it_IT.UTF-8	Qualcosa è andato storto
 pt_BR.UTF-8	Algo não está certo
 ru_RU.UTF-8	Что-то пошло не так
 sv_SV.UTF-8	Något gick fel
+tr_TR.UTF-8	Birşeyler yanlış
 uk_UA.UTF-8	Щось не так
 
 text		I can't go through the wall.
@@ -40,6 +42,7 @@ it_IT.UTF-8	Non posso attraversare il muro.
 pt_BR.UTF-8	Não posso atravessar a parede.
 ru_RU.UTF-8	Я не могу пройти сквозь стену.
 sv_SV.UTF-8	Jag kan inte gå genom väggen.
+tr_TR.UTF-8	Duvardan geçemiyorum.
 uk_UA.UTF-8	Я не можу пройти крізь стіну
 
 text		I can't go through this rock.
@@ -54,6 +57,7 @@ it_IT.UTF-8	Non posso superare questa roccia.
 pt_BR.UTF-8	Não posso atravessar essa pedra.
 ru_RU.UTF-8	Я не могу пройти через этот камень.
 sv_SV.UTF-8	Jag kan inte gå genom den här stenen.
+tr_TR.UTF-8	Bu taştan geçemiyorum.
 uk_UA.UTF-8	Я не можу пройти крізь цей камінь.
 
 text		I can't go through the door.
@@ -68,7 +72,8 @@ it_IT.UTF-8	Non posso attraversare la porta.
 pt_BR.UTF-8	Não posso atravessar a porta.
 ru_RU.UTF-8	Я не могу пройти через дверь.
 sv_SV.UTF-8	Jag kan inte gå genom dörren.
-ru_RU.UTF-8	Я не могу пройти через дверь.
+tr_TR.UTF-8	Kapıdan geçemiyorum.
+uk_UA.UTF-8	Я не можу пройти крізь двері.
 
 text		Oops, a spider web.
 cs_CZ.UTF-8	Ajaj, pavučina.
@@ -82,6 +87,7 @@ it_IT.UTF-8	Oh, no! La ragnatela!
 pt_BR.UTF-8	Opa, uma teia de aranha.
 ru_RU.UTF-8	Ой! Паутина!
 sv_SV.UTF-8	Oj, ett spindelväv.
+tr_TR.UTF-8	Olamaz! Örümcek!
 uk_UA.UTF-8	Ой, павутина!
 
 text		I can't move anymore.
@@ -96,6 +102,7 @@ it_IT.UTF-8	Non posso più muovermi.
 pt_BR.UTF-8	Não posso mais me mover.
 ru_RU.UTF-8	Я не могу двинуться.
 sv_SV.UTF-8	Jag kan inte röra mig mer.
+tr_TR.UTF-8	Hareket edemiyorum.
 uk_UA.UTF-8	Я не можу рухатися.
 
 text		Wohoo, the exit!
@@ -110,6 +117,7 @@ it_IT.UTF-8	Evviva! L'uscita!
 pt_BR.UTF-8	Uhu, a saída!
 ru_RU.UTF-8	Ура! Выход!
 sv_SV.UTF-8	Wohoo, utgången!
+tr_TR.UTF-8	Evet, çıkış!
 uk_UA.UTF-8	Ура! Вихід!
 
 text		I can't find a door to open.
@@ -124,6 +132,7 @@ it_IT.UTF-8	Non trovo una porta da aprire.
 pt_BR.UTF-8	Não encontro uma porta para abri-la.
 ru_RU.UTF-8	Не могу найти дверь, чтобы её открыть.
 sv_SV.UTF-8	Jag kan inte hitta en dörr att öppna.
+tr_TR.UTF-8	Açacak bir kapı bulamadım.
 uk_UA.UTF-8	Не можу знайти двері, щоб їх відкрити.
 
 text		I can't go out carrying a rock.
@@ -138,6 +147,7 @@ it_IT.UTF-8	Non posso uscire trasportando una pietra.
 pt_BR.UTF-8	Não posso sair carregando uma pedra.
 ru_RU.UTF-8	Я не могу выйти с камнем.
 sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
+tr_TR.UTF-8	Bir taş taşırken çıkamam.
 uk_UA.UTF-8	Я не можу вийти з каменем.
 
 text		There's no rock to take here.
@@ -152,6 +162,7 @@ it_IT.UTF-8	Non ci sono rocce da raccogliere.
 pt_BR.UTF-8	Não tem uma pedra para ser carregada aí.
 ru_RU.UTF-8	Здесь нет ни одного камня.
 sv_SV.UTF-8	Det finns ingen sten att bära här.
+tr_TR.UTF-8	Alınacak taş yok.
 uk_UA.UTF-8	Тут немає жодного каменя.
 
 text		I can't drop the rock here.
@@ -166,6 +177,7 @@ it_IT.UTF-8	Non posso posare la pietra qui.
 pt_BR.UTF-8	Não posso largar a pedra aqui.
 ru_RU.UTF-8	Я не могу бросить сюда камень.
 sv_SV.UTF-8	Jag kan inte släppa stenen här.
+tr_TR.UTF-8	Taşı buraya bırakamam.
 uk_UA.UTF-8	Я не можу кинути сюди камінь.
 
 text		I have nothing to drop.
@@ -179,6 +191,7 @@ it_IT.UTF-8	Non ho nulla da scaricare.
 pt_BR.UTF-8	Não tenho nada para largar.
 ru_RU.UTF-8	Мне нечего бросить.
 sv_SV.UTF-8	Jag har inget att släppa.
+tr_TR.UTF-8	Bırakacak bir şeyim yok.
 uk_UA.UTF-8	Мені нічого кидати.
 
 # ascii api names (no funny characters)
@@ -194,6 +207,7 @@ hu_HU.UTF-8	Hangya
 it_IT.UTF-8	Formica
 pt_BR.UTF-8	Formiga
 sv_SV.UTF-8	Myra
+#tr_TR.UTF-8	Karınca
 
 text:ascii	ant
 cs_CZ.UTF-8	mravenec
@@ -206,6 +220,7 @@ hu_HU.UTF-8	hangya
 it_IT.UTF-8	formica
 pt_BR.UTF-8	formiga
 sv_SV.UTF-8	myra
+#tr_TR.UTF-8	karınca
 
 text:ascii	left
 cs_CZ.UTF-8	vlevo
@@ -218,6 +233,7 @@ hu_HU.UTF-8	balra
 it_IT.UTF-8	sinistra
 pt_BR.UTF-8	esquerda
 sv_SV.UTF-8	vanster
+#tr_TR.UTF-8	sol
 
 text:ascii	right
 cs_CZ.UTF-8	vpravo
@@ -230,6 +246,7 @@ hu_HU.UTF-8	jobbra
 it_IT.UTF-8	destra
 pt_BR.UTF-8	direita
 sv_SV.UTF-8	hoger
+#tr_TR.UTF-8	sağ
 
 text:ascii	forward
 cs_CZ.UTF-8	vpred
@@ -242,6 +259,7 @@ hu_HU.UTF-8	elore
 it_IT.UTF-8	avanti
 pt_BR.UTF-8	frente
 sv_SV.UTF-8	framat
+#tr_TR.UTF-8	ileri
 
 text:ascii	take
 cs_CZ.UTF-8	vezmi
@@ -254,6 +272,7 @@ it_IT.UTF-8	raccogli
 hu_HU.UTF-8	felvesz
 pt_BR.UTF-8	pegar
 sv_SV.UTF-8	ta
+#tr_TR.UTF-8	al
 
 text:ascii	drop
 cs_CZ.UTF-8	poloz
@@ -266,6 +285,7 @@ hu_HU.UTF-8	letesz
 it_IT.UTF-8	lascia
 pt_BR.UTF-8	largar
 sv_SV.UTF-8	slapp
+#tr_TR.UTF-8	bırak
 
 text:ascii	escape
 cs_CZ.UTF-8	vyjdi
@@ -278,6 +298,7 @@ hu_HU.UTF-8	kimegy
 it_IT.UTF-8	esci
 pt_BR.UTF-8	escapar
 sv_SV.UTF-8	fly
+#tr_TR.UTF-8	çık
 
 text:ascii	look
 cs_CZ.UTF-8	divej
@@ -290,6 +311,7 @@ hu_HU.UTF-8	nez
 it_IT.UTF-8	guarda
 pt_BR.UTF-8	olhar
 sv_SV.UTF-8	titta
+#tr_TR.UTF-8	görüş
 
 text:ascii	say
 cs_CZ.UTF-8	rekni
@@ -302,6 +324,7 @@ hu_HU.UTF-8	mondja
 it_IT.UTF-8	parla
 pt_BR.UTF-8	dizer
 sv_SV.UTF-8	sag
+#tr_TR.UTF-8	söyle
 
 text:ascii	Void
 cs_CZ.UTF-8	Prazdny
@@ -313,6 +336,7 @@ hu_HU.UTF-8	Semmi
 it_IT.UTF-8	Vuoto
 pt_BR.UTF-8	Vazio
 sv_SV.UTF-8	Tomt
+#tr_TR.UTF-8	Boşluk
 
 text:ascii	Wall
 cs_CZ.UTF-8	Zed
@@ -325,6 +349,7 @@ hu_HU.UTF-8	Fal
 it_IT.UTF-8	Muro
 pt_BR.UTF-8	Parede
 sv_SV.UTF-8	Vagg
+#tr_TR.UTF-8	Duvar
 
 text:ascii	Rock
 cs_CZ.UTF-8	Kamen
@@ -337,6 +362,7 @@ hu_HU.UTF-8	Ko
 it_IT.UTF-8	Roccia
 pt_BR.UTF-8	Pedra
 sv_SV.UTF-8	Sten
+#tr_TR.UTF-8	Taş
 
 text:ascii	Web
 cs_CZ.UTF-8	Pavucina
@@ -349,6 +375,7 @@ hu_HU.UTF-8	Halo
 it_IT.UTF-8	Ragnatela
 pt_BR.UTF-8	Teia
 sv_SV.UTF-8	Spindelvav
+#tr_TR.UTF-8	Ağ
 
 text:ascii	Exit
 cs_CZ.UTF-8	Vychod
@@ -361,6 +388,7 @@ it_IT.UTF-8	Uscita
 pt_BR.UTF-8	Saida
 sv_SV.UTF-8	Utgang
 es_MX.UTF-8	Salir
+#tr_TR.UTF-8	Çıkış
 
 text:ascii	Unknown
 cs_CZ.UTF-8	Neznamy
@@ -373,6 +401,7 @@ hu_HU.UTF-8	Ismeretlen
 it_IT.UTF-8	Sconosciuto
 pt_BR.UTF-8	Desconhecido
 sv_SV.UTF-8	Okand
+#tr_TR.UTF-8	Bilinmiyor
 
 
 # gfx.ml
@@ -389,6 +418,7 @@ it_IT.UTF-8	Linguaggio:
 pt_BR.UTF-8	Linguagem:
 ru_RU.UTF-8	Язык:
 sv_SV.UTF-8	Språk:
+tr_TR.UTF-8	Dil:
 uk_UA.UTF-8	Мова:
 
 text		Level:
@@ -403,6 +433,7 @@ it_IT.UTF-8	Livello:
 pt_BR.UTF-8	Nível:
 ru_RU.UTF-8	Уровень:
 sv_SV.UTF-8	Nivå:
+tr_TR.UTF-8	Seviye:
 uk_UA.UTF-8	Рівень:
 
 text		Program:
@@ -417,6 +448,7 @@ it_IT.UTF-8	Programma:
 pt_BR.UTF-8	Programa:
 ru_RU.UTF-8	Программа:
 sv_SV.UTF-8	Program:
+tr_TR.UTF-8	Program:
 uk_UA.UTF-8	Програма:
 
 text		Messages:
@@ -431,6 +463,7 @@ it_IT.UTF-8	Messaggi:
 pt_BR.UTF-8	Mensagens:
 ru_RU.UTF-8	Сообщения:
 sv_SV.UTF-8	Medelanden:
+tr_TR.UTF-8	Mesajlar:
 uk_UA.UTF-8	Повідомлення:
 
 text		Help:
@@ -445,6 +478,7 @@ it_IT.UTF-8	Aiuto:
 pt_BR.UTF-8	Dicas:
 ru_RU.UTF-8	Помощь:
 sv_SV.UTF-8	Hjälp:
+tr_TR.UTF-8	Yardım:
 uk_UA.UTF-8	Допомога:
 
 text		graphic interface configuration
@@ -459,6 +493,7 @@ it_IT.UTF-8	configurazione grafica
 pt_BR.UTF-8	configuração da interface gráfica
 ru_RU.UTF-8	настройки интерфейса
 sv_SV.UTF-8	grafiskt gränssnittskonfiguration
+tr_TR.UTF-8	arayüz ayarları
 uk_UA.UTF-8	налаштування інтерфейсу
 
 text		cannot load syntax for <name> mod
@@ -472,6 +507,7 @@ it_IT.UTF-8	impossibile caricare il modulo di sintassi <name>
 pt_BR.UTF-8	não foi possível carregar sintaxe do mod <name>
 ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
 sv_SV.UTF-8	kan inte ladda syntax för <name> modden
+tr_TR.UTF-8	<name> modu yüklenemiyor
 uk_UA.UTF-8	не можу завантажити синтаксис для мод <name>
 
 
@@ -487,6 +523,7 @@ it_IT.UTF-8	seleziona un modulo di programmazione
 pt_BR.UTF-8	selecione um mod específico
 ru_RU.UTF-8	выбор программного мода
 sv_SV.UTF-8	välj en specifik programmerings-modd
+tr_TR.UTF-8	bir programlama dili seçin
 uk_UA.UTF-8	обрати програмний мод
 
 text		size of tiles in pixels
@@ -501,6 +538,7 @@ it_IT.UTF-8	dimensioni delle tessere in pixel
 pt_BR.UTF-8	tamanho do bloco em pixels
 ru_RU.UTF-8	размер ячейки в пикселях
 sv_SV.UTF-8	storlek av tile i pixlar
+tr_TR.UTF-8	kiremitlerin piksel cinsinden büyüklüğü
 uk_UA.UTF-8	розмір комірки в пікселях
 
 text		language
@@ -515,6 +553,7 @@ it_IT.UTF-8	linguaggio
 pt_BR.UTF-8	linguagem
 ru_RU.UTF-8	язык
 sv_SV.UTF-8	språk
+tr_TR.UTF-8	dil
 uk_UA.UTF-8	мова
 
 
@@ -532,6 +571,7 @@ it_IT.UTF-8	configurazione sonora
 pt_BR.UTF-8	configuração de áudio
 ru_RU.UTF-8	настройка звука
 sv_SV.UTF-8	ljudkonfiguration
+tr_TR.UTF-8	ses ayarları
 uk_UA.UTF-8	налаштування звуку
 
 text		enable or disable sounds
@@ -546,6 +586,7 @@ it_IT.UTF-8	abilita o disabilita i suoni
 pt_BR.UTF-8	ativar ou desativar sons
 ru_RU.UTF-8	включить или выключить звук
 sv_SV.UTF-8	aktivera eller avaktivera ljud
+tr_TR.UTF-8	sesi aç/kapa
 uk_UA.UTF-8	ввімкнути чи вимкнути звук
 
 
@@ -563,6 +604,7 @@ it_IT.UTF-8	tessera sconosciuta
 pt_BR.UTF-8	bloco desconhecido
 ru_RU.UTF-8	неизвестная ячейка
 sv_SV.UTF-8	okänd tile
+tr_TR.UTF-8	bilinmeyen tuğla
 uk_UA.UTF-8	невідома комірка
 
 text		mismatching line length
@@ -576,6 +618,7 @@ hu_HU.UTF-8	ismeretlen sorhossz
 it_IT.UTF-8	fine linea non corretto
 pt_BR.UTF-8	comprimento da linha incorreto
 sv_SV.UTF-8	fel i linje längden
+tr_TR.UTF-8	eşleşmeyen hat uzunluğu
 uk_UA.UTF-8	невідповідна довжина рядка
 
 text		bad level format: <file>
@@ -589,6 +632,7 @@ it_IT.UTF-8	formato del livello non funzionante: <file>
 pt_BR.UTF-8	formato do nível incorreto: <file>
 ru_RU.UTF-8	неверный формат уровня: <file>
 sv_SV.UTF-8	fel nivå format: <file>
+tr_TR.UTF-8	yanlış dosya formatı: <file>
 uk_UA.UTF-8	помилковий формат рівня: <file>
 
 text		missing level section <name> in: <file>
@@ -603,6 +647,7 @@ it_IT.UTF-8	sezione <name> del livello mancante: <file>
 pt_BR.UTF-8	falta sessão <name> no nível: <file>
 ru_RU.UTF-8	отсутствует секция уровня <name> в: <file>
 sv_SV.UTF-8	saknar nivå sektion <name> i: <file>
+tr_TR.UTF-8	<file> de kayıp seviye <name>
 uk_UA.UTF-8	відсутня секція рівня <name> в: <file>
 
 
@@ -620,6 +665,7 @@ it_IT.UTF-8	linguaggi di programmazione
 pt_BR.UTF-8	linguagens de programação
 ru_RU.UTF-8	языки программирования
 sv_SV.UTF-8	programmeringsspråk
+tr_TR.UTF-8	programlama dilleri
 uk_UA.UTF-8	мова програмування
 
 
@@ -636,6 +682,7 @@ hu_HU.UTF-8	futtatás végrehajtása sikertelen
 it_IT.UTF-8	esecuzione dell'interprete fallita
 pt_BR.UTF-8	execução do interpretador falhou
 sv_SV.UTF-8	misslyckades med att köra tolk
+tr_TR.UTF-8	tercüman çalıştırılamadı
 uk_UA.UTF-8	помилка в роботі інтерпретатора
 
 
@@ -653,6 +700,7 @@ it_IT.UTF-8	impossibile aprire la finestra
 pt_BR.UTF-8	falha na exibição
 ru_RU.UTF-8	невозможно открыть окно
 sv_SV.UTF-8	visning misslyckades
+tr_TR.UTF-8	görüntü hatası
 uk_UA.UTF-8	неможливо відкрити вікно
 
 text		gtk error: <error>
@@ -667,6 +715,7 @@ it_IT.UTF-8	errore gtk: <error>
 pt_BR.UTF-8	erro gtk: <error>
 ru_RU.UTF-8	ошибка gtk: <error>
 sv_SV.UTF-8	gtk-fel: <error>
+tr_TR.UTF-8	gtk hatası: <error>
 uk_UA.UTF-8	помилка gtk: <error>
 
 
@@ -684,6 +733,7 @@ it_IT.UTF-8	file <f>, linea <l>: <error>
 pt_BR.UTF-8	arquivo <f>, linha <l>: <error>
 ru_RU.UTF-8	файл <f>, строка <l>: <error>
 sv_SV.UTF-8	fil <f>, rad <l>: <error>
+tr_TR.UTF-8	dosya <f>, satır <l>: <error>
 uk_UA.UTF-8	файл <f>, рядок <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
@@ -698,6 +748,7 @@ it_IT.UTF-8	linea <l>, caratteri <begin-char>-<end-char>
 pt_BR.UTF-8	linha <l>, caracteres <begin-char>-<end-char>
 ru_RU.UTF-8	строка <l>, позиция <begin-char>-<end-char>
 sv_SV.UTF-8	rad <l>, bokstav <begin-char>-<end-char>
+tr_TR.UTF-8	satır <l>, karakterler <begin-char>-<end-char>
 uk_UA.UTF-8	рядок <l>, позиція <begin-char>-<end-char>
 
 text		line <l>, character <char>
@@ -712,6 +763,7 @@ it_IT.UTF-8	linea <l>, carattere <char>
 pt_BR.UTF-8	linha <l>, caracter <char>
 ru_RU.UTF-8	строка <l>, позиция <char>
 sv_SV.UTF-8	rad <l>, bokstaäver <char>
+tr_TR.UTF-8	satır <l>, karakter <char>
 uk_UA.UTF-8	рядок <l>, позиція <char>
 
 text		lexical error
@@ -726,6 +778,7 @@ it_IT.UTF-8	errore lessicale
 pt_BR.UTF-8	erro léxico
 ru_RU.UTF-8	лексическая ошибка
 sv_SV.UTF-8	lexikala fel
+tr_TR.UTF-8	sözlük hatası
 uk_UA.UTF-8	лексична помилка
 
 text		syntax error
@@ -740,6 +793,7 @@ it_IT.UTF-8	errore di sintassi
 pt_BR.UTF-8	erro sintático
 sv_SV.UTF-8	syntaxfel
 ru_RU.UTF-8	синтаксическая ошибка
+tr_TR.UTF-8	sözdizimi hatası
 uk_UA.UTF-8	синтаксична помилка
 
 text		<status>: <message>
@@ -754,6 +808,7 @@ it_IT.UTF-8	<status>: <message>
 pt_BR.UTF-8	<status>: <message>
 ru_RU.UTF-8	<status> : <message>
 sv_SV.UTF-8	<status> : <message>
+tr_TR.UTF-8	<status> : <messages>
 uk_UA.UTF-8	<status> : <message>
 
 text		exception
@@ -768,6 +823,7 @@ it_IT.UTF-8	eccezione
 pt_BR.UTF-8	exceção
 ru_RU.UTF-8	исключение
 sv_SV.UTF-8	undantag
+tr_TR.UTF-8	ayrıcalık
 uk_UA.UTF-8	виключення
 
 text		internal error
@@ -782,6 +838,7 @@ it_IT.UTF-8	errore interno
 pt_BR.UTF-8	erro interno
 ru_RU.UTF-8	внутренняя ошибка
 sv_SV.UTF-8	internt fel
+tr_TR.UTF-8	iç hata
 uk_UA.UTF-8	внутрішня помилка
 
 text		fatal error
@@ -796,6 +853,7 @@ it_IT.UTF-8	errore fatale
 pt_BR.UTF-8	erro fatal
 ru_RU.UTF-8	фатальная ошибка
 sv_SV.UTF-8	fatalt fel
+tr_TR.UTF-8	önemli hata
 uk_UA.UTF-8	фатальна помилка
 
 text		error
@@ -810,6 +868,7 @@ it_IT.UTF-8	errore
 pt_BR.UTF-8	erro
 ru_RU.UTF-8	ошибка
 sv_SV.UTF-8	fel
+tr_TR.UTF-8	hata
 uk_UA.UTF-8	помилка
 
 text		warning
@@ -824,6 +883,7 @@ it_IT.UTF-8	attenzione
 pt_BR.UTF-8	aviso
 ru_RU.UTF-8	предупреждение
 sv_SV.UTF-8	varning
+tr_TR.UTF-8	uyarı
 uk_UA.UTF-8	попередження
 
 text		debug
@@ -838,6 +898,7 @@ it_IT.UTF-8	debug
 pt_BR.UTF-8	depurar
 ru_RU.UTF-8	отладка
 sv_SV.UTF-8	debug
+tr_TR.UTF-8	hata ayıklama
 uk_UA.UTF-8	налагодження
 
 text		failure
@@ -852,6 +913,7 @@ it_IT.UTF-8	fallimento
 pt_BR.UTF-8	falha
 ru_RU.UTF-8	сбой
 sv_SV.UTF-8	misslyckande
+tr_TR.UTF-8	başarısız
 uk_UA.UTF-8	збій
 
 text		done
@@ -866,6 +928,7 @@ it_IT.UTF-8	fatto
 pt_BR.UTF-8	feito
 ru_RU.UTF-8	готово
 sv_SV.UTF-8	klart
+tr_TR.UTF-8	tamamlandı
 uk_UA.UTF-8	готово
 
 text		line <l>
@@ -880,6 +943,7 @@ it_IT.UTF-8	linea <l>
 pt_BR.UTF-8	linha <l>
 ru_RU.UTF-8	строка <l>
 sv_SV.UTF-8	rad <l>
+tr_TR.UTF-8	satır <l>
 uk_UA.UTF-8	рядок <l>
 
 text		unknown token
@@ -894,6 +958,7 @@ it_IT.UTF-8	token sconosciuto
 pt_BR.UTF-8	token desconhecido
 ru_RU.UTF-8	неизвестный токен
 sv_SV.UTF-8	okänt tecken
+tr_TR.UTF-8	bilinmeyen simge
 uk_UA.UTF-8	невідомий токен
 
 text		unknown type
@@ -908,6 +973,7 @@ it_IT.UTF-8	tipo sconosciuto
 pt_BR.UTF-8	tipo desconhecido
 ru_RU.UTF-8	неизвестный тип
 sv_SV.UTF-8	okänd typ
+tr_TR.UTF-8	bilinmeyen tip
 uk_UA.UTF-8	невідомий тип
 
 text		failed to load file: <error>
@@ -922,6 +988,7 @@ it_IT.UTF-8	errore nel caricamento del file: <error>
 pt_BR.UTF-8	erro ao carregar arquivo: <error>
 ru_RU.UTF-8	ошибка загрузки файла: <error>
 sv_SV.UTF-8	misslyckades med att ladda fil: <error>
+tr_TR.UTF-8	seviye dosyası yüklenemedi: <error>
 uk_UA.UTF-8	помилка завантаження файлу: <error>
 
 text		<type> value expected

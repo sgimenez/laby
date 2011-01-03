@@ -15,6 +15,7 @@ hu_HU.UTF-8	Sziklák folyosója
 pt_BR.UTF-8	O corredor de pedras
 ru_RU.UTF-8	Коридор камней
 sv_SV.UTF-8	Stenkorridoren
+tr_TR.UTF-8	Taşlarla dolu koridor
 
 comment:
 text		Once again a “while” loop will be useful!
@@ -27,3 +28,4 @@ fr_FR.UTF-8	Une fois de plus la boucle “while” va être utile !
 hu_HU.UTF-8	Egy “while” ciklus megkönnyíti az életed!
 pt_BR.UTF-8	Novamente o laço de repetição “while” será útil!
 ru_RU.UTF-8	И снова нам поможет цикл “while”!
+tr_TR.UTF-8	“while” bağlacı bu sefer de işe yarayabilir!

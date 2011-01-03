@@ -20,6 +20,7 @@ hu_HU.UTF-8	Óóó, egy szikla
 pt_BR.UTF-8	Oh, uma pedra
 ru_RU.UTF-8	О, камень
 sv_SV.UTF-8	Å, en sten
+tr_TR.UTF-8	Eyvah bir kaya
 
 comment:
 text		A rock is in the way. Use specific instructions to take and drop rocks.
@@ -32,3 +33,4 @@ fr_FR.UTF-8	Un caillou te barre la route. Il faut utiliser les instructions qui 
 hu_HU.UTF-8	Egy szikla van az utadban. Használd a különleges utasításokat, hogy felemeld és letedd a sziklát.
 pt_BR.UTF-8	Tem uma pedra no caminho. Use instruções específicas para pegar e largar pedras.
 ru_RU.UTF-8	На пути камень. Используйте специальные команды, чтобы поднимать и выбрасывать камни.
+tr_TR.UTF-8	Yolumuzun üzerinde bir kaya var. Talimatları kullanarak kayayı yolunuzdan çekin.
