@@ -67,13 +67,13 @@ tclean () {
         rm -rf $i
       done
       for i in ${BINTARGETS}; do
-	  rm -rf "$i";
-	  for j in byte native d.byte p.native ${BINEXT};
-	  do rm -rf "$i-${SYSARCH}.$j"; done;
+	  rm -rf "$i"
+	  for j in byte native d.byte p.native ${BINEXT}
+	  do rm -rf "$i-${SYSARCH}.$j"; done
       done
       for i in ${LIBTARGETS}; do
-	  for j in cma cmxa d.cma p.cmxa;
-          do rm -rf "$i-${SYSARCH}.$j"; done;
+	  for j in cma cmxa d.cma p.cmxa
+          do rm -rf "$i-${SYSARCH}.$j"; done
       done
 }
 
@@ -107,11 +107,11 @@ esac
 TARGETS=""
 
 for i in ${BINTARGETS}; do
-  for j in ${BINEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done;
-done;
+  for j in ${BINEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done
+done
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done;
-done;
+  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done
+done
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
 echo building "${PROJECT_NAME}-${PROJECT_VERSION} for ${SYSARCH}:" ${FILES}
@@ -123,13 +123,13 @@ tclean
 ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
 for i in ${BINTARGETS}; do
-  for j in ${BINEXT};
+  for j in ${BINEXT}
   do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
-done;
+done
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT};
+  for j in ${LIBEXT}
   do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
-done;
+done
 
 # linking
 
@@ -137,8 +137,8 @@ done;
 for i in ${BINTARGETS}; do ln -sf "$i-${SYSARCH}.${LNK}" "$i"; done
 
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do ln -sf "$i-${SYSARCH}.$j" "$i.$j"; done;
-done;
+  for j in ${LIBEXT}; do ln -sf "$i-${SYSARCH}.$j" "$i.$j"; done
+done
 
 exit 0
 
