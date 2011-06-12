@@ -17,6 +17,7 @@ fr_FR.UTF-8	Que c'est loin
 hu_HU.UTF-8	Messze van még
 pt_BR.UTF-8	Até agora
 ru_RU.UTF-8	Далеко…
+sq_AL.UTF-8	Sa larg
 sv_SV.UTF-8	Så långt…
 tr_TR.UTF-8	Çok uzak…
 
@@ -31,4 +32,5 @@ fr_FR.UTF-8	Simple pas vrai ? Le but du jeu ici c'est d'écrire un programme cou
 hu_HU.UTF-8	Egyszerű, mi? A cél, hogy írj egy rövidke programot a “while” ciklus használatával, amely megmondja a robotnak, hogy menjen előre, amíg nincs előtte akadály.
 pt_BR.UTF-8	Fácil, não é? O objetivo aqui é escrever um pequeno programa usando o laço de repetição “while” que diz ao robô para ir em frente enquanto o caminho adiante estiver livre.
 ru_RU.UTF-8	Нетрудно, правда? Теперь наша цель - написать короткую программу используя цикл “while”, которая позволит роботу двигаться вперёд до тех пор, пока ячейка перед ним свободна.
+sq_AL.UTF-8	E lehtë apo jo? Qëllimi këtu është që të shkruhet një program i shkurtër duke përdorur lakun "while", i cili i thotë robotit të shkojë përpara, përderisa pllaka që ka përpara është bosh.
 tr_TR.UTF-8	Kolay, değil mi? “while” bağlacını kullanarak önü boş oldukça karıncaya ilerlemesini söyleyen bir program yazın.

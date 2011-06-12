@@ -19,6 +19,7 @@ fr_FR.UTF-8	Ahhh des toiles
 hu_HU.UTF-8	Áááá!!! Pókhálók!!!
 pt_BR.UTF-8	Ahhh! Teias!
 ru_RU.UTF-8	А-а-а! Паутина!
+sq_AL.UTF-8	Ahhh rrjetat
 sv_SV.UTF-8	Spindelnät!
 tr_TR.UTF-8	Hayır! Ağlar!
 
@@ -33,4 +34,5 @@ fr_FR.UTF-8	Des toiles d'araignées ! La petite ne t'empêchera pas de passer, m
 hu_HU.UTF-8	Pókhálók! A kicsin át tudsz haladni, de a nagyba belegabalyodsz! Előre szólok, hogy a nagy háló nem mindig ugyanazon az oldalon van! Tudsz olyan programot írni, amelyik mindig elvezeti a robotot a kijárathoz? Használd az “if” feltételes elágazást.
 pt_BR.UTF-8	Teias de aranha! A teia pequena não irá te pegar, porém a grande lhe deixará prisioneiro. Tenha cuidado, pois a teia grande não estará sempre no mesmo lado! Como ter certeza que o robô sempre chegará à saída? Vamos usar uma instrução condicional “if”.
 ru_RU.UTF-8	Паутина! Маленькая не сможет нас поймать, но большая захватит нас в плен. Помните, что большая паутина не всегда на той же стороне! Как быть увереным, что робот добрался до выхода? Используйте условную инструкцию “if”.
+sq_AL.UTF-8	Rrjeta merimangash! Të voglat nuk mund tju kapin, por të mëdhajat ama ju kthejnë në një të burgosur. Ta dini që rrjeta e madhe nuk është gjithmonë në të njëjtën anë! Si mund të siguroheni që roboti do të arrijë daljen? Let të përdorim udhëzimin kushtëzues “if”.
 tr_TR.UTF-8	Örümcek ağları! Küçük olanlar sana zarar vermez ancak, büyük olan seni mahkum eder. Ayrıca büyük ağın her zaman aynı yerde olmadığını da bil! Robotun çıkışa gittiğinden nası emin olacaksın? Burada “if” komutunu kullanabilirsin!

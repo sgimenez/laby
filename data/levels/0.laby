@@ -17,6 +17,7 @@ fr_FR.UTF-8	Démo
 hu_HU.UTF-8	Demó
 pt_BR.UTF-8	Demo
 ru_RU.UTF-8	Демо
+sq_AL.UTF-8	Demo
 sv_SV.UTF-8	Demo
 tr_TR.UTF-8	Demo
 
@@ -31,4 +32,5 @@ fr_FR.UTF-8	Ce labyrinthe sert de démonstration. Le programme initial permet au
 hu_HU.UTF-8	Ez egy demó labirintus. Az inícializáló program kivezeti a hangya-robotot a labirintusból. Egy kis nehézség benne a szikla és a pókháló kikerülése. Kattints a gombra a program robotba töltéséhez, és használd a nyilakat a lépésenkénti végrehajtáshoz.
 pt_BR.UTF-8	Esse labirinto é uma demonstração. O programa inicial permite a formiga robô sair do labirinto. Ficará mais interessante com a pedra e evite ser pego pela teia de aranha. Pressione o botão para carregar o programa no robô e use as setas para executar passo a passo.
 ru_RU.UTF-8	Этот лабиринт - демонстрация. Исходная программа позволяет роботу-муравью выбраться из этого лабиринта. Он поиграет с камнем и постарается избежать паутины. Нажмите кнопку, чтобы загрузить программу в робота, и используйте кнопки, чтобы выполнить отдельные шаги.
+sq_AL.UTF-8	Ky labirint është një demo. Programi fillestar i mundëson robotit milingonë që të dalë jashtë nga ky labirint. Ai do të luaj pak me gurin dhe do ti shmanget rrjetës së merimangës. Kliko butonin për ta ngarkuar programin në robot dhe përdor shigjetat për të kryer hapat e veçantë.
 tr_TR.UTF-8	Bu labirent bir alıştırmadır. Program robot karıncanın labirentten çıkması üzerine kurulu. Kayalardan ve örümcek ağlarına yakalanmaktan sakınmalısınız. Programı robota yüklemek için çalıştır tuşuna basın, ve okları kullanarak adımları yönetin.
