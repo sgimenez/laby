@@ -23,6 +23,7 @@ en_US.UTF-8	Zig Zag
 es_MX.UTF-8	Zig Zag
 fr_FR.UTF-8	Zig Zag
 hu_HU.UTF-8	Cikk-cakk
+nl_NL.UTF-8	Zig zag
 pt_BR.UTF-8	Zig zag
 ru_RU.UTF-8	Зиг Заг
 sq_AL.UTF-8	Zik-Zak
@@ -38,6 +39,7 @@ en_US.UTF-8	Five long runs! To avoid writing the same loop five times, we shall 
 es_MX.UTF-8	¡Cinco largos caminos! ¡Para evitar escribir lo mismo cinco veces emplearemos un atajo! Vamos a escribir un proceidimiento que haga que el robot avance tan lejos como pueda. Entonces lo podremos llamar varias veces.
 fr_FR.UTF-8	Cinq longues distances à parcourir ! Pour éviter de recopier cinq fois la même boucle, on peut utiliser un raccourci ! On va écrire une procédure qui fait avancer le robot le plus loin possible en ligne droite. Ensuite on pourra facilement l'appeler plusieurs fois.
 hu_HU.UTF-8	Öt hosszú futás. Hogy ne kelljen ugyanazt ötször leírni, használjunk rövidítéseket! Ideje írni egy eljárást, ami addig vezeti előre a robotot, ameddig csak tudja. Ezt az egyszer megírt eljárást bármennyiszer meg tudjuk hívni a nevével.
+nl_NL.UTF-8	Vijf lange stukken! Om te voorkomen dat je dezelfde lus vijf keer achter elkaar moet schrijven, schrijven we een procedure die de robot zolang mogelijk recht vooruit laat gaan. Dan kunnen we hem verschillende keren aanroepen.
 pt_BR.UTF-8	Cinco retas longas! Para evitar escrever o mesmo laço de repetição cinco vezes, devemos usar um atalho. Escreva um procedimento para fazer o robô andar em frente o máximo que puder. Posteriormente, você poderá executar esse procedimento sempre que necessário.
 ru_RU.UTF-8	Пять длинных проходов! Чтобы не писать один и тот же цикл пять раз мы используем сокращение! Давайте напишем процедуру, которая продвигает робота вперёд пока это возможно. Затем мы сможем вызвать её несколько раз.
 sq_AL.UTF-8	Pesë rrugë të gjata! Për mos ta shkruar të njëjtin lak pesë herë, do të përdorim një shkurtim! Le të shkruajmë një funksion i cili e bën robotin të ecë përpara sa më shumë të jetë e mundur. Pastaj mund ta thërrasim funksionin disa herë.

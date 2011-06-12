@@ -9,6 +9,7 @@ es_MX.UTF-8	Estoy listo
 fr_FR.UTF-8	Je suis prêt
 hu_HU.UTF-8	Készen vagyok
 it_IT.UTF-8	Sono pronto
+nl_NL.UTF-8	Ik ben gereed
 pt_BR.UTF-8	Estou pronto
 ru_RU.UTF-8	Я готов
 sq_AL.UTF-8	Jam gati
@@ -25,6 +26,7 @@ es_MX.UTF-8	Algo fallo
 fr_FR.UTF-8	Quelque chose ne vas pas
 hu_HU.UTF-8	Valami hibás
 it_IT.UTF-8	Qualcosa è andato storto
+nl_NL.UTF-8	Er ging iets verkeerd
 pt_BR.UTF-8	Algo não está certo
 ru_RU.UTF-8	Что-то пошло не так
 sq_AL.UTF-8	Diçka ka shkuar keq
@@ -41,6 +43,7 @@ es_MX.UTF-8	No puedo atravesar la pared.
 fr_FR.UTF-8	Je ne peux pas avancer dans le mur.
 hu_HU.UTF-8	Nem tudok átmenni a falon.
 it_IT.UTF-8	Non posso attraversare il muro.
+nl_NL.UTF-8	Ik kan niet door de muur heen.
 pt_BR.UTF-8	Não posso atravessar a parede.
 ru_RU.UTF-8	Я не могу пройти сквозь стену.
 sq_AL.UTF-8	Nuk mund të ec përmes murit.
@@ -56,6 +59,7 @@ en_US.UTF-8	I can't go through this rock.
 es_MX.UTF-8	No puedo atravezar esta piedra.
 fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
 hu_HU.UTF-8	Nem tudok átmenni a kövön.
+nl_NL.UTF-8	Ik kan niet door deze steen heen.
 it_IT.UTF-8	Non posso superare questa roccia.
 pt_BR.UTF-8	Não posso atravessar essa pedra.
 ru_RU.UTF-8	Я не могу пройти через этот камень.
@@ -73,6 +77,7 @@ es_MX.UTF-8	No puedo atravezar esta puerta.
 fr_FR.UTF-8	Je ne peux pas passer à travers la porte.
 hu_HU.UTF-8	Nem tudok átmenni az ajtón.
 it_IT.UTF-8	Non posso attraversare la porta.
+nl_NL.UTF-8	Ik kan niet door deze deur gaan.
 pt_BR.UTF-8	Não posso atravessar a porta.
 ru_RU.UTF-8	Я не могу пройти через дверь.
 sq_AL.UTF-8	Nuk mund të shkoj përmes derës.
@@ -89,6 +94,7 @@ es_MX.UTF-8	Oops, una telaraña.
 fr_FR.UTF-8	Oups, une toile d'araignée.
 hu_HU.UTF-8	Upsz! Egy pókháló!
 it_IT.UTF-8	Oh, no! La ragnatela!
+nl_NL.UTF-8	Oeps, een spinneweb!
 pt_BR.UTF-8	Opa, uma teia de aranha.
 ru_RU.UTF-8	Ой! Паутина!
 sq_AL.UTF-8	Oop, një rrjetë merimange.
@@ -105,6 +111,7 @@ es_MX.UTF-8	No me puedo mover.
 fr_FR.UTF-8	Je ne peux plus bouger.
 hu_HU.UTF-8	Nem tudok többet mozogni.
 it_IT.UTF-8	Non posso più muovermi.
+nl_NL.UTF-8	Ik kan me niet meer bewegen.
 pt_BR.UTF-8	Não posso mais me mover.
 ru_RU.UTF-8	Я не могу двинуться.
 sq_AL.UTF-8	Nuk lëviz dot më.
@@ -121,6 +128,7 @@ es_MX.UTF-8	Wohoo, la salida!
 fr_FR.UTF-8	Hourra la sortie !
 hu_HU.UTF-8	Szuper!!! Kijutottam!!!
 it_IT.UTF-8	Evviva! L'uscita!
+nl_NL.UTF-8	Joepie, de uitgang!
 pt_BR.UTF-8	Uhu, a saída!
 ru_RU.UTF-8	Ура! Выход!
 sq_AL.UTF-8	Urraa, dalja!
@@ -137,6 +145,7 @@ es_MX.UTF-8	No puedo encontrar una puerta y abrirla.
 fr_FR.UTF-8	Je ne trouve pas de porte à ouvrir.
 hu_HU.UTF-8	Nem találom az ajtót, hogy kinyissam.
 it_IT.UTF-8	Non trovo una porta da aprire.
+nl_NL.UTF-8	Ik kan geen deur vinden om te openen.
 pt_BR.UTF-8	Não encontro uma porta para abri-la.
 ru_RU.UTF-8	Не могу найти дверь, чтобы её открыть.
 sq_AL.UTF-8	Nuk kam çfarë dere të hap.
@@ -153,6 +162,7 @@ es_MX.UTF-8	No puedo salir cargando la piedra.
 fr_FR.UTF-8	Je ne peux pas sortir en portant un caillou.
 hu_HU.UTF-8	Nem tudom felvenni a követ.
 it_IT.UTF-8	Non posso uscire trasportando una pietra.
+nl_NL.UTF-8	Ik kan dit niveau niet verlaten terwijl ik een steen draag.
 pt_BR.UTF-8	Não posso sair carregando uma pedra.
 ru_RU.UTF-8	Я не могу выйти с камнем.
 sq_AL.UTF-8	Nuk mund të dalë jashtë duke mbajtur një gur.
@@ -169,6 +179,7 @@ es_MX.UTF-8	No hay una piedra para agarrar.
 fr_FR.UTF-8	Il n'y a pas de caillou à prendre ici.
 hu_HU.UTF-8	Nincs kő, amit leraknék.
 it_IT.UTF-8	Non ci sono rocce da raccogliere.
+nl_NL.UTF-8	Er is geen steen hier om op te tillen.
 pt_BR.UTF-8	Não tem uma pedra para ser carregada aí.
 ru_RU.UTF-8	Здесь нет ни одного камня.
 sq_AL.UTF-8	Nuk ka çfarë guri të marr këtu.
@@ -185,6 +196,7 @@ es_MX.UTF-8	No puedo dejar la piedra aquí.
 fr_FR.UTF-8	Je ne peux pas poser le caillou ici.
 hu_HU.UTF-8	Nem tudom ide lerakni a követ.
 it_IT.UTF-8	Non posso posare la pietra qui.
+nl_NL.UTF-8	Ik kan de steen hier niet laten vallen.
 pt_BR.UTF-8	Não posso largar a pedra aqui.
 ru_RU.UTF-8	Я не могу бросить сюда камень.
 sq_AL.UTF-8	Nuk mund ta lë gurin këtu.
@@ -200,6 +212,7 @@ en_US.UTF-8	I have nothing to drop.
 es_MX.UTF-8	No tengo nada que dejar.
 fr_FR.UTF-8	Je n'ai rien à poser.
 it_IT.UTF-8	Non ho nulla da scaricare.
+nl_NL.UTF-8	Ik heb niets bij me om te laten vallen.
 pt_BR.UTF-8	Não tenho nada para largar.
 ru_RU.UTF-8	Мне нечего бросить.
 sv_SV.UTF-8	Jag har inget att släppa.
@@ -217,6 +230,7 @@ es_MX.UTF-8	Hormiga
 fr_FR.UTF-8	Fourmi
 hu_HU.UTF-8	Hangya
 it_IT.UTF-8	Formica
+nl_NL.UTF-8	Mier
 pt_BR.UTF-8	Formiga
 sq_AL.UTF-8	Milingona
 sv_SV.UTF-8	Myra
@@ -231,6 +245,7 @@ es_MX.UTF-8	hormiga
 fr_FR.UTF-8	fourmi
 hu_HU.UTF-8	hangya
 it_IT.UTF-8	formica
+nl_NL.UTF-8	mier
 pt_BR.UTF-8	formiga
 sq_AL.UTF-8	milingona
 sv_SV.UTF-8	myra
@@ -245,6 +260,7 @@ es_MX.UTF-8	izquierda
 fr_FR.UTF-8	gauche
 hu_HU.UTF-8	balra
 it_IT.UTF-8	sinistra
+nl_NL.UTF-8	links
 pt_BR.UTF-8	esquerda
 sq_AL.UTF-8	majtas
 sv_SV.UTF-8	vanster
@@ -259,6 +275,7 @@ es_MX.UTF-8	derecha
 fr_FR.UTF-8	droite
 hu_HU.UTF-8	jobbra
 it_IT.UTF-8	destra
+nl_NL.UTF-8	rechts
 pt_BR.UTF-8	direita
 sq_AL.UTF-8	djathtas
 sv_SV.UTF-8	hoger
@@ -273,6 +290,7 @@ es_MX.UTF-8	avanzar
 fr_FR.UTF-8	avance
 hu_HU.UTF-8	elore
 it_IT.UTF-8	avanti
+nl_NL.UTF-8	vooruit
 pt_BR.UTF-8	frente
 sq_AL.UTF-8	perpara
 sv_SV.UTF-8	framat
@@ -287,6 +305,7 @@ es_MX.UTF-8	tomar
 fr_FR.UTF-8	prend
 it_IT.UTF-8	raccogli
 hu_HU.UTF-8	felvesz
+nl_NL.UTF-8	optillen
 pt_BR.UTF-8	pegar
 sq_AL.UTF-8	merr
 sv_SV.UTF-8	ta
@@ -301,6 +320,7 @@ es_MX.UTF-8	dejar
 fr_FR.UTF-8	pose
 hu_HU.UTF-8	letesz
 it_IT.UTF-8	lascia
+nl_NL.UTF-8	laten vallen
 pt_BR.UTF-8	largar
 sq_AL.UTF-8	ler
 sv_SV.UTF-8	slapp
@@ -315,6 +335,7 @@ es_MX.UTF-8	escapar
 fr_FR.UTF-8	ouvre
 hu_HU.UTF-8	kimegy
 it_IT.UTF-8	esci
+nl_NL.UTF-8	ontsnappen
 pt_BR.UTF-8	escapar
 sq_AL.UTF-8	dil
 sv_SV.UTF-8	fly
@@ -329,6 +350,7 @@ es_MX.UTF-8	mirar
 fr_FR.UTF-8	regarde
 hu_HU.UTF-8	nez
 it_IT.UTF-8	guarda
+nl_NL.UTF-8	kijk
 pt_BR.UTF-8	olhar
 sq_AL.UTF-8	shiko
 sv_SV.UTF-8	titta
@@ -343,6 +365,7 @@ es_MX.UTF-8	decir
 fr_FR.UTF-8	dit
 hu_HU.UTF-8	mondja
 it_IT.UTF-8	parla
+nl_NL.UTF-8	zeg
 pt_BR.UTF-8	dizer
 sq_AL.UTF-8	thuaj
 sv_SV.UTF-8	sag
@@ -356,6 +379,7 @@ en_US.UTF-8	Void
 fr_FR.UTF-8	Vide
 hu_HU.UTF-8	Semmi
 it_IT.UTF-8	Vuoto
+nl_NL.UTF-8	Leeg
 pt_BR.UTF-8	Vazio
 sq_AL.UTF-8	Bosh
 sv_SV.UTF-8	Tomt
@@ -370,6 +394,7 @@ es_MX.UTF-8	Pared
 fr_FR.UTF-8	Mur
 hu_HU.UTF-8	Fal
 it_IT.UTF-8	Muro
+nl_NL.UTF-8	Muur
 pt_BR.UTF-8	Parede
 sq_AL.UTF-8	Mur
 sv_SV.UTF-8	Vagg
@@ -384,6 +409,7 @@ es_MX.UTF-8	Piedra
 fr_FR.UTF-8	Caillou
 hu_HU.UTF-8	Ko
 it_IT.UTF-8	Roccia
+nl_NL.UTF-8	Steen
 pt_BR.UTF-8	Pedra
 sq_AL.UTF-8	Gur
 sv_SV.UTF-8	Sten
@@ -398,6 +424,7 @@ es_MX.UTF-8	Telarana
 fr_FR.UTF-8	Toile
 hu_HU.UTF-8	Halo
 it_IT.UTF-8	Ragnatela
+nl_NL.UTF-8	Web
 pt_BR.UTF-8	Teia
 sq_AL.UTF-8	Rrjet
 sv_SV.UTF-8	Spindelvav
@@ -411,6 +438,7 @@ en_US.UTF-8	Exit
 fr_FR.UTF-8	Sortie
 hu_HU.UTF-8	Kilep
 it_IT.UTF-8	Uscita
+nl_NL.UTF-8	Uitgang
 pt_BR.UTF-8	Saida
 sq_AL.UTF-8	Dalje
 sv_SV.UTF-8	Utgang
@@ -443,6 +471,7 @@ es_MX.UTF-8	Idioma:
 fr_FR.UTF-8	Langage :
 hu_HU.UTF-8	Nyelv :
 it_IT.UTF-8	Linguaggio:
+nl_NL.UTF-8	Taal:
 pt_BR.UTF-8	Linguagem:
 ru_RU.UTF-8	Язык:
 sq_AL.UTF-8	Gjuha:
@@ -459,6 +488,7 @@ es_MX.UTF-8	Nive:
 fr_FR.UTF-8	Niveau :
 hu_HU.UTF-8	Szint :
 it_IT.UTF-8	Livello:
+nl_NL.UTF-8	Niveau:
 pt_BR.UTF-8	Nível:
 ru_RU.UTF-8	Уровень:
 sq_AL.UTF-8	Niveli:
@@ -475,6 +505,7 @@ es_MX.UTF-8	Programa:
 fr_FR.UTF-8	Programme :
 hu_HU.UTF-8	Program :
 it_IT.UTF-8	Programma:
+nl_NL.UTF-8	Programma:
 pt_BR.UTF-8	Programa:
 ru_RU.UTF-8	Программа:
 sq_AL.UTF-8	Programi:
@@ -491,6 +522,7 @@ es_MX.UTF-8	Mensajes:
 fr_FR.UTF-8	Messages :
 hu_HU.UTF-8	Üzenet :
 it_IT.UTF-8	Messaggi:
+nl_NL.UTF-8	Berichten:
 pt_BR.UTF-8	Mensagens:
 ru_RU.UTF-8	Сообщения:
 sq_AL.UTF-8	Mesazhet:
@@ -507,6 +539,7 @@ es_MX.UTF-8	Ayudar:
 fr_FR.UTF-8	Aide :
 hu_HU.UTF-8	Segítség :
 it_IT.UTF-8	Aiuto:
+nl_NL.UTF-8	Hulp:
 pt_BR.UTF-8	Dicas:
 ru_RU.UTF-8	Помощь:
 sq_AL.UTF-8	Ndihmë:
@@ -523,6 +556,7 @@ es_MX.UTF-8	configruacion de la interfaz gráfica
 fr_FR.UTF-8	configuration de l'interface graphique
 hu_HU.UTF-8	grafikus beállítások
 it_IT.UTF-8	configurazione grafica
+nl_NL.UTF-8	configuratie van de grafische gebruikersomgeving
 pt_BR.UTF-8	configuração da interface gráfica
 ru_RU.UTF-8	настройки интерфейса
 sq_AL.UTF-8	rregullimi i ndërfaqes grafike
@@ -538,6 +572,7 @@ en_US.UTF-8	cannot load syntax for <name> mod
 es_MX.UTF-8	imposible cargar la sintaxis del mod <name>
 fr_FR.UTF-8	impossible de charger la syntaxe du mode <name>
 it_IT.UTF-8	impossibile caricare il modulo di sintassi <name>
+nl_NL.UTF-8	kan de syntax voor <name> niet laden
 pt_BR.UTF-8	não foi possível carregar sintaxe do mod <name>
 ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
 sq_AL.UTF-8	nuk mund të marr sintaksën për mënyrën <name>
@@ -555,6 +590,7 @@ de_DE.UTF-8	Wähle ein Programmier Mod aus
 en_US.UTF-8	select a specific programming mod
 fr_FR.UTF-8	choisir un mode de programmation donné
 it_IT.UTF-8	seleziona un modulo di programmazione
+nl_NL.UTF-8	kies een programmeermodule
 pt_BR.UTF-8	selecione um mod específico
 ru_RU.UTF-8	выбор программного мода
 sq_AL.UTF-8	madhësia e pllakave në pixel
@@ -571,6 +607,7 @@ es_MX.UTF-8	tamaño del patrón en pixeles
 fr_FR.UTF-8	taille des cases en pixels
 hu_HU.UTF-8	térképek nagysága pixelben
 it_IT.UTF-8	dimensioni delle tessere in pixel
+nl_NL.UTF-8	tegelgrootte in pixels
 pt_BR.UTF-8	tamanho do bloco em pixels
 ru_RU.UTF-8	размер ячейки в пикселях
 sv_SV.UTF-8	storlek av tile i pixlar
@@ -586,6 +623,7 @@ es_MX.UTF-8	idioma
 fr_FR.UTF-8	langage
 hu_HU.UTF-8	nyelv
 it_IT.UTF-8	linguaggio
+nl_NL.UTF-8	taal
 pt_BR.UTF-8	linguagem
 ru_RU.UTF-8	язык
 sv_SV.UTF-8	språk
@@ -604,6 +642,7 @@ es_MX.UTF-8	configuración de sonido
 fr_FR.UTF-8	configuration du son
 hu_HU.UTF-8	hangbeállítások
 it_IT.UTF-8	configurazione sonora
+nl_NL.UTF-8	geluidsconfiguratie
 pt_BR.UTF-8	configuração de áudio
 ru_RU.UTF-8	настройка звука
 sq_AL.UTF-8	rregullimi i zërit
@@ -620,6 +659,7 @@ es_MX.UTF-8	activar o desactivar el sonido
 fr_FR.UTF-8	activer ou désactiver le son
 hu_HU.UTF-8	hang be/ki
 it_IT.UTF-8	abilita o disabilita i suoni
+nl_NL.UTF-8	geluiden aan of uit zetten
 pt_BR.UTF-8	ativar ou desativar sons
 ru_RU.UTF-8	включить или выключить звук
 sq_AL.UTF-8	aktivizo ose ç'aktivizo zërin
@@ -639,6 +679,7 @@ es_MX.UTF-8	patrón desconocido
 fr_FR.UTF-8	case inconnue
 hu_HU.UTF-8	ismeretlen térkép
 it_IT.UTF-8	tessera sconosciuta
+nl_NL.UTF-8	onbekende tegel
 pt_BR.UTF-8	bloco desconhecido
 ru_RU.UTF-8	неизвестная ячейка
 sq_AL.UTF-8	pllakë e panjohur
@@ -655,6 +696,7 @@ es_MX.UTF-8	longitud de linea no concuerda
 fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
 it_IT.UTF-8	fine linea non corretto
+nl_NL.UTF-8	verkeerde regellengte
 pt_BR.UTF-8	comprimento da linha incorreto
 ru_RU.UTF-8	неподходящая длина строки
 sq_AL.UTF-8	gjatësia e rreshtit nuk përputhet
@@ -670,6 +712,7 @@ es_MX.UTF-8	mal formato de nivel: <file>
 fr_FR.UTF-8	format de fichier erroné : <file>
 hu_HU.UTF-8	rossz szint-formátum: <file>
 it_IT.UTF-8	formato del livello non funzionante: <file>
+nl_NL.UTF-8	ongeldig niveau formaat: <file>
 pt_BR.UTF-8	formato do nível incorreto: <file>
 ru_RU.UTF-8	неверный формат уровня: <file>
 sq_AL.UTF-8	format i pasaktë niveli: <file>
@@ -686,6 +729,7 @@ es_MX.UTF-8	la sección <name> falta en el nivel: <file>
 fr_FR.UTF-8	section <name> manquante dans le niveau : <file>
 hu_HU.UTF-8	rossz szint szekció <name> ebben: <file>
 it_IT.UTF-8	sezione <name> del livello mancante: <file>
+nl_NL.UTF-8	ontbrekende niveau sectie <name> in: <file>
 pt_BR.UTF-8	falta sessão <name> no nível: <file>
 ru_RU.UTF-8	отсутствует секция уровня <name> в: <file>
 sq_AL.UTF-8	mungon pjesa <name> e nivelit në: <file>
@@ -705,6 +749,7 @@ es_MX.UTF-8	lenguaje de programación
 fr_FR.UTF-8	langages de programmation
 hu_HU.UTF-8	programozási nyelvek
 it_IT.UTF-8	linguaggi di programmazione
+nl_NL.UTF-8	programmeertalen
 pt_BR.UTF-8	linguagens de programação
 ru_RU.UTF-8	языки программирования
 sq_AL.UTF-8	gjuhët e programimit
@@ -724,6 +769,7 @@ es_MX.UTF-8	la ejecución del intérprete ha fallado
 fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
 it_IT.UTF-8	esecuzione dell'interprete fallita
+nl_NL.UTF-8	uitvoeren van interpreter mislukt
 pt_BR.UTF-8	execução do interpretador falhou
 ru_RU.UTF-8	ошибка в работе интерпретатора
 sq_AL.UTF-8	nisja e përkthyesit dështoi
@@ -743,6 +789,7 @@ es_MX.UTF-8	no se puede mostrar
 fr_FR.UTF-8	impossible d'ouvrir une fenêtre
 hu_HU.UTF-8	megjelenítás sikertelen
 it_IT.UTF-8	impossibile aprire la finestra
+nl_NL.UTF-8	schermweergave mislukt
 pt_BR.UTF-8	falha na exibição
 ru_RU.UTF-8	невозможно открыть окно
 sq_AL.UTF-8	paraqitja dështoi
@@ -759,6 +806,7 @@ es_MX.UTF-8	error de gtk: <error>
 fr_FR.UTF-8	erreur gtk : <error>
 hu_HU.UTF-8	gtk hiba: <error>
 it_IT.UTF-8	errore gtk: <error>
+nl_NL.UTF-8	gtk fout: <error>
 pt_BR.UTF-8	erro gtk: <error>
 ru_RU.UTF-8	ошибка gtk: <error>
 sq_AL.UTF-8	gabim gtk: <error>
@@ -778,6 +826,7 @@ es_MX.UTF-8	archivo <f>, línea <l>: <error>
 fr_FR.UTF-8	fichier <f>, ligne <l> : <error>
 hu_HU.UTF-8	<f> fájl, <l>.sor: <error>
 it_IT.UTF-8	file <f>, linea <l>: <error>
+nl_NL.UTF-8	bestand <f>, regel <l>: <error>
 pt_BR.UTF-8	arquivo <f>, linha <l>: <error>
 ru_RU.UTF-8	файл <f>, строка <l>: <error>
 sq_AL.UTF-8	skedari <f>, rreshti <l>: <error>
@@ -794,6 +843,7 @@ es_MX.UTF-8	linea <l>, caracteres <begin-char>-<end-char>
 fr_FR.UTF-8	ligne <l>, caractères <begin-char>-<end-char>
 hu_HU.UTF-8	<l>.sor, karakterek: <begin-char>-<end-char>
 it_IT.UTF-8	linea <l>, caratteri <begin-char>-<end-char>
+nl_NL.UTF-8	regel <l>, tekens <begin-char>-<end-char>
 pt_BR.UTF-8	linha <l>, caracteres <begin-char>-<end-char>
 ru_RU.UTF-8	строка <l>, позиция <begin-char>-<end-char>
 sq_AL.UTF-8	rreshti <l>, shkronjat <begin-char>-<end-char>
@@ -810,6 +860,7 @@ es_MX.UTF-8	línea <l>, carácter <char>
 fr_FR.UTF-8	ligne <l>, caractère <char>
 hu_HU.UTF-8	<l>.sor, karakterek: <char>
 it_IT.UTF-8	linea <l>, carattere <char>
+nl_NL.UTF-8	regel <l>, teken <char>
 pt_BR.UTF-8	linha <l>, caracter <char>
 ru_RU.UTF-8	строка <l>, позиция <char>
 sq_AL.UTF-8	rreshti <l>, shkronja <char>
@@ -826,6 +877,7 @@ es_MX.UTF-8	error léxico
 fr_FR.UTF-8	erreur lexicale
 hu_HU.UTF-8	lexikális hiba
 it_IT.UTF-8	errore lessicale
+nl_NL.UTF-8	lexicale fout
 pt_BR.UTF-8	erro léxico
 ru_RU.UTF-8	лексическая ошибка
 sq_AL.UTF-8	gabim leksikor
@@ -842,6 +894,7 @@ es_MX.UTF-8	error de sintaxis
 fr_FR.UTF-8	erreur de syntaxe
 hu_HU.UTF-8	szintaxis hiba
 it_IT.UTF-8	errore di sintassi
+nl_NL.UTF-8	syntaxis fout
 pt_BR.UTF-8	erro sintático
 sq_AL.UTF-8	gabim sintakse
 sv_SV.UTF-8	syntaxfel
@@ -858,6 +911,7 @@ es_MX.UTF-8	<status>: <message>
 fr_FR.UTF-8	<status> : <message>
 hu_HU.UTF-8	<status> : <message>
 it_IT.UTF-8	<status>: <message>
+nl_NL.UTF-8	<status>: <message>
 pt_BR.UTF-8	<status>: <message>
 ru_RU.UTF-8	<status> : <message>
 sq_AL.UTF-8	<status>: <message>
@@ -874,6 +928,7 @@ es_MX.UTF-8	excepción
 fr_FR.UTF-8	exception
 hu_HU.UTF-8	kivétel
 it_IT.UTF-8	eccezione
+nl_NL.UTF-8	uitzondering
 pt_BR.UTF-8	exceção
 ru_RU.UTF-8	исключение
 sq_AL.UTF-8	përjashtim
@@ -890,6 +945,7 @@ es_MX.UTF-8	error interno
 fr_FR.UTF-8	erreur interne
 hu_HU.UTF-8	belső hiba
 it_IT.UTF-8	errore interno
+nl_NL.UTF-8	interne fout
 pt_BR.UTF-8	erro interno
 ru_RU.UTF-8	внутренняя ошибка
 sq_AL.UTF-8	gabim i brendshëm
@@ -906,6 +962,7 @@ es_MX.UTF-8	error fatal
 fr_FR.UTF-8	erreur fatale
 hu_HU.UTF-8	súlyos hiba
 it_IT.UTF-8	errore fatale
+nl_NL.UTF-8	fatale fout
 pt_BR.UTF-8	erro fatal
 ru_RU.UTF-8	фатальная ошибка
 sq_AL.UTF-8	gabim shkatërrimtar
@@ -922,6 +979,7 @@ es_MX.UTF-8	error
 fr_FR.UTF-8	erreur
 hu_HU.UTF-8	hiba
 it_IT.UTF-8	errore
+nl_NL.UTF-8	fout
 pt_BR.UTF-8	erro
 ru_RU.UTF-8	ошибка
 sq_AL.UTF-8	gabim
@@ -938,6 +996,7 @@ es_MX.UTF-8	aviso
 fr_FR.UTF-8	avertissement
 hu_HU.UTF-8	figyelmeztetés
 it_IT.UTF-8	attenzione
+nl_NL.UTF-8	waarschuwing
 pt_BR.UTF-8	aviso
 ru_RU.UTF-8	предупреждение
 sq_AL.UTF-8	kujdes
@@ -954,6 +1013,7 @@ es_MX.UTF-8	depuración
 fr_FR.UTF-8	debug
 hu_HU.UTF-8	hibakeresés
 it_IT.UTF-8	debug
+nl_NL.UTF-8	debug
 pt_BR.UTF-8	depurar
 ru_RU.UTF-8	отладка
 sq_AL.UTF-8	korigjo
@@ -970,6 +1030,7 @@ es_MX.UTF-8	fallo
 fr_FR.UTF-8	échec
 hu_HU.UTF-8	sikertelen
 it_IT.UTF-8	fallimento
+nl_NL.UTF-8	fout
 pt_BR.UTF-8	falha
 ru_RU.UTF-8	сбой
 sq_AL.UTF-8	dështim
@@ -986,6 +1047,7 @@ es_MX.UTF-8	listo
 fr_FR.UTF-8	fait
 hu_HU.UTF-8	kész
 it_IT.UTF-8	fatto
+nl_NL.UTF-8	klaar
 pt_BR.UTF-8	feito
 ru_RU.UTF-8	готово
 sq_AL.UTF-8	mbaroi
@@ -1002,6 +1064,7 @@ es_MX.UTF-8	línea <l>
 fr_FR.UTF-8	ligne <l>
 hu_HU.UTF-8	<l>.sor
 it_IT.UTF-8	linea <l>
+nl_NL.UTF-8	regel <l>
 pt_BR.UTF-8	linha <l>
 ru_RU.UTF-8	строка <l>
 sq_AL.UTF-8	rreshti <l>
@@ -1018,6 +1081,7 @@ es_MX.UTF-8	token desconocido
 fr_FR.UTF-8	lexème inconnu
 hu_HU.UTF-8	ismeretlen jelölés
 it_IT.UTF-8	token sconosciuto
+nl_NL.UTF-8	onbekend symbool
 pt_BR.UTF-8	token desconhecido
 ru_RU.UTF-8	неизвестный токен
 sq_AL.UTF-8	pjesëz e panjohur
@@ -1034,6 +1098,7 @@ es_MX.UTF-8	tipo desconocido
 fr_FR.UTF-8	type inconnu
 hu_HU.UTF-8	ismeretlen típus
 it_IT.UTF-8	tipo sconosciuto
+nl_NL.UTF-8	onbekend type
 pt_BR.UTF-8	tipo desconhecido
 ru_RU.UTF-8	неизвестный тип
 sq_AL.UTF-8	tip i panjohur
@@ -1050,6 +1115,7 @@ es_MX.UTF-8	no se pudo cargar el archivo: <error>
 fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
 hu_HU.UTF-8	sikertelen fájlbetöltés: <error>
 it_IT.UTF-8	errore nel caricamento del file: <error>
+nl_NL.UTF-8	fout bij laden van bestand: <error>
 pt_BR.UTF-8	erro ao carregar arquivo: <error>
 ru_RU.UTF-8	ошибка загрузки файла: <error>
 sq_AL.UTF-8	dështoi ngarkimi i skedarit: <error>
