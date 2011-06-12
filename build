@@ -12,9 +12,9 @@ export SYSTMPDIR=${SYSTMPDIR-/tmp}
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 
+export OCAMLFIND=${OCAMLFIND-ocamlfind}
 export OCAMLC=${OCAMLC-ocamlc}
 export OCAMLOPT=${OCAMLOPT-ocamlopt}
-export OCAMLFIND=${OCAMLFIND-ocamlfind}
 export OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
 
 export OCAML_VERSION=$(${OCAMLC} -version)
@@ -33,7 +33,8 @@ export PKG_VERSION="${OCAMLFIND} query -format %v"
 SYSARCH="${OCAML_SYSTEM}-${OCAML_ARCH}"
 BUILDDIR="_build-${SYSARCH}"
 
-OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ocamlc -ocamlopt ocamlopt -build-dir ${BUILDDIR}"
+OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ${OCAMLC} -ocamlopt ${OCAMLOPT} -build-dir ${BUILDDIR}"
+
 OFQ="${OCAMLFIND} query -r -format -I,%d"
 
 [ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
