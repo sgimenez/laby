@@ -19,6 +19,10 @@ let conf_exclusive =
   Conf.bool ~p:(conf#plug "exclusive") ~d:false
     (F.x "force the selected programming mod" [])
 
+let conf_translation =
+  Conf.bool ~p:(conf#plug "translation") ~d:true
+    (F.x "enable or disable translation of the programming interface" [])
+
 let opt =
   let action i =
     conf_selected#set i;
@@ -80,7 +84,9 @@ let subst : string -> string =
     let s = Str.matched_string x in
     let ss = String.sub s 10 (String.length s - 10) in
     begin try
-      Fd.render_raw (List.assoc ss substs)
+      if conf_translation#get
+      then Fd.render_raw (List.assoc ss substs)
+      else ss
     with
     | Not_found -> ss
     end

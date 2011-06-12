@@ -8,6 +8,7 @@
 val conf : Conf.ut
 val conf_selected : string Conf.t
 val conf_exclusive : bool Conf.t
+val conf_translation : bool Conf.t
 
 val opt : Opt.t
 

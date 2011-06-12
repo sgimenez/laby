@@ -4,5 +4,6 @@
 #string	gfx.source-style               :classic
 #string	mod.selected                   :ocaml
 #bool	mod.exclusive                  :false
+#bool	mod.translation                :true
 #bool	sound.enabled                  :true
 #int	log.level                      :0

@@ -54,15 +54,12 @@ let f ?arg (short, long, _, _) =
 
 let help_opt opts : t =
   let action () =
-    let msg = F.x "display help message" [] in
-    let help_opt : t = (Some 'h', Some "help", `None, msg) in
-    let usage = help_opt :: opts in
     let pl opt =
       let (short, long, _, desc) = opt in
       F.h [f opt; F.q desc]
     in
     let program = F.s (Sys.argv.(0)) in
-    let options_f = List.map pl usage in
+    let options_f = List.map pl opts in
     F.l "usage" (
       F.h [program; F.s "--option[=parameter] ..."; F.v options_f]
     )
