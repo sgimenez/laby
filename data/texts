@@ -656,6 +656,7 @@ fr_FR.UTF-8	longueur de ligne non concordante
 hu_HU.UTF-8	ismeretlen sorhossz
 it_IT.UTF-8	fine linea non corretto
 pt_BR.UTF-8	comprimento da linha incorreto
+ru_RU.UTF-8	неподходящая длина строки
 sq_AL.UTF-8	gjatësia e rreshtit nuk përputhet
 sv_SV.UTF-8	fel i linje längden
 tr_TR.UTF-8	eşleşmeyen hat uzunluğu
@@ -724,6 +725,7 @@ fr_FR.UTF-8	échec lors de l'exécution de l'interprète
 hu_HU.UTF-8	futtatás végrehajtása sikertelen
 it_IT.UTF-8	esecuzione dell'interprete fallita
 pt_BR.UTF-8	execução do interpretador falhou
+ru_RU.UTF-8	ошибка в работе интерпретатора
 sq_AL.UTF-8	nisja e përkthyesit dështoi
 sv_SV.UTF-8	misslyckades med att köra tolk
 tr_TR.UTF-8	tercüman çalıştırılamadı
