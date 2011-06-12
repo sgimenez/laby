@@ -916,7 +916,7 @@ pt_BR.UTF-8	<status>: <message>
 ru_RU.UTF-8	<status> : <message>
 sq_AL.UTF-8	<status>: <message>
 sv_SV.UTF-8	<status> : <message>
-tr_TR.UTF-8	<status> : <messages>
+tr_TR.UTF-8	<status> : <message>
 uk_UA.UTF-8	<status> : <message>
 
 text		exception
