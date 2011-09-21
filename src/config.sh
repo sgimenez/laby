@@ -15,7 +15,7 @@ fi
 
 BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
 
-[ "${THREADS}" = "yes" ] && echo "let threads = T_thread.main"
+[ -n "${THREADS}" ] && echo "let threads = T_thread.main"
 
 cat <<EOF
 let project_name = "${PROJECT_NAME}"

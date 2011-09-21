@@ -13,40 +13,30 @@ export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
 
 export OCAMLFIND=${OCAMLFIND-ocamlfind}
-export OCAMLC=${OCAMLC-ocamlc}
-export OCAMLOPT=${OCAMLOPT-ocamlopt}
-export OCAMLBUILD=${OCAMLBUILD-ocamlbuild}
+export OCAMLBUILD=${OCAMLBUID-ocamlbuild}
 
-export OCAML_VERSION=$(${OCAMLC} -version)
-[ -n "${OCAML_VERSION}" ] || \
-  { echo "compilation requires ocaml compilers"; exit 1; }
-
+export OCAML_VERSION=$($OCAMLFIND ocamlc -version)
 ocaml_config () {
-  ${OCAMLC} -config | sed -n 's/^'"$1"': //p' | tr -c -d '[:alnum:]'
+  ${OCAMLFIND} ocamlc -config | sed -n 's/^'"$1"': //p' | tr -c -d '[:alnum:]'
 }
-
 export OCAML_SYSTEM=$(ocaml_config system)
 export OCAML_ARCH=$(ocaml_config architecture)
-
-export PKG_VERSION="${OCAMLFIND} query -format %v"
 
 SYSARCH="${OCAML_SYSTEM}-${OCAML_ARCH}"
 BUILDDIR="_build-${SYSARCH}"
 
-OCB="${OCAMLBUILD} -no-links -no-sanitize -no-hygiene -ocamlc ${OCAMLC} -ocamlopt ${OCAMLOPT} -build-dir ${BUILDDIR}"
+[ -n "${OCAML_VERSION}" -a -n "${SYSARCH}" ] || \
+  { echo "compilation requires ocaml compilers and ocamlfind"; exit 1; }
 
-OFQ="${OCAMLFIND} query -r -format -I,%d"
+export PKG_VERSION="${OCAMLFIND} query -format %v"
 
-[ "${THREADS}" = "yes" ] && OCBF="${OCBF} -lflags -thread -cflags -thread"
-[ "${DEBUG}" = "yes" ] && OCBF="${OCBF} -tag debug"
+[ -n "${THREADS}" ] && OCBF="${OCBF} -tag thread"
+[ -n "${TAGS}" ] && OCBF="${OCBF} -tags ${TAGS}"
+[ -n "${TAGLINE}" ] && OCBF="${OCBF} -tag-line ${TAGLINE}"
 [ -n "${JOBS}" ] && OCBF="${OCBF} -j ${JOBS}"
 
-DIRS=$(${OFQ} ${PACKAGES})
-for i in ${DIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done
-for i in ${DEPLIBS}; do OCBF="${OCBF} -lib $i"; done
-for i in ${SRCDIRS}; do OCBF="${OCBF} -I $i"; done
-
-OCBI="${OCB} ${OCBF}"
+OCBF="${OCBF} -pkgs $PACKAGES -libs $LIBRARIES -Is $SRCDIRS"
+OCBI="${OCAMLBUILD} -no-sanitize -no-hygiene -use-ocamlfind -build-dir ${BUILDDIR} ${OCBF}"
 
 ACT="${1---all}"
 shift
@@ -68,13 +58,11 @@ tclean () {
         rm -rf $i
       done
       for i in ${BINTARGETS}; do
-	  rm -rf "$i"
-	  for j in byte native d.byte p.native ${BINEXT}
-	  do rm -rf "$i-${SYSARCH}.$j"; done
+	  rm -rf "$(basename $i)"
       done
       for i in ${LIBTARGETS}; do
 	  for j in cma cmxa d.cma p.cmxa
-          do rm -rf "$i-${SYSARCH}.$j"; done
+          do rm -rf "$(basename $i).$j"; done
       done
 }
 
@@ -108,10 +96,10 @@ esac
 TARGETS=""
 
 for i in ${BINTARGETS}; do
-  for j in ${BINEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done
+  for j in ${BINEXT}; do TARGETS="${TARGETS} $i.$j"; done
 done
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do TARGETS="${TARGETS} ${DIR}/$i.$j"; done
+  for j in ${LIBEXT}; do TARGETS="${TARGETS} $i.$j"; done
 done
 
 FILES="${BINTARGETS} ${LIBTARGETS}"
@@ -123,22 +111,13 @@ tclean
 
 ${OCBI} ${TARGETS} ${AUXTARGETS} || exit 1
 
-for i in ${BINTARGETS}; do
-  for j in ${BINEXT}
-  do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
-done
-for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}
-  do cp "${BUILDDIR}/${DIR}/$i.$j" "$i-${SYSARCH}.$j"; done
-done
-
 # linking
 
 [ -n ${LNK} ] &&
-for i in ${BINTARGETS}; do ln -sf "$i-${SYSARCH}.${LNK}" "$i"; done
+for i in ${BINTARGETS}; do cp "${BUILDDIR}/${i}.${LNK}" "$(basename $i)"; done
 
 for i in ${LIBTARGETS}; do
-  for j in ${LIBEXT}; do ln -sf "$i-${SYSARCH}.$j" "$i.$j"; done
+  for j in ${LIBEXT}; do cp "${BUILDDIR}/$i.$j" "$(basename $i.$j)"; done
 done
 
 exit 0

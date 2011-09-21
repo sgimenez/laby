@@ -38,7 +38,7 @@ let play ~msg ~help ~draw =
     end
   in
 
-object (self)
+object
 
   method chg_mod s =
     !lmod#stop;
@@ -64,11 +64,11 @@ object (self)
     !lmod#start msg
 
   method next =
-      begin match Trace.next !trace with
-      | `None -> false
-      | `New t -> trace := t; draw_update (); effects (); true
-      | `Old t -> trace := t; draw_update (); true
-      end
+    begin match Trace.next !trace with
+    | `None -> false
+    | `New t -> trace := t; draw_update (); effects (); true
+    | `Old t -> trace := t; draw_update (); true
+    end
 
   method prev =
     begin match Trace.prev !trace with
