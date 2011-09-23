@@ -214,13 +214,13 @@ let exec (tmp, lib, prg, err) p pl =
   Unix.close r;
   status
 
-exception Incomplete
+exception Incomplete of string
 
 let make name : t =
   let res = Res.get ["mods"; name] in
   let pathres p =
     let path = Res.path (res ::  p) in
-    if not (Sys.file_exists path) then raise Incomplete;
+    if not (Sys.file_exists path) then raise (Incomplete path);
     path
   in
   let rules = Res.read_blocks (pathres ["rules"]) in
@@ -377,10 +377,11 @@ end
 
 let try_make f name =
   begin try make name with
-  | Incomplete ->
+  | Incomplete path ->
       f (
-	F.x "mod <name> is incomplete" [
+	F.x "mod <name> is outdated or incomplete: file <path> is missing" [
 	  "name", F.string name;
+	  "path", F.string path;
 	]
       );
       dummy name
