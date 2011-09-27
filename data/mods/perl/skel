@@ -1,0 +1,15 @@
+require "robot.pl";
+
+laby_name_right();
+laby_name_forward();
+laby_name_take();
+laby_name_left();
+laby_name_forward();
+laby_name_drop();
+laby_name_right();
+laby_name_forward();
+laby_name_left();
+laby_name_forward();
+laby_name_forward();
+laby_name_right();
+laby_name_escape();

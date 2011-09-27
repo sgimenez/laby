@@ -1,0 +1,7 @@
+info:
+need	perl
+
+run:
+fetch	robot.pl
+dump	program.pl
+spawn	perl program.pl
