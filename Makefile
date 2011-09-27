@@ -15,11 +15,7 @@ byte native byte-debug native-profile:
 	@./build --$@
 
 dist:
-	@rm -rf "_dist/$(PROJECT_ARCHIVE)"
-	@mkdir -p "_dist/$(PROJECT_ARCHIVE)"
-	@mtn list known | while read i; do \
-	  [ -f "$$i" ] && \
-	    cp -f --parents "$$i" "_dist/$(PROJECT_ARCHIVE)/"; \
-	done
-	@cd _dist; tar czf "$(PROJECT_ARCHIVE).tar.gz" "$(PROJECT_ARCHIVE)"
+	@mkdir _dist
+	@git archive --prefix="$(PROJECT_ARCHIVE)/" HEAD \
+		 | gzip >_dist/"$(PROJECT_ARCHIVE)".tar.gz
 	@echo archive stored in "_dist/$(PROJECT_ARCHIVE).tar.gz"
