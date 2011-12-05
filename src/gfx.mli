@@ -8,6 +8,8 @@
 val conf : Conf.ut
 val conf_tilesize : int Conf.t
 val conf_source_style : string Conf.t
+val conf_playback_rate : float Conf.t
+val conf_cue_rate : float Conf.t
 
 exception Error of F.t
 

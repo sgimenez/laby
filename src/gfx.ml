@@ -15,6 +15,14 @@ let conf_tilesize =
   Conf.int ~p:(conf#plug "tile-size") ~d:40
     (F.x "size of tiles in pixels" [])
 
+let conf_playback_rate =
+  Conf.float ~p:(conf#plug "playback-rate") ~d:2.0
+    (F.x "number of iterations per seconds" [])
+
+let conf_cue_rate =
+  Conf.float ~p:(conf#plug "cue-rate") ~d:10.0
+    (F.x "number of iterations per second in fast-forward/rewind mode" [])
+
 let conf_source_style =
   Conf.string ~p:(conf#plug "source-style") ~d:"classic"
     (F.x "highlighting style to use for source code" [])
@@ -390,16 +398,17 @@ let display_gtk ressources =
   let next () = if not command#next then play_inactive () in
   let play =
     let rid = ref None in
-    begin fun direction speed () ->
+    begin fun direction rate () ->
       begin match !rid with
       | None ->
 	  let callback () =
 	    begin match direction with
-	    |	`Forward -> next (); true
+	    | `Forward -> next (); true
 	    | `Backward -> prev (); true
 	    end
 	  in
-	  rid := Some (GMain.Timeout.add ~ms:speed ~callback);
+          let ms = int_of_float (1000. /. rate) in
+	  rid := Some (GMain.Timeout.add ~ms ~callback);
       | Some id ->
 	  play_inactive ();
 	  GMain.Timeout.remove id; rid := None
@@ -423,13 +432,17 @@ let display_gtk ressources =
 
   (* declaring callbacks *)
 
+  let play_cb = play `Forward conf_playback_rate#get in
+  let forward_cb = play `Forward conf_cue_rate#get in
+  let backward_cb = play `Backward conf_cue_rate#get in
+
   ignore (c.window#event#connect#delete ~callback:altdestroy);
   ignore (c.window#connect#destroy ~callback:destroy);
   ignore (c.button_prev#connect#clicked ~callback:prev);
   ignore (c.button_next#connect#clicked ~callback:next);
-  ignore (c.button_play#connect#toggled ~callback:(play `Forward 500));
-  ignore (c.button_backward#connect#toggled ~callback:(play `Backward 100));
-  ignore (c.button_forward#connect#toggled ~callback:(play `Forward 100));
+  ignore (c.button_play#connect#toggled ~callback:play_cb);
+  ignore (c.button_backward#connect#toggled ~callback:backward_cb);
+  ignore (c.button_forward#connect#toggled ~callback:forward_cb);
   ignore (c.button_execute#connect#clicked ~callback:execute);
   ignore (c.interprets#entry#connect#changed ~callback:newmod);
   ignore (c.levels#entry#connect#changed ~callback:newlevel);

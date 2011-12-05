@@ -37,6 +37,8 @@ let opts =
     Opt.conf ~short:'s' ~long:"sound" Sound.conf_enabled;
     Opt.conf ~long:"tile-size" Gfx.conf_tilesize;
     Opt.conf ~long:"source-style" Gfx.conf_source_style;
+    Opt.conf ~long:"playback-rate" Gfx.conf_playback_rate;
+    Opt.conf ~long:"cue-rate" Gfx.conf_cue_rate;
     Opt.conf_set ~short:'c' ~long:"conf" conf;
     Opt.conf_descr ~long:"conf-descr" conf;
     Opt.conf_dump ~long:"conf-dump" conf;
