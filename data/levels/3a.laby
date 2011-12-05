@@ -18,6 +18,7 @@ es_MX.UTF-8	¡¡Ahhh telarañas!!
 fr_FR.UTF-8	Ahhh des toiles
 hu_HU.UTF-8	Áááá!!! Pókhálók!!!
 nl_NL.UTF-8	Aaahh, spinnewebben!
+pl_PL.UTF-8	Oj… Pajęczyny!
 pt_BR.UTF-8	Ahhh! Teias!
 ru_RU.UTF-8	А-а-а! Паутина!
 sq_AL.UTF-8	Ahhh rrjetat
@@ -33,7 +34,8 @@ en_US.UTF-8	Spider webs! The small one won't catch you, but the large one will m
 es_MX.UTF-8	¡Telarañas! Las pequeñas no te atraparán, pero en las grandes te quedarás atrapado. ¡Ten cuidado porque las telarañas grandes pueden cambiar de lugar! ¿Cómo puedes asegurarte de que el robot llegará a la salida? Vamos a usar una instrucción condicional “if”.
 fr_FR.UTF-8	Des toiles d'araignées ! La petite ne t'empêchera pas de passer, mais la grande te retiendra prisonnier. Attention la grande toile n'est pas toujours du même côté ! Comment être sûr que le robot arrive toujours à la sortie ? On va utiliser une conditionnelle “if”.
 hu_HU.UTF-8	Pókhálók! A kicsin át tudsz haladni, de a nagyba belegabalyodsz! Előre szólok, hogy a nagy háló nem mindig ugyanazon az oldalon van! Tudsz olyan programot írni, amelyik mindig elvezeti a robotot a kijárathoz? Használd az “if” feltételes elágazást.
-nl_NL.UTF-8	Spinnewebben! De kleine kan je niet vangen, maar de grote neemt je gevangen. Pas op, het grote web zit niet altijd aan dezelfde kant! Hoe kan je er zeker van zijn dat de robot de uitgang bereikt? Laten we een conditionele "if" instructie gebruiken.
+nl_NL.UTF-8	Spinnewebben! De kleine kan je niet vangen, maar de grote neemt je gevangen. Pas op, het grote web zit niet altijd aan dezelfde kant! Hoe kan je er zeker van zijn dat de robot de uitgang bereikt? Laten we een conditionele “if” instructie gebruiken.
+pl_PL.UTF-8	Pajęcze sieci! W małą robak się nie złapie, ale uważaj! Duża nie zawsze jest po tej samej stronie! Wykorzystaj instrukcję warunkową “if” (pol. jeżeli), by sprawdzić czy robak widzi zasadzkę-pajęczynę. Pozwoli ci to doprowadzić go do wyjścia.
 pt_BR.UTF-8	Teias de aranha! A teia pequena não irá te pegar, porém a grande lhe deixará prisioneiro. Tenha cuidado, pois a teia grande não estará sempre no mesmo lado! Como ter certeza que o robô sempre chegará à saída? Vamos usar uma instrução condicional “if”.
 ru_RU.UTF-8	Паутина! Маленькая не сможет нас поймать, но большая захватит нас в плен. Помните, что большая паутина не всегда на той же стороне! Как быть увереным, что робот добрался до выхода? Используйте условную инструкцию “if”.
 sq_AL.UTF-8	Rrjeta merimangash! Të voglat nuk mund tju kapin, por të mëdhajat ama ju kthejnë në një të burgosur. Ta dini që rrjeta e madhe nuk është gjithmonë në të njëjtën anë! Si mund të siguroheni që roboti do të arrijë daljen? Let të përdorim udhëzimin kushtëzues “if”.
