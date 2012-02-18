@@ -581,6 +581,10 @@ sv_SV.UTF-8	Hjälp:
 tr_TR.UTF-8	Yardım:
 uk_UA.UTF-8	Допомога:
 
+text		Transfer the program to the ant
+en_US.UTF-8	Transfer the program to the ant
+fr_FR.UTF-8	Mettre le programme dans la fourmi
+
 text		graphic interface configuration
 cs_CZ.UTF-8	nastavení rozhraní
 da_DK.UTF-8	kongiguration af grafisk brugerflade
