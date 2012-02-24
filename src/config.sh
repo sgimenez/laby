@@ -1,17 +1,15 @@
 #!/bin/sh
 
-
-if [ -d "_MTN" ] && mtn automate get_workspace_root 2> /dev/null > /dev/null
+if [ -d ".git" ]
 then
-VERSION_BASE=$(mtn automate get_base_revision_id 2> /dev/null)
-VERSION_CURRENT=$(mtn automate get_current_revision_id 2> /dev/null)
-VERSION_STATUS=$(mtn diff | grep ^# | sed 's/"/\\"/g')
+VERSION_BASE=$(git log origin/master | head -n 1 | cut -d' ' -f 2)
+VERSION_CURRENT=$(git log | head -n 1 | cut -d' ' -f 2)
+VERSION_STATUS=$(git diff --stat origin/master)
 else
 VERSION_BASE="unknown"
 VERSION_CURRENT="unknown"
 VERSION_STATUS="unknown"
 fi
-
 
 BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
 
