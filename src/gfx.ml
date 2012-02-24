@@ -17,7 +17,7 @@ let conf_tilesize =
 
 let conf_playback_rate =
   Conf.float ~p:(conf#plug "playback-rate") ~d:2.0
-    (F.x "number of iterations per seconds" [])
+    (F.x "number of iterations per second" [])
 
 let conf_cue_rate =
   Conf.float ~p:(conf#plug "cue-rate") ~d:10.0
