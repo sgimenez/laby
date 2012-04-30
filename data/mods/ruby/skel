@@ -1,4 +1,4 @@
-require "robot"
+require "./robot"
 
 class laby_name_Ant < Robot
   def laby_name_ant

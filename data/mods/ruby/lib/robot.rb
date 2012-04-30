@@ -28,8 +28,20 @@ class Robot
   end
 
   def laby_name_look
-    tile = perform('look')
-    self.class.const_get tile rescue laby_name_Unknown
+    case perform('look')
+    when "void\n"
+      laby_name_Void
+    when "wall\n"
+      laby_name_Wall
+    when "rock\n"
+      laby_name_Rock
+    when "web\n"
+      laby_name_Web
+    when "exit\n"
+      laby_name_Exit
+    else
+      laby_name_Unknown
+    end
   end
 
   def laby_name_left; perform 'left'; end
