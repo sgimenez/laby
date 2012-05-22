@@ -1,28 +1,28 @@
-location:
+Location:
 
-  translation data is stored in the file "data/texts"
+  Translation data is stored in the file "data/texts"
 
-  its format is human-friendly, it consists of a bunch of entries of
+  Its format is human-friendly, it consists of a bunch of entries of
   this kind:
 
     text            option <opt> requires an argument
     en_US.UTF-8     option <opt> requires an argument
     fr_FR.UTF-8     l'option <opt> nécessite un argument
 
-  the first line gives the text as written in the program source code,
+  The first line gives the text as written in the program source code,
   following lines are translations of this text in various locales
 
-  you may use a modified version of this file, laby will look for it
+  You may use a modified version of this file, laby will look for it
   at the following locations (in this order):
     ~/.config/laby/texts
     /usr/share/laby/texts
 
-  levels stored in data/levels also contains translatable strings
+  Levels stored in data/levels also contains translatable strings
   using the same format
 
-contributions:
+Contributions:
 
-  if you wish to contribute new translations or improve existing ones,
+  If you wish to contribute new translations or improve existing ones,
   you are welcome to send them by email to:
 
     Stéphane Gimenez <gimenez@pps.jussieu.fr>
