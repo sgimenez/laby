@@ -35,10 +35,14 @@ complex path finding.
 	# Help:
 	#
 	# Constants:
-	#   Void
-	#   Rock
-	#   Web
+	#   Void - empty space
+	#   Rock - there is a Rock
+	#   Web - there is a Web
+  #   (more...) later :)
 	#
+  # Built-in functions:
+  #   look() - look forward and returns and object name
+  #
 	# Basic Movement:
 	#   forward
 	#   left
