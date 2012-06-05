@@ -6,8 +6,8 @@ maze. Usually there is a door the robot wants to reach, but before that, it
 needs to sort out several traps on its way. Help the robot by writing a
 program that guides it out of the maze. Even if you have not programmed
 before this is a great game to start. Help the robot and learn to
-program several languages at the same time: ruby, pascal, perl,
-ocaml, and java. They are mini-versions of the original languages, but you
+program several languages at the same time: Ruby, Pascal, Perl,
+OCaml, and Java. They are mini-versions of the original languages, but you
 will still learn the fundamental of loops, conditionals and functions and what is
 better you will have fun while doing that.
 
