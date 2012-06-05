@@ -1,15 +1,15 @@
 Laby
 ====
 
-Laby is a easy to use IDE to program a rock carrying ant-robot trapped in a
+Laby is an easy to use IDE to program a rock-carrying robot-ant trapped in a
 maze. Usually there is a door the robot wants to reach, but before that, it
 needs to sort out several traps on his way. Help the robot by writing a
 program that guides it out of the maze. Even if you have not programmed
-before this is a great game to start. Help the robot and you will learn to
-write programs at the same time, in several languages: ruby, pascal, perl,
-ocaml, and java. We use mini-versions of the mentioned languages, but you
-will still learn the fundamental of loops, conditionals and functions and you
-will have fun while doing that.
+before this is a great game to start. Help the robot and learn to
+program several languages at the same time: ruby, pascal, perl,
+ocaml, and java. They are mini-versions of the original languages, but you
+will still learn the fundamental of loops, conditionals and functions and what is
+better you will have fun while doing that.
 
 Enjoy!
 
