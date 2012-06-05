@@ -22,62 +22,62 @@ the level 2b. We are planning adding a lot of levels and some AI for
 complex path finding.
 
 
-  require "./robot"
+    require "./robot"
 
-  # Level 2a
-  #   ....+....1....
-  # 1 +-------------
-  # . |a           d
-  # . +-------------
-  # a = Ant Robot
-  # d = Door
-  #
-  # Help:
-  #
-  # Constants:
-  #   Void - empty space
-  #   Rock - there is a Rock
-  #   Web - there is a Web
-  #   (more...) later :)
-  #
-  # Built-in functions:
-  #   look() - look forward and returns and object name
-  #
-  # Basic Movement:
-  #   forward
-  #   left
-  #   right
-  #   escape - open door
-  #
-  # Rocks:
-  #   take - take rock in front
-  #   drop - drop rock to front
-  #
-  # Loops:
-  #   while look() == Void
-  #     ...
-  #   end
-  #
-  # Conditionals:
-  #   if look() == Web
-  #      ...
-  #   else
-  #      ...
-  #   end
-  #
-  # Functions:
-  #   def f
-  #     ...
-  #   end
+    # Level 2a
+    #   ....+....1....
+    # 1 +-------------
+    # . |a           d
+    # . +-------------
+    # a = Ant Robot
+    # d = Door
+    #
+    # Help:
+    #
+    # Constants:
+    #   Void - empty space
+    #   Rock - there is a Rock
+    #   Web - there is a Web
+    #   (more...) later :)
+    #
+    # Built-in functions:
+    #   look() - look forward and returns and object name
+    #
+    # Basic Movement:
+    #   forward
+    #   left
+    #   right
+    #   escape - open door
+    #
+    # Rocks:
+    #   take - take rock in front
+    #   drop - drop rock to front
+    #
+    # Loops:
+    #   while look() == Void
+    #     ...
+    #   end
+    #
+    # Conditionals:
+    #   if look() == Web
+    #      ...
+    #   else
+    #      ...
+    #   end
+    #
+    # Functions:
+    #   def f
+    #     ...
+    #   end
 
-  # Example Code to solve Level 2b:
-  class Ant < Robot
-    def ant
-      while look() == Void
-        forward
+    # Example Code to solve Level 2b:
+    class Ant < Robot
+      def ant
+        while look() == Void
+          forward
+        end
+        escape
       end
-      escape
     end
-  end
 
-  Ant.new
+    Ant.new
