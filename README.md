@@ -1,7 +1,7 @@
 Laby
 ====
 
-Laby is an easy to use IDE to program a rock-carrying robot-ant trapped in a
+Laby is an easy to use IDE to program a rock-carrying ant-robot trapped in a
 maze. Usually there is a door the robot wants to reach, but before that, it
 needs to sort out several traps on its way. Help the robot by writing a
 program that guides it out of the maze. Even if you have not programmed
