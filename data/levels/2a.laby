@@ -15,6 +15,7 @@ en_US.UTF-8	So far
 es_MX.UTF-8	Hasta ahora
 fr_FR.UTF-8	Que c'est loin
 hu_HU.UTF-8	Messze van még
+it_IT.UTF-8	Molto lontano
 nl_NL.UTF-8	Zo ver
 pl_PL.UTF-8	Daleko…
 pt_BR.UTF-8	Até agora
@@ -32,6 +33,7 @@ en_US.UTF-8	Easy isn't it? The goal here is to write a short program using a “
 es_MX.UTF-8	Fácil, ¿verdad? El objetivo aquí es escribir un breve programa empleando un bucle “while” que le diga al robot que avance mientras la casilla delante de él esté vacía.
 fr_FR.UTF-8	Simple pas vrai ? Le but du jeu ici c'est d'écrire un programme court en utilisant une boucle “while” qui dit au robot d'avancer tant que la case devant lui est vide.
 hu_HU.UTF-8	Egyszerű, mi? A cél, hogy írj egy rövidke programot a “while” ciklus használatával, amely megmondja a robotnak, hogy menjen előre, amíg nincs előtte akadály.
+it_IT.UTF-8	Facile no? Lo scopo di questo livello è di scrivere un programma molto corto utilizzando il ciclo “while” che dice al robot di avanzare finchè davanti a lui c'è del Vuoto.
 nl_NL.UTF-8	Makkelijk, nietwaar? Het doel hier is om een kort programma te schrijven wat gebruik maakt van een “while” lus die de robot opdracht geeft om net zo lang vooruit te gaan zolang de plaats ervoor leeg is.
 pl_PL.UTF-8	Twoim celem jest napisanie krótkiego programu z użyciem pętli “while” (pol. dopóki). Instrukcje, które są w pętli wykonują się w kółko dopóki warunek pętli jest prawdziwy. Pętla będzie posuwać robaka do przodu dotąd, aż dotrze do drzwi.
 pt_BR.UTF-8	Fácil, não é? O objetivo aqui é escrever um pequeno programa usando o laço de repetição “while” que diz ao robô para ir em frente enquanto o caminho adiante estiver livre.

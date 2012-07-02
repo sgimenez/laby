@@ -15,6 +15,7 @@ en_US.UTF-8	Demo
 es_MX.UTF-8	Demo
 fr_FR.UTF-8	Démo
 hu_HU.UTF-8	Demó
+it_IT.UTF-8	Demo
 nl_NL.UTF-8	Demo
 pl_PL.UTF-8	Demonstacja
 pt_BR.UTF-8	Demo
@@ -32,6 +33,7 @@ en_US.UTF-8	This labyrinth is a demo. The initial program allows the ant robot t
 es_MX.UTF-8	Este laberito es una demo. El programa inicial permite que la hormiga robot salga del laberito. Manipulará un poco la piedra y evitará ser capturado por la telaraña. Haz clic en el botón para cargar el programa dentro del robot y usa las flechas para dar pasos individuales.
 fr_FR.UTF-8	Ce labyrinthe sert de démonstration. Le programme initial permet au robot fourmi de sortir de ce labyrinthe. Il va s'amuser un peu avec le caillou et éviter la toile d'araignée. Appuie sur le bouton qui permet de charger le programme dans le robot, et fait défiler le temps avec les flèches.
 hu_HU.UTF-8	Ez egy demó labirintus. Az inícializáló program kivezeti a hangya-robotot a labirintusból. Egy kis nehézség benne a szikla és a pókháló kikerülése. Kattints a gombra a program robotba töltéséhez, és használd a nyilakat a lépésenkénti végrehajtáshoz.
+it_IT.UTF-8	Questo labirinto serve come prima dimostrazione. Il primo programma programma permette al robot formica di uscire da questo labirinto. Bisogna evitare la ragnatela, e divertirsi con la roccia. Una volta scritto il programma clicka su “esegui” e se non hai fatto errori ciccka su “Avanti” per vedere se il tuo programma funziona.
 nl_NL.UTF-8	Dit doolhof is een demo. Het huidige programma maakt het mogelijk voor de mier om dit doolhof te verlaten. Het speelt een beetje met de steen en het ontlopen van het spinneweb. Klik op de knop om het programma in de robot te laden, en gebruik de pijlen om afzonderlijke stappen uit te voeren.
 pl_PL.UTF-8	Ten labirynt ma ci przybliżyć cel gry. Wpisane komendy pozwalają robakowi (mrówce) uciec z labiryntu. Musisz tak kierować robakiem, by unikać zasadzki-pajęczyny. Kliknij przycisk 'Wykonaj', aby załadować program. Następnie użyj strzałek 'Dalej' lub 'Wstecz', by wykonać kolejne komendy. Możesz też odtworzyć cały zaprogramowany ruch robaka klikając 'Odtwarzaj'.
 pt_BR.UTF-8	Esse labirinto é uma demonstração. O programa inicial permite a formiga robô sair do labirinto. Ficará mais interessante com a pedra e evite ser pego pela teia de aranha. Pressione o botão para carregar o programa no robô e use as setas para executar passo a passo.
