@@ -1,0 +1,9 @@
+info:
+need	g++
+
+run:
+fetch	robot.cpp
+fetch	robot.h
+dump	program.cpp
+exec	g++ -Wall robot.cpp program.cpp -o program
+spawnl	program
