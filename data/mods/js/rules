@@ -1,0 +1,7 @@
+info:
+need	rhino
+
+run:
+fetch   robot.js
+dump	program.js
+spawn	rhino program.js
