@@ -238,7 +238,7 @@ let layout () =
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
   let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
-  let bbox = GPack.hbox ~packing:rtvbox#pack () in
+  let bbox = GPack.hbox ~packing:rtvbox#pack ~homogeneous:true () in
   let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
   button_execute#set_focus_on_click false;
   {
