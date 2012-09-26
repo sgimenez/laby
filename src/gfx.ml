@@ -220,11 +220,6 @@ let layout () =
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
   let rbvbox = GPack.vbox ~packing:vpaned#add2 () in
-  label_txt (Fd.render_raw label_mesg) rbvbox#pack;
-  let sw_mesg = scrolled rbvbox#add in
-  let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
-  view_mesg#misc#modify_font monofont;
-  let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let toolbar = GButton.toolbar ~packing:rbvbox#pack ~style:`BOTH () in
   let button stock = GButton.tool_button ~packing:toolbar#insert ~stock () in
   let tbutton stock =
@@ -238,6 +233,11 @@ let layout () =
   let button_play = tbutton `MEDIA_PLAY in
   let button_forward = tbutton `MEDIA_FORWARD in
   view_prog#misc#grab_focus ();
+  label_txt (Fd.render_raw label_mesg) rbvbox#pack;
+  let sw_mesg = scrolled rbvbox#add in
+  let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
+  view_mesg#misc#modify_font monofont;
+  let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let bbox = GPack.hbox ~packing:rtvbox#pack () in
   let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
   button_execute#set_focus_on_click false;
