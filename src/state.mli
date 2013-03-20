@@ -31,4 +31,4 @@ val carry : t -> [ `None | `Rock ]
 val dir : t -> dir
 val action : t -> action
 
-
+val random_walk : t -> t

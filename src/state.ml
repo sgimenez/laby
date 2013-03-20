@@ -172,3 +172,8 @@ let run action state =
 let size state =
   Array.fold_left (fun m e -> max m (Array.length e)) 0 state.map,
   Array.length state.map
+
+let random_walk state =
+  if look state <> `Void || Random.int 10 = 0
+  then if Random.int 2 = 0 then left state else right state
+  else forward state

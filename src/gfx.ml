@@ -60,15 +60,22 @@ type ressources =
 type controls =
     {
       window: GWindow.window;
+      start_vbox: GPack.box;
+      start_image: GMisc.image;
+      main_hpaned: GPack.paned;
+      menu_quit: GMenu.image_menu_item;
+      menu_home: GMenu.image_menu_item;
+      menu_level: GMenu.image_menu_item;
+      menu_levels: GMenu.menu;
+      button_start: GButton.button;
       button_prev: GButton.tool_button;
       button_next: GButton.tool_button;
       button_play: GButton.toggle_tool_button;
       button_backward: GButton.toggle_tool_button;
       button_forward: GButton.toggle_tool_button;
       button_execute: GButton.button;
-      px: GMisc.image;
+      map_image: GMisc.image;
       interprets: GEdit.combo;
-      levels: GEdit.combo;
       view_prog: GSourceView2.source_view;
       view_help: GSourceView2.source_view;
       box_help: GPack.box;
@@ -179,11 +186,14 @@ let label packing =
 let label_txt text packing =
   ignore (GMisc.label ~text ~ypad:5 ~line_wrap:true ~packing ())
 
+let label_menu = F.x "Menu" []
+let label_level = F.x "Level" []
+let label_welcome = F.x "Welcome to laby, a programming game." []
 let label_language = F.x "Language:" []
-let label_level = F.x "Level:" []
 let label_prog = F.x "Program:" []
 let label_mesg = F.x "Messages:" []
 let label_help = F.x "Help:" []
+let label_start = F.x "Start" []
 
 let layout () =
   let scrolled ?(vpolicy=`ALWAYS) packing =
@@ -191,7 +201,53 @@ let layout () =
   in
   let monofont = Pango.Font.from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
-  let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
+  let windowbox = GPack.vbox ~packing:window#add () in
+  let menu_bar = GMenu.menu_bar ~packing:windowbox#pack () in
+  let menu_levels = GMenu.menu () in
+  let sub_main = GMenu.menu () in
+  let menu_main = GMenu.menu_item ~label:(Fd.render_raw label_menu)
+    ~packing:menu_bar#append () in
+  let menu_level = GMenu.image_menu_item
+    ~label:(Fd.render_raw label_level) ~packing:menu_bar#append () in
+  let menu_fullscreen = GMenu.image_menu_item ~stock:`FULLSCREEN
+    ~packing:sub_main#append () in
+  let menu_unfullscreen = GMenu.image_menu_item ~stock:`LEAVE_FULLSCREEN
+    ~packing:sub_main#append ~show:false () in
+  let menu_quit = GMenu.image_menu_item ~stock:`QUIT
+    ~packing:sub_main#append () in
+  let menu_home = GMenu.image_menu_item ~stock:`HOME
+    ~packing:sub_main#append () in
+  let fullscreen () =
+    menu_fullscreen#misc#hide ();
+    menu_unfullscreen#misc#show ();
+    window#fullscreen ();
+  in
+  let unfullscreen () =
+    menu_unfullscreen#misc#hide ();
+    menu_fullscreen#misc#show ();
+    window#unfullscreen ();
+  in
+  ignore (menu_fullscreen#connect#activate ~callback:fullscreen);
+  ignore (menu_unfullscreen#connect#activate ~callback:unfullscreen);
+  menu_level#set_submenu menu_levels;
+  menu_main#set_submenu sub_main;
+  let main_vbox = GPack.vbox ~packing:windowbox#add () in
+
+  (* Start-up screen *)
+  let start_vbox = GPack.vbox ~packing:main_vbox#add
+    ~spacing:10 ~border_width:25 () in
+  let start_image = GMisc.image ~packing:start_vbox#add () in
+  let mstart_vbox = GPack.vbox ~packing:start_vbox#pack () in
+  let _ = GMisc.label ~markup:(Fd.render_raw label_welcome)
+    ~justify:`CENTER ~packing:mstart_vbox#pack () in
+  let interprets =
+    labeled_combo (Fd.render_raw label_language) mstart_vbox#pack
+  in
+  let button_start = GButton.button ~packing:mstart_vbox#pack
+    ~label:(Fd.render_raw label_start) () in
+
+  (* Game screen *)
+  let hpaned = GPack.paned `HORIZONTAL ~packing:main_vbox#add () in
   hpaned#set_position 620;
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
@@ -208,8 +264,6 @@ let layout () =
   view_help#set_indent 1;
   view_help#misc#modify_font monofont;
   let rtvbox = GPack.vbox ~packing:vpaned#add1 () in
-  let interprets = labeled_combo (Fd.render_raw label_language) rtvbox#pack in
-  let levels = labeled_combo (Fd.render_raw label_level) rtvbox#pack in
   label_txt (Fd.render_raw label_prog) rtvbox#pack;
   let sw_prog = scrolled rtvbox#add in
   let view_prog =
@@ -237,19 +291,25 @@ let layout () =
   let sw_mesg = scrolled rbvbox#add in
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
-  let px = GMisc.image ~packing:sw_laby#add_with_viewport () in
+  let map_image = GMisc.image ~packing:sw_laby#add_with_viewport () in
   let bbox = GPack.hbox ~packing:rtvbox#pack ~homogeneous:true () in
   let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
   button_execute#set_focus_on_click false;
   {
     window = window;
+    start_vbox = start_vbox;
+    start_image = start_image;
+    main_hpaned = hpaned;
+    menu_quit = menu_quit; menu_home = menu_home;
+    menu_level = menu_level; menu_levels = menu_levels;
+    button_start = button_start;
     button_prev = button_prev; button_next = button_next;
     button_play = button_play;
     button_backward = button_backward;
     button_forward = button_forward;
     button_execute = button_execute;
-    px = px;
-    interprets = interprets; levels = levels;
+    map_image = map_image;
+    interprets = interprets;
     view_prog = view_prog; view_mesg = view_mesg;
     box_help = box_help; view_help = view_help;
     view_title = view_title; view_comment = view_comment;
@@ -271,7 +331,6 @@ let display_gtk ressources =
   let levels_list =
     List.sort (compare) (Res.get_list ~ext:"laby" ["levels"])
   in
-
   if mods = [] then Run.fatal (
     F.x "no mod is available among: <list>" [
       "list", F.v (List.map (fun x -> F.string x#name) amods);
@@ -280,10 +339,9 @@ let display_gtk ressources =
 
   let bg = ref `WHITE in
   let c = layout () in
-  let pixmap = ref (GDraw.pixmap ~width:1 ~height:1 ()) in
   let level_load name =
     let l = Level.load (Res.get ["levels"; name]) in
-    pixmap := make_pixmap ressources.size l; l
+    c.map_image#set_pixmap (make_pixmap ressources.size l); l
   in
   let syntaxd = Res.get ["syntax"] in
   let add_search_path m l = m#set_search_path (l @ m#search_path) in
@@ -295,9 +353,7 @@ let display_gtk ressources =
   let slm = GSourceView2.source_language_manager false in
   add_search_path slm [syntaxd; Res.path [syntaxd; "language-specs"]];
 
-
   (* gui outputs *)
-
   let msg str =
     c.view_mesg#buffer#place_cursor c.view_mesg#buffer#end_iter;
     c.view_mesg#buffer#insert (str ^ "\n")
@@ -312,20 +368,49 @@ let display_gtk ressources =
 	c.box_help#misc#show ()
     end
   in
-  let draw state =
-    !pixmap#set_foreground !bg;
-    let width, height = !pixmap#size in
-    !pixmap#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
-    draw_state (state) ressources !pixmap;
-    c.px#set_pixmap !pixmap
+  let draw image state =
+    let p : GDraw.pixmap = image#pixmap in
+    p#set_foreground !bg;
+    let width, height = p#size in
+    p#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+    draw_state state ressources p;
+    image#set_pixmap p
   in
 
   (* game creation *)
-
-  let command = Game.play msg help draw in
+  let command = Game.play msg help (draw c.map_image) in
 
   (* gui inputs *)
+  let rid = ref None in
+  let start_animation = ref (Level.generate Level.dummy) in
+  let start_play () =
+    c.start_vbox#misc#hide ();
+    c.menu_quit#misc#hide ();
+    begin match !rid with
+      | None -> ()
+      | Some id -> GMain.Timeout.remove id; rid := None
+    end;
+    rid := None;
+    c.menu_home#misc#show ();
+    c.menu_level#misc#show ();
+    c.main_hpaned#misc#show ()
 
+  in
+  let exit_play () =
+    c.main_hpaned#misc#hide ();
+    c.menu_home#misc#hide ();
+    c.menu_level#misc#hide ();
+    let callback () =
+      start_animation := State.random_walk !start_animation;
+      draw c.start_image (!start_animation);
+      true
+    in
+    let rate = conf_playback_rate#get in
+    let ms = int_of_float (1000. /. rate) in
+    rid := Some (GMain.Timeout.add ~ms ~callback);
+    c.menu_quit#misc#show ();
+    c.start_vbox#misc#show ()
+  in
   let show_execute () = c.button_execute#set_relief `NORMAL in
   let hide_execute () = c.button_execute#set_relief `NONE in
   let ctrl_sensitive b =
@@ -382,8 +467,7 @@ let display_gtk ressources =
     end;
     hide_execute ();
   in
-  let newlevel () =
-    let name = c.levels#entry#text in
+  let newlevel name =
     begin match List.mem name levels_list with
     | true ->
 	let l = level_load name in
@@ -421,23 +505,27 @@ let display_gtk ressources =
     GMain.Main.quit ()
   in
   let altdestroy _ = destroy (); true in
-
   c.interprets#set_popdown_strings language_list;
   let smod = Mod.conf_selected#get in
   if List.mem smod language_list
   then c.interprets#entry#set_text smod;
-  c.levels#set_popdown_strings levels_list;
-  if List.mem "0.laby" levels_list
-  then c.levels#entry#set_text "0.laby";
+
+  let group = ref None in
+  let add_language l =
+    let item = GMenu.radio_menu_item ?group:!group
+      ~label:l ~packing:c.menu_levels#append () in
+    if !group = None then group := Some (item#group);
+    ignore (item#connect#activate ~callback:(fun () -> newlevel l))
+  in
+  List.iter add_language levels_list;
 
   (* declaring callbacks *)
-
   let play_cb = play `Forward conf_playback_rate#get in
   let forward_cb = play `Forward conf_cue_rate#get in
   let backward_cb = play `Backward conf_cue_rate#get in
-
   ignore (c.window#event#connect#delete ~callback:altdestroy);
   ignore (c.window#connect#destroy ~callback:destroy);
+  ignore (c.button_start#connect#clicked ~callback:start_play);
   ignore (c.button_prev#connect#clicked ~callback:prev);
   ignore (c.button_next#connect#clicked ~callback:next);
   ignore (c.button_play#connect#toggled ~callback:play_cb);
@@ -445,17 +533,21 @@ let display_gtk ressources =
   ignore (c.button_forward#connect#toggled ~callback:forward_cb);
   ignore (c.button_execute#connect#clicked ~callback:execute);
   ignore (c.interprets#entry#connect#changed ~callback:newmod);
-  ignore (c.levels#entry#connect#changed ~callback:newlevel);
   ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
-
+  ignore (c.menu_quit#connect#activate ~callback:destroy);
+  ignore (c.menu_home#connect#activate ~callback:exit_play);
   (* now we must have everything up *)
-
   setupmod ();
+  exit_play ();
   c.window#set_default_size conf_window_width#get conf_window_height#get;
   c.window#show ();
   (* bg color has to be retrieved after c.window#show *)
-  bg := `COLOR (c.px#misc#style#light `NORMAL);
-  newlevel ();
+  bg := `COLOR (c.window#misc#style#light `NORMAL);
+  if List.mem "0.laby" levels_list
+  then newlevel "0.laby"
+  else if levels_list <> [] then newlevel (List.hd levels_list);
+  c.start_image#set_pixmap (make_pixmap ressources.size Level.dummy);
+  draw c.start_image (!start_animation);
   ignore (GMain.Main.main ())
 
 let run_gtk () =

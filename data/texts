@@ -1,5 +1,9 @@
 # say.ml
 
+text		Welcome to laby, a programming game.
+en_US.UTF-8	Welcome to laby, a programming game.
+fr_FR.UTF-8	Bienvenue. Voici laby, un jeu de programmation.
+
 text		I'm ready
 cs_CZ.UTF-8	Jsem připraven
 da_DK.UTF-8	Jeg er klar
@@ -519,6 +523,29 @@ sv_SV.UTF-8	Okand
 
 # gfx.ml
 
+text		Menu
+en_US.UTF-8	Menu
+fr_FR.UTF-8	Menu
+
+text		Level
+cs_CZ.UTF-8	Úroveň
+da_DK.UTF-8	Level
+de_DE.UTF-8	Level
+en_US.UTF-8	Level
+es_MX.UTF-8	Nive
+fr_FR.UTF-8	Niveau
+gl_ES.UTF-8	Nivel
+hu_HU.UTF-8	Szint
+it_IT.UTF-8	Livello
+nl_NL.UTF-8	Niveau
+pl_PL.UTF-8	Poziom
+pt_BR.UTF-8	Nível
+ru_RU.UTF-8	Уровень
+sq_AL.UTF-8	Niveli
+sv_SV.UTF-8	Nivå
+tr_TR.UTF-8	Seviye
+uk_UA.UTF-8	Рівень
+
 text		Language:
 cs_CZ.UTF-8	Jazyk:
 da_DK.UTF-8	Sprog:
@@ -537,25 +564,6 @@ sq_AL.UTF-8	Gjuha:
 sv_SV.UTF-8	Språk:
 tr_TR.UTF-8	Dil:
 uk_UA.UTF-8	Мова:
-
-text		Level:
-cs_CZ.UTF-8	Úroveň:
-da_DK.UTF-8	Level:
-de_DE.UTF-8	Level:
-en_US.UTF-8	Level:
-es_MX.UTF-8	Nive:
-fr_FR.UTF-8	Niveau :
-gl_ES.UTF-8	Nivel:
-hu_HU.UTF-8	Szint :
-it_IT.UTF-8	Livello:
-nl_NL.UTF-8	Niveau:
-pl_PL.UTF-8	Poziom:
-pt_BR.UTF-8	Nível:
-ru_RU.UTF-8	Уровень:
-sq_AL.UTF-8	Niveli:
-sv_SV.UTF-8	Nivå:
-tr_TR.UTF-8	Seviye:
-uk_UA.UTF-8	Рівень:
 
 text		Program:
 cs_CZ.UTF-8	Program:
