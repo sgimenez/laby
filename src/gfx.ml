@@ -44,6 +44,7 @@ exception Error of F.t
 type ressources =
     {
       size : int;
+      startup : GdkPixbuf.pixbuf;
       void_p : GdkPixbuf.pixbuf;
       exit_p : GdkPixbuf.pixbuf;
       wall_p : GdkPixbuf.pixbuf;
@@ -60,6 +61,11 @@ type ressources =
 type controls =
     {
       window: GWindow.window;
+      start_vbox: GPack.box;
+      start_px: GMisc.image;
+      main_hpaned: GPack.paned;
+      button_start: GButton.button;
+      button_exit: GButton.button;
       button_prev: GButton.tool_button;
       button_next: GButton.tool_button;
       button_play: GButton.toggle_tool_button;
@@ -121,10 +127,14 @@ let gtk_init () =
     | GdkPixbuf.GdkPixbufError(GdkPixbuf.ERROR_UNKNOWN_TYPE, _) ->
 	let file = Res.get ["tiles"; p ^ ".png"] in
 	GdkPixbuf.from_file_at_size file tile_size tile_size
-    end
+    end in
+  let startup_pix =
+    let file = Res.get ["images"; "startup-screen.svg"] in
+    GdkPixbuf.from_file_at_size file 880 400
   in
   {
     size = tile_size;
+    startup = startup_pix;
     void_p = pix "void";
     exit_p = pix "exit";
     wall_p = pix "wall";
@@ -184,6 +194,8 @@ let label_level = F.x "Level:" []
 let label_prog = F.x "Program:" []
 let label_mesg = F.x "Messages:" []
 let label_help = F.x "Help:" []
+let label_welcome = F.x "Welcome to laby, a programming game" []
+let label_start = F.x "Start" []
 
 let layout () =
   let scrolled ?(vpolicy=`ALWAYS) packing =
@@ -191,7 +203,21 @@ let layout () =
   in
   let monofont = Pango.Font.from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
-  let hpaned = GPack.paned `HORIZONTAL ~packing:window#add () in
+  let main_vbox = GPack.vbox ~packing:window#add () in
+
+  (* Start-up screen *)
+  let start_vbox = GPack.vbox ~packing:main_vbox#add 
+    ~spacing:10 ~border_width:50 () in
+  let start_px = GMisc.image ~packing:start_vbox#add () in
+  let mstart_vbox = GPack.vbox ~packing:start_vbox#pack ~width:400 () in
+  let _ = GMisc.label ~markup:(Fd.render_raw label_welcome)
+    ~justify:`CENTER ~packing:mstart_vbox#pack () in
+  let interprets = labeled_combo (Fd.render_raw label_language) mstart_vbox#pack in
+  let button_start = GButton.button ~packing:mstart_vbox#pack
+    ~label:(Fd.render_raw label_start) () in
+
+  (* Game screen *)
+  let hpaned = GPack.paned `HORIZONTAL ~packing:main_vbox#add ~show:false() in
   hpaned#set_position 620;
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
@@ -208,8 +234,10 @@ let layout () =
   view_help#set_indent 1;
   view_help#misc#modify_font monofont;
   let rtvbox = GPack.vbox ~packing:vpaned#add1 () in
-  let interprets = labeled_combo (Fd.render_raw label_language) rtvbox#pack in
-  let levels = labeled_combo (Fd.render_raw label_level) rtvbox#pack in
+  let rthbox = GPack.hbox ~packing:rtvbox#pack () in
+  let levels = labeled_combo (Fd.render_raw label_level) rthbox#add in
+  let button_exit = GButton.button ~packing:rthbox#pack ~stock:`QUIT 
+    ~label:"Exit" () in
   label_txt (Fd.render_raw label_prog) rtvbox#pack;
   let sw_prog = scrolled rtvbox#add in
   let view_prog =
@@ -243,6 +271,11 @@ let layout () =
   button_execute#set_focus_on_click false;
   {
     window = window;
+    start_vbox = start_vbox;
+    start_px = start_px;
+    main_hpaned = hpaned;
+    button_start = button_start;
+    button_exit = button_exit;
     button_prev = button_prev; button_next = button_next;
     button_play = button_play;
     button_backward = button_backward;
@@ -326,6 +359,12 @@ let display_gtk ressources =
 
   (* gui inputs *)
 
+  let start_play () = 
+    c.start_vbox#misc#hide() ;
+    c.main_hpaned#misc#show() in
+  let exit_play () = 
+    c.start_vbox#misc#show() ;
+    c.main_hpaned#misc#hide() in
   let show_execute () = c.button_execute#set_relief `NORMAL in
   let hide_execute () = c.button_execute#set_relief `NONE in
   let ctrl_sensitive b =
@@ -422,6 +461,7 @@ let display_gtk ressources =
   in
   let altdestroy _ = destroy (); true in
 
+  c.start_px#set_pixbuf ressources.startup ;
   c.interprets#set_popdown_strings language_list;
   let smod = Mod.conf_selected#get in
   if List.mem smod language_list
@@ -438,6 +478,8 @@ let display_gtk ressources =
 
   ignore (c.window#event#connect#delete ~callback:altdestroy);
   ignore (c.window#connect#destroy ~callback:destroy);
+  ignore (c.button_start#connect#clicked ~callback:start_play);
+  ignore (c.button_exit#connect#clicked ~callback:exit_play);
   ignore (c.button_prev#connect#clicked ~callback:prev);
   ignore (c.button_next#connect#clicked ~callback:next);
   ignore (c.button_play#connect#toggled ~callback:play_cb);
@@ -454,7 +496,7 @@ let display_gtk ressources =
   c.window#set_default_size conf_window_width#get conf_window_height#get;
   c.window#show ();
   (* bg color has to be retrieved after c.window#show *)
-  bg := `COLOR (c.px#misc#style#light `NORMAL);
+  bg := `WHITE (* `COLOR (c.px#misc#style#light `NORMAL) *);
   newlevel ();
   ignore (GMain.Main.main ())
 
