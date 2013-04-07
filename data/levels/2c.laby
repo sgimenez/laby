@@ -22,6 +22,7 @@ de_DE.UTF-8	Zick Zack
 en_US.UTF-8	Zig Zag
 es_MX.UTF-8	Zig Zag
 fr_FR.UTF-8	Zig Zag
+gl_ES.UTF-8	Zigue Zague
 hu_HU.UTF-8	Cikk-cakk
 it_IT.UTF-8	Zig Zag
 nl_NL.UTF-8	Zig zag
@@ -40,6 +41,7 @@ de_DE.UTF-8	Fünf lange Strecken! Um die gleiche Schleife fünf mal zu schreiben
 en_US.UTF-8	Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.
 es_MX.UTF-8	¡Cinco largos caminos! ¡Para evitar escribir lo mismo cinco veces emplearemos un atajo! Vamos a escribir un proceidimiento que haga que el robot avance tan lejos como pueda. Entonces lo podremos llamar varias veces.
 fr_FR.UTF-8	Cinq longues distances à parcourir ! Pour éviter de recopier cinq fois la même boucle, on peut utiliser un raccourci ! On va écrire une procédure qui fait avancer le robot le plus loin possible en ligne droite. Ensuite on pourra facilement l'appeler plusieurs fois.
+gl_ES.UTF-8	Cinco longas carreiras! Para evitar escribir o mesmo bucle en cinco ocasións, imos utilizar un atallo! Imos escribir unha función que faga que o robot avance en liña recta tanto como sexa posíbel. Así poderemos chamalo varias veces.
 hu_HU.UTF-8	Öt hosszú futás. Hogy ne kelljen ugyanazt ötször leírni, használjunk rövidítéseket! Ideje írni egy eljárást, ami addig vezeti előre a robotot, ameddig csak tudja. Ezt az egyszer megírt eljárást bármennyiszer meg tudjuk hívni a nevével.
 it_IT.UTF-8	Cinque volte un lungo corridoio da percorrere! Per evitare di scrivere cinque volte lo stesso codice, puoi utilizare una scorciatoia! Scrivi un codice che faccia avanzare il robot il più lontano possibile andando dritto. Poi richiamala più volte fino a trovare l'uscita.
 nl_NL.UTF-8	Vijf lange stukken! Om te voorkomen dat je dezelfde lus vijf keer achter elkaar moet schrijven, schrijven we een procedure die de robot zolang mogelijk recht vooruit laat gaan. Dan kunnen we hem verschillende keren aanroepen.

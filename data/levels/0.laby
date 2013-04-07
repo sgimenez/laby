@@ -14,6 +14,7 @@ de_DE.UTF-8	Demo
 en_US.UTF-8	Demo
 es_MX.UTF-8	Demo
 fr_FR.UTF-8	Démo
+gl_ES.UTF-8	Demostración
 hu_HU.UTF-8	Demó
 it_IT.UTF-8	Demo
 nl_NL.UTF-8	Demo
@@ -32,6 +33,7 @@ de_DE.UTF-8	Dieses Labyrinth ist eine Demonstration. Das vorgegebene Programm sa
 en_US.UTF-8	This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
 es_MX.UTF-8	Este laberito es una demo. El programa inicial permite que la hormiga robot salga del laberito. Manipulará un poco la piedra y evitará ser capturado por la telaraña. Haz clic en el botón para cargar el programa dentro del robot y usa las flechas para dar pasos individuales.
 fr_FR.UTF-8	Ce labyrinthe sert de démonstration. Le programme initial permet au robot fourmi de sortir de ce labyrinthe. Il va s'amuser un peu avec le caillou et éviter la toile d'araignée. Appuie sur le bouton qui permet de charger le programme dans le robot, et fait défiler le temps avec les flèches.
+gl_ES.UTF-8	Este labirinto é unha demostración. O programa inicial permite que o robot formiga saia deste labirinto. Entreterase un chisco coas rochas e evitando ser atrapado na arañeira. Prema no botón «Reproducir» para cargar o programa no robot, e empregue as frechas para un control individual dos pasos.
 hu_HU.UTF-8	Ez egy demó labirintus. Az inícializáló program kivezeti a hangya-robotot a labirintusból. Egy kis nehézség benne a szikla és a pókháló kikerülése. Kattints a gombra a program robotba töltéséhez, és használd a nyilakat a lépésenkénti végrehajtáshoz.
 it_IT.UTF-8	Questo labirinto serve come prima dimostrazione. Il primo programma programma permette al robot formica di uscire da questo labirinto. Bisogna evitare la ragnatela, e divertirsi con la roccia. Una volta scritto il programma clicka su “esegui” e se non hai fatto errori ciccka su “Avanti” per vedere se il tuo programma funziona.
 nl_NL.UTF-8	Dit doolhof is een demo. Het huidige programma maakt het mogelijk voor de mier om dit doolhof te verlaten. Het speelt een beetje met de steen en het ontlopen van het spinneweb. Klik op de knop om het programma in de robot te laden, en gebruik de pijlen om afzonderlijke stappen uit te voeren.
