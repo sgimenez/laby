@@ -8,6 +8,7 @@ o o o o o o
 
 title:
 text		Demo
+ca_ES.UTF-8	Demostració
 cs_CZ.UTF-8	Demo
 da_DK.UTF-8	Demo
 de_DE.UTF-8	Demo
@@ -27,6 +28,7 @@ tr_TR.UTF-8	Demo
 
 comment:
 text		This labyrinth is a demo. The initial program allows the ant robot to get out of this labyrinth. It will tease up a bit with the rock and avoid being caught in the spider web. Click the button to load the program into the robot, and use the arrows to perform individual steps.
+ca_ES.UTF-8	Aquest laberint és una demostració. El programa inicial permet que la formiga robot surti del laberint. Manipularà la pedra i evitarà ser capturada per la teranyina. Clica el botó per a carregar el programa al robot i utilitza les fletxes per a donar-li les ordres pas a pas.
 cs_CZ.UTF-8	Toto bludiště je příklad. Připravený program umožní mravency vyjít z bludiště. Trochu si pohraje s kamenem a vyhne se pavučině. Zmáčkni tlačítko, abys nahrál program do robota, a použij šipky k provedení jednotlivých kroků.
 da_DK.UTF-8	Denne labyrint er en demo. Det nuværende program gør det muligt for myren at slippe ud af labyrinten. Det viser hvordan man tager og slipper en sten, og hvordan man undgår at gå ind i spindelvæv. Klik på knappen for at indlæse programmet i robotten og brug pilene for at tage individuelle trin.
 de_DE.UTF-8	Dieses Labyrinth ist eine Demonstration. Das vorgegebene Programm sagt dem Ameisenroboter, wie er aus dem Labyrinth kommt. Er wird sich kurz mit dem Stein beschäftigen und vermeiden, im Spinnennetz gefangen zu werden. Klick auf den Button um das Programm auf den Roboter zu übertragen, und benutze die Pfeile, um einzelne Schritte auszuführen.

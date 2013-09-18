@@ -17,6 +17,7 @@ o o o o o o o o o o o o o o
 
 title:
 text		Spiral
+ca_ES.UTF-8	Espiral
 cs_CZ.UTF-8	Spirála
 da_DK.UTF-8	Spiral
 de_DE.UTF-8	Spirale
@@ -36,6 +37,7 @@ tr_TR.UTF-8	Spiral
 
 comment:
 text		The spiral of hell!
+ca_ES.UTF-8	L'espiral infernal!
 cs_CZ.UTF-8	Pekelná spirála!
 da_DK.UTF-8	Helvedesspiralen!
 de_DE.UTF-8	Die höllische Spirale!

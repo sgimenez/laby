@@ -1,10 +1,13 @@
 # say.ml
 
 text		Welcome to laby, a programming game.
+ca_ES.UTF-8	Benvingut a laby, un joc de programació.
 en_US.UTF-8	Welcome to laby, a programming game.
+es_MX.UTF-8	Bienvenido a laby, un juego de programación.
 fr_FR.UTF-8	Bienvenue. Voici laby, un jeu de programmation.
 
 text		I'm ready
+ca_ES.UTF-8	Estic apunt
 cs_CZ.UTF-8	Jsem připraven
 da_DK.UTF-8	Jeg er klar
 de_DE.UTF-8	Ich bin bereit
@@ -24,6 +27,7 @@ tr_TR.UTF-8	Ben Hazırım
 uk_UA.UTF-8	Я готовий
 
 text		Something went wrong
+ca_ES.UTF-8	Alguna cosa no ha funcionat
 cs_CZ.UTF-8	Někde se stala chyba
 da_DK.UTF-8	Noget gik galt
 de_DE.UTF-8	Da hat was nicht geklappt
@@ -43,6 +47,7 @@ tr_TR.UTF-8	Birşeyler yanlış
 uk_UA.UTF-8	Щось не так
 
 text		I can't go through the wall.
+ca_ES.UTF-8	No puc travessar la paret.
 cs_CZ.UTF-8	Nemohu procházet zdí.
 da_DK.UTF-8	Jeg kan ikke gå igennem vægen.
 de_DE.UTF-8	Ich kann nicht durch die Wand gehen.
@@ -62,11 +67,12 @@ tr_TR.UTF-8	Duvardan geçemiyorum.
 uk_UA.UTF-8	Я не можу пройти крізь стіну
 
 text		I can't go through this rock.
+ca_ES.UTF-8	No puc travessar aquesta pedra.
 cs_CZ.UTF-8	Nemohu projít skrz tento kámen.
 da_DK.UTF-8	Jeg kan ikke gå igennem denne sten.
 de_DE.UTF-8	Ich kann nicht durch diesen Stein gehen.
 en_US.UTF-8	I can't go through this rock.
-es_MX.UTF-8	No puedo atravezar esta piedra.
+es_MX.UTF-8	No puedo atravesar esta piedra.
 fr_FR.UTF-8	Je ne peux pas passer sur ce caillou.
 gl_ES.UTF-8	Non podo atravesar esta rocha.
 hu_HU.UTF-8	Nem tudok átmenni a kövön.
@@ -81,6 +87,7 @@ tr_TR.UTF-8	Bu taştan geçemiyorum.
 uk_UA.UTF-8	Я не можу пройти крізь цей камінь.
 
 text		I can't go through the door.
+ca_ES.UTF-8	No puc travessar aquesta porta.
 cs_CZ.UTF-8	Nemohu projít těmito dveřmi.
 da_DK.UTF-8	Jeg kan ikke gå igennem døren.
 de_DE.UTF-8	Ich kann nicht durch die Tür gehen.
@@ -100,6 +107,7 @@ tr_TR.UTF-8	Kapıdan geçemiyorum.
 uk_UA.UTF-8	Я не можу пройти крізь двері.
 
 text		Oops, a spider web.
+ca_ES.UTF-8	Vaja, una teranyina!
 cs_CZ.UTF-8	Ajaj, pavučina.
 da_DK.UTF-8	Ups, et spindelvæv.
 de_DE.UTF-8	Ups, ein Spinnennetz!
@@ -119,6 +127,7 @@ tr_TR.UTF-8	Olamaz! Örümcek!
 uk_UA.UTF-8	Ой, павутина!
 
 text		I can't move anymore.
+ca_ES.UTF-8	No em puc moure.
 cs_CZ.UTF-8	Nemohu se už ani pohnout.
 da_DK.UTF-8	Jeg kan ikke bevæge mig mere.
 de_DE.UTF-8	Ich kann mich nicht mehr bewegen.
@@ -138,6 +147,7 @@ tr_TR.UTF-8	Hareket edemiyorum.
 uk_UA.UTF-8	Я не можу рухатися.
 
 text		Wohoo, the exit!
+ca_ES.UTF-8	Hurra, la sortida!
 cs_CZ.UTF-8	Hurá, východ!
 da_DK.UTF-8	Juhuu, udgangen.
 de_DE.UTF-8	Juhu, der Ausgang!
@@ -157,6 +167,7 @@ tr_TR.UTF-8	Evet, çıkış!
 uk_UA.UTF-8	Ура! Вихід!
 
 text		I can't find a door to open.
+ca_ES.UTF-8	No puc trobar una porta per a obrir.
 cs_CZ.UTF-8	Nemohu najít dvěře, které bych otevřel.
 da_DK.UTF-8	Jeg kan ikke finde en dør jeg kan åbne.
 de_DE.UTF-8	Ich kann keine Tür finden, die ich öffnen kann.
@@ -176,6 +187,7 @@ tr_TR.UTF-8	Açacak bir kapı bulamadım.
 uk_UA.UTF-8	Не можу знайти двері, щоб їх відкрити.
 
 text		I can't go out carrying a rock.
+ca_ES.UTF-8	No puc sortir mentre carrego la pedra.
 cs_CZ.UTF-8	Nemohu jít ven s kamenem.
 da_DK.UTF-8	Jeg kan ikke gå ud imens jeg bærer en sten.
 de_DE.UTF-8	Ich kann hier nicht raus während ich einen Stein trage.
@@ -195,6 +207,7 @@ tr_TR.UTF-8	Bir taş taşırken çıkamam.
 uk_UA.UTF-8	Я не можу вийти з каменем.
 
 text		There's no rock to take here.
+ca_ES.UTF-8	Aquí no hi ha cap pedra per a agafar.
 cs_CZ.UTF-8	Není tu žádný kámen, který bych mohl vzít.
 da_DK.UTF-8	Der er ikke nogen sten jeg kan tage her.
 de_DE.UTF-8	Da ist kein Stein den ich aufheben kann.
@@ -214,6 +227,7 @@ tr_TR.UTF-8	Alınacak taş yok.
 uk_UA.UTF-8	Тут немає жодного каменя.
 
 text		I can't drop the rock here.
+ca_ES.UTF-8	No puc deixar la pedra aquí.
 cs_CZ.UTF-8	Tady nemohu odložit kámen.
 da_DK.UTF-8	Jeg kan ikke lægge stenen her.
 de_DE.UTF-8	Ich kann den Stein hier nicht ablegen.
@@ -233,6 +247,7 @@ tr_TR.UTF-8	Taşı buraya bırakamam.
 uk_UA.UTF-8	Я не можу кинути сюди камінь.
 
 text		I have nothing to drop.
+ca_ES.UTF-8	No tinc res per a deixar anar.
 cs_CZ.UTF-8	Nemám kámen, který bych položil.
 da_DK.UTF-8	Jeg har ikke noget jeg kan slippe.
 de_DE.UTF-8	Ich habe nichts zum ablegen.
@@ -251,6 +266,7 @@ uk_UA.UTF-8	Мені нічого кидати.
 # ascii api names (no funny characters)
 
 text:ascii	Ant
+ca_ES.UTF-8	Formiga
 cs_CZ.UTF-8	Mravenec
 da_DK.UTF-8	Myre
 de_DE.UTF-8	Ameise
@@ -268,6 +284,7 @@ sv_SV.UTF-8	Myra
 #tr_TR.UTF-8	Karınca
 
 text:ascii	ant
+ca_ES.UTF-8	formiga
 cs_CZ.UTF-8	mravenec
 da_DK.UTF-8	myre
 de_DE.UTF-8	ameise
@@ -285,6 +302,7 @@ sv_SV.UTF-8	myra
 #tr_TR.UTF-8	karınca
 
 text:ascii	left
+ca_ES.UTF-8	esquerra
 cs_CZ.UTF-8	vlevo
 da_DK.UTF-8	venstre
 de_DE.UTF-8	links
@@ -302,6 +320,7 @@ sv_SV.UTF-8	vanster
 #tr_TR.UTF-8	sol
 
 text:ascii	right
+ca_ES.UTF-8	dreta
 cs_CZ.UTF-8	vpravo
 da_DK.UTF-8	hojre
 de_DE.UTF-8	rechts
@@ -319,6 +338,7 @@ sv_SV.UTF-8	hoger
 #tr_TR.UTF-8	sağ
 
 text:ascii	forward
+ca_ES.UTF-8	endavant
 cs_CZ.UTF-8	vpred
 da_DK.UTF-8	frem
 de_DE.UTF-8	vorwarts
@@ -336,6 +356,7 @@ sv_SV.UTF-8	framat
 #tr_TR.UTF-8	ileri
 
 text:ascii	take
+ca_ES.UTF-8	agafar
 cs_CZ.UTF-8	vezmi
 da_DK.UTF-8	tag
 de_DE.UTF-8	aufheben
@@ -353,6 +374,7 @@ sv_SV.UTF-8	ta
 #tr_TR.UTF-8	al
 
 text:ascii	drop
+ca_ES.UTF-8	deixar
 cs_CZ.UTF-8	poloz
 da_DK.UTF-8	slip
 de_DE.UTF-8	ablegen
@@ -370,6 +392,7 @@ sv_SV.UTF-8	slapp
 #tr_TR.UTF-8	bırak
 
 text:ascii	escape
+ca_ES.UTF-8	escapar
 cs_CZ.UTF-8	vyjdi
 da_DK.UTF-8	undslip
 de_DE.UTF-8	entkommen
@@ -387,6 +410,7 @@ sv_SV.UTF-8	fly
 #tr_TR.UTF-8	çık
 
 text:ascii	look
+ca_ES.UTF-8	mirar
 cs_CZ.UTF-8	divej
 da_DK.UTF-8	kig
 de_DE.UTF-8	schau
@@ -404,6 +428,7 @@ sv_SV.UTF-8	titta
 #tr_TR.UTF-8	görüş
 
 text:ascii	say
+ca_ES.UTF-8	dir
 cs_CZ.UTF-8	rekni
 da_DK.UTF-8	sig
 de_DE.UTF-8	sage
@@ -421,6 +446,7 @@ sv_SV.UTF-8	sag
 #tr_TR.UTF-8	söyle
 
 text:ascii	Void
+ca_ES.UTF-8	Buit
 cs_CZ.UTF-8	Prazdny
 da_DK.UTF-8	Intet
 de_DE.UTF-8	Leer
@@ -437,6 +463,7 @@ sv_SV.UTF-8	Tomt
 #tr_TR.UTF-8	Boşluk
 
 text:ascii	Wall
+ca_ES.UTF-8	Paret
 cs_CZ.UTF-8	Zed
 da_DK.UTF-8	Mur
 de_DE.UTF-8	Wand
@@ -454,6 +481,7 @@ sv_SV.UTF-8	Vagg
 #tr_TR.UTF-8	Duvar
 
 text:ascii	Rock
+ca_ES.UTF-8	Pedra
 cs_CZ.UTF-8	Kamen
 da_DK.UTF-8	Sten
 de_DE.UTF-8	Stein
@@ -488,6 +516,7 @@ sv_SV.UTF-8	Spindelvav
 #tr_TR.UTF-8	Ağ
 
 text:ascii	Exit
+ca_ES.UTF-8	Sortir
 cs_CZ.UTF-8	Vychod
 da_DK.UTF-8	Udgang
 de_DE.UTF-8	Ausgang
@@ -505,6 +534,7 @@ sv_SV.UTF-8	Utgang
 #tr_TR.UTF-8	Çıkış
 
 text:ascii	Unknown
+ca_ES.UTF-8	Desconegut
 cs_CZ.UTF-8	Neznamy
 da_DK.UTF-8	Ukendt
 de_DE.UTF-8	Unbekannt
@@ -524,10 +554,13 @@ sv_SV.UTF-8	Okand
 # gfx.ml
 
 text		Menu
+ca_ES.UTF-8	Menu
 en_US.UTF-8	Menu
+es_MX.UTF-8	Menu
 fr_FR.UTF-8	Menu
 
 text		Level
+ca_ES.UTF-8	Nivell
 cs_CZ.UTF-8	Úroveň
 da_DK.UTF-8	Level
 de_DE.UTF-8	Level
@@ -547,14 +580,15 @@ tr_TR.UTF-8	Seviye
 uk_UA.UTF-8	Рівень
 
 text		Language:
+ca_ES.UTF-8	Idioma:
 cs_CZ.UTF-8	Jazyk:
 da_DK.UTF-8	Sprog:
 de_DE.UTF-8	Sprache:
 en_US.UTF-8	Language:
 es_MX.UTF-8	Idioma:
-fr_FR.UTF-8	Langage :
+fr_FR.UTF-8	Langage:
 gl_ES.UTF-8	Idioma:
-hu_HU.UTF-8	Nyelv :
+hu_HU.UTF-8	Nyelv:
 it_IT.UTF-8	Linguaggio:
 nl_NL.UTF-8	Taal:
 pl_PL.UTF-8	Język:
@@ -566,6 +600,7 @@ tr_TR.UTF-8	Dil:
 uk_UA.UTF-8	Мова:
 
 text		Program:
+ca_ES.UTF-8	Programa:
 cs_CZ.UTF-8	Program:
 da_DK.UTF-8	Program:
 de_DE.UTF-8	Praogramm:
@@ -585,6 +620,7 @@ tr_TR.UTF-8	Program:
 uk_UA.UTF-8	Програма:
 
 text		Messages:
+ca_ES.UTF-8	Missatges:
 cs_CZ.UTF-8	Zprávy:
 da_DK.UTF-8	Meddelelser:
 de_DE.UTF-8	Benachrichtigungen:
@@ -604,6 +640,7 @@ tr_TR.UTF-8	Mesajlar:
 uk_UA.UTF-8	Повідомлення:
 
 text		Help:
+ca_ES.UTF-8	Ajuda:
 cs_CZ.UTF-8	Nápověda:
 da_DK.UTF-8	Hjælp:
 de_DE.UTF-8	Tipp:
@@ -623,6 +660,7 @@ tr_TR.UTF-8	Yardım:
 uk_UA.UTF-8	Допомога:
 
 text		graphic interface configuration
+ca_ES.UTF-8	configuració de la interfície gràfica
 cs_CZ.UTF-8	nastavení rozhraní
 da_DK.UTF-8	kongiguration af grafisk brugerflade
 de_DE.UTF-8	Benutzeroberfläche konfigurieren
@@ -642,6 +680,7 @@ tr_TR.UTF-8	arayüz ayarları
 uk_UA.UTF-8	налаштування інтерфейсу
 
 text		cannot load syntax for <name> mod
+ca_ES.UTF-8	impossible carregar la sintaxi del mode <name>.
 cs_CZ.UTF-8	nemohu nahrát syntax pro mód <name>
 da_DK.UTF-8	kan ikke indlæse syntaksen for modulet <name>
 de_DE.UTF-8	Kann keine Syntax für <name> mod laden
@@ -663,6 +702,7 @@ uk_UA.UTF-8	не можу завантажити синтаксис для мо�
 # command line options
 
 text		select a specific programming mod
+ca_ES.UTF-8	escull un mode de programació
 cs_CZ.UTF-8	vyber programovací mód
 da_DK.UTF-8	vælg et specifik programmeringsmodul
 de_DE.UTF-8	Wähle ein Programmier Mod aus
@@ -679,6 +719,7 @@ tr_TR.UTF-8	bir programlama dili seçin
 uk_UA.UTF-8	обрати програмний мод
 
 text		size of tiles in pixels
+ca_ES.UTF-8	tamany de les caselles en píxels
 cs_CZ.UTF-8	velikost polí v pixelech
 da_DK.UTF-8	flisernes størrelse i pixels
 de_DE.UTF-8	Kachelgröße in Pixeln
@@ -697,6 +738,7 @@ tr_TR.UTF-8	kiremitlerin piksel cinsinden büyüklüğü
 uk_UA.UTF-8	розмір комірки в пікселях
 
 text		language
+ca_ES.UTF-8	idioma
 cs_CZ.UTF-8	jazyk
 da_DK.UTF-8	sprog
 de_DE.UTF-8	Sprache
@@ -717,6 +759,7 @@ uk_UA.UTF-8	мова
 # sound.ml
 
 text		sound configuration
+ca_ES.UTF-8	configuració de so
 cs_CZ.UTF-8	nastavení zvuku
 da_DK.UTF-8	lydkonfiguration
 de_DE.UTF-8	Sound Konfiguration
@@ -736,6 +779,7 @@ tr_TR.UTF-8	ses ayarları
 uk_UA.UTF-8	налаштування звуку
 
 text		enable or disable sounds
+ca_ES.UTF-8	activar o desactivar el so.
 cs_CZ.UTF-8	zapnout nebo vypnout zvuk
 da_DK.UTF-8	aktiver eller deaktiver lyde
 de_DE.UTF-8	Sounds aktivieren/deaktivieren
@@ -758,6 +802,7 @@ uk_UA.UTF-8	ввімкнути чи вимкнути звук
 # level.ml
 
 text		unknown tile
+ca_ES.UTF-8	casella desconeguda
 cs_CZ.UTF-8	neznámé pole
 da_DK.UTF-8	ukendt flise
 de_DE.UTF-8	Unbekanntes Teil
@@ -777,6 +822,7 @@ tr_TR.UTF-8	bilinmeyen tuğla
 uk_UA.UTF-8	невідома комірка
 
 text		mismatching line length
+ca_ES.UTF-8	la longitud de la línia no és correcta
 cs_CZ.UTF-8	chybná délka řádku
 da_DK.UTF-8	fejl i linjehøjde
 de_DE.UTF-8	Zeilenlänge verfehlt
@@ -796,6 +842,7 @@ tr_TR.UTF-8	eşleşmeyen hat uzunluğu
 uk_UA.UTF-8	невідповідна довжина рядка
 
 text		bad level format: <file>
+ca_ES.UTF-8	nivell mal format al fitxer <file>
 cs_CZ.UTF-8	špatný formát úrovně: <file>
 da_DK.UTF-8	fejl i level-format: <file>
 en_US.UTF-8	bad level format: <file>
@@ -814,6 +861,7 @@ tr_TR.UTF-8	yanlış dosya formatı: <file>
 uk_UA.UTF-8	помилковий формат рівня: <file>
 
 text		missing level section <name> in: <file>
+ca_ES.UTF-8	la secció <name> no es troba al nivell <file>
 cs_CZ.UTF-8	chybí sekce <name> úrovně>: <file>
 da_DK.UTF-8	manglende level-sektion <name> i: <file>
 de_DE.UTF-8	Fehlende Levelsektion <name> in: <file>
@@ -836,6 +884,7 @@ uk_UA.UTF-8	відсутня секція рівня <name> в: <file>
 # laby.ml
 
 text		programming languages
+ca_ES.UTF-8	llenguatges de programació
 cs_CZ.UTF-8	programovací jazyky
 da_DK.UTF-8	programmeringssprog
 de_DE.UTF-8	Programmiersprachen
@@ -858,6 +907,7 @@ uk_UA.UTF-8	мова програмування
 # bot.ml
 
 text		execution of interpreter failed
+ca_ES.UTF-8	l'execució de l'intèrpret ha fallat
 cs_CZ.UTF-8	selhalo provedení překladače
 da_DK.UTF-8	kørsel af fortolker mislykkedes
 de_DE.UTF-8	Ausführung des Interpreters fehlgeschlagen
@@ -880,6 +930,7 @@ uk_UA.UTF-8	помилка в роботі інтерпретатора
 # misc
 
 text		display failed
+ca_ES.UTF-8	no es pot mostrar
 cs_CZ.UTF-8	zobrazení selhalo
 da_DK.UTF-8	visning mislykkedes
 de_DE.UTF-8	Anzeige fehlgeschlagen
@@ -899,6 +950,7 @@ tr_TR.UTF-8	görüntü hatası
 uk_UA.UTF-8	неможливо відкрити вікно
 
 text		gtk error: <error>
+ca_ES.UTF-8	error de gtk: <error>
 cs_CZ.UTF-8	chyba gtk: <error>
 da_DK.UTF-8	fejl i gtk: <error>
 de_DE.UTF-8	gtk Fehler: <error>
@@ -921,6 +973,7 @@ uk_UA.UTF-8	помилка gtk: <error>
 # dtools
 
 text		file <f>, line <l>: <error>
+ca_ES.UTF-8	fitxer <f>, línia <l>: <error>
 cs_CZ.UTF-8	soubor <f>, řádek <l>: <error>
 da_DK.UTF-8	fil <f>, linje <l>: <error>
 de_DE.UTF-8	Datei <f>, Zeile <l>: <error>
@@ -940,6 +993,7 @@ tr_TR.UTF-8	dosya <f>, satır <l>: <error>
 uk_UA.UTF-8	файл <f>, рядок <l>: <error>
 
 text		line <l>, characters <begin-char>-<end-char>
+ca_ES.UTF-8	línia <l>, caràcters <begin-char>-<end-char>
 cs_CZ.UTF-8	řádek <l>, znaky <begin-char>-<end-char>
 da_DK.UTF-8	linje <l>, tegn <begin-char>-<end-char>
 de_DE.UTF-8	Zeile <l>, Zeichen <begin-char>-<end-char>
@@ -959,6 +1013,7 @@ tr_TR.UTF-8	satır <l>, karakterler <begin-char>-<end-char>
 uk_UA.UTF-8	рядок <l>, позиція <begin-char>-<end-char>
 
 text		line <l>, character <char>
+ca_ES.UTF-8	línia <l>, caràcter <char>
 cs_CZ.UTF-8	řádek <l>, znak <char>
 da_DK.UTF-8	linje <l>, tegn <char>
 de_DE.UTF-8	Zeile <l>, Zeichen <char>
@@ -978,6 +1033,7 @@ tr_TR.UTF-8	satır <l>, karakter <char>
 uk_UA.UTF-8	рядок <l>, позиція <char>
 
 text		lexical error
+ca_ES.UTF-8	error lèxic
 cs_CZ.UTF-8	chyba lexikonu
 da_DK.UTF-8	leksikalsk fejl
 de_DE.UTF-8	Lexikalischer Fehler
@@ -997,6 +1053,7 @@ tr_TR.UTF-8	sözlük hatası
 uk_UA.UTF-8	лексична помилка
 
 text		syntax error
+ca_ES.UTF-8	error de sintaxi
 cs_CZ.UTF-8	chyba syntaxe
 da_DK.UTF-8	syntaksfejl
 de_DE.UTF-8	Syntax Fehler
@@ -1016,25 +1073,27 @@ tr_TR.UTF-8	sözdizimi hatası
 uk_UA.UTF-8	синтаксична помилка
 
 text		<status>: <message>
+ca_ES.UTF-8	<status>: <message>
 cs_CZ.UTF-8	<status>: <message>
 da_DK.UTF-8	<status>: <message>
 de_DE.UTF-8	<status>: <message>
 en_US.UTF-8	<status>: <message>
 es_MX.UTF-8	<status>: <message>
-fr_FR.UTF-8	<status> : <message>
-gl_ES.UTF-8	<status> : <message>
-hu_HU.UTF-8	<status> : <message>
+fr_FR.UTF-8	<status>: <message>
+gl_ES.UTF-8	<status>: <message>
+hu_HU.UTF-8	<status>: <message>
 it_IT.UTF-8	<status>: <message>
 nl_NL.UTF-8	<status>: <message>
-pl_PL.UTF-8	<status> : <message>
+pl_PL.UTF-8	<status>: <message>
 pt_BR.UTF-8	<status>: <message>
-ru_RU.UTF-8	<status> : <message>
+ru_RU.UTF-8	<status>: <message>
 sq_AL.UTF-8	<status>: <message>
-sv_SV.UTF-8	<status> : <message>
-tr_TR.UTF-8	<status> : <message>
-uk_UA.UTF-8	<status> : <message>
+sv_SV.UTF-8	<status>: <message>
+tr_TR.UTF-8	<status>: <message>
+uk_UA.UTF-8	<status>: <message>
 
 text		exception
+ca_ES.UTF-8	excepció
 cs_CZ.UTF-8	výjimka
 da_DK.UTF-8	undtagelse
 de_DE.UTF-8	Ausnahme
@@ -1054,6 +1113,7 @@ tr_TR.UTF-8	ayrıcalık
 uk_UA.UTF-8	виключення
 
 text		internal error
+ca_ES.UTF-8	error intern
 cs_CZ.UTF-8	vnitřní chyba
 da_DK.UTF-8	intern fejl
 de_DE.UTF-8	Interner Fehler
@@ -1073,6 +1133,7 @@ tr_TR.UTF-8	iç hata
 uk_UA.UTF-8	внутрішня помилка
 
 text		fatal error
+ca_ES.UTF-8	error fatal
 cs_CZ.UTF-8	fatální chyba
 da_DK.UTF-8	fatal fejl
 de_DE.UTF-8	Fataler Fehler
@@ -1092,6 +1153,7 @@ tr_TR.UTF-8	önemli hata
 uk_UA.UTF-8	фатальна помилка
 
 text		error
+ca_ES.UTF-8	error
 cs_CZ.UTF-8	chyba
 da_DK.UTF-8	fejl
 de_DE.UTF-8	Fehler
@@ -1111,6 +1173,7 @@ tr_TR.UTF-8	hata
 uk_UA.UTF-8	помилка
 
 text		warning
+ca_ES.UTF-8	advertència
 cs_CZ.UTF-8	varování
 da_DK.UTF-8	advarsel
 de_DE.UTF-8	Achtung
@@ -1130,6 +1193,7 @@ tr_TR.UTF-8	uyarı
 uk_UA.UTF-8	попередження
 
 text		debug
+ca_ES.UTF-8	depuració
 cs_CZ.UTF-8	debug
 da_DK.UTF-8	fejlfinding
 de_DE.UTF-8	Debug
@@ -1149,6 +1213,7 @@ tr_TR.UTF-8	hata ayıklama
 uk_UA.UTF-8	налагодження
 
 text		failure
+ca_ES.UTF-8	fallada
 cs_CZ.UTF-8	selhání
 da_DK.UTF-8	fejl
 de_DE.UTF-8	Fehlschlag
@@ -1168,6 +1233,7 @@ tr_TR.UTF-8	başarısız
 uk_UA.UTF-8	збій
 
 text		done
+ca_ES.UTF-8	fet
 cs_CZ.UTF-8	hotovo
 da_DK.UTF-8	færdig
 de_DE.UTF-8	fertig
@@ -1187,6 +1253,7 @@ tr_TR.UTF-8	tamamlandı
 uk_UA.UTF-8	готово
 
 text		line <l>
+ca_ES.UTF-8	línia <l>
 cs_CZ.UTF-8	řádek <l>
 da_DK.UTF-8	linje <l>
 de_DE.UTF-8	Zeile <l>
@@ -1206,6 +1273,7 @@ tr_TR.UTF-8	satır <l>
 uk_UA.UTF-8	рядок <l>
 
 text		unknown token
+ca_ES.UTF-8	lexema desconegut
 cs_CZ.UTF-8	neznámý token
 da_DK.UTF-8	ukendt symbol
 de_DE.UTF-8	Unbekanntes Zeichen
@@ -1225,6 +1293,7 @@ tr_TR.UTF-8	bilinmeyen simge
 uk_UA.UTF-8	невідомий токен
 
 text		unknown type
+ca_ES.UTF-8	tipus desconegut
 cs_CZ.UTF-8	neznámý typ
 da_DK.UTF-8	ukendt type
 de_DE.UTF-8	Unbekannter Typ
@@ -1244,12 +1313,13 @@ tr_TR.UTF-8	bilinmeyen tip
 uk_UA.UTF-8	невідомий тип
 
 text		failed to load file: <error>
+ca_ES.UTF-8	error al carregar el fitxer: <error>
 cs_CZ.UTF-8	nepodařilo se nahrát soubor: <error>
 da_DK.UTF-8	filindlæsning mislykkedes: <error>
 de_DE.UTF-8	Fehler beim Laden der Datei: <error>
 en_US.UTF-8	failed to load file: <error>
 es_MX.UTF-8	no se pudo cargar el archivo: <error>
-fr_FR.UTF-8	échec pendant le chargement du fichier : <error>
+fr_FR.UTF-8	échec pendant le chargement du fichier: <error>
 gl_ES.UTF-8	non foi posíbel cargar o ficheiro: <error>
 hu_HU.UTF-8	sikertelen fájlbetöltés: <error>
 it_IT.UTF-8	errore nel caricamento del file: <error>
@@ -1263,7 +1333,9 @@ tr_TR.UTF-8	seviye dosyası yüklenemedi: <error>
 uk_UA.UTF-8	помилка завантаження файлу: <error>
 
 text		<type> value expected
+ca_ES.UTF-8	esperava un valor de tipus <type>
 en_US.UTF-8	<type> value expected
+es_MX.UTF-8	se esperaba un valor de tipo <type>
 fr_FR.UTF-8	valeur de type <type> attendue
 gl_ES.UTF-8	agardase un valor do tipo <type>
 hu_HU.UTF-8	<type> típust várok
@@ -1272,7 +1344,9 @@ sq_AL.UTF-8	pritej një vlerë <type>
 sv_SV.UTF-8	<type> värde förväntades
 
 text		the given configuration key has type <type>
+ca_ES.UTF-8	la clau de configuració indicada és de tipus <type>
 en_US.UTF-8	the given configuration key has type <type>
+es_MX.UTF-8	la llave de configuración indicada es de tipo <type>
 fr_FR.UTF-8	la clé de configuration donnée a le type <type>
 gl_ES.UTF-8	a chave de configuración indicada ten o tipo <type>
 hu_HU.UTF-8	a megadott konfigurációs billentyű <type> típusú
@@ -1281,7 +1355,9 @@ sq_AL.UTF-8	çelësi i dhënë i konfigurimit ka tip <type>
 sv_SV.UTF-8	viss konfiguration nyckeln typ <type>
 
 text		the given configuration key cannot be assigned a value
+ca_ES.UTF-8	no pot assignar-se un valor a la clau de configuració indicada
 en_US.UTF-8	the given configuration key cannot be assigned a value
+es_MX.UTF-8	no puede asignarse un valor a la llave de configuración indicada
 fr_FR.UTF-8	la clé de configuration donnée ne peut recevoir une valeur
 gl_ES.UTF-8	a chave de configuración indicada non pode recibir un valor
 hu_HU.UTF-8	a megadott konfigurációs billentyűhöz nem rendelhető érték
@@ -1290,7 +1366,9 @@ sq_AL.UTF-8	çelësit të dhënë të konfigurimit nuk mund ti jepet një vlerë
 sv_SV.UTF-8	den givna konfiguration nyckeln kan inte få värdet
 
 text		assignation syntax is <syntax>
+ca_ES.UTF-8	la sintaxi per a una assignació és <syntax>
 en_US.UTF-8	assignation syntax is <syntax>
+es_MX.UTF-8	la sintaxis para una asignación es <syntax>
 fr_FR.UTF-8	la syntaxe pour une assignation est <syntax>
 gl_ES.UTF-8	a sintaxe para unha asignación é <syntax>
 hu_HU.UTF-8	jogosultsági szintaxis: <syntax>
@@ -1298,7 +1376,9 @@ it_IT.UTF-8	la sintassi di assegnazione è <syntax>
 sq_AL.UTF-8	sintaksa e vlerëdhënies është <syntax>
 
 text		set a configuration key
+ca_ES.UTF-8	estableix una clau de configuració
 en_US.UTF-8	set a configuration key
+es_MX.UTF-8	establece una llave de configuración
 fr_FR.UTF-8	spécifie une clé de configuration
 gl_ES.UTF-8	estabelecer unha chave de configuración
 hu_HU.UTF-8	konfigurációs billentyű beállítása
@@ -1306,7 +1386,9 @@ it_IT.UTF-8	imposta una chiave di configurazione
 sq_AL.UTF-8	vendos një çelës konfigurimi
 
 text		describe a configuration key
+ca_ES.UTF-8	descriu una clau de configuració
 en_US.UTF-8	describe a configuration key
+es_MX.UTF-8	describe una llave de configuración
 fr_FR.UTF-8	décrit une clé de configuration
 gl_ES.UTF-8	describa unha chave de configuración
 hu_HU.UTF-8	írd le a konfigurációs billentyűt
@@ -1314,7 +1396,9 @@ it_IT.UTF-8	descrivi una chiave di configurazione
 sq_AL.UTF-8	përshkruaj një çelës konfigurimi
 
 text		dump a configuration key
+ca_ES.UTF-8	volcar una clau de configuració
 en_US.UTF-8	dump a configuration key
+es_MX.UTF-8	volcar una llave de configuración
 fr_FR.UTF-8	extrait une clé de configuration
 gl_ES.UTF-8	envorque unha chave de configuración
 hu_HU.UTF-8	nyomd le a konfigurációs billentyűt
@@ -1322,7 +1406,9 @@ it_IT.UTF-8	restituisci una chiave di configurazione
 sq_AL.UTF-8	zbraz një çelës konfigurimi
 
 text		log configuration
+ca_ES.UTF-8	configuració dels registres
 en_US.UTF-8	log configuration
+es_MX.UTF-8	configuración de los registros
 fr_FR.UTF-8	configuration des ‘log’s
 gl_ES.UTF-8	rexistro da configuración
 hu_HU.UTF-8	‘log’ konfiguráció
@@ -1330,7 +1416,9 @@ it_IT.UTF-8	log di configurazione
 sq_AL.UTF-8	konfigurimi i shënimeve
 
 text		general log level
+ca_ES.UTF-8	nivell de registre general
 en_US.UTF-8	general log level
+es_MX.UTF-8	nivel de registro general
 fr_FR.UTF-8	niveau de ‘log’ général
 gl_ES.UTF-8	nivel do rexistro xeral
 hu_HU.UTF-8	általános ‘log’ szint
@@ -1338,7 +1426,9 @@ it_IT.UTF-8	log generale di livello
 sq_AL.UTF-8	niveli i shënimeve të përgjithshme
 
 text		subordinate log level
+ca_ES.UTF-8	nivell de registre subordinat
 en_US.UTF-8	subordinate log level
+es_MX.UTF-8	nivel de registro subordinado
 fr_FR.UTF-8	niveau de ‘log’ subordonné
 gl_ES.UTF-8	nivel do rexistro subordinado
 hu_HU.UTF-8	alárendelt ‘log’ szint
@@ -1349,15 +1439,19 @@ sq_AL.UTF-8	niveli i shënimeve të varura
 # opt.ml
 
 text		invalid options: <errors>
+ca_ES.UTF-8	opcions incorrectes: <errors>
 en_US.UTF-8	invalid options: <errors>
-fr_FR.UTF-8	options incorrectes : <errors>
+es_MX.UTF-8	opciones incorrectas: <errors>
+fr_FR.UTF-8	options incorrectes: <errors>
 gl_ES.UTF-8	opcións incorrectas: <errors>
 hu_HU.UTF-8	rossz opció: <errors>
 it_IT.UTF-8	opzione non valida: <errors>
 sq_AL.UTF-8	zgjedhje të pavlefshme: <errors>
 
 text		unknown option <opt>
+ca_ES.UTF-8	<opt>: opció desconeguda
 en_US.UTF-8	unknown option <opt>
+es_MX.UTF-8	<opt>: opción desconocida
 fr_FR.UTF-8	option <opt> inconnue
 gl_ES.UTF-8	opción descoñecida <opt>
 hu_HU.UTF-8	ismeretlen <opt> opció
@@ -1365,7 +1459,9 @@ it_IT.UTF-8	opzione sconosciuta <opt>
 sq_AL.UTF-8	zgjedhje e panjohur <opt>
 
 text		option <opt> does not take an argument
+ca_ES.UTF-8	la opció <opt> no permet arguments
 en_US.UTF-8	option <opt> does not take an argument
+en_MX.UTF-8 la opción <opt> no permite argumentos
 fr_FR.UTF-8	l'option <opt> ne prend pas d'argument
 gl_ES.UTF-8	a opción <opt> non usa argumentos
 hu_HU.UTF-8	<opt> opciónak nincs argumentuma
@@ -1373,7 +1469,9 @@ it_IT.UTF-8	l'opzione <opt> non accetta argomenti
 sq_AL.UTF-8	zgjedhja <opt> nuk merr argument
 
 text		option <opt> requires an argument
+ca_ES.UTF-8	la opció <opt> requereix un argument
 en_US.UTF-8	option <opt> requires an argument
+es_MX.UTF-8	la opción <opt> requiere un argumento
 fr_FR.UTF-8	l'option <opt> nécessite un argument
 gl_ES.UTF-8	a opción <opt> require un argumento
 hu_HU.UTF-8	<opt> opciónak argumentumra van szüksége
@@ -1381,7 +1479,9 @@ it_IT.UTF-8	l'opzione <opt> richiede un argomento
 sq_AL.UTF-8	zgjedhja <opt> kërkon një argument
 
 text		multiple exclusive actions specified
+ca_ES.UTF-8	múltiples accions exclusives especificades
 en_US.UTF-8	multiple exclusive actions specified
+es_MX.UTF-8	múltiples acciones exclusivas especificadas
 fr_FR.UTF-8	plusieurs actions exclusives ont été spécifiées
 gl_ES.UTF-8	especificáronse múltiplas accións exclusivas
 hu_HU.UTF-8	több kizárólagos akció van leírva
@@ -1389,15 +1489,18 @@ it_IT.UTF-8	selezionate operazioni esclusive multiple
 sq_AL.UTF-8	janë dhënë veprime që përjashtojnë njëri-tjetrin
 
 text		invalid argument in <exp>: <error>
+ca_ES.UTF-8	argument invalid a <exp>: <error>
 en_US.UTF-8	invalid argument in <exp>: <error>
-fr_FR.UTF-8	argument invalide dans <exp> : <error>
+fr_FR.UTF-8	argument invalide dans <exp>: <error>
 gl_ES.UTF-8	argumento incorrecto en <exp>: <error>
 hu_HU.UTF-8	helytelen argumentum: <exp>: <error>
 it_IT.UTF-8	argomento non valido in <exp>: <error>
 sq_AL.UTF-8	argument i pavlefshëm në <exp>: <error>
 
 text		this key cannot be assigned a value
+ca_ES.UTF-8	No és possible assignar un valor a aquesta clau
 en_US.UTF-8	this key cannot be assigned a value
+es_MX.UTF-8	No es posible asignar un valor a esta llave
 fr_FR.UTF-8	impossible d'assigner une valeur à cette clé
 gl_ES.UTF-8	non é posíbel asignar un valor a esta chave
 hu_HU.UTF-8	ez a billentyű nem rendelhető értékhez
@@ -1405,7 +1508,9 @@ it_IT.UTF-8	impossibile assegnare un valore a questa chiave
 sq_AL.UTF-8	këtij çelësi nuk mund ti jepet vlerë
 
 text		expected type for this key is <type>
+ca_ES.UTF-8	El tipus esperat per a aquesta clau és <type>
 en_US.UTF-8	expected type for this key is <type>
+es_MX.UTF-8	El tipo esperado para esta llave es <type>
 fr_FR.UTF-8	le type attendu pour cette clé est <type>
 gl_ES.UTF-8	o tipo agardado por esta chave é <type>
 hu_HU.UTF-8	várt érték ehhez a billentyűhöz: <type>
@@ -1413,7 +1518,9 @@ it_IT.UTF-8	questa chiave accetta valori di tipo <type>
 sq_AL.UTF-8	tipi që pritet për këtë çelës është <type>
 
 text		display help message
+ca_ES.UTF-8	mostrar missatge d'ajuda
 en_US.UTF-8	display help message
+es_MX.UTF-8	mostrar mensaje de ayuda
 fr_FR.UTF-8	affiche un message d'aide
 gl_ES.UTF-8	amosar a mensaxe de erro
 hu_HU.UTF-8	segítő szöveg megjelenítése
@@ -1421,7 +1528,9 @@ it_IT.UTF-8	mostra messaggio di aiuto
 sq_AL.UTF-8	shfaq një mesazh ndihme
 
 text		output debug information
+ca_ES.UTF-8	informació sortida de la depuració
 en_US.UTF-8	output debug information
+es_MX.UTF-8	información salida de la depuración
 fr_FR.UTF-8	émet des messages de debug
 gl_ES.UTF-8	información da saída de depuración
 hu_HU.UTF-8	kimeneti hibakereső információ
@@ -1429,7 +1538,9 @@ it_IT.UTF-8	output delle informazioni di debug
 sq_AL.UTF-8	nxirr mesazhe korrigjimi
 
 text		log output to a file
+ca_ES.UTF-8	guardar la sortida a un fitxer
 en_US.UTF-8	log output to a file
+es_MX.UTF-8	guardar la salida a un archivo
 fr_FR.UTF-8	enregistre la sortie vers un fichier
 gl_ES.UTF-8	rexistrar a saída nun ficheiro
 hu_HU.UTF-8	‘log’ kimenet egy fájlba
@@ -1437,7 +1548,9 @@ it_IT.UTF-8	log dell'output su file
 sq_AL.UTF-8	rregjistro daljet në një skedar
 
 text		select theme file
+ca_ES.UTF-8	escull un fitxer de tema
 en_US.UTF-8	select theme file
+es_MX.UTF-8	escoja un archivo de tema
 fr_FR.UTF-8	choix du fichier de thème
 gl_ES.UTF-8	escolla un ficheiro de tema
 hu_HU.UTF-8	válassz témafájlt
@@ -1447,7 +1560,9 @@ sq_AL.UTF-8	zgjidh skedarin e temës
 # version.ml
 
 text		show versioning information
+ca_ES.UTF-8	mostrar informació de la versió
 en_US.UTF-8	show versioning information
+es_MX.UTF-8	mostrar información de la versión
 fr_FR.UTF-8	affiche les indications de version
 gl_ES.UTF-8	amosar a información do versionado
 hu_HU.UTF-8	vercióinformációk megjelenítése
@@ -1455,8 +1570,10 @@ it_IT.UTF-8	mostra informazioni sulla versione
 sq_AL.UTF-8	shfaq versionin
 
 text		this option accepts the following arguments: <list>
+ca_ES.UTF-8	aquesta opció accepta els següents arguments: <list>
 en_US.UTF-8	this option accepts the following arguments: <list>
-fr_FR.UTF-8	cette option accepte les arguments suivants : <list>
+es_MX.UTF-8	esta opción admite los siguientes argumentos: <list>
+fr_FR.UTF-8	cette option accepte les arguments suivants: <list>
 gl_ES.UTF-8	esta opción acepta os seguintes argumentos: <list>
 hu_HU.UTF-8	ez a beállítás a következő argumentumokat fogadja el: <list>
 it_IT.UTF-8	questa opzione accetta i seguenti argomenti: <list>
@@ -1466,7 +1583,9 @@ sq_AL.UTF-8	kjo zgjedhje pranon argumentat e mëposhtëm: <list>
 # data.ml
 
 text		unknown os type
+ca_ES.UTF-8	sistema operatiu desconegut
 en_US.UTF-8	unknown os type
+es_MX.UTF-8	sistema operativo desconocido
 fr_FR.UTF-8	système d'exploitation inconnu
 gl_ES.UTF-8	tipo de sistema operativo decoñecido
 hu_HU.UTF-8	ismeretlen operációs rendszer
@@ -1474,7 +1593,9 @@ it_IT.UTF-8	sistema operativo sconosciuto
 sq_AL.UTF-8	sistem shfrytëzimi i panjohur
 
 text		cannot access <path>
+ca_ES.UTF-8	impossible accedir a <path>
 en_US.UTF-8	cannot access <path>
+es_MX.UTF-8	imposible acceder a <path>
 fr_FR.UTF-8	impossible d'accéder à <path>
 gl_ES.UTF-8	non é posíbel acceder a <path>
 hu_HU.UTF-8	nincs jogosultságod hozzáférni ehhez: <path>
@@ -1482,8 +1603,10 @@ it_IT.UTF-8	non posos accedere al percorso <path>
 sq_AL.UTF-8	nuk mund të hapet <path>
 
 text		cannot find resource <resource> in: <list>
+ca_ES.UTF-8	no pot trobar-se el recurs <resource> a: <list>
 en_US.UTF-8	cannot find resource <resource> in: <list>
-fr_FR.UTF-8	ressource <resource> introuvable dans : <list>
+es_MX.UTF-8	imposible encontrar el recurso <resource> en: <list>
+fr_FR.UTF-8	ressource <resource> introuvable dans: <list>
 gl_ES.UTF-8	non é posíbel atopar o recurso <resource> en: <list>
 hu_HU.UTF-8	nem található <resource> eszköz ebben: <list>
 it_IT.UTF-8	non posso trovare il file di risorse <resource> in: <list>
@@ -1493,7 +1616,9 @@ sq_AL.UTF-8	nuk mund të gjendet <resource> në: <list>
 # run.ml
 
 text		activate debug mode
+ca_ES.UTF-8	activar el mode de depuració
 en_US.UTF-8	activate debug mode
+es_MX.UTF-8	activar el modo de depuración
 fr_FR.UTF-8	activer le mode ‘debug’
 gl_ES.UTF-8	activar o modo de depuración
 hu_HU.UTF-8	hibakereső mód aktiválása
