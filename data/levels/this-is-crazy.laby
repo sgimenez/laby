@@ -13,6 +13,7 @@ o o o o o o o o o o o o o o o
 
 title:
 text		This is crazy!
+ca_ES.UTF-8	Això és una bogeria!
 cs_CZ.UTF-8	To je šílený!
 da_DK.UTF-8	Det er vanvittigt!
 en_US.UTF-8	This is crazy!
@@ -26,6 +27,7 @@ tr_TR.UTF-8	Bu çılgınlık!
 
 comment:
 text		Multiple difficulties for yet another challenge!
+ca_ES.UTF-8	Els obstàcles es multipliquen!
 cs_CZ.UTF-8	Spousta překážek jako poslední výzva!
 da_DK.UTF-8	Mange problemer i den sidste udfordring.
 en_US.UTF-8	Multiple difficulties for yet another challenge!
