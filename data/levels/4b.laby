@@ -11,12 +11,13 @@ o o o o o o o o o o o o .
 
 title:
 text		Which way?
+ca_ES.UTF-8	Per quin camí?
 cs_CZ.UTF-8	Kudy?
 da_DK.UTF-8	Hvilken vej?
 de_DE.UTF-8	Welcher Weg?
 en_US.UTF-8	Which way?
 es_MX.UTF-8	¿A dónde?
-fr_FR.UTF-8	Par où passer ?
+fr_FR.UTF-8	Par où passer ?
 gl_ES.UTF-8	Que camiño?
 hu_HU.UTF-8	Melyik út?
 it_IT.UTF-8	Da dove passare?
@@ -30,11 +31,12 @@ tr_TR.UTF-8	Hangi yoldan?
 
 comment:
 text		The last challenge!
+ca_ES.UTF-8	L'última prova!
 cs_CZ.UTF-8	Poslední výzva!
 da_DK.UTF-8	Den sidste udfordring!
 de_US.UTF-8	Die letzte Herausforderung!
 en_US.UTF-8	The last challenge!
-fr_FR.UTF-8	Le dernier défi !
+fr_FR.UTF-8	Le dernier défi !
 gl_ES.UTF-8	O úlltimo reto!
 hu_HU.UTF-8	Az utolsó kihívás!
 it_IT.UTF-8	L'ultima sfida!

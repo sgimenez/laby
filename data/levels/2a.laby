@@ -8,6 +8,7 @@ loop
 
 title:
 text		So far
+ca_ES.UTF-8	Fins ara
 cs_CZ.UTF-8	Tak daleko
 da_DK.UTF-8	Så langt
 de_DE.UTF-8	So weit
@@ -27,12 +28,13 @@ tr_TR.UTF-8	Çok uzak…
 
 comment:
 text		Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.
+ca_ES.UTF-8	Fàcil, oi? L'objectiu aquí és escriure un petit programa utilitzant un bucle “while” que digui al robot que avanci mentre la casella de davant seu estigui lliure.
 cs_CZ.UTF-8	Vypadá to jednoduše? Cílem je napsat krátký program s využitím smyčky “while”, která říká robotovi, aby šel vpřed dokud je pole před ním prázdné.
 da_DK.UTF-8	Det er let, er det ikke? Målet her er et skrive et kort program med et “while”-loop, som fortæller robotten at den skal gå frem, så længe flisen foran den er ledig.
 de_DE.UTF-8	Einfach, oder? Hier ist das Ziel, ein kurzes Programm zu schreiben, dass eine “while”-Schleife benutzt, welche dem Roboter sagt, dass er so alnge vorwärts gehen soll, solange das Feld vor ihm frei ist.
 en_US.UTF-8	Easy isn't it? The goal here is to write a short program using a “while” loop which tells the robot to go forward as long as the tile in front of it is free.
 es_MX.UTF-8	Fácil, ¿verdad? El objetivo aquí es escribir un breve programa empleando un bucle “while” que le diga al robot que avance mientras la casilla delante de él esté vacía.
-fr_FR.UTF-8	Simple pas vrai ? Le but du jeu ici c'est d'écrire un programme court en utilisant une boucle “while” qui dit au robot d'avancer tant que la case devant lui est vide.
+fr_FR.UTF-8	Simple pas vrai ? Le but du jeu ici c'est d'écrire un programme court en utilisant une boucle “while” qui dit au robot d'avancer tant que la case devant lui est vide.
 gl_ES.UTF-8	Doado non? O obxectivo aquí é escribir un programa curto cun un bucle «while» que dille ao robot que siga adiante, sempre e cando a baldosa ao fronte estea baleira.
 hu_HU.UTF-8	Egyszerű, mi? A cél, hogy írj egy rövidke programot a “while” ciklus használatával, amely megmondja a robotnak, hogy menjen előre, amíg nincs előtte akadály.
 it_IT.UTF-8	Facile no? Lo scopo di questo livello è di scrivere un programma molto corto utilizzando il ciclo “while” che dice al robot di avanzare finchè davanti a lui c'è del Vuoto.

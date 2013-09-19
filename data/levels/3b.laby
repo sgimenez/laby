@@ -10,6 +10,7 @@ o o o o o
 
 title:
 text		Webs and rocks
+ca_ES.UTF-8	Teranyines i pedres
 cs_CZ.UTF-8	Pavučiny a kameny
 da_DK.UTF-8	Spindelvæv og sten
 de_DE.UTF-8	Netze und Steine
@@ -28,12 +29,13 @@ tr_TR.UTF-8	Ağlar ve taşlar
 
 comment:
 text		Woh it becomes increasingly complicated!
+ca_ES.UTF-8	Vaja! Això s'ha complicat en un moment!
 cs_CZ.UTF-8	A teď se to komplikuje!
 da_DK.UTF-8	Wow, det bliver mere og mere komplikeret!
 de_DE.UTF-8	Oha, es wird kompliziert!
 en_US.UTF-8	Woh it becomes increasingly complicated!
 es_MX.UTF-8	¡Buf, esto se ha complicado rápidamente!
-fr_FR.UTF-8	Oula ça devient de plus en plus compliqué !
+fr_FR.UTF-8	Oula ça devient de plus en plus compliqué !
 gl_ES.UTF-8	Vaites! Isto cada volta complicase máis!
 hu_HU.UTF-8	Váó! Egy kicsit komplikáltabb a feladatod!
 it_IT.UTF-8	Whoao diventa sempre più difficile!

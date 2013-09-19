@@ -10,6 +10,7 @@ rocks
 
 title:
 text		Oh a rock
+ca_ES.UTF-8	Oh, una pedra
 cs_CZ.UTF-8	Pozor kámen
 da_DK.UTF-8	Åh, en sten
 de_DE.UTF-8	Oha, ein Stein
@@ -29,6 +30,7 @@ tr_TR.UTF-8	Eyvah bir kaya
 
 comment:
 text		A rock is in the way. Use specific instructions to take and drop rocks.
+ca_ES.UTF-8	Hi ha una pedra al mig del camí. Utilitza instruccions específiques per a agafar i deixar anar pedres.
 cs_CZ.UTF-8	V cestě stojí kámen. Použij přikazy abys vzal a položil kámen.
 da_DK.UTF-8	En sten er i vejen. Brug specifikke instruktioner til at samle sten op og lægge dem igen.
 de_DE.UTF-8	Ein Stein ist im Weg. Benutze genaue Anleitungen um den Stein aufzuheben und abzulegen.

@@ -13,6 +13,7 @@ o o o o o o o o o o o o o o .
 
 title:
 text		Counting the rocks
+ca_ES.UTF-8	Comptant les pedres
 cs_CZ.UTF-8	Počítání kamenů
 da_DK.UTF-8	Tæl stenene
 en_US.UTF-8	Counting the rocks
@@ -26,10 +27,12 @@ tr_TR.UTF-8	Taşları saymak
 
 comment:
 text		This level is easily solved when you can count… The “for” loop is there for you!
+ca_ES.UTF-8	Aquest nivell és fàcil de resoldre si saps comptar… el bucle “for” està aquí per a tu!
 cs_CZ.UTF-8	Tahle úroveň je lehká, když umíš počíta. Smyčka “for” je tu pro tebe.
 da_DK.UTF-8	Denne bane er let at klare når du kan tælle… “for”-loop'et er der for dig!
 en_US.UTF-8	This level is easily solved when you can count… The “for” loop is there for you!
-fr_FR.UTF-8	Ce niveau se résout facilement quand on peut compter… La boucle “for” est là pour vous !
+es_MX.UTF-8 Este nivel es fácil de resolver si sabes contar… ¡El bucle “for” está ahí para tí!
+fr_FR.UTF-8	Ce niveau se résout facilement quand on peut compter… La boucle “for” est là pour vous !
 it_IT.UTF-8	Questo livello è facile da passare contando… Il ciflo “for” è un buon strumento.
 nl_NL.UTF-8	Dit niveau is makkelijk op te lossen, als je kan tellen… Hier heb je de “for” lus!
 pl_PL.UTF-8	Poziom ten możesz łatwo rozwiązać, gdy użyjesz pętli “for”, która pozwala powtórzyć instrukcje kilka razy.

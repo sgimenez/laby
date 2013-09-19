@@ -5,6 +5,7 @@ o o o o o o o o
 
 title:
 text		Still one
+ca_ES.UTF-8	Encara n'hi ha un
 cs_CZ.UTF-8	Ještě jeden
 da_DK.UTF-8	Stadig en
 de_DE.UTF-8	Noch einer
@@ -24,12 +25,13 @@ tr_TR.UTF-8	Hala bir tane var
 
 comment:
 text		Again, there is a rock. It's inside a corridor. How do you get through?
+ca_ES.UTF-8	De nou, hi ha una pedra. És al mig d'un passadís. Com el travessaràs?
 cs_CZ.UTF-8	Je tu ještě jeden kámen. Je uprostřed chodby. Jak se přes něj dostaneš?
 da_DK.UTF-8	Der er en sten igen. Den er i en korridor. Hvordan kommer du igennem?
 de_DE.UTF-8	Da ist noch ein Stein. Er ist in einem Gang. Wie kommst du durch?
 en_US.UTF-8	Again, there is a rock. It's inside a corridor. How do you get through?
 es_MX.UTF-8	De nuevo hay una piedra. Esta en un pasillo. ¿Como lo atravesarás?
-fr_FR.UTF-8	Un caillou au milieu d'un couloir. Comment passer ?
+fr_FR.UTF-8	Un caillou au milieu d'un couloir. Comment passer ?
 gl_ES.UTF-8	De novo, hai unha rocha. Está no interior dun corredor. Como pasar a través del?
 hu_HU.UTF-8	Megint egy szikla! És pont a folyosó előtt! Na, hogy jutsz keresztül?
 it_IT.UTF-8	Una pietre in mezzo al corridoio. Come riuscire a passare?

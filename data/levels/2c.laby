@@ -16,6 +16,7 @@ function
 
 title:
 text		Zig Zag
+ca_ES.UTF-8	Ziga-zaga
 cs_CZ.UTF-8	Cikcak
 da_DK.UTF-8	Siksak
 de_DE.UTF-8	Zick Zack
@@ -35,12 +36,13 @@ tr_TR.UTF-8	Zik zak
 
 comment:
 text		Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.
+ca_ES.UTF-8	Cinc llargs camins! Per a evitar escriure el mateix cinc vegades, utilitzarem una drecera! Escriurem un procediment que faci que el robot avanci tan lluny com sigui possible. Després, el cridarem diverses vegades.
 cs_CZ.UTF-8	Pět dlouhých chodeb! Vyhneme se psaní stejné smyčky pětkrát a použijeme zkratku. Napiš proceduru, podle které robot poběží tak dlouho rovně jak to bude možné. Potom ji můžeme použít vícekrát.
 da_DK.UTF-8	Fem lange strækninger! For at slippe for at skrive det samme loop fem gange, bruger vi en genvej. Lad os skrive en procedure som som får robotten til at løbe så langt lige frem som muligt. Så kan vi kalde den flere gange.
 de_DE.UTF-8	Fünf lange Strecken! Um die gleiche Schleife fünf mal zu schreiben, sollten wir eine Abkürzung benutzen. Lass uns eine Routine schreiben, die den Roboter so weit wie möglich vorwärts gehen lässt. Dann werden wir in der Lage sein diese fünfmal aufzurufen.
 en_US.UTF-8	Five long runs! To avoid writing the same loop five times, we shall use a shortcut! Let's write a procedure which makes the robot race strait forward as far as possible. Then we'll be able to call it several times.
 es_MX.UTF-8	¡Cinco largos caminos! ¡Para evitar escribir lo mismo cinco veces emplearemos un atajo! Vamos a escribir un proceidimiento que haga que el robot avance tan lejos como pueda. Entonces lo podremos llamar varias veces.
-fr_FR.UTF-8	Cinq longues distances à parcourir ! Pour éviter de recopier cinq fois la même boucle, on peut utiliser un raccourci ! On va écrire une procédure qui fait avancer le robot le plus loin possible en ligne droite. Ensuite on pourra facilement l'appeler plusieurs fois.
+fr_FR.UTF-8	Cinq longues distances à parcourir ! Pour éviter de recopier cinq fois la même boucle, on peut utiliser un raccourci ! On va écrire une procédure qui fait avancer le robot le plus loin possible en ligne droite. Ensuite on pourra facilement l'appeler plusieurs fois.
 gl_ES.UTF-8	Cinco longas carreiras! Para evitar escribir o mesmo bucle en cinco ocasións, imos utilizar un atallo! Imos escribir unha función que faga que o robot avance en liña recta tanto como sexa posíbel. Así poderemos chamalo varias veces.
 hu_HU.UTF-8	Öt hosszú futás. Hogy ne kelljen ugyanazt ötször leírni, használjunk rövidítéseket! Ideje írni egy eljárást, ami addig vezeti előre a robotot, ameddig csak tudja. Ezt az egyszer megírt eljárást bármennyiszer meg tudjuk hívni a nevével.
 it_IT.UTF-8	Cinque volte un lungo corridoio da percorrere! Per evitare di scrivere cinque volte lo stesso codice, puoi utilizare una scorciatoia! Scrivi un codice che faccia avanzare il robot il più lontano possibile andando dritto. Poi richiamala più volte fino a trovare l'uscita.
