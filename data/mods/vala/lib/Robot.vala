@@ -25,13 +25,16 @@ void laby_name_drop ()    { outin ("drop");    }
 void laby_name_escape ()  { outin ("escape");  }
 
 Tile laby_name_look() {
-  unowned EnumValue? eval = ((EnumClass) typeof (Tile).class_ref ()).get_value_by_name (outin ("look"));
-  if (eval == null) {
-    return Tile.Unknown;
+  Tile answer;
+  switch (outin ("look")) {
+    case "void": answer = Tile.laby_name_Void;    break;
+    case "wall": answer = Tile.laby_name_Wall;    break;
+    case "rock": answer = Tile.laby_name_Rock;    break;
+    case "web" : answer = Tile.laby_name_Web;     break;
+    case "exit": answer = Tile.laby_name_Exit;    break;
+    default    : answer = Tile.laby_name_Unknown; break;
   }
-  else {
-    return (Tile) eval.value;
-  }
+  return answer;
 }
 
 void laby_name_say (string s) { outin (@"say $s\n"); }

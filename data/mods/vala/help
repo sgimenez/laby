@@ -9,7 +9,7 @@ laby_name_take ();
 laby_name_drop ();
 
 loop:
-while (laby_name_look () == laby_name_Tile.Void) {
+while (laby_name_look () == Tile.laby_name_Void) {
   ...
 }
 
@@ -19,7 +19,7 @@ void f() {
 }
 
 conditional:
-if (laby_name_look () == laby_name_Tile.Web) {
+if (laby_name_look () == Tile.laby_name_Web) {
   ...
 }
 else {
