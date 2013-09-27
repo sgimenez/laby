@@ -14,7 +14,7 @@ type action =
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
- | `Take_Nothing | `Drop_Nothing | `Drop_No_Space
+ | `Take_Nothing | `Take_No_Space | `Drop_Nothing | `Drop_No_Space
  | `Say of string
  ]
 

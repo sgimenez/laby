@@ -38,6 +38,9 @@ let carry_exit =
 let take_nothing =
   F.x "There's no rock to take here." []
 
+let take_no_space = 
+  F.x "I'm already carrying a rock." []
+
 let drop_nothing =
   F.x "I have nothing to drop." []
 
@@ -58,6 +61,7 @@ let action f =
   | `No_Exit -> f no_exit
   | `Carry_Exit -> f carry_exit
   | `Take_Nothing -> f take_nothing
+  | `Take_No_Space -> f take_no_space
   | `Drop_Nothing -> f drop_nothing
   | `Drop_No_Space -> f drop_no_space
   | `Say s -> f (F.s s)

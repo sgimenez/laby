@@ -206,6 +206,26 @@ sv_SV.UTF-8	Jag kan inte gå ut bärandes på en sten.
 tr_TR.UTF-8	Bir taş taşırken çıkamam.
 uk_UA.UTF-8	Я не можу вийти з каменем.
 
+text		I'm already carrying a rock.
+ca_ES.UTF-8	Jo ja porto una pedra.
+cs_CZ.UTF-8	Už jsem nesl kámen.
+da_DK.UTF-8	Jeg er allerede bærer en sten.
+de_DE.UTF-8	Ich trägt schon einen Stein.
+en_US.UTF-8	I'm already carrying a rock.
+es_MX.UTF-8	Yo ya llevo una piedra.
+fr_FR.UTF-8	Je porte déjà un caillou.
+gl_ES.UTF-8	Eu xa estou cargando unha rocha.
+hu_HU.UTF-8	Én kezében egy kő már.
+it_IT.UTF-8	Sto già portando una pietra.
+nl_NL.UTF-8	Ik ben al met een steen.
+pl_PL.UTF-8	Jestem już niosąc kamień.
+pt_BR.UTF-8	Eu já estou carregando uma pedra.
+ru_RU.UTF-8	Я уже осуществляют камня.
+sq_AL.UTF-8	Unë jam tashmë mbante një gur.
+sv_SV.UTF-8	Jag redan bär en sten.
+tr_TR.UTF-8	Zaten bir taş taşıyorum.
+uk_UA.UTF-8	Я вже здійснюють каменю.
+
 text		There's no rock to take here.
 ca_ES.UTF-8	Aquí no hi ha cap pedra per a agafar.
 cs_CZ.UTF-8	Není tu žádný kámen, který bych mohl vzít.

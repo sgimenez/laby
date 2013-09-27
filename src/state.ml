@@ -14,7 +14,7 @@ type action =
  | `Web_Out
  | `Exit | `No_Exit | `Carry_Exit
  | `Rock_Take | `Rock_Drop
- | `Take_Nothing | `Drop_Nothing | `Drop_No_Space
+ | `Take_Nothing | `Take_No_Space | `Drop_Nothing | `Drop_No_Space
  | `Say of string
  ]
 
@@ -142,6 +142,7 @@ let run action state =
             carry = `Rock;
 	    action = `Rock_Take;
 	  }
+      |  `Rock, `Rock -> "error", chg state `Take_No_Space
       |  _, _ -> "error", chg state `Take_Nothing
       end
   | "drop" ->
