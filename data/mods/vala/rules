@@ -1,0 +1,8 @@
+info:
+need	valac
+
+run:
+fetch	Robot.vala
+dump	Program.vala
+exec	valac Robot.vala Program.vala -o program
+spawnl	program
