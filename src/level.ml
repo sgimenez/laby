@@ -10,6 +10,7 @@ type t =
       map: State.tile array array;
       pos: int * int;
       dir: State.dir;
+      mwalls: (int * int) list;
       mrocks: (int * int) list;
       mwebs: (int * int) list;
       title: string;
@@ -32,7 +33,7 @@ let dummy =
 	[| `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall |];
       |];
     pos = 10, 7; dir = `E;
-    mrocks = []; mwebs = [];
+    mwalls = []; mrocks = []; mwebs = [];
     title = ""; comment = ""; help = ""
   }
 
@@ -41,6 +42,7 @@ let sep = Str.regexp " "
 let get_map lines =
   let posx = ref (-1) in
   let posy = ref (-1) in
+  let may_walls = ref [] in
   let may_rocks = ref [] in
   let may_webs = ref [] in
   let dir = ref `N in
@@ -49,6 +51,7 @@ let get_map lines =
     incr posx;
     begin match s with
     | "o" -> `Wall;
+    | "O" -> may_walls := (!posx, !posy) :: !may_walls; `Wall;
     | "x" -> `Exit;
     | "↑" -> antpos := !posx, !posy; dir := `N; `Void;
     | "→" -> antpos := !posx, !posy; dir := `E; `Void;
@@ -70,7 +73,7 @@ let get_map lines =
     Array.of_list (List.map conv (Str.split sep line))
   in
   let map = Array.of_list (List.map tr lines) in
-  map, !antpos, !dir, !may_rocks, !may_webs
+  map, !antpos, !dir, !may_walls, !may_rocks, !may_webs
 
 let rec get_sentence default lines =
   begin match lines with
@@ -92,7 +95,7 @@ let rec get_sentence default lines =
 
 let load file =
   let sections = Res.read_blocks file in
-  let map, antpos, dir, mrocks, mwebs =
+  let map, antpos, dir, mwalls, mrocks, mwebs =
     get_map (match sections "map:" with None -> [] | Some l -> l)
   in
   let title =
@@ -115,7 +118,7 @@ let load file =
   in
   {
     map = map; pos = antpos; dir = dir;
-    mrocks = mrocks; mwebs = mwebs;
+    mwalls = mwalls; mrocks = mrocks; mwebs = mwebs;
     title = title; comment = comment; help = help;
   }
 
@@ -141,6 +144,7 @@ let generate level =
 	map.(y).(x) <- tile
     end
   in
+  fill level.mrocks `Void;
   fill level.mrocks `Rock;
   fill level.mwebs `NWeb;
   State.make map level.pos level.dir
