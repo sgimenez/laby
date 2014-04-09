@@ -1,0 +1,7 @@
+info:
+need	guile
+
+run:
+fetch	robot.scm
+dump	program.scm
+spawn	guile -L . program.scm
