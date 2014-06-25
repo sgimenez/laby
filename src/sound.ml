@@ -1,4 +1,3 @@
-
 (*
  * Copyright (C) 2007-2010 The laby team
  * You have permission to copy, modify, and redistribute under the
@@ -56,8 +55,8 @@ let action =
   | `Rock_Take -> play "rock-take"
   | `Rock_Drop -> play "rock-drop"
   | `Take_Nothing -> play "take-nothing"
+  | `Take_No_Space -> ()
   | `Drop_Nothing -> play "drop-nothing"
   | `Drop_No_Space -> play "drop-no-space"
   | `Say _ -> ()
   end
-
