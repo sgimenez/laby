@@ -1461,7 +1461,7 @@ sq_AL.UTF-8	zgjedhje e panjohur <opt>
 text		option <opt> does not take an argument
 ca_ES.UTF-8	la opció <opt> no permet arguments
 en_US.UTF-8	option <opt> does not take an argument
-en_MX.UTF-8 la opción <opt> no permite argumentos
+en_MX.UTF-8	la opción <opt> no permite argumentos
 fr_FR.UTF-8	l'option <opt> ne prend pas d'argument
 gl_ES.UTF-8	a opción <opt> non usa argumentos
 hu_HU.UTF-8	<opt> opciónak nincs argumentuma

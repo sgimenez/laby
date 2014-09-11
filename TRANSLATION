@@ -1,6 +1,6 @@
 Location:
 
-  Translation data is stored in the file "data/texts"
+  Translation data is stored in the file "data/texts".
 
   Its format is human-friendly, it consists of a bunch of entries of
   this kind:
@@ -10,15 +10,15 @@ Location:
     fr_FR.UTF-8     l'option <opt> nécessite un argument
 
   The first line gives the text as written in the program source code,
-  following lines are translations of this text in various locales
+  following lines are translations of this text in various locales.
 
   You may use a modified version of this file, laby will look for it
   at the following locations (in this order):
     ~/.config/laby/texts
     /usr/share/laby/texts
 
-  Levels stored in data/levels also contains translatable strings
-  using the same format
+  Levels stored in data/levels also contain translatable strings
+  using the same format.
 
 Contributions:
 
