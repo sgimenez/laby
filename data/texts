@@ -5,6 +5,7 @@ ca_ES.UTF-8	Benvingut a laby, un joc de programació.
 en_US.UTF-8	Welcome to laby, a programming game.
 es_MX.UTF-8	Bienvenido a laby, un juego de programación.
 fr_FR.UTF-8	Bienvenue. Voici laby, un jeu de programmation.
+ru_RU.UTF-8	Добро пожаловать в laby, игру для изучения программирования
 
 text		I'm ready
 ca_ES.UTF-8	Estic apunt
@@ -220,7 +221,7 @@ it_IT.UTF-8	Sto già portando una pietra.
 nl_NL.UTF-8	Ik ben al met een steen.
 pl_PL.UTF-8	Jestem już niosąc kamień.
 pt_BR.UTF-8	Eu já estou carregando uma pedra.
-ru_RU.UTF-8	Я уже осуществляют камня.
+ru_RU.UTF-8	Я уже несу камень.
 sq_AL.UTF-8	Unë jam tashmë mbante një gur.
 sv_SV.UTF-8	Jag redan bär en sten.
 tr_TR.UTF-8	Zaten bir taş taşıyorum.
@@ -712,7 +713,7 @@ it_IT.UTF-8	impossibile caricare il modulo di sintassi <name>
 nl_NL.UTF-8	kan de syntax voor <name> niet laden
 pl_PL.UTF-8	nie można załadować składni dla języka <name>.
 pt_BR.UTF-8	não foi possível carregar sintaxe do mod <name>
-ru_RU.UTF-8	не могу загрузить синтаксис для мод <name>
+ru_RU.UTF-8	не могу загрузить синтаксис для мода <name>
 sq_AL.UTF-8	nuk mund të marr sintaksën për mënyrën <name>
 sv_SV.UTF-8	kan inte ladda syntax för <name> modden
 tr_TR.UTF-8	<name> modu yüklenemiyor
