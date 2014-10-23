@@ -1,0 +1,8 @@
+info:
+need	fpc
+
+run:
+fetch	robot.pas
+dump	program.pas
+exec	fpc program.pas
+spawnl	program
