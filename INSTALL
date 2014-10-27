@@ -19,7 +19,7 @@ Linux or Unix-like:
 Windows:
 
   The best advice is to use pre-compiled binaries available on the web:
-    http://www.pps.univ-paris-diderot.fr/~gimenez/laby
+    http://cl-informatik.uibk.ac.at/users/sgimenez/data/fdls/windows/
   Those binaries are cross-compiled using mingw-ocaml.
   If you plan to compile them by yourself on windows, you will
   probably need patience and a lot of good luck and the following
