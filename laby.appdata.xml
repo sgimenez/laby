@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Igor Gnatenko <i.gnatenko.brain@gmail.com> -->
+<component type="desktop">
+ <id>laby.desktop</id>
+ <metadata_license>CC0-1.0</metadata_license>
+ <project_license>GPL-3.0+</project_license>
+ <name>Laby</name>
+ <summary>Learn programming, playing with ants and spider webs</summary>
+ <description>
+  <p>
+   Laby is a small program to learn how to program with ants and spider webs.
+   You have to move an ant out of a labyrinth, avoid spider webs, move rocks, etc.
+  </p>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://raw.githubusercontent.com/sgimenez/laby/master/screenshot.png</image>
+   <caption>The main window showing the application in action</caption>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">https://github.com/sgimenez/laby</url>
+ <updatecontact>i.gnatenko.brain@gmail.com</updatecontact>
+</component>

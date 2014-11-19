@@ -24,6 +24,7 @@ install:
 	install -Dpm 0644 data/tiles/ant-e.svg ${DESTDIR}${PREFIX}/share/icons/hicolor/scalable/apps/laby.svg
 	install -Dpm 0644 laby.xpm ${DESTDIR}${PREFIX}/share/pixmaps/laby.xpm
 	desktop-file-install laby.desktop --dir=${DESTDIR}${PREFIX}/share/applications
+	install -Dpm 0644 laby.appdata.xml ${DESTDIR}${PREFIX}/share/appdata/laby.appdata.xml
 
 dist:
 	@mkdir _dist
