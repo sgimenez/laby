@@ -32,11 +32,11 @@ let conf_window =
     (F.x "initial window geometry" [])
 
 let conf_window_width =
-  Conf.int ~p:(conf_window#plug "width") ~d:1000
+  Conf.int ~p:(conf_window#plug "width") ~d:800
     (F.x "width of window" [])
 
 let conf_window_height =
-  Conf.int ~p:(conf_window#plug "height") ~d:750
+  Conf.int ~p:(conf_window#plug "height") ~d:600
     (F.x "height of window" [])
 
 exception Error of F.t
@@ -248,10 +248,11 @@ let layout () =
 
   (* Game screen *)
   let hpaned = GPack.paned `HORIZONTAL ~packing:main_vbox#add () in
-  hpaned#set_position 620;
+  let tile_size = max 5 conf_tilesize#get in
+  hpaned#set_position (70 + 550 * tile_size / 40);
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
-  vpaned#set_position 450;
+  vpaned#set_position 350;
   let view_title = label lvbox#pack in
   let view_comment = label lvbox#pack in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in

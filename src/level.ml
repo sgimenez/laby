@@ -24,11 +24,11 @@ let dummy =
       [|
 	[| `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall |];
 	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Wall |];
-	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Wall; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall |];
+	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Void; `Wall; `Wall; `Void; `Void; `Wall; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall |];
 	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Void; `Void; `Web ; `Wall; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall |];
 	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Wall; `Wall; `Wall; `Wall; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall |];
 	[| `Wall; `Void; `Wall; `Void; `Void; `Void; `Wall; `Void; `Void; `Wall; `Void; `Wall; `Void; `Void; `Wall; `Void; `Void; `Wall; `Web ; `Wall; `Void; `Wall |];
-	[| `Wall; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Wall; `Wall; `Void; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Wall |];
+	[| `Wall; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Wall; `Wall; `Wall; `Void; `Wall; `Wall; `Wall; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Wall |];
 	[| `Wall; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Void; `Wall; `Void; `Void; `Void; `Wall |];
 	[| `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall; `Wall |];
       |];
