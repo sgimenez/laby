@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Laby
+Comment=Learn how to program with ants and spider webs
+Comment[fr]=Apprendre à programmer avec des fourmis
+Exec=laby
+Icon=laby
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Game;LogicGame;
+StartupNotify=true

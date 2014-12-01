@@ -26,6 +26,6 @@ let build_system = "${OCAML_SYSTEM}"
 let build_arch = "${OCAML_ARCH}"
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
-let _ = Res.sys_data_dir := "${SYSDATADIR}"
-let _ = Res.sys_tmp_dir := "${SYSTMPDIR}"
+let _ = Res.sys_data_dir := "${DATADIR}"
+let _ = Res.sys_tmp_dir := "${TMPDIR}"
 EOF

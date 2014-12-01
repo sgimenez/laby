@@ -6,8 +6,8 @@ cd $(dirname $0)
 source build.conf || exit 1
 
 export PREFIX=${PREFIX-/usr}
-export SYSDATADIR=${SYSDATADIR-${PREFIX}/share}
-export SYSTMPDIR=${SYSTMPDIR-/tmp}
+export DATADIR=${DATADIR-${PREFIX}/share}
+export TMPDIR=${TMPDIR-/tmp}
 
 export PROJECT_NAME=${PROJECT_NAME-unknown}
 export PROJECT_VERSION=${PROJECT_VERSION-unknown}
