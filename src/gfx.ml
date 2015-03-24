@@ -260,7 +260,7 @@ let layout () =
   label_txt (Fd.render_raw label_help) box_help#pack;
   let sw_help = scrolled box_help#pack in
   let view_help =
-    GSourceView2.source_view ~editable:false ~packing:sw_help#add ()
+    GSourceView2.source_view ~height:100 ~editable:false ~packing:sw_help#add ()
   in
   view_help#set_indent 1;
   view_help#misc#modify_font monofont;
