@@ -249,7 +249,7 @@ let layout () =
   (* Game screen *)
   let hpaned = GPack.paned `HORIZONTAL ~packing:main_vbox#add () in
   let tile_size = max 5 conf_tilesize#get in
-  hpaned#set_position (70 + 550 * tile_size / 40);
+  hpaned#set_position (80 + 550 * tile_size / 40);
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
   vpaned#set_position 350;
