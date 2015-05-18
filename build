@@ -35,15 +35,7 @@ export PKG_VERSION="${OCAMLFIND} query -format %v"
 [ -n "${TAGLINE}" ] && OCBF="${OCBF} -tag-line ${TAGLINE}"
 [ -n "${JOBS}" ] && OCBF="${OCBF} -j ${JOBS}"
 
-## compatibility for ocamlbuild<3.12 which lacks -use-ocamlfind
-IFS=$', \n';
-PKGDIRS=$(${OCAMLFIND} query -r -format -I,%d $PACKAGES)
-[ $? = 0 ] || exit 1
-for i in ${PKGDIRS}; do OCBF="${OCBF} -cflags $i -lflags $i"; done
-for i in ${LIBRARIES}; do OCBF="${OCBF} -lib $i"; done
-for i in ${SRCDIRS}; do OCBF="${OCBF} -I $i"; done
-unset IFS
-#OCBF="${OCBF} -use-ocamlfind -pkgs $PACKAGES -libs $LIBRARIES -Is $SRCDIRS"
+OCBF="${OCBF} -use-ocamlfind -pkgs $PACKAGES -libs $LIBRARIES -Is $SRCDIRS"
 
 OCBI="${OCAMLBUILD} -no-sanitize -no-hygiene -build-dir ${BUILDDIR} ${OCBF}"
 

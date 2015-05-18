@@ -94,17 +94,17 @@ let subst : string -> string =
   Str.global_substitute ln_regexp repl
 
 let bufsize = 16384
-let buffer = String.create bufsize
+let buffer = Bytes.create bufsize
 let buf_read fd f =
   begin match Unix.read fd buffer 0 bufsize with
   | 0 -> false
-  | i -> f (String.sub buffer 0 i); true
+  | i -> f (Bytes.to_string (Bytes.sub buffer 0 i)); true
   end
 
 let output fd s =
-  let str = s ^ "\n" in
-  let len = String.length str in
-  ignore (Unix.write fd str 0 len)
+  let bytes = Bytes.of_string (s ^ "\n") in
+  let len = Bytes.length bytes in
+  ignore (Unix.write fd bytes 0 len)
 
 let input ?(timeout=0.5) err h =
   let collect s =
