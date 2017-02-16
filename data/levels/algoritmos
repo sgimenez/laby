@@ -1,0 +1,28 @@
+map:
+o o o o o o o o o o o o o o o o o o o o o
+o → r . W . r . W . r . W . r . W . r . o
+o o o o o o o o o o o o o o o o o o o . o
+o x . w w w w w w w w . . w w w w w w . o
+o o o o o o o o o o o o o o o o o o o o o
+
+title:
+text  	mi propio nivel!
+cs_CZ.UTF-8	mi propio nivel!
+da_DK.UTF-8	mi propio nivel!
+en_US.UTF-8	mi propio nivel
+es_ES.UTF-8	mi propio nivel!
+fr_FR.UTF-8	mi propio nivel! !
+nl_NL.UTF-8	mi propio nivel!
+ru_RU.UTF-8	mi propio nivel!
+tr_TR.UTF-8	mi propio nivel!
+
+comment:
+text		Son solo algoritmos 
+cs_CZ.UTF-8	Son solo algoritmos
+da_DK.UTF-8	Son solo algoritmos
+en_US.UTF-8	Son solo algoritmos
+es_ES.UTF-8	Son solo algoritmos
+fr_FR.UTF-8	Son solo algoritmos
+nl_NL.UTF-8	Son solo algoritmos
+ru_RU.UTF-8	Son solo algoritmos
+tr_TR.UTF-8	Son solo algoritmos
