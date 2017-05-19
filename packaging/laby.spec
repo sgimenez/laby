@@ -1,13 +1,6 @@
-%global opt %(test -x %{_bindir}/ocamlopt && echo 1 || echo 0)
-%global debug_package %{nil}
-%global _use_internal_dependency_generator 0
-%global __find_requires /usr/lib/rpm/ocaml-find-requires.sh
-%global __find_provides /usr/lib/rpm/ocaml-find-provides.sh
-%define libname %(echo %{name} | sed -e 's/^ocaml-//')
-
 Name:           laby
 Version:        0.6.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Learn programming, playing with ants and spider webs
 
 License:        GPLv3+
@@ -41,8 +34,15 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ocaml-ocamlbuild
 %endif
 
+# Note: rpmlint suggest to add
+# BuildRequires: python2-devel
+# or
+# BuildRequires: python3-devel
+# but they're not used during the build so they've not been added.
+
 Requires:  gtksourceview2 >= 2.10
 Requires:  ocaml-lablgtk >= 2.14.0
+
 
 %description
 Laby is a small program to learn how to program with ants and spider webs.
@@ -54,17 +54,28 @@ You have to move an ant out of a labyrinth, avoid spider webs, move rocks, etc.
 %autosetup -n %{name}-%{name}-%{version} -p1
 
 %build
-make
+make native
 
 %install
 rm -rf %{buildroot}
 export DESTDIR=%{buildroot}
 make install
 
-strip %{buildroot}/%{_bindir}/%{name}
-
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/appdata/*.appdata.xml
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+
+%post
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
+%postun
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+
 
 %files
 %license COPYRIGHT
@@ -72,12 +83,24 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %doc AUTHORS
 %{_bindir}/%{name}
 %{_datadir}/%{name}/
+
+# Note above contains also:
+# /usr/share/laby/mods/c/lib/robot.h
+# /usr/share/laby/mods/cpp/lib/robot.h
+# Which rpmlint suggest to have in -devel subpackage.
+# This is intentional. The game teach you also how to program in C and in order
+# to move the ant, you'll need the robot.h header file. It isn't the use case
+# addressed by -devel subpackages.
+
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 
 %changelog
+* Fri May 19 2017 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 0.6.4-3
+- Addressed comments #3-7 from rhbz#1450679
+
 * Tue May 16 2017 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 0.6.4-2
 - Add Fedora >= 26 support
 
