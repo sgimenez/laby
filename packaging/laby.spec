@@ -1,6 +1,6 @@
 Name:           laby
 Version:        0.6.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Learn programming, playing with ants and spider webs
 
 License:        GPLv3+
@@ -40,10 +40,6 @@ BuildRequires:  ocaml-ocamlbuild
 # BuildRequires: python3-devel
 # but they're not used during the build so they've not been added.
 
-Requires:  gtksourceview2 >= 2.10
-Requires:  ocaml-lablgtk >= 2.14.0
-
-
 %description
 Laby is a small program to learn how to program with ants and spider webs.
 You have to move an ant out of a labyrinth, avoid spider webs, move rocks, etc.
@@ -54,10 +50,9 @@ You have to move an ant out of a labyrinth, avoid spider webs, move rocks, etc.
 %autosetup -n %{name}-%{name}-%{version} -p1
 
 %build
-make native
+make %{?_smp_mflags} native
 
 %install
-rm -rf %{buildroot}
 export DESTDIR=%{buildroot}
 make install
 
@@ -98,6 +93,9 @@ fi
 
 
 %changelog
+* Sun May 21 2017 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 0.6.4-4
+- Addressed comment #10 from rhbz#1450679
+
 * Fri May 19 2017 Sandro Bonazzola <sandro.bonazzola@gmail.com> - 0.6.4-3
 - Addressed comments #3-7 from rhbz#1450679
 
