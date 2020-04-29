@@ -63,9 +63,9 @@ type controls =
       start_vbox: GPack.box;
       start_image: GMisc.image;
       main_hpaned: GPack.paned;
-      menu_quit: GMenu.image_menu_item;
-      menu_home: GMenu.image_menu_item;
-      menu_level: GMenu.image_menu_item;
+      menu_quit: GMenu.menu_item;
+      menu_home: GMenu.menu_item;
+      menu_level: GMenu.menu_item;
       menu_levels: GMenu.menu;
       button_start: GButton.button;
       button_prev: GButton.tool_button;
@@ -75,9 +75,9 @@ type controls =
       button_forward: GButton.toggle_tool_button;
       button_execute: GButton.button;
       map_image: GMisc.image;
-      interprets: GEdit.combo;
-      view_prog: GSourceView2.source_view;
-      view_help: GSourceView2.source_view;
+      interprets: GEdit.combo_box;
+      view_prog: GSourceView3.source_view;
+      view_help: GSourceView3.source_view;
       box_help: GPack.box;
       view_mesg: GText.view;
       view_title: GMisc.label;
@@ -145,11 +145,11 @@ let gtk_init () =
     ant_w_p = pix "ant-w";
   }
 
-let draw_state state ressources (pixmap : GDraw.pixmap) =
+let draw_state state ressources (pixbuf : GdkPixbuf.pixbuf) =
   let size = ressources.size in
   let tile i j p =
-    pixmap#put_pixbuf
-      ~x:(size / 2 + i * size) ~y:(size / 2 + j * size) p
+    GdkPixbuf.copy_area ~dest:pixbuf
+      ~dest_x:(size / 2 + i * size) ~dest_y:(size / 2 + j * size) p
   in
   let i0, j0 = State.pos state in
   let disp_tile i j t =
@@ -175,10 +175,11 @@ let draw_state state ressources (pixmap : GDraw.pixmap) =
   | `None -> ()
   end
 
-let labeled_combo text packing =
+let labeled_combo text packing strings =
   let box = GPack.hbox ~packing () in
   let _ = GMisc.label ~text ~xpad:5 ~ypad:8 ~packing:box#pack () in
-  GEdit.combo ~packing:box#add ()
+  let r, (_, _) = GEdit.combo_box_text ~strings ~packing:box#add ()
+  in r
 
 let label packing =
   GMisc.label ~ypad:5 ~line_wrap:true ~packing ()
@@ -195,11 +196,11 @@ let label_mesg = F.x "Messages:" []
 let label_help = F.x "Help:" []
 let label_start = F.x "Start" []
 
-let layout () =
+let layout languages =
   let scrolled ?(vpolicy=`ALWAYS) packing =
     GBin.scrolled_window ~packing ~hpolicy:`AUTOMATIC ~vpolicy ()
   in
-  let monofont = Pango.Font.from_string "monospace" in
+  let monofont = GPango.font_description_from_string "monospace" in
   let window = GWindow.window ~resizable:true () in
   let windowbox = GPack.vbox ~packing:window#add () in
   let menu_bar = GMenu.menu_bar ~packing:windowbox#pack () in
@@ -207,15 +208,15 @@ let layout () =
   let sub_main = GMenu.menu () in
   let menu_main = GMenu.menu_item ~label:(Fd.render_raw label_menu)
     ~packing:menu_bar#append () in
-  let menu_level = GMenu.image_menu_item
+  let menu_level = GMenu.menu_item
     ~label:(Fd.render_raw label_level) ~packing:menu_bar#append () in
-  let menu_fullscreen = GMenu.image_menu_item ~stock:`FULLSCREEN
+  let menu_fullscreen = GMenu.menu_item ~label:"gtk-fullscreen"
     ~packing:sub_main#append () in
-  let menu_unfullscreen = GMenu.image_menu_item ~stock:`LEAVE_FULLSCREEN
+  let menu_unfullscreen = GMenu.menu_item ~label:"gtk-leave-fullscreen"
     ~packing:sub_main#append ~show:false () in
-  let menu_quit = GMenu.image_menu_item ~stock:`QUIT
+  let menu_quit = GMenu.menu_item ~label:"gtk-quit"
     ~packing:sub_main#append () in
-  let menu_home = GMenu.image_menu_item ~stock:`HOME
+  let menu_home = GMenu.menu_item ~label:"gtk-home"
     ~packing:sub_main#append () in
   let fullscreen () =
     menu_fullscreen#misc#hide ();
@@ -241,7 +242,7 @@ let layout () =
   let _ = GMisc.label ~markup:(Fd.render_raw label_welcome)
     ~justify:`CENTER ~packing:mstart_vbox#pack () in
   let interprets =
-    labeled_combo (Fd.render_raw label_language) mstart_vbox#pack
+    labeled_combo (Fd.render_raw label_language) mstart_vbox#pack languages
   in
   let button_start = GButton.button ~packing:mstart_vbox#pack
     ~label:(Fd.render_raw label_start) () in
@@ -260,7 +261,7 @@ let layout () =
   label_txt (Fd.render_raw label_help) box_help#pack;
   let sw_help = scrolled box_help#pack in
   let view_help =
-    GSourceView2.source_view ~height:100 ~editable:false ~packing:sw_help#add ()
+    GSourceView3.source_view ~height:100 ~editable:false ~packing:sw_help#add ()
   in
   view_help#set_indent 1;
   view_help#misc#modify_font monofont;
@@ -268,7 +269,7 @@ let layout () =
   label_txt (Fd.render_raw label_prog) rtvbox#pack;
   let sw_prog = scrolled rtvbox#add in
   let view_prog =
-    GSourceView2.source_view
+    GSourceView3.source_view
       ~auto_indent:true ~indent_width:2 ~insert_spaces_instead_of_tabs:true
       ~show_line_numbers:true ~packing:sw_prog#add ()
   in
@@ -316,10 +317,10 @@ let layout () =
     view_title = view_title; view_comment = view_comment;
   }
 
-let make_pixmap tile_size level =
+let make_pixbuf tile_size level =
   let sizex, sizey = Level.size level in
   let width, height = tile_size * (1 + sizex), tile_size * (1 + sizey) in
-  GDraw.pixmap ~width ~height ()
+  GdkPixbuf.create ~width ~height ~has_alpha:true ()
 
 
 let display_gtk ressources =
@@ -337,21 +338,22 @@ let display_gtk ressources =
       "list", F.v (List.map (fun x -> F.string x#name) amods);
     ]
   );
+  (* let languages, column = GTree.store_of_list Gobject.Data.string language_list in *)
 
   let bg = ref `WHITE in
-  let c = layout () in
+  let c = layout language_list in
   let level_load name =
     let l = Level.load (Res.get ["levels"; name]) in
-    c.map_image#set_pixmap (make_pixmap ressources.size l); l
+    c.map_image#set_pixbuf (make_pixbuf ressources.size l); l
   in
   let syntaxd = Res.get ["syntax"] in
   let add_search_path m l = m#set_search_path (l @ m#search_path) in
-  let ssm = GSourceView2.source_style_scheme_manager true in
+  let ssm = GSourceView3.source_style_scheme_manager true in
   add_search_path ssm [syntaxd; Res.path [syntaxd; "styles"]];
   let style = ssm#style_scheme conf_source_style#get in
   c.view_prog#source_buffer#set_style_scheme style;
   c.view_help#source_buffer#set_style_scheme style;
-  let slm = GSourceView2.source_language_manager false in
+  let slm = GSourceView3.source_language_manager false in
   add_search_path slm [syntaxd; Res.path [syntaxd; "language-specs"]];
 
   (* gui outputs *)
@@ -370,12 +372,13 @@ let display_gtk ressources =
     end
   in
   let draw image state =
-    let p : GDraw.pixmap = image#pixmap in
-    p#set_foreground !bg;
-    let width, height = p#size in
-    p#rectangle ~x:0 ~y:0 ~width ~height ~filled:true ();
+    let p : GdkPixbuf.pixbuf = image#pixbuf in
+    (* p#set_foreground !bg; *)
+    (* let width, height = p#size in *)
+    (* p#rectangle ~x:0 ~y:0 ~width ~height ~filled:true (); *)
+    GdkPixbuf.fill p 0l;
     draw_state state ressources p;
-    image#set_pixmap p
+    image#set_pixbuf p
   in
 
   (* game creation *)
@@ -433,21 +436,23 @@ let display_gtk ressources =
     play_inactive ();
   in
   let setupmod () =
-    let name = c.interprets#entry#text in
-    begin match List.mem name language_list with
-    | true ->
-	let lmod = List.find (fun x -> x#name = name) mods in
-	c.view_prog#buffer#set_text (command#chg_mod lmod);
-	let l = slm#language name in
-	if l = None then
-	  log#warning (
+    begin match
+      try Some (List.nth language_list c.interprets#active)
+      with _ -> None
+    with
+      | Some name ->
+	 let lmod = List.find (fun x -> x#name = name) mods in
+	 c.view_prog#buffer#set_text (command#chg_mod lmod);
+	 let l = slm#language name in
+	 if l = None then
+	   log#warning (
 	    F.x "cannot load syntax for <name> mod" [
 	      "name", F.string name;
 	    ]
 	  );
-	c.view_prog#source_buffer#set_language l;
-	c.view_help#source_buffer#set_language l;
-    | false -> ()
+	 c.view_prog#source_buffer#set_language l;
+	 c.view_help#source_buffer#set_language l;
+      | None -> ()
     end
   in
   let newmod () =
@@ -506,10 +511,9 @@ let display_gtk ressources =
     GMain.Main.quit ()
   in
   let altdestroy _ = destroy (); true in
-  c.interprets#set_popdown_strings language_list;
   let smod = Mod.conf_selected#get in
-  if List.mem smod language_list
-  then c.interprets#entry#set_text smod;
+  let select i m = if m = smod then c.interprets#set_active i in
+  List.iteri select language_list;
 
   let group = ref None in
   let add_language l =
@@ -533,7 +537,7 @@ let display_gtk ressources =
   ignore (c.button_backward#connect#toggled ~callback:backward_cb);
   ignore (c.button_forward#connect#toggled ~callback:forward_cb);
   ignore (c.button_execute#connect#clicked ~callback:execute);
-  ignore (c.interprets#entry#connect#changed ~callback:newmod);
+  ignore (c.interprets#connect#changed ~callback:newmod);
   ignore (c.view_prog#buffer#connect#changed ~callback:show_execute);
   ignore (c.menu_quit#connect#activate ~callback:destroy);
   ignore (c.menu_home#connect#activate ~callback:exit_play);
@@ -547,7 +551,7 @@ let display_gtk ressources =
   if List.mem "0.laby" levels_list
   then newlevel "0.laby"
   else if levels_list <> [] then newlevel (List.hd levels_list);
-  c.start_image#set_pixmap (make_pixmap ressources.size Level.dummy);
+  c.start_image#set_pixbuf (make_pixbuf ressources.size Level.dummy);
   draw c.start_image (!start_animation);
   ignore (GMain.Main.main ())
 
