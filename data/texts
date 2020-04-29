@@ -579,6 +579,7 @@ ca_ES.UTF-8	Menu
 en_US.UTF-8	Menu
 es_MX.UTF-8	Menu
 fr_FR.UTF-8	Menu
+ru_RU.UTF-8	Меню
 
 text		Level
 ca_ES.UTF-8	Nivell
@@ -1363,6 +1364,7 @@ hu_HU.UTF-8	<type> típust várok
 it_IT.UTF-8	atteso valore <type>
 sq_AL.UTF-8	pritej një vlerë <type>
 sv_SV.UTF-8	<type> värde förväntades
+ru_RU.UTF-8	 ожидается значение <type>
 
 text		the given configuration key has type <type>
 ca_ES.UTF-8	la clau de configuració indicada és de tipus <type>
@@ -1374,6 +1376,7 @@ hu_HU.UTF-8	a megadott konfigurációs billentyű <type> típusú
 it_IT.UTF-8	la chiave di configurazione è di tipo <type>
 sq_AL.UTF-8	çelësi i dhënë i konfigurimit ka tip <type>
 sv_SV.UTF-8	viss konfiguration nyckeln typ <type>
+ru_RU.UTF-8	данный ключ настройки имеет тип <type>
 
 text		the given configuration key cannot be assigned a value
 ca_ES.UTF-8	no pot assignar-se un valor a la clau de configuració indicada
@@ -1385,6 +1388,7 @@ hu_HU.UTF-8	a megadott konfigurációs billentyűhöz nem rendelhető érték
 it_IT.UTF-8	impossibile assegnare un valore a questa chiave di configurazione
 sq_AL.UTF-8	çelësit të dhënë të konfigurimit nuk mund ti jepet një vlerë
 sv_SV.UTF-8	den givna konfiguration nyckeln kan inte få värdet
+ru_RU.UTF-8	данному ключу настройки нельзя присвоить значение 
 
 text		assignation syntax is <syntax>
 ca_ES.UTF-8	la sintaxi per a una assignació és <syntax>
@@ -1395,6 +1399,7 @@ gl_ES.UTF-8	a sintaxe para unha asignación é <syntax>
 hu_HU.UTF-8	jogosultsági szintaxis: <syntax>
 it_IT.UTF-8	la sintassi di assegnazione è <syntax>
 sq_AL.UTF-8	sintaksa e vlerëdhënies është <syntax>
+ru_RU.UTF-8	синтаксис присваивания <syntax>
 
 text		set a configuration key
 ca_ES.UTF-8	estableix una clau de configuració
@@ -1405,6 +1410,7 @@ gl_ES.UTF-8	estabelecer unha chave de configuración
 hu_HU.UTF-8	konfigurációs billentyű beállítása
 it_IT.UTF-8	imposta una chiave di configurazione
 sq_AL.UTF-8	vendos një çelës konfigurimi
+ru_RU.UTF-8	задайте ключ настройки
 
 text		describe a configuration key
 ca_ES.UTF-8	descriu una clau de configuració
@@ -1415,6 +1421,7 @@ gl_ES.UTF-8	describa unha chave de configuración
 hu_HU.UTF-8	írd le a konfigurációs billentyűt
 it_IT.UTF-8	descrivi una chiave di configurazione
 sq_AL.UTF-8	përshkruaj një çelës konfigurimi
+ru_RU.UTF-8	опишите ключ настройки 
 
 text		dump a configuration key
 ca_ES.UTF-8	volcar una clau de configuració
@@ -1425,6 +1432,7 @@ gl_ES.UTF-8	envorque unha chave de configuración
 hu_HU.UTF-8	nyomd le a konfigurációs billentyűt
 it_IT.UTF-8	restituisci una chiave di configurazione
 sq_AL.UTF-8	zbraz një çelës konfigurimi
+ru_RU.UTF-8	сохраните ключ конфигурации
 
 text		log configuration
 ca_ES.UTF-8	configuració dels registres
@@ -1435,6 +1443,7 @@ gl_ES.UTF-8	rexistro da configuración
 hu_HU.UTF-8	‘log’ konfiguráció
 it_IT.UTF-8	log di configurazione
 sq_AL.UTF-8	konfigurimi i shënimeve
+ru_RU.UTF-8	настройка журналов
 
 text		general log level
 ca_ES.UTF-8	nivell de registre general
@@ -1445,6 +1454,7 @@ gl_ES.UTF-8	nivel do rexistro xeral
 hu_HU.UTF-8	általános ‘log’ szint
 it_IT.UTF-8	log generale di livello
 sq_AL.UTF-8	niveli i shënimeve të përgjithshme
+ru_RU.UTF-8	общий уровень журнала
 
 text		subordinate log level
 ca_ES.UTF-8	nivell de registre subordinat
@@ -1455,6 +1465,7 @@ gl_ES.UTF-8	nivel do rexistro subordinado
 hu_HU.UTF-8	alárendelt ‘log’ szint
 it_IT.UTF-8	log del sottolivello
 sq_AL.UTF-8	niveli i shënimeve të varura
+ru_RU.UTF-8	подчинённый уровень журнала
 
 
 # opt.ml
@@ -1468,6 +1479,7 @@ gl_ES.UTF-8	opcións incorrectas: <errors>
 hu_HU.UTF-8	rossz opció: <errors>
 it_IT.UTF-8	opzione non valida: <errors>
 sq_AL.UTF-8	zgjedhje të pavlefshme: <errors>
+ru_RU.UTF-8	неверные опции: <errors>
 
 text		unknown option <opt>
 ca_ES.UTF-8	<opt>: opció desconeguda
@@ -1478,6 +1490,7 @@ gl_ES.UTF-8	opción descoñecida <opt>
 hu_HU.UTF-8	ismeretlen <opt> opció
 it_IT.UTF-8	opzione sconosciuta <opt>
 sq_AL.UTF-8	zgjedhje e panjohur <opt>
+ru_RU.UTF-8	неизвестная опция <opt>
 
 text		option <opt> does not take an argument
 ca_ES.UTF-8	la opció <opt> no permet arguments
@@ -1488,6 +1501,7 @@ gl_ES.UTF-8	a opción <opt> non usa argumentos
 hu_HU.UTF-8	<opt> opciónak nincs argumentuma
 it_IT.UTF-8	l'opzione <opt> non accetta argomenti
 sq_AL.UTF-8	zgjedhja <opt> nuk merr argument
+ru_RU.UTF-8	опция <opt> не имеет аргумента
 
 text		option <opt> requires an argument
 ca_ES.UTF-8	la opció <opt> requereix un argument
@@ -1498,6 +1512,7 @@ gl_ES.UTF-8	a opción <opt> require un argumento
 hu_HU.UTF-8	<opt> opciónak argumentumra van szüksége
 it_IT.UTF-8	l'opzione <opt> richiede un argomento
 sq_AL.UTF-8	zgjedhja <opt> kërkon një argument
+ru_RU.UTF-8	опция <opt> требует аргумента
 
 text		multiple exclusive actions specified
 ca_ES.UTF-8	múltiples accions exclusives especificades
@@ -1508,6 +1523,7 @@ gl_ES.UTF-8	especificáronse múltiplas accións exclusivas
 hu_HU.UTF-8	több kizárólagos akció van leírva
 it_IT.UTF-8	selezionate operazioni esclusive multiple
 sq_AL.UTF-8	janë dhënë veprime që përjashtojnë njëri-tjetrin
+ru_RU.UTF-8	указано несколько исключающих действий
 
 text		invalid argument in <exp>: <error>
 ca_ES.UTF-8	argument invalid a <exp>: <error>
@@ -1517,6 +1533,7 @@ gl_ES.UTF-8	argumento incorrecto en <exp>: <error>
 hu_HU.UTF-8	helytelen argumentum: <exp>: <error>
 it_IT.UTF-8	argomento non valido in <exp>: <error>
 sq_AL.UTF-8	argument i pavlefshëm në <exp>: <error>
+ru_RU.UTF-8	неверный аргумент в <exp>: <error>
 
 text		this key cannot be assigned a value
 ca_ES.UTF-8	No és possible assignar un valor a aquesta clau
@@ -1527,6 +1544,7 @@ gl_ES.UTF-8	non é posíbel asignar un valor a esta chave
 hu_HU.UTF-8	ez a billentyű nem rendelhető értékhez
 it_IT.UTF-8	impossibile assegnare un valore a questa chiave
 sq_AL.UTF-8	këtij çelësi nuk mund ti jepet vlerë
+ru_RU.UTF-8	этому ключу нельзя присвоить значение
 
 text		expected type for this key is <type>
 ca_ES.UTF-8	El tipus esperat per a aquesta clau és <type>
@@ -1537,6 +1555,7 @@ gl_ES.UTF-8	o tipo agardado por esta chave é <type>
 hu_HU.UTF-8	várt érték ehhez a billentyűhöz: <type>
 it_IT.UTF-8	questa chiave accetta valori di tipo <type>
 sq_AL.UTF-8	tipi që pritet për këtë çelës është <type>
+ru_RU.UTF-8	ожидаемый тип для этого ключа <type>
 
 text		display help message
 ca_ES.UTF-8	mostrar missatge d'ajuda
@@ -1547,6 +1566,7 @@ gl_ES.UTF-8	amosar a mensaxe de erro
 hu_HU.UTF-8	segítő szöveg megjelenítése
 it_IT.UTF-8	mostra messaggio di aiuto
 sq_AL.UTF-8	shfaq një mesazh ndihme
+ru_RU.UTF-8	показать сообщение справки
 
 text		output debug information
 ca_ES.UTF-8	informació sortida de la depuració
@@ -1557,6 +1577,7 @@ gl_ES.UTF-8	información da saída de depuración
 hu_HU.UTF-8	kimeneti hibakereső információ
 it_IT.UTF-8	output delle informazioni di debug
 sq_AL.UTF-8	nxirr mesazhe korrigjimi
+ru_RU.UTF-8	выходная информация отладки
 
 text		log output to a file
 ca_ES.UTF-8	guardar la sortida a un fitxer
@@ -1567,6 +1588,7 @@ gl_ES.UTF-8	rexistrar a saída nun ficheiro
 hu_HU.UTF-8	‘log’ kimenet egy fájlba
 it_IT.UTF-8	log dell'output su file
 sq_AL.UTF-8	rregjistro daljet në një skedar
+ru_RU.UTF-8	сохраните вывод в файл
 
 text		select theme file
 ca_ES.UTF-8	escull un fitxer de tema
@@ -1577,6 +1599,7 @@ gl_ES.UTF-8	escolla un ficheiro de tema
 hu_HU.UTF-8	válassz témafájlt
 it_IT.UTF-8	seleziona un file di tema
 sq_AL.UTF-8	zgjidh skedarin e temës
+ru_RU.UTF-8	выберите файл темы
 
 # version.ml
 
@@ -1589,6 +1612,7 @@ gl_ES.UTF-8	amosar a información do versionado
 hu_HU.UTF-8	vercióinformációk megjelenítése
 it_IT.UTF-8	mostra informazioni sulla versione
 sq_AL.UTF-8	shfaq versionin
+ru_RU.UTF-8	показать данные о версиях
 
 text		this option accepts the following arguments: <list>
 ca_ES.UTF-8	aquesta opció accepta els següents arguments: <list>
@@ -1599,6 +1623,7 @@ gl_ES.UTF-8	esta opción acepta os seguintes argumentos: <list>
 hu_HU.UTF-8	ez a beállítás a következő argumentumokat fogadja el: <list>
 it_IT.UTF-8	questa opzione accetta i seguenti argomenti: <list>
 sq_AL.UTF-8	kjo zgjedhje pranon argumentat e mëposhtëm: <list>
+ru_RU.UTF-8	опция принимает следующие аргументы: <list>
 
 
 # data.ml
@@ -1612,6 +1637,7 @@ gl_ES.UTF-8	tipo de sistema operativo decoñecido
 hu_HU.UTF-8	ismeretlen operációs rendszer
 it_IT.UTF-8	sistema operativo sconosciuto
 sq_AL.UTF-8	sistem shfrytëzimi i panjohur
+ru_RU.UTF-8	неизвестный тип ОС
 
 text		cannot access <path>
 ca_ES.UTF-8	impossible accedir a <path>
@@ -1622,6 +1648,7 @@ gl_ES.UTF-8	non é posíbel acceder a <path>
 hu_HU.UTF-8	nincs jogosultságod hozzáférni ehhez: <path>
 it_IT.UTF-8	non posos accedere al percorso <path>
 sq_AL.UTF-8	nuk mund të hapet <path>
+ru_RU.UTF-8	нет доступа к <path>
 
 text		cannot find resource <resource> in: <list>
 ca_ES.UTF-8	no pot trobar-se el recurs <resource> a: <list>
@@ -1632,6 +1659,7 @@ gl_ES.UTF-8	non é posíbel atopar o recurso <resource> en: <list>
 hu_HU.UTF-8	nem található <resource> eszköz ebben: <list>
 it_IT.UTF-8	non posso trovare il file di risorse <resource> in: <list>
 sq_AL.UTF-8	nuk mund të gjendet <resource> në: <list>
+ru_RU.UTF-8	не найден ресурс <resource> в: <list>
 
 
 # run.ml
@@ -1645,3 +1673,4 @@ gl_ES.UTF-8	activar o modo de depuración
 hu_HU.UTF-8	hibakereső mód aktiválása
 it_IT.UTF-8	attiva il modo di debug
 sq_AL.UTF-8	aktivizo mënyrën e korrigjimit
+ru_RU.UTF-8	включить режим отладки
