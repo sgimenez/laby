@@ -318,7 +318,7 @@ let set (t: ut) s =
 	  let i = int_of_string val2 in
 	  let k = as_int st in fun () -> k#set i
 	with
-	| Failure "int_of_string" -> value_error val0
+	| Failure _ -> value_error val0
 	| Mismatch _ -> type_error st#kind
 	end
     | "float" ->
@@ -326,7 +326,7 @@ let set (t: ut) s =
 	  let f = float_of_string val2 in
 	  let k = as_float st in fun () -> k#set f
 	with
-	| Failure "float_of_string" -> value_error val0
+	| Failure _ -> value_error val0
 	| Mismatch _ -> type_error st#kind
 	end
     | "bool" ->
@@ -334,7 +334,7 @@ let set (t: ut) s =
 	  let b = bool_of_string val2 in
 	  let k = as_bool st in fun () -> k#set b
 	with
-	| Invalid_argument "bool_of_string" -> value_error val0
+	| Invalid_argument _ -> value_error val0
 	| Mismatch _ -> type_error st#kind
 	end
     | "string" ->

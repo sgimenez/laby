@@ -166,7 +166,7 @@ let wrap_spec sp =
 	    let i = int_of_string s in
 	    Do (fun () -> f i)
 	  with
-	  | Failure "int_of_string" -> wrong_value "int"
+	  | Failure _ -> wrong_value "int"
 	  end
       end
   | `Excl_int f ->
@@ -177,7 +177,7 @@ let wrap_spec sp =
 	    let i = int_of_string s in
 	    Excl (fun () -> f i)
 	  with
-	  | Failure "int_of_string" -> wrong_value "int"
+	  | Failure _ -> wrong_value "int"
 	  end
       end
   | `Do_optint f ->
@@ -188,7 +188,7 @@ let wrap_spec sp =
 	    let i = int_of_string s in
 	    Do (fun () -> f (Some i))
 	  with
-	  | Failure "int_of_string" -> wrong_value "int"
+	  | Failure _ -> wrong_value "int"
 	  end
       end
   | `Excl_optint f ->
@@ -199,7 +199,7 @@ let wrap_spec sp =
 	    let i = int_of_string s in
 	    Excl (fun () -> f (Some i))
 	  with
-	  | Failure "int_of_string" -> wrong_value "int"
+	  | Failure _ -> wrong_value "int"
 	  end
       end
   end
@@ -296,7 +296,7 @@ let opt_int ?short ?long conf : t =
       let i = int_of_string s in
       Do (fun () -> conf#set i)
     with
-    | Failure "int_of_string" -> wrong_value "int"
+    | Failure _ -> wrong_value "int"
     end
   in
   make ?short ?long (`Arg action) conf#descr
@@ -307,7 +307,7 @@ let opt_float ?short ?long conf : t =
       let f = float_of_string s in
       Do (fun () -> conf#set f)
     with
-    | Failure "float_of_string" -> wrong_value "float"
+    | Failure _ -> wrong_value "float"
     end
   in
   make ?short ?long (`Arg action) conf#descr

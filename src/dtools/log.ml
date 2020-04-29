@@ -29,7 +29,7 @@ let default_level =
     int_of_string (Sys.getenv "DEBUG")
   with
   | Not_found -> 0
-  | Failure "int_of_float" -> 0
+  | Failure _ -> 0
   end
 
 
