@@ -1364,7 +1364,7 @@ hu_HU.UTF-8	<type> típust várok
 it_IT.UTF-8	atteso valore <type>
 sq_AL.UTF-8	pritej një vlerë <type>
 sv_SV.UTF-8	<type> värde förväntades
-ru_RU.UTF-8	 ожидается значение <type>
+ru_RU.UTF-8	ожидается значение <type>
 
 text		the given configuration key has type <type>
 ca_ES.UTF-8	la clau de configuració indicada és de tipus <type>

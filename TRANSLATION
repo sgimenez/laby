@@ -9,8 +9,8 @@ Location:
     en_US.UTF-8     option <opt> requires an argument
     fr_FR.UTF-8     l'option <opt> nécessite un argument
 
-  The first line gives the text as written in the program source code,
-  following lines are translations of this text in various locales.
+  The first line gives the text as written in the program source code.
+  Following lines are translations of this text in various locales.
 
   You may use a modified version of this file, laby will look for it
   at the following locations (in this order):
@@ -23,7 +23,6 @@ Location:
 Contributions:
 
   If you wish to contribute new translations or improve existing ones,
-  you are welcome to send them by email to:
+  please post them on github: https://github.com/sgimenez/laby/issues
 
-    Stéphane Gimenez <gimenez@pps.jussieu.fr>
 
