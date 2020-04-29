@@ -1,0 +1,8 @@
+info:
+need	php
+
+run:
+fetch	robot.php
+dump	program.php
+spawn	php program.php
+
