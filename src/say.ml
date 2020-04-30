@@ -26,7 +26,7 @@ let web_in =
 let web_out =
   F.x "I can't move anymore." []
 
-let exit =
+let do_exit =
   F.x "Wohoo, the exit!" []
 
 let no_exit =
@@ -38,7 +38,7 @@ let carry_exit =
 let take_nothing =
   F.x "There's no rock to take here." []
 
-let take_no_space = 
+let take_no_space =
   F.x "I'm already carrying a rock." []
 
 let drop_nothing =
@@ -57,7 +57,7 @@ let action f =
   | `Exit_In -> f exit_in
   | `Web_In -> f web_in
   | `Web_Out -> f web_out
-  | `Exit -> f exit
+  | `Exit -> f do_exit
   | `No_Exit -> f no_exit
   | `Carry_Exit -> f carry_exit
   | `Take_Nothing -> f take_nothing

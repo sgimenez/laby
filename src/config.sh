@@ -11,7 +11,8 @@ VERSION_CURRENT="unknown"
 VERSION_STATUS="unknown"
 fi
 
-BUILD_LABLGTK=$(${PKG_VERSION} lablgtk2)
+BUILD_LABLGTK=$(${PKG_VERSION} lablgtk3)
+BUILD_LABLGTKSV=$(${PKG_VERSION} lablgtk3-sourceview3)
 
 [ -n "${THREADS}" ] && echo "let threads = T_thread.main"
 
@@ -26,6 +27,7 @@ let build_system = "${OCAML_SYSTEM}"
 let build_arch = "${OCAML_ARCH}"
 let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
+let build_lablgtk_sourceview = "${BUILD_LABLGTKSV}"
 let _ = Res.sys_data_dir := "${DATADIR}"
 let _ = Res.sys_tmp_dir := "${TMPDIR}"
 EOF

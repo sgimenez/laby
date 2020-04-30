@@ -16,3 +16,4 @@ val build_system : string
 val build_arch : string
 val build_ocaml : string
 val build_lablgtk : string
+val build_lablgtk_sourceview : string
