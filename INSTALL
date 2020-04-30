@@ -1,9 +1,9 @@
 Linux or Unix-like:
 
-  To compile laby, you need ocaml >= 3.10.0 and lablgtk >= 2.14.0
-  (with support for gtksourceview >= 2.10).
+  To compile laby, you need ocaml >= 4.10.0, lablgtk3 >= 3.1.0 and
+  lablgtk3-sourceview3 >= 3.1.0).
 
-  Execute the following commands in the archive main directory:
+  Execute the following commands in the archive's main directory:
 
     make
     ln -s ${PWD}/data ${HOME}/.config/laby
@@ -25,9 +25,6 @@ Windows:
   probably need patience and a lot of good luck and the following
   software:
 
-    - ocaml >= 3.10.0 :
-        http://caml.inria.fr/download.en.html
-    - lablgtk >= 2.14.0 :
-        http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/lablgtk.html
-    - gtksourceview >= 2.10 :
-        http://projects.gnome.org/gtksourceview/download.html
+    - ocaml: http://caml.inria.fr/download.en.html
+    - lablgtk: http://wwwfun.kurims.kyoto-u.ac.jp/soft/olabl/lablgtk.html
+    - gtksourceview: http://projects.gnome.org/gtksourceview/download.html
