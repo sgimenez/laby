@@ -1,0 +1,7 @@
+info:
+need	go
+
+run:
+fetch	robot.go
+dump	program.go
+spawn	go run program.go robot.go
