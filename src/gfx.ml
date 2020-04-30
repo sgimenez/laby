@@ -178,8 +178,7 @@ let draw_state state ressources (pixbuf : GdkPixbuf.pixbuf) =
 let labeled_combo text packing strings =
   let box = GPack.hbox ~packing () in
   let _ = GMisc.label ~text ~xpad:5 ~ypad:8 ~packing:box#pack () in
-  let r, (_, _) = GEdit.combo_box_text ~strings ~packing:box#add ()
-  in r
+  fst (GEdit.combo_box_text ~strings ~packing:box#add ())
 
 let label packing =
   GMisc.label ~ypad:5 ~line_wrap:true ~packing ()
@@ -210,13 +209,13 @@ let layout languages =
     ~packing:menu_bar#append () in
   let menu_level = GMenu.menu_item
     ~label:(Fd.render_raw label_level) ~packing:menu_bar#append () in
-  let menu_fullscreen = GMenu.menu_item ~label:"gtk-fullscreen"
+  let menu_fullscreen = GMenu.menu_item ~label:"Fullscreen"
     ~packing:sub_main#append () in
-  let menu_unfullscreen = GMenu.menu_item ~label:"gtk-leave-fullscreen"
+  let menu_unfullscreen = GMenu.menu_item ~label:"Leave Fullscreen"
     ~packing:sub_main#append ~show:false () in
-  let menu_quit = GMenu.menu_item ~label:"gtk-quit"
+  let menu_quit = GMenu.menu_item ~label:"Quit"
     ~packing:sub_main#append () in
-  let menu_home = GMenu.menu_item ~label:"gtk-home"
+  let menu_home = GMenu.menu_item ~label:"Home"
     ~packing:sub_main#append () in
   let fullscreen () =
     menu_fullscreen#misc#hide ();
@@ -253,7 +252,7 @@ let layout languages =
   hpaned#set_position (80 + 550 * tile_size / 40);
   let lvbox = GPack.vbox ~packing:hpaned#add1 () in
   let vpaned = GPack.paned `VERTICAL ~packing:hpaned#add () in
-  vpaned#set_position 350;
+  vpaned#set_position 400;
   let view_title = label lvbox#pack in
   let view_comment = label lvbox#pack in
   let sw_laby = scrolled ~vpolicy:`AUTOMATIC lvbox#add in
@@ -275,18 +274,18 @@ let layout languages =
   in
   view_prog#set_indent 1;
   view_prog#misc#modify_font monofont;
+  let bbox = GPack.hbox ~packing:rtvbox#pack () in
+  let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
   let rbvbox = GPack.vbox ~packing:vpaned#add2 () in
-  let toolbar = GButton.toolbar ~packing:rbvbox#pack ~style:`BOTH () in
+  let toolbar = GButton.toolbar ~packing:bbox#pack () in
   let button stock = GButton.tool_button ~packing:toolbar#insert ~stock () in
   let tbutton stock =
     GButton.toggle_tool_button ~packing:toolbar#insert ~stock ()
   in
-  let sti = GButton.separator_tool_item in
-  let button_prev = button `GO_BACK in
-  let button_next = button `GO_FORWARD in
-  let _ = sti ~expand:true ~draw:false ~packing:toolbar#insert () in
   let button_backward = tbutton `MEDIA_REWIND in
+  let button_prev = button `GO_BACK in
   let button_play = tbutton `MEDIA_PLAY in
+  let button_next = button `GO_FORWARD in
   let button_forward = tbutton `MEDIA_FORWARD in
   view_prog#misc#grab_focus ();
   label_txt (Fd.render_raw label_mesg) rbvbox#pack;
@@ -294,8 +293,6 @@ let layout languages =
   let view_mesg = GText.view ~editable:false ~packing:sw_mesg#add  () in
   view_mesg#misc#modify_font monofont;
   let map_image = GMisc.image ~packing:sw_laby#add_with_viewport () in
-  let bbox = GPack.hbox ~packing:rtvbox#pack ~homogeneous:true () in
-  let button_execute = GButton.button ~packing:bbox#pack ~stock:`EXECUTE () in
   button_execute#set_focus_on_click false;
   {
     window = window;
@@ -340,7 +337,6 @@ let display_gtk ressources =
   );
   (* let languages, column = GTree.store_of_list Gobject.Data.string language_list in *)
 
-  let bg = ref `WHITE in
   let c = layout language_list in
   let level_load name =
     let l = Level.load (Res.get ["levels"; name]) in
@@ -373,9 +369,6 @@ let display_gtk ressources =
   in
   let draw image state =
     let p : GdkPixbuf.pixbuf = image#pixbuf in
-    (* p#set_foreground !bg; *)
-    (* let width, height = p#size in *)
-    (* p#rectangle ~x:0 ~y:0 ~width ~height ~filled:true (); *)
     GdkPixbuf.fill p 0l;
     draw_state state ressources p;
     image#set_pixbuf p
@@ -546,8 +539,6 @@ let display_gtk ressources =
   exit_play ();
   c.window#set_default_size conf_window_width#get conf_window_height#get;
   c.window#show ();
-  (* bg color has to be retrieved after c.window#show *)
-  bg := `COLOR (c.window#misc#style#light `NORMAL);
   if List.mem "0.laby" levels_list
   then newlevel "0.laby"
   else if levels_list <> [] then newlevel (List.hd levels_list);
