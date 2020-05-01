@@ -1,6 +1,6 @@
 import 'robot.dart';
 
-main() {
+void main() {
   laby_name_start();
   laby_name_right();
   laby_name_forward();
