@@ -38,7 +38,7 @@ let build () =
     [F.s "architecture        "; F.s Config.build_arch];
     [F.s "ocaml               "; F.s Config.build_ocaml];
     [F.s "lablgtk             "; F.s Config.build_lablgtk];
-    [F.s "lablgtksourceview   "; F.s Config.build_lablgtk];
+    [F.s "lablgtksourceview   "; F.s Config.build_lablgtk_sourceview];
   ]
 
 let run () =

@@ -1,6 +1,6 @@
 
 (*
- * Copyright (C) 2007-2014 The laby team
+ * Copyright (C) 2007-2020 The laby team
  * You have permission to copy, modify, and redistribute under the
  * terms of the GPL-3.0. For full license terms, see gpl-3.0.txt.
  *)
@@ -339,7 +339,6 @@ let display_gtk ressources =
       "list", F.v (List.map (fun x -> F.string x#name) amods);
     ]
   );
-  (* let languages, column = GTree.store_of_list Gobject.Data.string language_list in *)
 
   let c = layout language_list in
   let level_load name =
