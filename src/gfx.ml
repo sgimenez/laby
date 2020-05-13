@@ -148,8 +148,12 @@ let gtk_init () =
 let draw_state state ressources (pixbuf : GdkPixbuf.pixbuf) =
   let size = ressources.size in
   let tile i j p =
-    GdkPixbuf.copy_area ~dest:pixbuf
-      ~dest_x:(size / 2 + i * size) ~dest_y:(size / 2 + j * size) p
+    let px = size / 2 + i * size in
+    let py = size / 2 + j * size in
+    (* GdkPixbuf.copy_area ~dest:pixbuf ~dest_x:px ~dest_y:py p *)
+    GdkPixbuf.composite ~dest:pixbuf ~alpha:255
+      ~dest_x:px ~dest_y:py ~width:size ~height:size
+      ~ofs_x:(float px) ~ofs_y:(float py) ~scale_x:1.0 ~scale_y:1.0 p
   in
   let i0, j0 = State.pos state in
   let disp_tile i j t =
