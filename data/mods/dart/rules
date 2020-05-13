@@ -1,0 +1,7 @@
+info:
+need	dart
+
+run:
+fetch	robot.dart
+dump	program.dart
+spawn	dart robot.dart
