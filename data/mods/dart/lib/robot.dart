@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'program.dart';
+
 const laby_name_Void = 'Void';
 const laby_name_Wall = 'Wall';
 const laby_name_Rock = 'Rock';
@@ -76,4 +78,9 @@ String laby_name_look() {
     default:
       return laby_name_Unknown;
   }
+}
+
+void main() {
+  laby_name_start();
+  laby_name_ant();
 }
