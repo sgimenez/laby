@@ -1,5 +1,4 @@
 basic:
-laby_name_start();
 laby_name_forward();
 laby_name_left();
 laby_name_right();
