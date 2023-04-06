@@ -48,6 +48,7 @@ let opts =
 
 let _ =
   Printexc.record_backtrace true;
+  Res.sys_tmp_dir := Filename.get_temp_dir_name ();
   Run.init
     ~name:Config.project_name
     ~conf:(conf, ["conf"])
