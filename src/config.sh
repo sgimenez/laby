@@ -29,5 +29,4 @@ let build_ocaml = "${OCAML_VERSION}"
 let build_lablgtk = "${BUILD_LABLGTK}"
 let build_lablgtk_sourceview = "${BUILD_LABLGTKSV}"
 let _ = Res.sys_data_dir := "${DATADIR}"
-let _ = Res.sys_tmp_dir := "${TMPDIR}"
 EOF
